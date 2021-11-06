@@ -11,35 +11,51 @@ import java.util.regex.Pattern
 
 
 /**
+ * Catching errors. Return null if Exception happened
+ */
+inline fun <T> catching(block: () -> T?): T? {
+    return try {
+        val result = block()
+        result
+    } catch (e: Throwable) {
+        e.printStackTrace()
+        null
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
+    }
+}
+
+/**
  * Converting string from file configuration to hex with default param
  */
 fun ConfigurationSection.getHEXString(path: String, def: String): String {
-    return EmpireUtils.HEXPattern(getString(path, def)!!)
+    return AstraUtils.HEXPattern(getString(path, def)!!)
 }
 
 /**
  * Converting string from file configuration to hex without default param
  */
 fun FileConfiguration.getHEXString(path: String): String? {
-    return EmpireUtils.HEXPattern(getString(path))
+    return AstraUtils.HEXPattern(getString(path))
 }
 
 /**
  * Converting string list from file configuration to hex without default param
  */
 fun ConfigurationSection.getHEXStringList(path: String): List<String> {
-    return EmpireUtils.HEXPattern(getStringList(path))
+    return AstraUtils.HEXPattern(getStringList(path))
 }
 
 /**
  * Converting string to hex
  */
 fun String.HEX(): String {
-    return EmpireUtils.HEXPattern(this)
+    return AstraUtils.HEXPattern(this)
 }
 
 fun FileConfiguration.getHEXString(path: String, def: String): String {
-    return EmpireUtils.HEXPattern(getString(path, def)!!)
+    return AstraUtils.HEXPattern(getString(path, def)!!)
 }
 
 
@@ -95,7 +111,7 @@ fun callSyncMethod(function: Runnable): Future<Unit>? {
 /**
  * Utils class
  */
-object EmpireUtils {
+object AstraUtils {
     private val hexPattern =
         Pattern.compile("#[a-fA-F0-9]{6}|&#[a-fA-F0-9]{6}")
 

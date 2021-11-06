@@ -14,7 +14,7 @@ import kotlin.Exception
  *
  * It allows you to use GSON with yaml
  */
-class EmpireYamlParser {
+class AstraYamlParser {
     companion object {
         private fun getConfSection(cs: ConfigurationSection?): MutableMap<String, Any>? {
             cs ?: return null

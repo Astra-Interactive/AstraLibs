@@ -14,12 +14,13 @@ import org.bukkit.inventory.InventoryHolder
  *
  * Don't use just Player class
  */
-data class PlayerMenuUtility(val player: Player)
+open class AstraPlayerMenuUtility(open var player: Player)
 
 /**
  * Default menu abstract class
  */
-public abstract class Menu(open var playerMenuUtility: PlayerMenuUtility) : InventoryHolder {
+abstract class Menu() : InventoryHolder {
+    abstract val playerMenuUtility: AstraPlayerMenuUtility
 
     private lateinit var inventory: Inventory
 

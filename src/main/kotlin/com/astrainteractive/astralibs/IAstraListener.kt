@@ -4,10 +4,10 @@ import org.bukkit.event.Listener
 /**
  * This interface provides you comfortability whe use events
  */
-interface IEmpireListener:Listener {
+interface IAstraListener:Listener {
 
 
-    fun onEnable(manager: IEventManager): IEmpireListener {
+    fun onEnable(manager: IAstraManager): IAstraListener {
         AstraLibs.instance.server.pluginManager.registerEvents(this, AstraLibs.instance)
         manager.addHandler(this)
         return this

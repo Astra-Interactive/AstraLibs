@@ -1,13 +1,13 @@
 package com.astrainteractive.astralibs.menu
 
-import com.astrainteractive.astralibs.IEmpireListener
+import com.astrainteractive.astralibs.IAstraListener
 import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.InventoryClickEvent
 
 /**
  * You probably won't ever edit this file
  */
-class MenuListener : IEmpireListener {
+class MenuListener : IAstraListener {
 
     /**
      * Cancelling inventory event if player clicked

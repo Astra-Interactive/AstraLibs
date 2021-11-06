@@ -4,7 +4,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
 
-abstract class PaginatedMenu(playerMenuUtility: PlayerMenuUtility?) : Menu(playerMenuUtility!!) {
+abstract class PaginatedMenu : Menu() {
 
     /**
      * Page of current menu. Must be 0 by default
@@ -79,9 +79,9 @@ abstract class PaginatedMenu(playerMenuUtility: PlayerMenuUtility?) : Menu(playe
 
 
 
-    private fun getPrevButtonIndex() = menuSize-8-1
-    private fun getBackButtonIndex() = menuSize-4-1
-    private fun getNextButtonIndex() = menuSize-1
+    fun getPrevButtonIndex() = menuSize-8-1
+    fun getBackButtonIndex() = menuSize-4-1
+    fun getNextButtonIndex() = menuSize-1
 
     /**
      * Managing buttons for pages
