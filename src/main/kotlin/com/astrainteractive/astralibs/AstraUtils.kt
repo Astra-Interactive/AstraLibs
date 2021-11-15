@@ -26,6 +26,32 @@ inline fun <T> catching(block: () -> T?): T? {
     }
 }
 
+inline fun <reified T : Enum<T>> valueOfOrNull(type: String): T? =
+    catchingNoStackTrace {
+        java.lang.Enum.valueOf(T::class.java, type)
+    }
+
+
+
+
+inline fun <T> catchingNoStackTrace(block: () -> T?): T? {
+    return try {
+        val result = block()
+        result
+    } catch (e: Throwable) {
+        null
+    } catch (e: Exception) {
+        null
+    }
+}
+fun ConfigurationSection.getFloat(path: String): Float =
+    getDouble(path).toFloat()
+
+fun ConfigurationSection.getFloat(path: String, defaultValue: Float): Float =
+    getDouble(path, defaultValue.toDouble()).toFloat()
+
+
+
 /**
  * Converting string from file configuration to hex with default param
  */

@@ -15,7 +15,9 @@ import org.bukkit.inventory.InventoryHolder
  * Don't use just Player class
  */
 open class AstraPlayerMenuUtility(open var player: Player)
-
+enum class AstraMenuSize(val size:Int){
+    XXS(9),XS(18),S(27),M(36),L(45),XL(54)
+}
 /**
  * Default menu abstract class
  */
@@ -34,7 +36,7 @@ abstract class Menu() : InventoryHolder {
      *
      * Shoul be in [9;54] and divided by 9
      */
-    abstract val menuSize: Int
+    abstract val menuSize: AstraMenuSize
 
     /**
      * Menu handler
@@ -51,7 +53,7 @@ abstract class Menu() : InventoryHolder {
      */
     fun open() {
         runAsyncTask {
-            inventory = Bukkit.createInventory(this, menuSize, menuName)
+            inventory = Bukkit.createInventory(this, menuSize.size, menuName)
             setMenuItems()
             callSyncMethod {
                 playerMenuUtility.player.openInventory(inventory)
