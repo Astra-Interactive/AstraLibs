@@ -6,7 +6,7 @@ object ETimer {
         timers[key] = System.currentTimeMillis()
     }
     fun endTimer(key:String){
-        println("Task $key enden in ${(System.currentTimeMillis().minus(timers[key]?:return))/1000.0}")
+        println("Task $key enden in ${(System.currentTimeMillis().minus(timers[key]?:return))/1000.0}s")
         timers.remove(key)
     }
     fun timer(key: String){

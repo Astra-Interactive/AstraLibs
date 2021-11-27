@@ -8,6 +8,9 @@ object AstraLibs {
     val instance: JavaPlugin
         get() = plugin
 
+    /**
+     * Initializer for AstraLibs
+     */
     fun create(plugin: JavaPlugin) {
         AstraLibs.plugin = plugin
     }
@@ -16,20 +19,24 @@ object AstraLibs {
 
     private val activeTasksList = mutableMapOf<Long,BukkitTask>()
     /**
-     * Добавляем ссылка на таск
+     * Add task to list
      */
     fun onBukkitTaskAdded(id: Long, taskRef: BukkitTask) {
         activeTasksList[id] = taskRef
     }
 
     /**
-     * Отключаем таск и выкидываем его из списка
+     * Disable task and remove from list
      */
     fun onBukkitTaskEnded(id: Long) {
         val task = activeTasksList[id]
         task?.cancel()
         activeTasksList.remove(id)
     }
+
+    /**
+     * Clear all tasks
+     */
     private fun clearAllTasks(){
         for ((key,task) in activeTasksList)
             task.cancel()

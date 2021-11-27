@@ -34,9 +34,9 @@ class PluginBetaAccessCheck() {
         }
 
         val maxTime: Long = hoursToMS(7000)// * 60 * 1000
-        val time: Long = 1626024523239
+        val time: Long = Date(2021,11,27).time
         val date = getDate(time + maxTime, "dd/MM/yyyy HH:mm:ss")
-        AstraLibs.instance.server.broadcastMessage("${ChatColor.RED}Используется тестовая версия плагина EmpireItems.")
+        AstraLibs.instance.server.broadcastMessage("${ChatColor.RED}Используется тестовая версия плагина на основе AstraLibs")
         AstraLibs.instance.server.broadcastMessage("${ChatColor.RED}Плагин будет отключен $date")
         AstraLibs.instance.server.broadcastMessage("${ChatColor.RED}EmpireProjekt.ru")
 

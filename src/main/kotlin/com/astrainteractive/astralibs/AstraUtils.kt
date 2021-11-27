@@ -2,6 +2,7 @@ package com.astrainteractive.astralibs
 
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
+import org.bukkit.command.CommandSender
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.plugin.IllegalPluginAccessException
@@ -26,14 +27,46 @@ inline fun <T> catching(block: () -> T?): T? {
     }
 }
 
+/**
+ * Returns value of enum or null if value not found
+ */
 inline fun <reified T : Enum<T>> valueOfOrNull(type: String): T? =
     catchingNoStackTrace {
         java.lang.Enum.valueOf(T::class.java, type)
     }
 
 
+/**
+ * Simple replacement for CommandManager
+ */
+fun AstraLibs.registerCommand(
+    alias: String,
+    permission: String? = null,
+    callback: (CommandSender, args: Array<out String>) -> Unit
+) =
+    AstraLibs.instance.getCommand(alias)?.setExecutor { sender, command, label, args ->
+        if (permission != null && !sender.hasPermission(permission))
+            return@setExecutor true
+        callback(sender, args)
+        return@setExecutor true
+    }
+
+/**
+ * Simple replacement for TabCompleter
+ */
+fun AstraLibs.registerTabCompleter(
+    alias: String,
+    permission: String? = null,
+    callback: (CommandSender, args: Array<out String>) -> List<String>
+) =
+    AstraLibs.instance.getCommand(alias)?.setTabCompleter { commandSender, command, s, strings ->
+        return@setTabCompleter callback(commandSender,strings)
+    }
 
 
+/**
+ * Catch Exception without stackTrace
+ */
 inline fun <T> catchingNoStackTrace(block: () -> T?): T? {
     return try {
         val result = block()
@@ -44,9 +77,16 @@ inline fun <T> catchingNoStackTrace(block: () -> T?): T? {
         null
     }
 }
+
+/**
+ * Get Float from ConfigurationSection
+ */
 fun ConfigurationSection.getFloat(path: String): Float =
     getDouble(path).toFloat()
 
+/**
+ * Get float or default value from ConfigurationSection
+ */
 fun ConfigurationSection.getFloat(path: String, defaultValue: Float): Float =
     getDouble(path, defaultValue.toDouble()).toFloat()
 
@@ -80,14 +120,15 @@ fun String.HEX(): String {
     return AstraUtils.HEXPattern(this)
 }
 
+/**
+ * Return hex string from path
+ */
 fun FileConfiguration.getHEXString(path: String, def: String): String {
     return AstraUtils.HEXPattern(getString(path, def)!!)
 }
 
 
-inline fun <reified T : kotlin.Enum<T>> T.valueOfOrNull(type: String?): T? {
-    return java.lang.Enum.valueOf(T::class.java, type)
-}
+
 
 /**
  * If you have list with entries {"entry","ementry","emementry"} and entry="me", you'll have returned list {"ementry","emementry"}.
@@ -103,6 +144,9 @@ fun List<String>.withEntry(entry: String?, ignoreCase: Boolean = true): List<Str
     return list
 }
 
+/**
+ * Creates async Bukkit task
+ */
 fun runAsyncTask(function: Runnable): BukkitTask? {
     return try {
         val id = System.currentTimeMillis()
@@ -119,6 +163,9 @@ fun runAsyncTask(function: Runnable): BukkitTask? {
 
 }
 
+/**
+ * Returns you to main Thread
+ */
 fun callSyncMethod(function: Runnable): Future<Unit>? {
 
     return try {
@@ -141,13 +188,18 @@ object AstraUtils {
     private val hexPattern =
         Pattern.compile("#[a-fA-F0-9]{6}|&#[a-fA-F0-9]{6}")
 
+    /**
+     * Convert list to HEX list
+     */
     @JvmName("HEXPattern1")
     fun HEXPattern(_list: List<String>?): List<String> {
         val list = _list?.toMutableList() ?: return mutableListOf()
         for (i in list.indices) list[i] = HEXPattern(list[i])
         return list
     }
-
+    /**
+     * Convert list to HEX list
+     */
     fun HEXPattern(list: MutableList<String>?): List<String> {
         list ?: return mutableListOf()
         for (i in list.indices) list[i] = HEXPattern(list[i])
