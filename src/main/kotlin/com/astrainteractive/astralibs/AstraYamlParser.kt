@@ -14,95 +14,61 @@ import kotlin.Exception
  *
  * It allows you to use GSON with yaml
  */
-@Deprecated("Only use it for small Config files! Bad performance detected!")
-class AstraYamlParser {
-    companion object {
-        private fun getConfSection(cs: ConfigurationSection?): MutableMap<String, Any>? {
-            cs ?: return null
-            val map = mutableMapOf<String, Any>()
-            for (key in cs.getKeys(false)) {
-                if (cs.isConfigurationSection(key))
-                    map[key] = getConfSection(cs.getConfigurationSection(key)) as Any
-                else
-                    map[key] = cs.get(key) as Any
-            }
-            return map
-        }
-
-        fun getMap(fc: FileConfiguration?): MutableMap<String, Any>? {
-            fc ?: return null
-
-            val map = mutableMapOf<String, Any>()
-            for (key in fc.getKeys(false)) {
-                if (fc.isConfigurationSection(key)) {
-                    map[key] = getConfSection(fc.getConfigurationSection(key)) as Any
-                } else {
-                    map[key] = fc.get(key) as Any
-                }
-            }
-
-            return map
-        }
-
-
-        private fun <T> fromJson(map: Map<String, Any>?, type: Type, paths: List<String>?): T? {
-
-            var json = JsonParser().parse(Gson().toJson(map, LinkedHashMap::class.java))
-            val gson = GsonBuilder().serializeNulls().create()
-            return if (paths != null) {
-                for (path in paths)
-                    if (json.isJsonObject)
-                        json = json.asJsonObject.get(path)
-
-                gson.fromJson(json, type)
-            } else
-                gson.fromJson(json, type)
-
-        }
-
-        private fun <T> returnTry(
-            map: MutableMap<String, Any>?,
-            type: Type,
-            paths: List<String>?,
-            file: String?=null
-        ): T? {
-            return try {
-                fromJson(map, type, paths)
-            } catch (e: Exception) {
-                println("${ChatColor.RED}Error during parsing fil $file")
-//                println(e.stackTraceToString())
-                return null
-            }
-        }
-
-        public fun <T> fromExistedMap(map:MutableMap<String, Any>?, type: Type, paths: List<String>? = null): T? {
-            return try {
-                returnTry<T>(map, type, paths)
-            }catch (e:Exception){
-                null
-            }
-
-
-        }
-
-        public fun <T> fromYAML(file: FileConfiguration?, type: Type, paths: List<String>? = null): T? {
-            file ?: return null
-            return try {
-                val map = getMap(file)
-                returnTry<T>(map, type, paths, file.name)
-            }catch (e:Exception){
-                null
-            }
-
-
-        }
-
-
-        public fun <T> fromYAML(section: ConfigurationSection?, type: Type, paths: List<String>? = null): T? {
-            section ?: return null
-            val map = getConfSection(section)
-            return returnTry<T>(map, type, paths, section.name)
-        }
-
+class AstraYamlParser{
+    companion object{
+        val parser = AstraYamlParser()
     }
+    fun <T> fixNull(v1:T?,v2:T):T = v1?:v2
+    /**
+     * Convert configuration section to map
+     */
+    fun configurationSectionToMap(section: ConfigurationSection?): Map<String, Any?> {
+        section ?: return hashMapOf<String, Any>()
+        return section.getKeys(false).associateWith { key ->
+            val value: Any? = if (section.isConfigurationSection(key))
+                configurationSectionToMap(section.getConfigurationSection(key))
+            else {
+                val obj = section.get(key)
+                if (obj is String)
+                    "\"${obj}\""
+                else obj
+            }
+            value
+        }
+    }
+
+    /**
+     * Convert configuration section to Class
+     */
+    inline fun <reified T> configurationSectionToClass(section: ConfigurationSection?,debugSection:Boolean=false): T? = catching {
+        val map = section.toMap() ?: return null
+
+        val stringMap = map.toString()
+        if (debugSection) {
+            println(map)
+            println(stringMap)
+        }
+
+        return Gson().fromJson(stringMap, T::class.java)
+    }
+
+    /**
+     * Convert configuration section to map
+     */
+    fun ConfigurationSection?.toMap() = configurationSectionToMap(this)
+
+
+    /**
+     * Convert file configuration to Class
+     */
+    inline fun <reified T> fileConfigurationToClass(file: FileConfiguration?): T? =
+        configurationSectionToClass(file?.defaultSection)
+
+    /**
+     * Convert fileConfig to map
+     */
+    fun mapFromFileConfig(f: FileConfiguration?) =
+        f?.defaultSection?.toMap()
+
+
 }

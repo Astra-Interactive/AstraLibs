@@ -1,7 +1,7 @@
 package com.astrainteractive.astralibs
 
+import org.apache.commons.codec.digest.DigestUtils
 import org.bukkit.Bukkit
-import org.bukkit.craftbukkit.libs.org.apache.commons.codec.digest.DigestUtils
 import org.bukkit.scheduler.BukkitTask
 import oshi.SystemInfo
 import java.net.URL

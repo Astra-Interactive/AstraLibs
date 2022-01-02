@@ -37,9 +37,12 @@ object AstraLibs {
     /**
      * Clear all tasks
      */
-    private fun clearAllTasks(){
-        for ((key,task) in activeTasksList)
-            task.cancel()
+    fun clearAllTasks(){
+        activeTasksList.forEach { (_,task) ->
+            catchingNoStackTrace{
+                task.cancel()
+            }
+        }
         activeTasksList.clear()
 
     }

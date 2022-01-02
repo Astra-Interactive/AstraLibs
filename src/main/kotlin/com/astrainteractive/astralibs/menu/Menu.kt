@@ -25,6 +25,7 @@ abstract class Menu() : InventoryHolder {
     abstract val playerMenuUtility: AstraPlayerMenuUtility
 
     private lateinit var inventory: Inventory
+    fun isInventoryInitialized() = this::inventory.isInitialized
 
     /**
      * Title of this inventory
