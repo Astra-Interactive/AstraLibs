@@ -6,21 +6,21 @@
 
     <groupId>com.astrainteractive</groupId>
     <artifactId>astralibs</artifactId>
-    <version>1.0.22</version>
+    <version>1.0.23</version>
     <packaging>jar</packaging>
 
     <distributionManagement>
         <repository>
             <id>github</id>
             <name>GitHub Asrta-Interactive Apache Maven Packages</name>
-            <url>https://maven.pkg.github.com/asrta-interactive/astralibs</url>
+            <url>https://maven.pkg.github.com/Astra-Interactive/AstraLibs</url>
         </repository>
     </distributionManagement>
 
 
     <properties>
-        <maven.compiler.source>16</maven.compiler.source>
-        <maven.compiler.target>16</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <kotlin.version>1.6.0-RC</kotlin.version>
     </properties>
     <repositories>
@@ -39,6 +39,11 @@
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+        </repository>
+
+        <repository>
+            <id>sonatype</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
 
@@ -108,20 +113,14 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
-            <version>1.18-R0.1-SNAPSHOT</version>
+            <version>1.18.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!--        Spigot-->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.18-R0.1-SNAPSHOT</version>
+            <version>1.18.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
