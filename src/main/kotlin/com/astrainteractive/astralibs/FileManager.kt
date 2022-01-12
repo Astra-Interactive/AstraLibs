@@ -1,5 +1,6 @@
 package com.astrainteractive.astralibs
 
+import com.astrainteractive.astralibs.AstraLibs
 import org.bukkit.ChatColor
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
@@ -14,13 +15,14 @@ import java.lang.IllegalArgumentException
  * If file not exist in resouces, it will be created anyway
  * @param configName is name of the file with file type
  */
-public class FileManager(var configName:String){
+public class FileManager(var configName: String) {
 
 
     /**
      * Reference for the file
      */
-    private var configFiles: File? = null
+    private var configFile: File? = null
+
     /**
      * Reference for file configuration
      */
@@ -35,13 +37,11 @@ public class FileManager(var configName:String){
 
 
     private fun reloadConfig() {
-        if (this.configFiles == null) this.configFiles = File(AstraLibs.instance.dataFolder, configName)
-        dataConfig = YamlConfiguration.loadConfiguration(configFiles!!)
-        val defaultStream = AstraLibs.instance.getResource(configName)
-        if (defaultStream != null) {
-            val defaultConfig = YamlConfiguration.loadConfiguration(InputStreamReader(defaultStream))
-            this.dataConfig?.setDefaults(defaultConfig)
-        }
+        if (this.configFile == null) this.configFile = File(AstraLibs.instance.dataFolder, configName)
+        dataConfig = YamlConfiguration.loadConfiguration(configFile!!)
+        val defaultConfig = YamlConfiguration.loadConfiguration(this.configFile!!)
+        this.dataConfig?.setDefaults(defaultConfig)
+
     }
 
     fun getName(): String {
@@ -53,14 +53,12 @@ public class FileManager(var configName:String){
         if (this.dataConfig == null) reloadConfig()
         return this.dataConfig!!
     }
+
     fun getFile(): File {
         if (this.dataConfig == null) reloadConfig()
-        return this.configFiles!!
+        return this.configFile!!
     }
 
-    fun LoadFiles() {
-        configFiles = File(AstraLibs.instance.dataFolder, configName)
-    }
 
     fun updateConfig(conf: FileConfiguration) {
         this.dataConfig = conf
@@ -71,9 +69,9 @@ public class FileManager(var configName:String){
      * function allows you to save dataConfig
      */
     fun saveConfig() {
-        if (this.configFiles == null || this.dataConfig == null) return
+        if (this.configFile == null || this.dataConfig == null) return
         try {
-            getConfig().save(this.configFiles!!)
+            getConfig().save(this.configFile!!)
         } catch (e: IOException) {
             println("${ChatColor.RESET}Error during saving $configName")
         }
@@ -83,10 +81,10 @@ public class FileManager(var configName:String){
      * Initialization of file
      */
     private fun saveDefaultConfig() {
-        if (this.configFiles == null) this.configFiles = File(AstraLibs.instance.dataFolder, configName)
+        if (this.configFile == null) this.configFile = File(AstraLibs.instance.dataFolder, configName)
         try {
-            if (!this.configFiles!!.exists()) AstraLibs.instance.saveResource(configName, false)
-        }catch (e:IllegalArgumentException){
+            if (this.configFile?.exists() != true) AstraLibs.instance.saveResource(configName, false)
+        } catch (e: IllegalArgumentException) {
             println("${ChatColor.YELLOW} Non standart file: $configName")
         }
     }
