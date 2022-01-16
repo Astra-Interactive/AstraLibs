@@ -7,9 +7,9 @@ package com.astrainteractive.astralibs
  *
  * It has handlers that will automatically disable
  */
-interface IAstraManager {
-    abstract val handlers: MutableList<IAstraListener>
-    public fun addHandler(event: IAstraListener) {
+interface EventManager {
+    abstract val handlers: MutableList<EventListener>
+    public fun addHandler(event: EventListener) {
         handlers.add(event)
     }
     public fun onDisable() {

@@ -6,7 +6,7 @@
 
     <groupId>com.astrainteractive</groupId>
     <artifactId>astralibs</artifactId>
-    <version>1.0.28</version>
+    <version>1.1.0</version>
     <packaging>jar</packaging>
 
     <distributionManagement>
@@ -109,13 +109,6 @@
 
 
     <dependencies>
-        <!--        Paper-->
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.18.1-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
         <!--        Spigot-->
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -134,6 +127,18 @@
             <artifactId>kotlin-test</artifactId>
             <version>${kotlin.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <!--        Coroutines-->
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-core</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-core-jvm</artifactId>
+            <version>1.6.0</version>
         </dependency>
     </dependencies>
 

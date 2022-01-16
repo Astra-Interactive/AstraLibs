@@ -17,7 +17,7 @@ abstract class PaginatedMenu : Menu() {
     open val maxItemsPerPage
         get() = menuSize.size - 9
     abstract val maxItemsAmount: Int
-    private val maxPages
+    val maxPages
         get() = maxItemsAmount / maxItemsPerPage
 
     /**
