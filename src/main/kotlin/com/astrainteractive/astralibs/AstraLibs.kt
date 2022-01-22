@@ -1,9 +1,11 @@
 package com.astrainteractive.astralibs
 
+import com.astrainteractive.astralibs.observer.LifecycleOwner
+import com.astrainteractive.astralibs.observer.MutableLiveData
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitTask
 
-object AstraLibs {
+object AstraLibs:LifecycleOwner {
     private lateinit var plugin: JavaPlugin
     val instance: JavaPlugin
         get() = plugin

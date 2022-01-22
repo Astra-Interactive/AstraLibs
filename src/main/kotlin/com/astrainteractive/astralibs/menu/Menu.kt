@@ -46,7 +46,7 @@ abstract class Menu() : InventoryHolder {
             playerMenuUtility.player.openInventory(inventory)
         }
     }
-
     override fun getInventory() = inventory
+
 
 }

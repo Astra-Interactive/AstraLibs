@@ -3,6 +3,7 @@ package com.astrainteractive.astralibs.menu
 import com.astrainteractive.astralibs.EventListener
 import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryCloseEvent
 
 /**
  * You probably won't ever edit this file
@@ -24,6 +25,7 @@ open class MenuListener : EventListener {
             holder.handleMenu(e)
         }
     }
+
     public override fun onDisable(){
         InventoryClickEvent.getHandlerList().unregister(this)
     }
