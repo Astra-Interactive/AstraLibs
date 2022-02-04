@@ -85,6 +85,9 @@ public class FileManager(var configName: String) {
         try {
             if (this.configFile?.exists() != true) AstraLibs.instance.saveResource(configName, false)
         } catch (e: IllegalArgumentException) {
+            this.configFile = File(AstraLibs.instance.dataFolder, configName)
+            this.configFile?.parentFile?.mkdirs()
+            this.configFile?.createNewFile()
             println("${ChatColor.YELLOW} Non standart file: $configName")
         }
     }

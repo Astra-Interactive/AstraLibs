@@ -24,17 +24,24 @@ class AstraYamlParser{
      */
     fun configurationSectionToMap(section: ConfigurationSection?): Map<String, Any?> {
         section ?: return hashMapOf<String, Any>()
-        return section.getKeys(false).associateWith { key ->
+        var s = section.getKeys(false).associateWith { key ->
             val value: Any? = if (section.isConfigurationSection(key))
                 configurationSectionToMap(section.getConfigurationSection(key))
             else {
                 val obj = section.get(key)
                 if (obj is String)
                     "\"${obj}\""
+                else if (obj is List<*>) {
+                    if (obj.firstOrNull() is String)
+                        obj.map { "\"${it}\"" }
+                    else obj
+                }
                 else obj
             }
             value
         }
+        println(s)
+        return s
     }
 
     /**
