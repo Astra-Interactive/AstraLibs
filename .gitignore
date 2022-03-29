@@ -24,3 +24,6 @@ hs_err_pid*
 .idea/
 out/
 target/
+astra.properties
+.gradle/
+build/

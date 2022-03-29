@@ -12,29 +12,13 @@ import java.util.regex.Pattern
 /**
  * Catching errors. Return null if Exception happened
  */
-inline fun <T> catching(block: () -> T?): T? {
+inline fun <T> catching(stackTrace: Boolean = false,block: () -> T?): T? {
     return try {
         val result = block()
         result
-    } catch (e: Throwable) {
-        e.printStackTrace()
-        null
     } catch (e: Exception) {
-        e.printStackTrace()
-        null
-    }
-}
-
-/**
- * Catch Exception without stackTrace
- */
-inline fun <T> catchingNoStackTrace(block: () -> T?): T? {
-    return try {
-        val result = block()
-        result
-    } catch (e: Throwable) {
-        null
-    } catch (e: Exception) {
+        if (stackTrace)
+            e.printStackTrace()
         null
     }
 }
@@ -43,7 +27,7 @@ inline fun <T> catchingNoStackTrace(block: () -> T?): T? {
  * Returns value of enum or null if value not found
  */
 inline fun <reified T : Enum<T>> valueOfOrNull(type: String): T? =
-    catchingNoStackTrace {
+    catching {
         java.lang.Enum.valueOf(T::class.java, type)
     }
 
@@ -91,7 +75,7 @@ fun ConfigurationSection.getFloat(path: String, defaultValue: Float): Float =
 /**
  * Get double or null from ConfigurationSection
  */
-fun ConfigurationSection.getDoubleOrNull(path:String): Double? =
+fun ConfigurationSection.getDoubleOrNull(path: String): Double? =
     if (!this.contains(path))
         null
     else getDouble(path)
@@ -164,8 +148,7 @@ fun convertHex(list: MutableList<String>?): List<String> {
  */
 @JvmName("convertHexFromNullableString")
 fun convertHex(line: String?): String? {
-    line ?: return line
-    return convertHex(line)
+    return convertHex(line?:return null)
 }
 
 /**
@@ -194,7 +177,6 @@ val Player.uuid: String
     get() = this.uniqueId.toString()
 
 
-
 /**
  * For loop for ResultSet
  */
@@ -210,6 +192,7 @@ inline fun ResultSet.forEach(rs: (ResultSet) -> Unit) {
 public inline fun <R : Any> ResultSet.mapNotNull(rs: (ResultSet) -> R?): List<R> {
     return mapNotNullTo(ArrayList<R>(), rs)
 }
+
 /**
  * Map not null for result set
  */

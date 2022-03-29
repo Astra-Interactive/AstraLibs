@@ -5,7 +5,7 @@ import com.astrainteractive.astralibs.observer.MutableLiveData
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitTask
 
-object AstraLibs:LifecycleOwner {
+object AstraLibs : LifecycleOwner {
     private lateinit var plugin: JavaPlugin
     val instance: JavaPlugin
         get() = plugin
@@ -18,8 +18,8 @@ object AstraLibs:LifecycleOwner {
     }
 
 
+    private val activeTasksList = mutableMapOf<Long, BukkitTask>()
 
-    private val activeTasksList = mutableMapOf<Long,BukkitTask>()
     /**
      * Add task to list
      */
@@ -39,9 +39,9 @@ object AstraLibs:LifecycleOwner {
     /**
      * Clear all tasks
      */
-    fun clearAllTasks(){
-        activeTasksList.forEach { (_,task) ->
-            catchingNoStackTrace{
+    fun clearAllTasks() {
+        activeTasksList.forEach { (_, task) ->
+            catching {
                 task.cancel()
             }
         }

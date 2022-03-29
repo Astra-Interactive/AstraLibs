@@ -10,14 +10,11 @@ import java.util.logging.Level
  * Logger file
  */
 object Logger {
-    private var prefix = "[AstraLibs]"
+    var prefix = "[AstraLibs]"
+        set(value) {
+            field = "[$value]"
+        }
 
-    /**
-     * Call this method to init your plugin prefix
-     */
-    fun init(prefix: String) {
-        Logger.prefix = "[$prefix]"
-    }
 
     /**
      * Log message with tag
@@ -37,13 +34,8 @@ object Logger {
 
     private fun log(tag: String?, message: String, type: Type, consolePrint: Boolean) {
         val tag = tag ?: "Default"
-        val level = when (type) {
-            Type.INFO -> Level.INFO
-            Type.WARN -> Level.WARNING
-            Type.ERROR -> Level.SEVERE
-        }
         if (consolePrint)
-            Bukkit.getLogger().log(level, "[$tag] $message")
+            Bukkit.getLogger().log(type.level, "[$tag] $message")
         logInFile(tag, message, type)
     }
 
@@ -61,8 +53,8 @@ object Logger {
     private fun getTime(): String = DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())
     private fun getDate(): String = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now())
 
-    enum class Type {
-        WARN, INFO, ERROR
+    enum class Type(val level: Level) {
+        WARN(Level.WARNING), INFO(Level.INFO), ERROR(Level.SEVERE)
     }
 }
 
