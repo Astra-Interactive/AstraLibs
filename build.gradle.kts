@@ -1,6 +1,7 @@
+import org.jetbrains.dokka.gradle.DokkaTask
 import java.util.Properties
 import java.io.FileInputStream
-
+import kotlin.collections.mutableMapOf
 
 var astraPropsFile = file("astra.properties")
 if (!astraPropsFile.exists())
@@ -22,6 +23,7 @@ plugins {
     `java-library`
     kotlin("jvm") version "1.5.21"
     id("com.github.johnrengelman.shadow") version "7.1.0"
+    id("org.jetbrains.dokka") version "1.6.10"
 }
 
 repositories {
@@ -34,8 +36,34 @@ repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://oss.sonatype.org/content/groups/public/")
 }
+tasks.dokkaHtml.configure {
+    outputDirectory.set(file("../documentation/html"))
+}
 
+tasks.dokkaJavadoc.configure {
+    outputDirectory.set(file("../documentation/javadoc"))
+}
+
+tasks.dokkaGfm.configure {
+    outputDirectory.set(file("../documentation/gfm"))
+}
+val dokkaHtml = tasks.dokkaHtml
+tasks.withType<DokkaTask>().configureEach {
+    pluginsMapConfiguration.set(
+        mutableMapOf("org.jetbrains.dokka.base.DokkaBase" to """{ "separateInheritedMembers": true}""")
+    )
+}
+
+dokkaHtml.configure {
+    dokkaSourceSets {
+        named("main") {
+            skipDeprecated.set(false)
+        }
+    }
+}
 dependencies {
+    implementation("org.jetbrains.dokka:dokka-gradle-plugin:1.6.10")
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.10")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.0")
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.21")
@@ -72,9 +100,5 @@ publishing {
             }
         }
     }
-//    publications {
-//        register<MavenPublication>("gpr") {
-//            from(components["java"])
-//        }
-//    }
 }
+
