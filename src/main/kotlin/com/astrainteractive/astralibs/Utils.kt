@@ -10,7 +10,8 @@ import java.util.regex.Pattern
 
 
 /**
- * Catching errors. Return null if Exception happened
+ * Catching errors
+ * @return null if Exception happened or result of [block]
  */
 inline fun <T> catching(stackTrace: Boolean = false,block: () -> T?): T? {
     return try {
@@ -24,7 +25,8 @@ inline fun <T> catching(stackTrace: Boolean = false,block: () -> T?): T? {
 }
 
 /**
- * Returns value of enum or null if value not found
+ * Safely get value from enum with type [T]
+ * @return T or null if value in [Enum] not found
  */
 inline fun <reified T : Enum<T>> valueOfOrNull(type: String): T? =
     catching {
@@ -129,7 +131,7 @@ private val hexPattern =
     Pattern.compile("#[a-fA-F0-9]{6}|&#[a-fA-F0-9]{6}")
 
 /**
- * Convert list to HEX list
+ * Convert list of string to HEX list
  */
 @JvmName("convertHexFromNullableList")
 fun convertHex(list: List<String>?): List<String> {
@@ -137,7 +139,7 @@ fun convertHex(list: List<String>?): List<String> {
 }
 
 /**
- * Convert list to HEX list
+ * Convert list of string to HEX list
  */
 fun convertHex(list: MutableList<String>?): List<String> {
     return list?.map { convertHex(it) } ?: listOf()

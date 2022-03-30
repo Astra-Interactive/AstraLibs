@@ -16,7 +16,15 @@ abstract class PaginatedMenu : Menu() {
      */
     open val maxItemsPerPage
         get() = menuSize.size - 9
+
+    /**
+     * Max items in this menu
+     */
     abstract val maxItemsAmount: Int
+
+    /**
+     * Max pages in this menu
+     */
     val maxPages
         get() = maxItemsAmount / maxItemsPerPage
 
@@ -71,12 +79,9 @@ abstract class PaginatedMenu : Menu() {
     abstract val nextPageButton: ItemStack
 
 
-    val prevButtonIndex
-        get() = menuSize.size - 8 - 1
-    val backButtonIndex
-        get() = menuSize.size - 4 - 1
-    val nextButtonIndex
-        get() = menuSize.size - 1
+    abstract val prevButtonIndex: Int
+    abstract val backButtonIndex: Int
+    abstract val nextButtonIndex: Int
 
     /**
      * Managing buttons for pages

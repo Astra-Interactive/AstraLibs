@@ -14,10 +14,8 @@ import kotlin.Exception
  *
  * It allows you to use GSON with yaml
  */
-class AstraYamlParser{
-    companion object{
-        val parser = AstraYamlParser()
-    }
+@Deprecated("Do not use with big data. Can cause null exception. Use on your own risk")
+object AstraYamlParser{
     fun <T> fixNull(v1:T?,v2:T):T = v1?:v2
     /**
      * Convert configuration section to map

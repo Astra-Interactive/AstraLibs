@@ -1,6 +1,8 @@
 package com.astrainteractive.astralibs
 
-
+/**
+ * Allows you to estimate time of task
+ */
 object AstraEstimator {
     /**
      * Estimator for task
