@@ -1,8 +1,7 @@
 package com.astrainteractive.astralibs
 
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParser
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import org.bukkit.ChatColor
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.FileConfiguration
@@ -38,7 +37,6 @@ object AstraYamlParser{
             }
             value
         }
-        println(s)
         return s
     }
 
@@ -53,8 +51,8 @@ object AstraYamlParser{
             println(map)
             println(stringMap)
         }
-
-        return Gson().fromJson(stringMap, T::class.java)
+        return Json.decodeFromString<T>(stringMap)
+//        return Gson().fromJson(stringMap, T::class.java)
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.astrainteractive.astralibs
+package com.astrainteractive.astralibs.events
 
 /**
  * Event manager for event handling.

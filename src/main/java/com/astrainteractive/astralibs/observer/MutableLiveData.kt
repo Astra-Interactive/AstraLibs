@@ -5,6 +5,7 @@ package com.astrainteractive.astralibs.observer
  *
  * You can define object which you need to listen to update it in gui or anywhere you want
  */
+@Deprecated("Use flow instead")
 class MutableLiveData<T> : LiveData<T> {
 
 

@@ -8,14 +8,10 @@ import kotlin.concurrent.timer
 /**
  * Calculating cooldown for anything where [K] is key
  */
-class Cooldown<K>(val maxTime: Long = 60):AutoCloseable {
+class Cooldown<K>(val maxTime: Long = 60) {
     private val map = mutableMapOf<K, Long>()
     val constMap: Map<K, Long>
         get() = synchronized(this) { map.toMap() }
-    val scheduler = kotlin.concurrent.timer(null,true,0L,maxTime){
-        clearOldCooldowns()
-    }
-
 
     /**
      * Set starded cooldown time for [K] for this [System.currentTimeMillis]
@@ -34,7 +30,7 @@ class Cooldown<K>(val maxTime: Long = 60):AutoCloseable {
     /**
      * Clear all keys, which passed time more than [maxTime]
      */
-    fun clearOldCooldowns() = AsyncHelper.runBackground {
+    fun clearOldCooldowns(){
         constMap.forEach { (k, v) ->
             if (getPassedTime(v)> maxTime)
                 removeCooldown(k)
@@ -60,9 +56,5 @@ class Cooldown<K>(val maxTime: Long = 60):AutoCloseable {
             return true
         }
         return false
-    }
-
-    override fun close() {
-        scheduler.cancel()
     }
 }

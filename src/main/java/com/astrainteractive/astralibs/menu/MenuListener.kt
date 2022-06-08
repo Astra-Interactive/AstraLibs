@@ -1,9 +1,8 @@
 package com.astrainteractive.astralibs.menu
 
-import com.astrainteractive.astralibs.EventListener
+import com.astrainteractive.astralibs.events.EventListener
 import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.inventory.InventoryCloseEvent
 
 /**
  * You probably won't ever edit this file

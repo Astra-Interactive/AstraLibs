@@ -6,6 +6,7 @@ package com.astrainteractive.astralibs.observer
  *
  * Almost like in Android Studio
  */
+@Deprecated("Use flow instead")
 abstract class LiveData<T> {
     protected constructor(value: T?) {
         this.value = value

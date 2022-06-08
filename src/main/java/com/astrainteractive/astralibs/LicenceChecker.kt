@@ -2,6 +2,7 @@ package com.astrainteractive.astralibs
 
 
 import com.astrainteractive.astralibs.async.AsyncHelper
+import kotlinx.coroutines.launch
 import org.bukkit.Bukkit
 import org.bukkit.scheduler.BukkitTask
 import java.math.BigInteger
@@ -37,7 +38,7 @@ class LicenceChecker {
     fun enable() {
         timer = getTimer()
         Logger.log("Licence key", licenceKey)
-        AsyncHelper.runBackground {
+        AsyncHelper.launch {
             val licences = checkLicence()
             if (licences != null && licences.contains(licenceKey)) {
                 Logger.log("Licence key", "You have a licence for ${AstraLibs.instance.name}")

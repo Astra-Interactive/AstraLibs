@@ -13,22 +13,6 @@ import org.bukkit.Bukkit
  */
 object AsyncHelper : AsyncTask {
     /**
-     * Run task in background thread with selected [CoroutineDispatcher]
-     */
-    @Deprecated(
-        "Use AsyncHelper.launch{} instead",
-        ReplaceWith("launch(scope) { block.invoke(this) }", "kotlinx.coroutines.launch")
-    )
-    inline fun <T> runBackground(
-        scope: CoroutineDispatcher = Dispatchers.IO,
-        crossinline block: suspend CoroutineScope.() -> T
-    ) {
-        launch(scope) {
-            block.invoke(this)
-        }
-    }
-
-    /**
      * Call sync method from background task
      */
     inline fun <T> callSyncMethod(crossinline block: () -> T) = catching {

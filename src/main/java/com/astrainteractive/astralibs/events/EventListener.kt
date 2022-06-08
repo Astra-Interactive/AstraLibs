@@ -1,5 +1,7 @@
-package com.astrainteractive.astralibs
+package com.astrainteractive.astralibs.events
 
+import com.astrainteractive.astralibs.AstraLibs
+import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 /**
  * This interface provides you comfortability whe use events
@@ -12,5 +14,11 @@ interface EventListener:Listener {
         manager.addHandler(this)
         return this
     }
-    abstract fun onDisable()
+
+    /**
+     * You should unregister all the listeners here
+     */
+    fun onDisable(){
+        HandlerList.unregisterAll(this)
+    }
 }

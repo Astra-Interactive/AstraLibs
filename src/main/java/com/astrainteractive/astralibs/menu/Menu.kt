@@ -1,12 +1,8 @@
 package com.astrainteractive.astralibs.menu
 
-import com.astrainteractive.astralibs.EventListener
-import com.astrainteractive.astralibs.EventManager
 import com.astrainteractive.astralibs.async.AsyncHelper
 import org.bukkit.Bukkit
-import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 
