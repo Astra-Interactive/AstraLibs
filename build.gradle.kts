@@ -4,7 +4,9 @@ import java.io.FileInputStream
 import kotlin.collections.mutableMapOf
 var gprUser: String? = null
 var gprPassword: String? = null
-
+val kotlin_version: String by project
+val kotlin_coroutines_version: String by project
+val kotlin_json_version: String by project
 fun getFileOrCreate(path: String): File {
     val _file = file(path)
     if (!_file.exists()) _file.createNewFile()
@@ -43,9 +45,9 @@ plugins {
     java
     `maven-publish`
     `java-library`
-    kotlin("jvm") version "1.6.21"
     id("com.github.johnrengelman.shadow") version "7.1.0"
     id("org.jetbrains.dokka") version "1.6.10"
+    kotlin("jvm") version "1.6.21"
     kotlin("plugin.serialization") version "1.6.21"
 }
 repositories {
@@ -84,20 +86,27 @@ dokkaHtml.configure {
     }
 }
 dependencies {
-    val kotlinVersion = "1.6.21"
-    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.10")
-    compileOnly("org.jetbrains.dokka:dokka-gradle-plugin:1.6.10")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.6.0")
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+    // Kotlin
+    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+    // Coroutines
+    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$kotlin_coroutines_version")
+    // Serialization
+    compileOnly("org.jetbrains.kotlin:kotlin-serialization:$kotlin_version")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlin_json_version")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-runtime:1.0-M1-1.4.0-rc")
+    compileOnly("com.charleskorn.kaml:kaml:0.45.0")
+    // Documentation
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.20")
+    compileOnly("org.jetbrains.dokka:dokka-gradle-plugin:1.6.20")
+    // Spigot dependencies
     compileOnly("org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT")
+    // Test
     testImplementation("junit:junit:4.13.1")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.18:1.24.1")
     testImplementation("io.kotest:kotest-runner-junit5:latest.release")
     testImplementation("io.kotest:kotest-assertions-core:latest.release")
     testImplementation(kotlin("test"))
-    implementation("org.jetbrains.kotlin:kotlin-serialization:$kotlinVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3")
 }
 
 group = "com.astrainteractive"

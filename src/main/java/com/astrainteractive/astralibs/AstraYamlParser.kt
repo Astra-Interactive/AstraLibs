@@ -1,13 +1,28 @@
 package com.astrainteractive.astralibs
 
+import com.google.gson.Gson
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.serializer
 import org.bukkit.ChatColor
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.FileConfiguration
 import java.lang.reflect.Type
 import kotlin.Exception
+@kotlinx.serialization.Serializable
+data class ActionInventoriesHolder(
+    val action_inventory:String
+){
 
+
+    companion object {
+        fun getAll(): ActionInventoriesHolder? {
+
+            return ActionInventoriesHolder("Aaa")
+        }
+    }
+}
 /**
  * Converting yaml file to .json format
  *
@@ -51,8 +66,8 @@ object AstraYamlParser{
             println(map)
             println(stringMap)
         }
-        return Json.decodeFromString<T>(stringMap)
-//        return Gson().fromJson(stringMap, T::class.java)
+
+        return Gson().fromJson(stringMap, T::class.java)
     }
 
     /**
