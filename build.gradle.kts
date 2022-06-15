@@ -53,12 +53,19 @@ plugins {
 repositories {
     mavenLocal()
     mavenCentral()
-    maven("https://repo.maven.apache.org/maven2/")
-    maven("https://maven.pkg.github.com/Astra-Interactive/AstraLibs")
-    maven("https://repo1.maven.org/maven2/")
-    maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+    maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://nexus.scarsz.me/content/groups/public/")
+    maven("https://repo.dmulloy2.net/repository/public/")
     maven("https://oss.sonatype.org/content/groups/public/")
+    maven("https://repo.essentialsx.net/snapshots/")
+    maven("https://repo.maven.apache.org/maven2/")
+    maven("https://maven.enginehub.org/repo/")
+    maven("https://repo1.maven.org/maven2/")
+    maven("https://maven.playpro.com")
+    maven("https://jitpack.io")
 }
 tasks.dokkaHtml.configure {
     outputDirectory.set(file("../documentation/html"))
@@ -86,6 +93,7 @@ dokkaHtml.configure {
     }
 }
 dependencies {
+    val spigot = "1.19-R0.1-SNAPSHOT"
     // Kotlin
     compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     // Coroutines
@@ -100,7 +108,8 @@ dependencies {
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.20")
     compileOnly("org.jetbrains.dokka:dokka-gradle-plugin:1.6.20")
     // Spigot dependencies
-    compileOnly("org.spigotmc:spigot-api:1.18.1-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:$spigot")
+    compileOnly("org.spigotmc:spigot:$spigot")
     // Test
     testImplementation("junit:junit:4.13.1")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.18:1.24.1")
@@ -110,12 +119,14 @@ dependencies {
 }
 
 group = "com.astrainteractive"
-version = "1.1.8-5"
+version = "1.2.0"
 description = "astralibs"
-java.sourceCompatibility = JavaVersion.VERSION_16
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.targetCompatibility = JavaVersion.VERSION_17
 
 java {
     withJavadocJar()
+//    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 publishing {
@@ -129,9 +140,6 @@ sourceSets {
             srcDir("java")
         }
     }
-}
-tasks.withType<JavaCompile>() {
-    options.encoding = "UTF-8"
 }
 
 tasks {

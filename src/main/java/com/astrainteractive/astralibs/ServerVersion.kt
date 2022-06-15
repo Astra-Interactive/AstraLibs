@@ -23,6 +23,7 @@ enum class ServerVersion {
     v1_17_1_R1,
     v1_18_1_R1,
     v1_18_R1,
+    v1_19_R1,
     UNMAINTAINED;
 
     override fun toString(): String = name
