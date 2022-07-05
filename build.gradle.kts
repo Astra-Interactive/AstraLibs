@@ -1,54 +1,42 @@
 import org.jetbrains.dokka.gradle.DokkaTask
-import java.util.Properties
-import java.io.FileInputStream
 import kotlin.collections.mutableMapOf
-var gprUser: String? = null
-var gprPassword: String? = null
-val kotlin_version: String by project
-val kotlin_coroutines_version: String by project
-val kotlin_json_version: String by project
-fun getFileOrCreate(path: String): File {
-    val _file = file(path)
-    if (!_file.exists()) _file.createNewFile()
-    return _file
+
+object Kotlin {
+    const val version = "1.7.0"
+    const val coroutines = "1.6.3"
+    const val json = "1.3.3"
+    const val kaml = "0.46.0"
 }
 
-inline fun <reified T> File.getProperty(key: String, default: T? = null): T? {
-    val prop: String = Properties().apply { load(inputStream()) }.getProperty(key) ?: return default
-    return when (T::class) {
-        Int::class -> prop.toIntOrNull() as T?
-        String::class -> prop as T?
-        else -> throw IllegalStateException("Unknown Generic Type")
-    }
+object Spigot {
+    const val version = "1.19-R0.1-SNAPSHOT"
+    const val placeholderAPI = "2.11.2"
+    const val protocolLib = "4.8.0"
+    const val worldGuard = "7.0.7"
+    const val vault = "1.7"
+    const val coreProtect = "21.2"
+    const val modelEngine = "R2.5.0"
+    const val essentials = "2.19.5-SNAPSHOT"
+    const val discordSRV = "1.25.0"
+    const val luckPerms = "5.4"
 }
-
-inline fun <reified T> File.setProperty(key: String, value: T? = null) {
-    Properties().apply {
-        load(inputStream())
-        this.setProperty(key, value?.toString())
-    }.store(this.outputStream(), "")
-
-}
-
-task("Get GPR user keys") {
-    val astraPropsFile = getFileOrCreate("astra.properties")
-    gprUser = astraPropsFile.getProperty<String?>("gpr.user")
-    gprPassword = astraPropsFile.getProperty<String?>("gpr.password")
-    if (gprUser == null || gprPassword == null) {
-        astraPropsFile.setProperty("gpr.user", gprUser ?: "SET_GPR_USERNAME_HERE")
-        astraPropsFile.setProperty("gpr.password", gprPassword ?: "SET_GPR_KEY_HERE")
-        throw GradleException("You need to set your GPR keys")
-    }
-}
+group = "com.astrainteractive"
+version = "1.3.0"
+description = "astralibs"
 
 plugins {
     java
     `maven-publish`
     `java-library`
+    kotlin("jvm") version "1.7.0"
+    kotlin("plugin.serialization") version "1.7.0"
     id("com.github.johnrengelman.shadow") version "7.1.0"
     id("org.jetbrains.dokka") version "1.6.10"
-    kotlin("jvm") version "1.6.21"
-    kotlin("plugin.serialization") version "1.6.21"
+}
+java {
+    withJavadocJar()
+    java.sourceCompatibility = JavaVersion.VERSION_1_8
+    java.targetCompatibility = JavaVersion.VERSION_17
 }
 repositories {
     mavenLocal()
@@ -67,49 +55,24 @@ repositories {
     maven("https://maven.playpro.com")
     maven("https://jitpack.io")
 }
-tasks.dokkaHtml.configure {
-    outputDirectory.set(file("../documentation/html"))
-}
 
-tasks.dokkaJavadoc.configure {
-    outputDirectory.set(file("../documentation/javadoc"))
-}
-
-tasks.dokkaGfm.configure {
-    outputDirectory.set(file("../documentation/gfm"))
-}
-val dokkaHtml = tasks.dokkaHtml
-tasks.withType<DokkaTask>().configureEach {
-    pluginsMapConfiguration.set(
-        mutableMapOf("org.jetbrains.dokka.base.DokkaBase" to """{ "separateInheritedMembers": true}""")
-    )
-}
-
-dokkaHtml.configure {
-    dokkaSourceSets {
-        named("main") {
-            skipDeprecated.set(false)
-        }
-    }
-}
 dependencies {
-    val spigot = "1.19-R0.1-SNAPSHOT"
     // Kotlin
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}")
     // Coroutines
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:$kotlin_coroutines_version")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Kotlin.coroutines}")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${Kotlin.coroutines}")
     // Serialization
-    compileOnly("org.jetbrains.kotlin:kotlin-serialization:$kotlin_version")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlin_json_version")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-runtime:1.0-M1-1.4.0-rc")
-    compileOnly("com.charleskorn.kaml:kaml:0.45.0")
+    compileOnly("org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}")
+    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:${Kotlin.json}")
+    compileOnly("com.charleskorn.kaml:kaml:${Kotlin.kaml}")
     // Documentation
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.20")
     compileOnly("org.jetbrains.dokka:dokka-gradle-plugin:1.6.20")
     // Spigot dependencies
-    compileOnly("io.papermc.paper:paper-api:$spigot")
-    compileOnly("org.spigotmc:spigot:$spigot")
+    compileOnly("io.papermc.paper:paper-api:${Spigot.version}")
+    compileOnly("org.spigotmc:spigot-api:${Spigot.version}")
+    compileOnly("org.spigotmc:spigot:${Spigot.version}")
     // Test
     testImplementation("junit:junit:4.13.1")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.18:1.24.1")
@@ -118,33 +81,56 @@ dependencies {
     testImplementation(kotlin("test"))
 }
 
-group = "com.astrainteractive"
-version = "1.2.0"
-description = "astralibs"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
-java.targetCompatibility = JavaVersion.VERSION_17
 
-java {
-    withJavadocJar()
-//    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-}
 
-publishing {
-    publications.create<MavenPublication>("maven") {
-        from(components["java"])
-    }
-}
 sourceSets {
-    main{
-        java{
+    main {
+        java {
             srcDir("java")
         }
     }
 }
-
 tasks {
+    dokkaHtml.configure {
+        outputDirectory.set(file("../documentation/html"))
+        dokkaSourceSets {
+            named("main") {
+                skipDeprecated.set(false)
+            }
+        }
+    }
+    dokkaGfm.configure {
+        outputDirectory.set(file("../documentation/gfm"))
+    }
+    dokkaJavadoc.configure {
+        outputDirectory.set(file("../documentation/javadoc"))
+    }
+    withType<DokkaTask>().configureEach {
+        pluginsMapConfiguration.set(
+            mutableMapOf("org.jetbrains.dokka.base.DokkaBase" to """{ "separateInheritedMembers": true}""")
+        )
+    }
+    withType<JavaCompile>() {
+        options.encoding = "UTF-8"
+    }
+    withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions.jvmTarget = "17"
+    }
+    withType<Jar> {
+        archiveClassifier.set("min")
+    }
     compileJava {
         options.encoding = "UTF-8"
+    }
+    test {
+        useJUnit()
+        testLogging {
+            events("passed", "skipped", "failed")
+            this.showStandardStreams = true
+        }
     }
     shadowJar {
         dependencies {
@@ -152,23 +138,10 @@ tasks {
         }
         isReproducibleFileOrder = true
         from(sourceSets.main.get().output)
-//        from(project.configurations.runtimeClasspath)
+        archiveClassifier.set(null as String?)
         exclude("kotlin")
         exclude("kotlin/")
         exclude("/kotlin")
         minimize()
     }
 }
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Astra-Interactive/AstraLibs")
-            credentials {
-                username = gprUser
-                password = gprPassword
-            }
-        }
-    }
-}
-
