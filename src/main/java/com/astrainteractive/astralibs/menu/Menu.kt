@@ -66,16 +66,12 @@ abstract class Menu : InventoryHolder {
             onInventoryClose(it,this)
         }
     }
-    private val innerClassHolder = CloseInventoryEventManager()
+    private val inventoryCloseManager = CloseInventoryEventManager()
 
     /**
      * Called when inventory was closed
      */
-    fun onInventoryClose(it: InventoryCloseEvent,manager: EventManager) {
-        if (it.player != playerMenuUtility.player) return
-        if (it.inventory.holder != inventory.holder) return
-        manager.onDisable()
-    }
+    abstract fun onInventoryClose(it: InventoryCloseEvent,manager: EventManager)
 
 
 }

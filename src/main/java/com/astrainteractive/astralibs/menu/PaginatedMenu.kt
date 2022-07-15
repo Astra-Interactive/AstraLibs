@@ -82,6 +82,7 @@ abstract class PaginatedMenu : Menu() {
     abstract val prevButtonIndex: Int
     abstract val backButtonIndex: Int
     abstract val nextButtonIndex: Int
+    
 
     /**
      * Managing buttons for pages
