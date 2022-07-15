@@ -1,11 +1,7 @@
 package com.astrainteractive.astralibs.async
 
 import com.astrainteractive.astralibs.AstraLibs
-import com.astrainteractive.astralibs.catching
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.astrainteractive.astralibs.utils.catching
 import org.bukkit.Bukkit
 
 /**

@@ -1,5 +1,6 @@
-package com.astrainteractive.astralibs
+package com.astrainteractive.astralibs.utils
 
+import com.astrainteractive.astralibs.AstraLibs
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.ConfigurationSection
@@ -13,11 +14,12 @@ import java.util.regex.Pattern
  * Catching errors
  * @return null if Exception happened or result of [block]
  */
-inline fun <T> catching(stackTrace: Boolean = false,block: () -> T?): T? {
+inline fun <T> catching(stackTrace: Boolean = false, onError: (Exception) -> Unit = {}, block: () -> T?): T? {
     return try {
         val result = block()
         result
     } catch (e: Exception) {
+        onError(e)
         if (stackTrace)
             e.printStackTrace()
         null
@@ -42,7 +44,7 @@ fun AstraLibs.registerCommand(
     permission: String? = null,
     callback: (CommandSender, args: Array<out String>) -> Unit
 ) =
-    AstraLibs.instance.getCommand(alias)?.setExecutor { sender, command, label, args ->
+    instance.getCommand(alias)?.setExecutor { sender, command, label, args ->
         if (permission != null && !sender.hasPermission(permission))
             return@setExecutor true
         callback(sender, args)
@@ -57,7 +59,7 @@ fun AstraLibs.registerTabCompleter(
     permission: String? = null,
     callback: (CommandSender, args: Array<out String>) -> List<String>
 ) =
-    AstraLibs.instance.getCommand(alias)?.setTabCompleter { commandSender, command, s, strings ->
+    instance.getCommand(alias)?.setTabCompleter { commandSender, command, s, strings ->
         return@setTabCompleter callback(commandSender, strings)
     }
 
@@ -150,7 +152,7 @@ fun convertHex(list: MutableList<String>?): List<String> {
  */
 @JvmName("convertHexFromNullableString")
 fun convertHex(line: String?): String? {
-    return convertHex(line?:return null)
+    return convertHex(line ?: return null)
 }
 
 /**

@@ -1,5 +1,6 @@
 package com.astrainteractive.astralibs
 
+import com.astrainteractive.astralibs.utils.valueOfOrNull
 import org.bukkit.Bukkit
 
 enum class ServerVersion {

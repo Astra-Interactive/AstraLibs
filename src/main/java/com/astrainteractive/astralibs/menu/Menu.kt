@@ -1,8 +1,12 @@
 package com.astrainteractive.astralibs.menu
 
 import com.astrainteractive.astralibs.async.AsyncHelper
+import com.astrainteractive.astralibs.events.DSLEvent
+import com.astrainteractive.astralibs.events.EventListener
+import com.astrainteractive.astralibs.events.EventManager
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 
@@ -50,7 +54,28 @@ abstract class Menu : InventoryHolder {
             playerMenuUtility.player.openInventory(inventory)
         }
     }
+
     override fun getInventory() = inventory
+
+    /**
+     * Inventory close manager
+     */
+    private inner class CloseInventoryEventManager : EventManager {
+        override val handlers: MutableList<EventListener> = mutableListOf()
+        private val menuCloseHandler = DSLEvent.event(InventoryCloseEvent::class.java, this) {
+            onInventoryClose(it,this)
+        }
+    }
+    private val innerClassHolder = CloseInventoryEventManager()
+
+    /**
+     * Called when inventory was closed
+     */
+    fun onInventoryClose(it: InventoryCloseEvent,manager: EventManager) {
+        if (it.player != playerMenuUtility.player) return
+        if (it.inventory.holder != inventory.holder) return
+        manager.onDisable()
+    }
 
 
 }

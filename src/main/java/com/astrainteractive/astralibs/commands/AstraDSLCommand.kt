@@ -1,8 +1,8 @@
 package com.astrainteractive.astralibs.commands
 
 import com.astrainteractive.astralibs.AstraLibs
-import com.astrainteractive.astralibs.registerCommand
-import com.astrainteractive.astralibs.registerTabCompleter
+import com.astrainteractive.astralibs.utils.registerCommand
+import com.astrainteractive.astralibs.utils.registerTabCompleter
 import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player

@@ -1,12 +1,11 @@
 package com.astrainteractive.astralibs.events
 
 import com.astrainteractive.astralibs.AstraLibs
-import com.astrainteractive.astralibs.catching
+import com.astrainteractive.astralibs.utils.catching
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
-import kotlin.random.Random
 
 object DSLEvent{
     inline fun <reified T : Event> event(
