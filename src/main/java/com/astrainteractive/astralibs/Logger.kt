@@ -1,5 +1,6 @@
 package com.astrainteractive.astralibs
 
+import com.astrainteractive.astralibs.utils.catching
 import org.bukkit.Bukkit
 import java.io.File
 import java.time.LocalDateTime
@@ -34,8 +35,9 @@ object Logger {
 
     private fun log(tag: String?, message: String, type: Type, consolePrint: Boolean) {
         val tag = tag ?: "Default"
+
         if (consolePrint)
-            Bukkit.getLogger().log(type.level, "[$tag] $message")
+            catching { Bukkit.getLogger().log(type.level, "[$tag] $message") }?: println("[$tag] $message")
         logInFile(tag, message, type)
     }
 
