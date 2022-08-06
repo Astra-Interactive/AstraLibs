@@ -47,11 +47,15 @@ class RetrofitProxyInvocationHandler(private val configuration: RestRequester.Co
     override fun invoke(proxy: Any, method: Method, args: Array<out Any>?): Any? {
         val request = getTransferAnnotation<Request>(method)
             ?: throw Exception("Classes which built with RestRequester should be annotated with Request annotation")
+        var path = request.path
+        annotationsToParam(annotationWithIndex<Path>(method.parameterAnnotations), args).forEach {
+            path = path.replace("{${it.second.field}}", it.first.toString())
+        }
 
         val query: String = buildQuery(method, args)
         val body = buildBody(method, args)
         return ProxyTask {
-            val url = URL(configuration.baseUrl + request.path + query)
+            val url = URL(configuration.baseUrl + path + query)
             val connection = url.openConnection() as HttpURLConnection
             connection.requestMethod = request.type
             configuration.headers().forEach(connection::setRequestProperty)

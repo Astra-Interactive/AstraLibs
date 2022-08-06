@@ -21,6 +21,13 @@ annotation class Request(val path: String, val type: String = "GET")
 annotation class Query(val field: String)
 
 /**
+ * May be you will need something like empireprojekt.ru/{path}
+ */
+@Target(AnnotationTarget.VALUE_PARAMETER)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Path(val field: String)
+
+/**
  * Default body request - need to pass any object - it will be converted to string with [RestRequester.Configuration.decoderFactory]
  */
 @Target(AnnotationTarget.VALUE_PARAMETER)

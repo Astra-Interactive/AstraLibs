@@ -16,7 +16,7 @@ class RestRequester(private val configuration: Configuration.() -> Unit) {
      * [decoderFactory] - will convert Object to String - used to create [Body]
      */
     data class Configuration(
-        val baseUrl: String = "",
+        var baseUrl: String = "",
         var headers: () -> Map<String, String> = { emptyMap() },
         var converterFactory: (String?, Class<*>) -> Any? = { _, _ -> },
         var decoderFactory: (Any?) -> String = { "" },
