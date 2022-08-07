@@ -49,13 +49,21 @@ abstract class DatabaseCore {
 
         val entries = info?.columns?.mapNotNull {
             if (it.primaryKey != null) null
+            else if (it.parameter.type == ByteArray::class.java) "${it.columnInfo.name}=?"
             else "${it.columnInfo.name}=${it.sqlFieldValue}"
         }?.joinToString(", ")
 
         val query =
             "UPDATE ${info?.entity?.tableName} SET $entries WHERE ${primaryKeyInfo.columnInfo.name}=${primaryKeyInfo.sqlFieldValue}"
         if (debugQuery) Logger.log(query, TAG)
-        return connection?.prepareStatement(query)?.execute()
+        return connection?.prepareStatement(query)?.apply {
+            info?.columns?.filter{it.parameter.type==ByteArray::class.java}?.forEachIndexed { i, entityColumnInfo ->
+                (entityColumnInfo.fieldValue as? ByteArray?)?.let {
+                    this?.setBytes(1,it)
+                }
+            }
+
+        }?.execute()
     }
 
     fun <T> delete(clazz: Class<out T>, instance: T, debugQuery: Boolean = false): Boolean? {
@@ -93,14 +101,22 @@ abstract class DatabaseCore {
         }?.joinToString(", ", "(", ")")
 
         val values = info?.columns?.filter { it.primaryKey==null }?.map {
-            it.sqlFieldValue
+            if (it.parameter.type == ByteArray::class.java) "?"
+            else it.sqlFieldValue
         }?.joinToString(", ", "(", ")")
 
         val query = "INSERT INTO ${info?.entity?.tableName} $keys VALUES $values"
         if (debugQuery) Logger.log(query, TAG)
 
         val prepared =
-            connection?.prepareStatement(query, Statement.RETURN_GENERATED_KEYS).apply { this?.executeUpdate() }
+            connection?.prepareStatement(query, Statement.RETURN_GENERATED_KEYS).apply {
+                info?.columns?.filter{it.parameter.type==ByteArray::class.java}?.forEachIndexed { i, entityColumnInfo ->
+                    (entityColumnInfo.fieldValue as? ByteArray?)?.let {
+                        this?.setBytes(1,it)
+                    }
+                }
+                this?.executeUpdate()
+            }
         return prepared?.generatedKeys?.getLong(1)
     }
 

@@ -2,6 +2,7 @@ package com.astrainteractive.astralibs.database
 
 import com.astrainteractive.astralibs.utils.ReflectionUtil
 import com.astrainteractive.astralibs.utils.catching
+import com.astrainteractive.astralibs.utils.then
 import java.lang.reflect.AccessibleObject
 import java.lang.reflect.Constructor
 import java.lang.reflect.Field
@@ -64,7 +65,7 @@ object AnnotationUtils {
             val primaryKey: PrimaryKey?,
             val fieldName: String,
             val parameter: Parameter,
-            private val fieldValue: Any?,
+            val fieldValue: Any?,
         ) {
             val sqlFieldValue: String?
                 get() = fieldValue?.let {
@@ -90,7 +91,7 @@ fun <T> AnnotationUtils.EntityInfo.Companion.create(
 ): AnnotationUtils.EntityInfo? {
     val entity = AnnotationUtils.getAnnotation<Entity>(clazz) ?: return null
 
-    val primaryConstructor = clazz.primaryConstructor?:return null
+    val primaryConstructor = clazz.primaryConstructor ?: return null
 
     /**
      * We have a class; When we call declaredFields it returns all field including companion object and it's childrens
@@ -132,7 +133,20 @@ inline val <reified T, V> KProperty1<T, V>.columnName: String?
 @Suppress("UNCHECKED_CAST")
 fun <T> fromResultSet(clazz: Class<out T>, info: AnnotationUtils.EntityInfo?, rs: ResultSet): T? {
     val constructor = info?.columns?.map {
-        rs.getObject(it.columnInfo.name)
+        val obj = catching {
+            when (it.parameter.type) {
+                Int::class.java -> rs.getInt(it.columnInfo.name)
+                String::class.java -> rs.getString(it.columnInfo.name)
+                Double::class.java -> rs.getDouble(it.columnInfo.name)
+                Float::class.java -> rs.getFloat(it.columnInfo.name)
+                ByteArray::class.java -> rs.getBytes(it.columnInfo.name)
+                Byte::class.java -> rs.getByte(it.columnInfo.name)
+                Long::class.java -> rs.getLong(it.columnInfo.name)
+                Boolean::class.java -> rs.getBoolean(it.columnInfo.name)
+                else -> rs.getObject(it.columnInfo.name)
+            }
+        }
+        obj
     } ?: return null
     return clazz.primaryConstructor?.newInstance(*constructor.toTypedArray()) as? T?
 }

@@ -1,6 +1,7 @@
 package com.astrainteractive.astralibs.utils
 
 import com.astrainteractive.astralibs.AstraLibs
+import com.astrainteractive.astralibs.Logger
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
@@ -27,6 +28,7 @@ inline fun <T> catching(stackTrace: Boolean = false, onError: (Exception) -> Uni
         onError(e)
         if (stackTrace)
             e.printStackTrace()
+        Logger.log(e.stackTraceToString(),"Catching",false)
         null
     }
 }
