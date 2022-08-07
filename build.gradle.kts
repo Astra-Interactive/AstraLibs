@@ -73,6 +73,7 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:${Spigot.version}")
     compileOnly("org.spigotmc:spigot-api:${Spigot.version}")
     compileOnly("org.spigotmc:spigot:${Spigot.version}")
+    compileOnly("com.github.MilkBowl:VaultAPI:${Spigot.vault}")
     // Test
     testImplementation("junit:junit:4.13.1")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.18:1.24.1")

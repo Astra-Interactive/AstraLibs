@@ -2,12 +2,17 @@ package com.astrainteractive.astralibs.utils
 
 import com.astrainteractive.astralibs.AstraLibs
 import net.md_5.bungee.api.ChatColor
+import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.entity.Player
+import org.bukkit.inventory.Inventory
+import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.ItemMeta
 import java.sql.ResultSet
 import java.util.regex.Pattern
+import kotlin.random.Random
 
 
 /**
@@ -35,14 +40,13 @@ inline fun <reified T : Enum<T>> valueOfOrNull(type: String): T? =
         java.lang.Enum.valueOf(T::class.java, type)
     }
 
-
 /**
  * Simple replacement for CommandManager
  */
 fun AstraLibs.registerCommand(
     alias: String,
     permission: String? = null,
-    callback: (CommandSender, args: Array<out String>) -> Unit
+    callback: (CommandSender, args: Array<out String>) -> Unit,
 ) =
     instance.getCommand(alias)?.setExecutor { sender, command, label, args ->
         if (permission != null && !sender.hasPermission(permission))
@@ -57,7 +61,7 @@ fun AstraLibs.registerCommand(
 fun AstraLibs.registerTabCompleter(
     alias: String,
     permission: String? = null,
-    callback: (CommandSender, args: Array<out String>) -> List<String>
+    callback: (CommandSender, args: Array<out String>) -> List<String>,
 ) =
     instance.getCommand(alias)?.setTabCompleter { commandSender, command, s, strings ->
         return@setTabCompleter callback(commandSender, strings)
@@ -202,8 +206,55 @@ public inline fun <R : Any> ResultSet.mapNotNull(rs: (ResultSet) -> R?): List<R>
  */
 public inline fun <R : Any, C : MutableCollection<in R>> ResultSet.mapNotNullTo(
     destination: C,
-    rs: (ResultSet) -> R?
+    rs: (ResultSet) -> R?,
 ): C {
     forEach { element -> rs(element)?.let { destination.add(it) } }
     return destination
 }
+
+inline fun <reified T : kotlin.Enum<T>> T.addIndex(offset: Int): T {
+    val values = T::class.java.enumConstants
+    var res = ordinal + offset
+    if (res <= -1) res = values.size - 1
+    val index = res % values.size
+    return values[index]
+}
+
+inline fun <reified T : kotlin.Enum<T>> T.next(): T {
+    return addIndex(1)
+}
+
+inline fun <reified T : kotlin.Enum<T>> T.prev(): T {
+    return addIndex(-1)
+}
+
+fun ItemStack.editMeta(metaBuilder: (ItemMeta) -> Unit) {
+    val meta = itemMeta ?: return
+    metaBuilder(meta)
+    this.itemMeta = meta
+}
+
+fun Inventory.close() {
+    this.viewers?.toList()?.forEach {
+        it?.closeInventory()
+    }
+}
+
+val OfflinePlayer.uuid: String
+    get() = uniqueId.toString()
+val randomColor: org.bukkit.ChatColor
+    get() = org.bukkit.ChatColor.values()[Random.nextInt(org.bukkit.ChatColor.values().size)]
+
+fun ItemStack.setDisplayName(name: String) {
+    val meta = itemMeta!!
+    meta.setDisplayName(name)
+    itemMeta = meta
+}
+
+val <T> List<T>.randomElementOrNull: T?
+    get() {
+        if (isEmpty()) return null
+        return this.getOrNull(Random.nextInt(size))
+    }
+
+infix fun <T> Boolean.then(param: T): T? = if (this) param else null
