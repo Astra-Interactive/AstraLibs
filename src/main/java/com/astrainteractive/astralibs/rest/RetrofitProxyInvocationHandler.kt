@@ -12,7 +12,7 @@ import java.net.URL
 class RetrofitProxyInvocationHandler(private val configuration: RestRequester.Configuration) :
     InvocationHandler {
 
-    private inline fun <reified T> getTransferAnnotation(method: Method): T? =
+    private inline fun <reified T> getAnnotation(method: Method): T? =
         method.annotations.firstNotNullOfOrNull { it as? T }
 
 
@@ -45,8 +45,8 @@ class RetrofitProxyInvocationHandler(private val configuration: RestRequester.Co
 
 
     override fun invoke(proxy: Any, method: Method, args: Array<out Any>?): Any? {
-        val request = getTransferAnnotation<Request>(method)
-            ?: throw Exception("Classes which built with RestRequester should be annotated with Request annotation")
+
+        val request = getAnnotation<Request>(method) ?: return InvocationHandler.invokeDefault(proxy,method,args)
         var path = request.path
         annotationsToParam(annotationWithIndex<Path>(method.parameterAnnotations), args).forEach {
             path = path.replace("{${it.second.field}}", it.first.toString())
