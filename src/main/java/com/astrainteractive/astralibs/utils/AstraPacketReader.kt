@@ -53,7 +53,7 @@ abstract class AstraPacketReader<T : Packet<*>> {
      * Need to disable so all channels will be cleared
      */
     fun onDisable() {
-        channels.keys.forEach { deInject(it) }
+        channels.keys.toList().forEach { deInject(it) }
         channels.clear()
     }
 
@@ -84,6 +84,7 @@ abstract class AstraPacketReader<T : Packet<*>> {
         }
     }
 
+    @Synchronized
     fun inject(player: Player) {
         val channel = player.provideChannel
         channels[player.uniqueId] = channel
@@ -91,6 +92,7 @@ abstract class AstraPacketReader<T : Packet<*>> {
         channel.pipeline().addAfter("decoder", "PacketInjector", decoder(player))
     }
 
+    @Synchronized
     fun deInject(uuid: UUID) {
         val channel = channels[uuid] ?: return
         catching { channel.pipeline().remove("PacketInjector") }

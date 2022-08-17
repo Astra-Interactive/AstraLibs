@@ -44,7 +44,7 @@ object ReflectionUtil {
         return io.toByteArray()
     }
 
-    fun <T> deserializeItem(byteArray: ByteArray, createdTime: Long): T {
+    fun <T> deserializeItem(byteArray: ByteArray): T {
         val _in = ByteArrayInputStream(byteArray)
         val _is = BukkitObjectInputStream(_in)
         return _is.readObject() as T

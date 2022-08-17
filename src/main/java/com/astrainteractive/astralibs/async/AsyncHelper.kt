@@ -5,7 +5,7 @@ import com.astrainteractive.astralibs.utils.catching
 import org.bukkit.Bukkit
 
 /**
- * If you don't want to extend your class, just use [AsyncHelper.runBackground]
+ * If you don't want to extend your class, just use [AsyncHelper.launch]
  */
 object AsyncHelper : AsyncTask {
     /**

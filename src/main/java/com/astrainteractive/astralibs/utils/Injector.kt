@@ -30,6 +30,7 @@ object Injector {
      * Will remember object
      */
     fun <T : Any> remember(obj: T) = _objects.add(obj)
+    fun module(block:()-> Unit) = block()
 
     /**
      * Will forget object
