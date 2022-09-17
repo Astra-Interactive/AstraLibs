@@ -8,18 +8,18 @@ object Injector {
     /**
      * This is a list of static objects
      */
-    private val _objects = mutableSetOf<Any>()
+    private val _objects = mutableSetOf<Any?>()
 
     /**
      * Need a public reference to use reified and inline
      */
-    val objects: Set<Any>
+    val objects: Set<Any?>
         get() = _objects
 
     /**
      * Will return value of type [T]
      */
-    inline fun <reified T : Any> inject(): T? = objects.firstOrNull { it is T } as? T?
+    inline fun <reified T> inject(): T = objects.firstOrNull { it is T } as T
 
     /**
      * Will return value of type [T] lazily
@@ -29,8 +29,7 @@ object Injector {
     /**
      * Will remember object
      */
-    fun <T : Any> remember(obj: T) = _objects.add(obj)
-    fun module(block:()-> Unit) = block()
+    fun <T> remember(obj: T) = _objects.add(obj)
 
     /**
      * Will forget object

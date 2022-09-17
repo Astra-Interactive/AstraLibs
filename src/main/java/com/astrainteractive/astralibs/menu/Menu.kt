@@ -49,9 +49,9 @@ abstract class Menu : InventoryHolder {
      */
     fun open() {
         inventory = Bukkit.createInventory(this, menuSize.size, menuName)
-        setMenuItems()
         AsyncHelper.callSyncMethod {
             playerMenuUtility.player.openInventory(inventory)
+            onCreated()
         }
     }
 
@@ -63,7 +63,8 @@ abstract class Menu : InventoryHolder {
     private inner class CloseInventoryEventManager : EventManager {
         override val handlers: MutableList<EventListener> = mutableListOf()
         private val menuCloseHandler = DSLEvent.event(InventoryCloseEvent::class.java, this) {
-            onInventoryClose(it,this)
+            onDestroy(it,this)
+            this.onDisable()
         }
     }
     private val inventoryCloseManager = CloseInventoryEventManager()
@@ -71,7 +72,9 @@ abstract class Menu : InventoryHolder {
     /**
      * Called when inventory was closed
      */
-    abstract fun onInventoryClose(it: InventoryCloseEvent,manager: EventManager)
-
+    abstract fun onDestroy(it: InventoryCloseEvent, manager: EventManager)
+    fun onCreated(){
+        setMenuItems()
+    }
 
 }
