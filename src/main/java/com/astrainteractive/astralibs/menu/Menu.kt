@@ -1,9 +1,12 @@
 package com.astrainteractive.astralibs.menu
 
 import com.astrainteractive.astralibs.async.AsyncHelper
+import com.astrainteractive.astralibs.async.BukkitMain
 import com.astrainteractive.astralibs.events.DSLEvent
 import com.astrainteractive.astralibs.events.EventListener
 import com.astrainteractive.astralibs.events.EventManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
@@ -49,7 +52,7 @@ abstract class Menu : InventoryHolder {
      */
     fun open() {
         inventory = Bukkit.createInventory(this, menuSize.size, menuName)
-        AsyncHelper.callSyncMethod {
+        AsyncHelper.launch(Dispatchers.BukkitMain) {
             playerMenuUtility.player.openInventory(inventory)
             onCreated()
         }
