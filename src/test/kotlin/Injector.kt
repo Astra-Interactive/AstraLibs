@@ -1,6 +1,5 @@
 import com.astrainteractive.astralibs.utils.Injector
-import io.kotest.matchers.ints.nonNegative
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals
 

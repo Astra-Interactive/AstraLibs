@@ -1,16 +1,17 @@
-package com.astrainteractive.astralibs.utils
+package com.astrainteractive.astralibs.utils.economy
 
 import com.astrainteractive.astralibs.Logger
 import net.milkbowl.vault.economy.Economy
 import net.milkbowl.vault.economy.EconomyResponse
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
+import java.util.UUID
 
-
-object VaultHook {
+object VaultEconomyProvider : IEconomyProvider {
     var econ: Economy? = null
         private set
     private const val TAG = "VaultHook"
+    fun offlinePlayer(uuid: UUID) = Bukkit.getOfflinePlayer(uuid)
 
     /**
      * @param  player player
@@ -59,4 +60,10 @@ object VaultHook {
     fun onDisable() {
         econ = null
     }
+
+    override fun getBalance(uuid: UUID): Double? = getBalance(offlinePlayer(uuid))
+
+    override fun takeMoney(uuid: UUID, amount: Double): Boolean = takeMoney(offlinePlayer(uuid), amount)
+
+    override fun addMoney(uuid: UUID, amount: Double): Boolean = addMoney(offlinePlayer(uuid), amount)
 }

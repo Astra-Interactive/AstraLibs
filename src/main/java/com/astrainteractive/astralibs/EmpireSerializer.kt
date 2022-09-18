@@ -1,5 +1,6 @@
 package com.astrainteractive.astralibs
 
+import com.astrainteractive.astralibs.file_manager.FileManager
 import com.charleskorn.kaml.DuplicateKeyException
 import com.charleskorn.kaml.EmptyYamlDocumentException
 import com.charleskorn.kaml.Yaml
@@ -9,7 +10,7 @@ import java.io.File
 
 object EmpireSerializer {
     const val TAG = "EmpireSerializer"
-    inline fun <reified T> toClass(file: FileManager): T? = toClass(file.getFile())
+    inline fun <reified T> toClass(file: FileManager): T? = toClass(file.configFile)
     inline fun <reified T> toClass(file: File): T? = try {
         val yaml = Yaml(
             Yaml.default.serializersModule,

@@ -21,7 +21,7 @@ object Spigot {
     const val luckPerms = "5.4"
 }
 group = "com.astrainteractive"
-version = "1.5.1"
+version = "1.7.0"
 description = "astralibs"
 
 plugins {
@@ -75,11 +75,8 @@ dependencies {
     compileOnly("org.spigotmc:spigot:${Spigot.version}")
     compileOnly("com.github.MilkBowl:VaultAPI:${Spigot.vault}")
     // Test
-    testImplementation("junit:junit:4.13.1")
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.18:1.24.1")
-    testImplementation("io.kotest:kotest-runner-junit5:latest.release")
-    testImplementation("io.kotest:kotest-assertions-core:latest.release")
     testImplementation(kotlin("test"))
+    testImplementation("org.testng:testng:7.1.0")
 }
 
 
@@ -114,9 +111,6 @@ tasks {
     withType<JavaCompile>() {
         options.encoding = "UTF-8"
     }
-    withType<Test>().configureEach {
-        useJUnitPlatform()
-    }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
     }
@@ -127,7 +121,7 @@ tasks {
         options.encoding = "UTF-8"
     }
     test {
-        useJUnit()
+        useJUnitPlatform()
         testLogging {
             events("passed", "skipped", "failed")
             this.showStandardStreams = true
