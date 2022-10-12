@@ -1,92 +1,27 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 import kotlin.collections.mutableMapOf
 
-object Kotlin {
-    const val version = "1.7.0"
-    const val coroutines = "1.6.3"
-    const val json = "1.3.3"
-    const val kaml = "0.46.0"
-}
-
-object Spigot {
-    const val version = "1.19-R0.1-SNAPSHOT"
-    const val placeholderAPI = "2.11.2"
-    const val protocolLib = "4.8.0"
-    const val worldGuard = "7.0.7"
-    const val vault = "1.7"
-    const val coreProtect = "21.2"
-    const val modelEngine = "R2.5.0"
-    const val essentials = "2.19.5-SNAPSHOT"
-    const val discordSRV = "1.25.0"
-    const val luckPerms = "5.4"
-}
-group = "com.astrainteractive"
-version = "1.7.1"
-description = "astralibs"
+group = Dependencies.group
+version = Dependencies.version
+description = "Core utilities for spigot development"
 
 plugins {
     java
-    `maven-publish`
     `java-library`
-    kotlin("jvm") version "1.7.0"
-    kotlin("plugin.serialization") version "1.7.0"
-    id("com.github.johnrengelman.shadow") version "7.1.0"
-    id("org.jetbrains.dokka") version "1.6.10"
+    kotlin("jvm") version Dependencies.Kotlin.version apply false
+    kotlin("plugin.serialization") version Dependencies.Kotlin.version apply false
+    id("com.github.johnrengelman.shadow") version Dependencies.Kotlin.shadow apply true
+    id("org.jetbrains.dokka") version Dependencies.Kotlin.dokka apply true
 }
 java {
     withJavadocJar()
     java.sourceCompatibility = JavaVersion.VERSION_1_8
     java.targetCompatibility = JavaVersion.VERSION_17
 }
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://papermc.io/repo/repository/maven-public/")
-    maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://nexus.scarsz.me/content/groups/public/")
-    maven("https://repo.dmulloy2.net/repository/public/")
-    maven("https://oss.sonatype.org/content/groups/public/")
-    maven("https://repo.essentialsx.net/snapshots/")
-    maven("https://repo.maven.apache.org/maven2/")
-    maven("https://maven.enginehub.org/repo/")
-    maven("https://repo1.maven.org/maven2/")
-    maven("https://maven.playpro.com")
-    maven("https://jitpack.io")
-}
-
 dependencies {
-    // Kotlin
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:${Kotlin.version}")
-    // Coroutines
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Kotlin.coroutines}")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${Kotlin.coroutines}")
-    // Serialization
-    compileOnly("org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:${Kotlin.json}")
-    compileOnly("com.charleskorn.kaml:kaml:${Kotlin.kaml}")
     // Documentation
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.20")
     compileOnly("org.jetbrains.dokka:dokka-gradle-plugin:1.6.20")
-    // Spigot dependencies
-    compileOnly("io.papermc.paper:paper-api:${Spigot.version}")
-    compileOnly("org.spigotmc:spigot-api:${Spigot.version}")
-    compileOnly("org.spigotmc:spigot:${Spigot.version}")
-    compileOnly("com.github.MilkBowl:VaultAPI:${Spigot.vault}")
-    // Test
-    testImplementation(kotlin("test"))
-    testImplementation("org.testng:testng:7.1.0")
-}
-
-
-
-sourceSets {
-    main {
-        java {
-            srcDir("java")
-        }
-    }
 }
 tasks {
     dokkaHtml.configure {
