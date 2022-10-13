@@ -5,12 +5,22 @@ This is a library with helpful functions for AstraInteractive plugins
 ## Add a ktx-core dependency to your project
 This will allow you to use non-spigot utilities
 ```groovy
-    implementation("com.astrainteractive.astralibs:ktx-core:<version>")
+implementation("com.astrainteractive.astralibs:ktx-core:<version>")
 ```
 ## Add a spigt-core dependency to your project
 This will allow you to use spigot utilities
 ```groovy
-    implementation("com.astrainteractive.astralibs:spigot-core:<version>")
+implementation("com.astrainteractive.astralibs:spigot-core:<version>")
+```
+## Also, add repository
+```groovy
+maven {
+    url = uri("https://maven.pkg.github.com/Astra-Interactive/AstraLibs")
+    credentials {
+        username = <username>
+        password = <password>
+    }
+}
 ```
 
 ## What can it do?
