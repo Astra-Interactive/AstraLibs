@@ -1,4 +1,4 @@
-import com.astrainteractive.astralibs.di.Injector
+import ru.astrainteractive.astralibs.di.Injector
 import org.junit.jupiter.api.Test
 import java.util.UUID
 import kotlin.test.assertEquals

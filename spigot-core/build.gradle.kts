@@ -50,15 +50,24 @@ tasks.shadowJar {
     minimize()
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            create<MavenPublication>("mavenJava") {
-                artifactId = "spigot-core"
-                groupId = Dependencies.group
-                version = Dependencies.version
-                from(components["kotlin"])
+
+publishing {
+    repositories {
+        maven {
+            url = uri("https://maven.pkg.github.com/Astra-Interactive/AstraLibs")
+            credentials {
+                val config = getConfig()
+                username = config.username
+                password = config.token
             }
+        }
+    }
+    publications {
+        register<MavenPublication>("gpr") {
+            artifactId = "spigot-core"
+            groupId = Dependencies.group
+            version = Dependencies.version
+            from(components["kotlin"])
         }
     }
 }

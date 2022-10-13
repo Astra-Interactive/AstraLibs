@@ -1,5 +1,5 @@
-import com.astrainteractive.astralibs.file_manager.FileManager
-import com.astrainteractive.astralibs.file_manager.IResourceProvider
+import ru.astrainteractive.astralibs.file_manager.FileManager
+import ru.astrainteractive.astralibs.file_manager.IResourceProvider
 import org.junit.jupiter.api.Test
 import java.io.File
 

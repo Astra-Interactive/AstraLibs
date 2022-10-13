@@ -1,12 +1,13 @@
-import org.gradle.api.Action
-import org.gradle.api.artifacts.repositories.MavenArtifactRepository
-import org.gradle.kotlin.dsl.PluginDependenciesSpecScope
-import org.gradle.kotlin.dsl.java
-import java.net.URI
+import org.gradle.api.Project
+import java.io.File
+import java.io.InputStream
+import java.util.*
+
 
 object Dependencies {
-    const val version = "1.8.0"
-    const val group = "com.astrainteractive.astralibs"
+    const val version = "1.9.0"
+    const val group = "ru.astrainteractive.astralibs"
+
     object Kotlin {
         const val version = "1.7.0"
         const val coroutines = "1.6.3"
@@ -17,6 +18,7 @@ object Dependencies {
         const val shadow = "7.1.0"
         const val dokka = "1.7.10"
     }
+
     object Spigot {
         const val version = "1.19-R0.1-SNAPSHOT"
         const val placeholderAPI = "2.11.2"
@@ -78,4 +80,41 @@ object Dependencies {
         const val coreprotect = "net.coreprotect:coreprotect:${Dependencies.Spigot.coreProtect}"
         const val modelengine = "com.ticxo.modelengine:api:${Dependencies.Spigot.modelEngine}"
     }
+
+}
+
+fun Project.getPluginProperties(path: String): Properties {
+    val properties: Properties = Properties()
+    val inputStream: InputStream = rootProject.file(path).inputStream()
+    properties.load(inputStream)
+    return properties
+}
+
+data class Config(
+    val username: String,
+    val password: String,
+    val token: String,
+    val signing: Signing,
+) {
+    class Signing(
+        val keyId: String,
+        val key:String,
+        val password: String,
+        val secretFile: File
+    )
+}
+
+fun Project.getConfig(): Config {
+    val properties = this.getPluginProperties("astra.properties")
+    return Config(
+        properties.getProperty("username") ?: "",
+        properties.getProperty("password") ?: "",
+        properties.getProperty("token") ?: "",
+        Config.Signing(
+            properties.getProperty("signing.keyId"),
+            properties.getProperty("signing.key"),
+            properties.getProperty("signing.password"),
+            File(properties.getProperty("signing.secretKeyRingFile"))
+        )
+    )
 }
