@@ -2,8 +2,18 @@
 This is a library with helpful functions for AstraInteractive plugins
 
 ### You can use AstraLibs as you want, but you are not allowed to use it in "pay to win projects"
+## Add a ktx-core dependency to your project
+This will allow you to use non-spigot utilities
+```groovy
+    implementation("com.astrainteractive.astralibs:ktx-core:<version>")
+```
+## Add a spigt-core dependency to your project
+This will allow you to use spigot utilities
+```groovy
+    implementation("com.astrainteractive.astralibs:spigot-core:<version>")
+```
 
-##What can it do?
+## What can it do?
 - Advanced utility functions
 - valueOfOrNull for enums
 - dsl catching function to safely run your functions
