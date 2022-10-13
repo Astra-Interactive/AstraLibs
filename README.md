@@ -18,7 +18,7 @@ maven {
     url = uri("https://maven.pkg.github.com/Astra-Interactive/AstraLibs")
     credentials {
         username = <username>
-        password = <password>
+        password = <token>
     }
 }
 ```
