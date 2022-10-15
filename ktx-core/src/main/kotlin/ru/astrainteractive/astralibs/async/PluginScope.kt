@@ -4,6 +4,7 @@ import kotlinx.coroutines.*
 
 /**
  * If you don't want to extend your class, just use [PluginScope.launch]
+ * Don't forget to call [PluginScope.cancel] when disabling your plugin
  */
-object PluginScope : ru.astrainteractive.astralibs.async.AsyncTask
+object PluginScope : AsyncTask
 

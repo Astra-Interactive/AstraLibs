@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
 
+@Deprecated("This was not good as I expected")
 object AstraDSLCommand {
     class AstraDSLCommandData(val commandSender: CommandSender, val args: Array<out String>)
 

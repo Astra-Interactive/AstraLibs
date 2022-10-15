@@ -4,6 +4,7 @@ package ru.astrainteractive.astralibs.di
 /**
  * Very simple DI for your plugin
  */
+@Deprecated("Use IReloadable and IModule instead")
 object Injector {
     /**
      * This is a list of static objects

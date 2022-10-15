@@ -5,7 +5,7 @@ import java.util.*
 
 
 object Dependencies {
-    const val version = "1.9.0"
+    const val version = "1.9.1"
     const val group = "ru.astrainteractive.astralibs"
 
     object Kotlin {

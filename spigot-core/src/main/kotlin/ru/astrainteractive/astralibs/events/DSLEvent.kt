@@ -7,6 +7,10 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 
+/**
+ * TODO get rid of reified
+ * With this object you will no longer need to create interfaces for your bukkit event listeners
+ */
 object DSLEvent{
     inline fun <reified T : Event> event(
         clazz: Class<T>,
@@ -34,7 +38,4 @@ object DSLEvent{
         }.onEnable(eventManager)
 
 
-}
-object GlobalEventManager : EventManager {
-    override val handlers: MutableList<EventListener> = mutableListOf()
 }

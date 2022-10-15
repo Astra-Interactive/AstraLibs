@@ -4,6 +4,7 @@ package ru.astrainteractive.astralibs.utils
 /**
  * Calculating cooldown for anything where [K] is key
  */
+@Deprecated("Need to create better one")
 class Cooldown<K>(val maxTime: Long = 60) {
     private val map = mutableMapOf<K, Long>()
     val constMap: Map<K, Long>

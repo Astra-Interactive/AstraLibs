@@ -188,16 +188,3 @@ fun ItemStack.setDisplayName(name: String) {
     meta.setDisplayName(name)
     itemMeta = meta
 }
-
-fun <T> serializeBukkitItem(
-    obj: T,
-    objectOutputStreamCreator: (ByteArrayOutputStream) -> ObjectOutputStream = { ObjectOutputStream(it) }
-): ByteArray = ReflectionUtil.serializeItem(obj) {
-    BukkitObjectOutputStream(it)
-}
-
-fun <T> deserializeBukkitItem(
-    byteArray: ByteArray,
-): T = ReflectionUtil.deserializeItem(byteArray) {
-    BukkitObjectInputStream(it)
-}

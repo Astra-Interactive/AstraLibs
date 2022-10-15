@@ -18,6 +18,9 @@ dependencies {
     compileOnly("org.jetbrains.kotlin:kotlin-serialization:${Dependencies.Kotlin.version}")
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:${Dependencies.Kotlin.json}")
     compileOnly("com.charleskorn.kaml:kaml:${Dependencies.Kotlin.kaml}")
+    // Test
+    testImplementation(kotlin("test"))
+    testImplementation("org.testng:testng:7.1.0")
 }
 
 tasks.getByName<Test>("test") {

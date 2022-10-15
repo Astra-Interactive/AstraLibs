@@ -35,23 +35,8 @@ object ReflectionUtil {
 
     }
 
-    fun <T> serializeItem(
-        obj: T,
-        objectOutputStreamCreator: (ByteArrayOutputStream) -> ObjectOutputStream = { ObjectOutputStream(it) }
-    ): ByteArray {
-        val io = ByteArrayOutputStream()
-        val os = objectOutputStreamCreator(io)
-        os.writeObject(obj)
-        os.flush()
-        return io.toByteArray()
-    }
 
-    fun <T> deserializeItem(
-        byteArray: ByteArray,
-        objectInputStreamCreator: (ByteArrayInputStream) -> ObjectInputStream = { ObjectInputStream(it) }
-    ): T {
-        val _in = ByteArrayInputStream(byteArray)
-        val _is = objectInputStreamCreator(_in)
-        return _is.readObject() as T
-    }
+
+
+
 }
