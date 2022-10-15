@@ -1,7 +1,6 @@
 package ru.astrainteractive.astralibs.menu
 
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.inventory.ItemStack
 
 
 abstract class PaginatedMenu : Menu() {
@@ -31,12 +30,12 @@ abstract class PaginatedMenu : Menu() {
     /**
      * Standart menu handler for close/back/next
      */
-    override fun handleMenu(e: InventoryClickEvent) {
-        if (e.slot == prevButtonIndex)
-            if (isFirstPage()) return
+    override fun onInventoryClicked(e: InventoryClickEvent) {
+        if (e.slot == prevPageButton.index)
+            if (isFirstPage) return
             else loadPage(-1)
-        else if (e.slot == nextButtonIndex)
-            if (isLastPage()) return
+        else if (e.slot == nextPageButton.index)
+            if (isLastPage) return
             else loadPage(1)
     }
 
@@ -50,20 +49,14 @@ abstract class PaginatedMenu : Menu() {
     /**
      * Check for first page
      */
-    fun isFirstPage(): Boolean {
-        if (page == 0)
-            return true
-        return false
-    }
+    val isFirstPage: Boolean
+        get() = page == 0
 
     /**
      * Check for last page
      */
-    fun isLastPage(): Boolean {
-        if (page >= maxPages)
-            return true
-        return false
-    }
+    val isLastPage: Boolean
+        get() = page >= maxPages
 
     /**
      * Function for handling pages
@@ -71,41 +64,26 @@ abstract class PaginatedMenu : Menu() {
     open fun loadPage(next: Int) {
         page += next
         inventory.clear()
-        setMenuItems()
     }
 
-    abstract val prevPageButton: ItemStack
-    abstract val backPageButton: ItemStack
-    abstract val nextPageButton: ItemStack
+    abstract val prevPageButton: IInventoryButton
+    abstract val backPageButton: IInventoryButton
+    abstract val nextPageButton: IInventoryButton
 
-
-    abstract val prevButtonIndex: Int
-    abstract val backButtonIndex: Int
-    abstract val nextButtonIndex: Int
-    
 
     /**
      * Managing buttons for pages
      *
      * next,prev,back
      */
-    fun addManageButtons() {
+    fun setManageButtons() {
         if (page >= 1)
-            inventory.setItem(
-                prevButtonIndex,
-                prevPageButton
-            )
+            prevPageButton.setInventoryButton()
 
-        inventory.setItem(
-            backButtonIndex,
-            backPageButton
-        )
+        backPageButton.setInventoryButton()
 
         if (page < maxPages)
-            inventory.setItem(
-                nextButtonIndex,
-                nextPageButton
-            )
+            nextPageButton.setInventoryButton()
 
     }
 }

@@ -7,4 +7,6 @@ import org.bukkit.entity.Player
  *
  * Can be extended to add stuff like opened page etc
  */
-open class AstraPlayerMenuUtility(open var player: Player)
+interface IPlayerHolder {
+    val player: Player
+}
