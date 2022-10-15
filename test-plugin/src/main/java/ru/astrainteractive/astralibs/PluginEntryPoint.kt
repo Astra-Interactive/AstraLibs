@@ -12,6 +12,8 @@ import ru.astrainteractive.astralibs.menu.AstraMenuSize
 import ru.astrainteractive.astralibs.menu.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.IPlayerHolder
 import ru.astrainteractive.astralibs.menu.Menu
+import ru.astrainteractive.astralibs.menu.multi_page.MultiPageMenu
+import ru.astrainteractive.astralibs.menu.multi_page.MultiPageViewModel
 import ru.astrainteractive.astralibs.menu.one_page.OnePageMenu
 import ru.astrainteractive.astralibs.menu.one_page.OnePageViewModel
 import ru.astrainteractive.astralibs.utils.registerCommand
@@ -22,11 +24,13 @@ class PluginEntryPoint : JavaPlugin() {
         AstraLibs.rememberPlugin(this)
         Logger.prefix = "AstraLibsShowcase"
         AstraLibs.registerCommand("gui") { sender, args ->
-            (sender as? Player)?.let {
-                PluginScope.launch(Dispatchers.IO) {
-                    OnePageMenu(it).open()
-                }
+            val player = (sender as? Player) ?: return@registerCommand
+            PluginScope.launch(Dispatchers.IO) {
+                if (args.isEmpty())
+                    OnePageMenu(player).open()
+                else MultiPageMenu(player).open()
             }
+
         }
     }
 

@@ -63,8 +63,10 @@ abstract class PaginatedMenu : Menu() {
      */
     open fun loadPage(next: Int) {
         page += next
-        inventory.clear()
+        onPageChanged()
     }
+
+    abstract fun onPageChanged()
 
     abstract val prevPageButton: IInventoryButton
     abstract val backPageButton: IInventoryButton
