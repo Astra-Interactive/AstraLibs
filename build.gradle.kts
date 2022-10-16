@@ -15,6 +15,7 @@ plugins {
 }
 java {
     withJavadocJar()
+    withSourcesJar()
     java.sourceCompatibility = JavaVersion.VERSION_1_8
     java.targetCompatibility = JavaVersion.VERSION_17
 }

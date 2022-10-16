@@ -21,6 +21,9 @@ dependencies {
     // Test
     testImplementation(kotlin("test"))
     testImplementation("org.testng:testng:7.1.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.Kotlin.coroutines}")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${Dependencies.Kotlin.coroutines}")
+    testImplementation("org.xerial:sqlite-jdbc:3.34.0")
 }
 
 tasks.getByName<Test>("test") {

@@ -8,7 +8,6 @@ import ru.astrainteractive.astralibs.events.DSLEvent
 import ru.astrainteractive.astralibs.events.EventListener
 import ru.astrainteractive.astralibs.events.EventManager
 import org.bukkit.Bukkit
-import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
@@ -35,7 +34,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         }
     }
 
-    object InventoryEventHandler : EventManager {
+    val inventoryEventHandler =object: EventManager {
         override val handlers: MutableList<EventListener> = mutableListOf()
     }
 
@@ -43,17 +42,17 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         inventory?.setItem(index, item)
     }
 
-    val onClickDetector = DSLEvent.event(InventoryClickEvent::class.java, InventoryEventHandler) { e ->
+    val onClickDetector = DSLEvent.event(InventoryClickEvent::class.java, inventoryEventHandler) { e ->
         val holder = e.clickedInventory?.holder ?: return@event
         if (e.clickedInventory?.holder != this) return@event
         onInventoryClicked(e)
     }
 
-    val closeInventoryEventDetector = DSLEvent.event(InventoryCloseEvent::class.java, InventoryEventHandler) {
+    val closeInventoryEventDetector = DSLEvent.event(InventoryCloseEvent::class.java, inventoryEventHandler) {
         if (it.inventory != inventory) return@event
         onInventoryClose(it)
-        InventoryEventHandler.onDisable()
-        inventory?.close()
+        inventoryEventHandler.onDisable()
+//        inventory?.close()
         lifecycleScope.cancel()
     }
 

@@ -11,6 +11,7 @@ import ru.astrainteractive.astralibs.menu.AstraMenuSize
 import ru.astrainteractive.astralibs.menu.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.IPlayerHolder
 import ru.astrainteractive.astralibs.menu.Menu
+import ru.astrainteractive.astralibs.menu.multi_page.MultiPageMenu
 
 class OnePageMenu(player: Player) : Menu(), IInventoryView {
     override val playerMenuUtility: IPlayerHolder = DefaultPlayerHolder(player)
@@ -28,8 +29,12 @@ class OnePageMenu(player: Player) : Menu(), IInventoryView {
         e.isCancelled = true
 //        if (e.slot == viewModel.item.value.index)
 //            viewModel.onItemClicked()
+//        if (e.slot == viewModel.item.value.index)
+//            presenter.onItemClicked()
         if (e.slot == viewModel.item.value.index)
-            presenter.onItemClicked()
+            lifecycleScope.launch(Dispatchers.IO) {
+                MultiPageMenu(playerMenuUtility.player).open()
+            }
     }
 
     override fun onInventoryClose(it: InventoryCloseEvent) {
