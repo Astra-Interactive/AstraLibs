@@ -52,7 +52,6 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         if (it.inventory != inventory) return@event
         onInventoryClose(it)
         inventoryEventHandler.onDisable()
-//        inventory?.close()
         lifecycleScope.cancel()
     }
 

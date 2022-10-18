@@ -1,12 +1,15 @@
 package ru.astrainteractive.astralibs.menu
 
+import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 
 interface IInventoryButton {
     val item: ItemStack
     val index: Int
-    fun set(inventory: Inventory) {
-        inventory.setItem(index, item)
-    }
+    fun onClick(e: InventoryClickEvent)
+}
+
+fun IInventoryButton.set(inventory: Inventory) {
+    inventory.setItem(index, item)
 }

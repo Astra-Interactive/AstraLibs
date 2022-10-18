@@ -25,25 +25,25 @@ dependencies {
     compileOnly("org.jetbrains.dokka:dokka-gradle-plugin:1.6.20")
 }
 tasks {
-//    dokkaHtml.configure {
-//        outputDirectory.set(file("../documentation/html"))
-//        dokkaSourceSets {
-//            named("main") {
-//                skipDeprecated.set(false)
-//            }
-//        }
-//    }
-//    dokkaGfm.configure {
-//        outputDirectory.set(file("../documentation/gfm"))
-//    }
-//    dokkaJavadoc.configure {
-//        outputDirectory.set(file("../documentation/javadoc"))
-//    }
-//    withType<DokkaTask>().configureEach {
-//        pluginsMapConfiguration.set(
-//            mutableMapOf("org.jetbrains.dokka.base.DokkaBase" to """{ "separateInheritedMembers": true}""")
-//        )
-//    }
+    dokkaHtml.configure {
+        outputDirectory.set(file("../documentation/html"))
+        dokkaSourceSets {
+            named("spigot-core") {
+                skipDeprecated.set(false)
+            }
+        }
+    }
+    dokkaGfm.configure {
+        outputDirectory.set(file("../documentation/gfm"))
+    }
+    dokkaJavadoc.configure {
+        outputDirectory.set(file("../documentation/javadoc"))
+    }
+    withType<DokkaTask>().configureEach {
+        pluginsMapConfiguration.set(
+            mutableMapOf("org.jetbrains.dokka.base.DokkaBase" to """{ "separateInheritedMembers": true}""")
+        )
+    }
     withType<JavaCompile>() {
         options.encoding = "UTF-8"
     }
