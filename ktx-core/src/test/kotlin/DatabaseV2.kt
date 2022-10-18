@@ -1,5 +1,6 @@
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.assertDoesNotThrow
+import ru.astrainteractive.astralibs.database.sqlString
 import ru.astrainteractive.astralibs.database_v2.*
 import java.util.UUID
 import kotlin.test.*
@@ -69,14 +70,15 @@ class DatabaseV2 {
     @Test
     fun `Select statement`() {
         runBlocking {
-            val users = UserTable.select<User>(databaseV2, "SELECT * FROM ${UserTable.tableName}") {
-                User()
+            val uuid = UUID.randomUUID().toString()
+            UserTable.insert(databaseV2) {
+                this[UserTable.name] = uuid
             }
-            users.forEach {
-                println(it)
-                println(it.name)
-                println(it.id)
-            }
+            val query = "SELECT * FROM ${UserTable.tableName} WHERE ${UserTable.name.name} = ${uuid.sqlString}"
+            println(query)
+            val users = UserTable.select(databaseV2, query, constructor = ::User)
+            assertEquals(users.size, 1)
+            assertEquals(users.first().name, uuid)
         }
     }
 }
