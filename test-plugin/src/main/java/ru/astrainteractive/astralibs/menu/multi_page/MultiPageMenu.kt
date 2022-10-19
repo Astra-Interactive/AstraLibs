@@ -14,9 +14,9 @@ class MultiPageMenu(player: Player) : PaginatedMenu() {
     override var page: Int = 0
     override val maxItemsAmount: Int
         get() = viewModel.items.value.size
-    override val prevPageButton: IInventoryButton = InventoryButton.fromString("Prev", 45)
-    override val backPageButton: IInventoryButton = InventoryButton.fromString("Back", 46)
-    override val nextPageButton: IInventoryButton = InventoryButton.fromString("Next", 47)
+    override val prevPageButton: IInventoryButton = InventoryButton.fromString("Prev", 45){}
+    override val backPageButton: IInventoryButton = InventoryButton.fromString("Back", 46){}
+    override val nextPageButton: IInventoryButton = InventoryButton.fromString("Next", 47){}
     override val playerMenuUtility: IPlayerHolder = DefaultPlayerHolder(player)
     override var menuTitle: String = "Title Page: $page"
         get() = "Title Page: $page"

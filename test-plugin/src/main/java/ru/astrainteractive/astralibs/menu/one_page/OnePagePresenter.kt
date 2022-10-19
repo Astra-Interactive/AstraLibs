@@ -8,8 +8,11 @@ import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.architecture.Presenter
 
 class OnePagePresenter(override val viewState: IInventoryView) : Presenter<IInventoryView>() {
-    private var item = InventoryButton(ItemStack(Material.GLOWSTONE))
-    fun onItemClicked() {
+    private var item = InventoryButton(ItemStack(Material.GLOWSTONE)) {
+        onItemClicked()
+    }
+
+    private fun onItemClicked() {
         val itemStack = item.item.clone().apply {
             editMeta {
                 it.setDisplayName("${ChatColor.values().random()}Hello Glowstone")

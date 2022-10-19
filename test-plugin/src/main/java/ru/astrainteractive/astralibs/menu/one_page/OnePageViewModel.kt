@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.architecture.ViewModel
 
 class OnePageViewModel : ViewModel() {
-    val item = MutableStateFlow<InventoryButton>(InventoryButton(ItemStack(Material.GLOWSTONE)))
+    val item = MutableStateFlow<InventoryButton>(InventoryButton(ItemStack(Material.GLOWSTONE)) { onItemClicked() })
     fun onItemClicked() {
         item.update {
             val itemStack = it.item.clone().apply {

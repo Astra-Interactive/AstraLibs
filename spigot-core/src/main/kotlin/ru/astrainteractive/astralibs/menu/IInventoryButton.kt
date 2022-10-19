@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack
 interface IInventoryButton {
     val item: ItemStack
     val index: Int
-    fun onClick(e: InventoryClickEvent)
+    val onClick: (e: InventoryClickEvent) -> Unit
 }
 
 fun IInventoryButton.set(inventory: Inventory) {
