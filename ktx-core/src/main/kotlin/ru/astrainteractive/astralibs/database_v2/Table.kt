@@ -20,8 +20,38 @@ abstract class Table<T>(val tableName: String) {
         }
     }
 
+    fun long(name: String): Column<Long> {
+        return Column<Long>(name, "INTEGER").also {
+            _columns.add(it)
+        }
+    }
+
     fun text(name: String): Column<String> {
         return Column<String>(name, "TEXT").also {
+            _columns.add(it)
+        }
+    }
+
+    fun bool(name: String): Column<Int> {
+        return Column<Int>(name, "BOOLEAN").also {
+            _columns.add(it)
+        }
+    }
+
+    fun float(name: String): Column<Float> {
+        return Column<Float>(name, "REAL").also {
+            _columns.add(it)
+        }
+    }
+
+    fun double(name: String): Column<Double> {
+        return Column<Double>(name, "REAL").also {
+            _columns.add(it)
+        }
+    }
+
+    fun byteArray(name: String): Column<ByteArray> {
+        return Column<ByteArray>(name, "VARBINARY").also {
             _columns.add(it)
         }
     }
@@ -75,13 +105,27 @@ abstract class Table<T>(val tableName: String) {
         stmnt.executeUpdate()
     }
 
-    fun <K : Entity<T>> delete(database: Database? = DatabaseHolder.value, op: SQLExpressionBuilder.() -> Expression<Boolean>) {
+    fun <K : Entity<T>> delete(
+        database: Database? = DatabaseHolder.value,
+        op: SQLExpressionBuilder.() -> Expression<Boolean>
+    ) {
         val op: Expression<Boolean> = SQLExpressionBuilder.op()
         val connection = assertConnected(database)
         val whenQuery = "WHERE ${SQLExpressionBuilder.resolveExpression(op)}"
         val query = "DELETE FROM $tableName $whenQuery"
         println("delete: $query")
         connection.prepareStatement(query).execute()
+    }
+
+    fun <K : Entity<T>> all(
+        database: Database? = DatabaseHolder.value,
+        constructor: () -> K,
+    ): List<K> {
+        val connection = assertConnected(database)
+        val query = "SELECT * FROM ${tableName}"
+        return connection.prepareStatement(query).executeQuery().mapNotNull {
+            wrap(it, constructor)
+        }
     }
 
     fun <K : Entity<T>> find(
@@ -103,6 +147,20 @@ abstract class Table<T>(val tableName: String) {
         }
     }
 
+    fun count(
+        database: Database? = DatabaseHolder.value,
+        op: SQLExpressionBuilder.() -> Expression<Boolean>
+    ): Int {
+        val op: Expression<Boolean> = SQLExpressionBuilder.op()
+        val connection = assertConnected(database)
+        var whenQuery = ""
+        whenQuery += SQLExpressionBuilder.resolveExpression(op)
+        var query = "SELECT COUNT(*) AS total FROM ${tableName}"
+        if (whenQuery.isNotEmpty())
+            query = "$query WHERE $whenQuery"
+        println(query)
+        return connection.prepareStatement(query).executeQuery().getInt("total")
+    }
 }
 
 internal fun <T> T.fixIfString(): T = if (this is String) "\"$this\"" as T else this
