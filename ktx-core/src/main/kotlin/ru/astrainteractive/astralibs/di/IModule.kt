@@ -12,3 +12,6 @@ abstract class IModule<T> {
     val value: T
         get() = lazyValue
 }
+fun <T> module(initializer: () -> T) = object : IModule<T>() {
+    override fun initializer(): T = initializer()
+}

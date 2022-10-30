@@ -14,3 +14,6 @@ abstract class IReloadable<T> {
     }
 
 }
+fun <T> reloadable(initializer: () -> T) = object : IReloadable<T>() {
+    override fun initializer(): T = initializer()
+}
