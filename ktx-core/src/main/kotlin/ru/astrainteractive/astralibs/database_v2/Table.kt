@@ -113,7 +113,6 @@ abstract class Table<T>(val tableName: String) {
         val connection = assertConnected(database)
         val whenQuery = "WHERE ${SQLExpressionBuilder.resolveExpression(op)}"
         val query = "DELETE FROM $tableName $whenQuery"
-        println("delete: $query")
         connection.prepareStatement(query).execute()
     }
 
@@ -141,7 +140,6 @@ abstract class Table<T>(val tableName: String) {
         var query = "SELECT * FROM ${tableName}"
         if (whenQuery.isNotEmpty())
             query = "$query WHERE $whenQuery"
-        println(query)
         return connection.prepareStatement(query).executeQuery().mapNotNull {
             wrap(it, constructor)
         }
@@ -158,7 +156,6 @@ abstract class Table<T>(val tableName: String) {
         var query = "SELECT COUNT(*) AS total FROM ${tableName}"
         if (whenQuery.isNotEmpty())
             query = "$query WHERE $whenQuery"
-        println(query)
         return connection.prepareStatement(query).executeQuery().getInt("total")
     }
 }

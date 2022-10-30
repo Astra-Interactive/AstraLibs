@@ -19,7 +19,6 @@ object DatabaseHolder {
     operator fun getValue(nothing: Nothing?, property: KProperty<*>): Database? = value
 
     suspend fun remember(database: Database) = withContext(writerDispatcher) {
-        println("Rememberig: $database")
         databaseList.add(database)
     }
 
