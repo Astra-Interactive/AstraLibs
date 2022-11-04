@@ -3,6 +3,7 @@ version = Dependencies.version
 
 plugins {
     `maven-publish`
+    id("signing")
     kotlin("jvm")
     kotlin("plugin.serialization")
     id("com.github.johnrengelman.shadow")
@@ -33,7 +34,10 @@ dependencies {
 
     implementation(project(":ktx-core"))
 }
-
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }

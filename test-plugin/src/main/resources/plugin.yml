@@ -14,3 +14,4 @@ commands:
   gui:
     description: Shows template gui
     usage: /<command>
+  egive:

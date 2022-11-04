@@ -7,10 +7,19 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
 
+
+
 @Deprecated("This was not good as I expected")
 object AstraDSLCommand {
     class AstraDSLCommandData(val commandSender: CommandSender, val args: Array<out String>)
 
+    fun command(alias: String, block: DSLCommandBuilder.() -> Unit) =
+        AstraLibs.registerCommand(alias) { sender, args ->
+            val astraDSLCommandData = AstraDSLCommandData(sender, args)
+            dslCommand(astraDSLCommandData) {
+                block(this)
+            }
+        }
     @DslMarker
     annotation class CommandDSL
 
@@ -47,13 +56,7 @@ object AstraDSLCommand {
 
     data class CommandArgument(val content: String, val type: String, val commandArgument: CommandArgument?)
 
-    fun command(alias: String, block: DSLCommandBuilder.() -> Unit) =
-        AstraLibs.registerCommand(alias) { sender, args ->
-            val astraDSLCommandData = AstraDSLCommandData(sender, args)
-            dslCommand(astraDSLCommandData) {
-                block(this)
-            }
-        }
+
     sealed class ArgumentStatus {
         /**
          * On argument empty
