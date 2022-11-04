@@ -1,6 +1,8 @@
 # AstraLibs
 This is a library with helpful functions for AstraInteractive plugins
 
+As an example - you can see how it beign used in [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate)
+
 ### You can use AstraLibs as you want, but you are not allowed to use it in "pay to win projects"
 ## Add a ktx-core dependency to your project
 This will allow you to use non-spigot utilities
