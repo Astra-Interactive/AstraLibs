@@ -5,7 +5,7 @@ import java.util.*
 
 
 object Dependencies {
-    const val version = "2.0.9"
+    const val version = "2.0.11"
     const val group = "ru.astrainteractive.astralibs"
 
     object Kotlin {
@@ -91,30 +91,16 @@ fun Project.getPluginProperties(path: String): Properties {
 }
 
 data class Config(
+    val token: String,
     val username: String,
     val password: String,
-    val token: String,
-    val signing: Signing,
-) {
-    class Signing(
-        val keyId: String,
-        val key:String,
-        val password: String,
-        val secretFile: File
-    )
-}
+)
 
 fun Project.getConfig(): Config {
     val properties = this.getPluginProperties("astra.properties")
     return Config(
+        properties.getProperty("token") ?: "",
         properties.getProperty("username") ?: "",
         properties.getProperty("password") ?: "",
-        properties.getProperty("token") ?: "",
-        Config.Signing(
-            properties.getProperty("signing.keyId"),
-            properties.getProperty("signing.key"),
-            properties.getProperty("signing.password"),
-            File(properties.getProperty("signing.secretKeyRingFile"))
-        )
     )
 }
