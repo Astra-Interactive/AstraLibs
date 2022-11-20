@@ -25,5 +25,6 @@ hs_err_pid*
 out/
 target/
 astra.properties
+local.properties
 .gradle/
 build/

@@ -2,11 +2,11 @@ group = Dependencies.group
 version = Dependencies.version
 
 plugins {
-    `maven-publish`
     kotlin("jvm")
     kotlin("plugin.serialization")
     id("com.github.johnrengelman.shadow")
     id("org.jetbrains.dokka")
+    id("convention.publication")
 }
 dependencies {
     // Kotlin
@@ -29,6 +29,7 @@ dependencies {
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
 }
+
 tasks.shadowJar {
     dependencies {
         exclude("kotlin")
@@ -41,23 +42,6 @@ tasks.shadowJar {
     exclude("/kotlin")
     minimize()
 }
-publishing {
-    repositories {
-        maven {
-            url = uri("https://maven.pkg.github.com/Astra-Interactive/AstraLibs")
-            credentials {
-                val config = getConfig()
-                username = config.username
-                password = config.token
-            }
-        }
-    }
-    publications {
-        register<MavenPublication>("gpr") {
-            artifactId = "ktx-core"
-            groupId = Dependencies.group
-            version = Dependencies.version
-            from(components["kotlin"])
-        }
-    }
+sourceSets.named("main") {
+    java.srcDir("src/main/kotlin")
 }
