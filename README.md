@@ -1,9 +1,13 @@
+[![version](https://img.shields.io/maven-central/v/ru.astrainteractive.astralibs/ktx-core?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)[![kotlin_version](https://img.shields.io/badge/kotlin-1.7.0-blueviolet?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
+[![spigot_version](https://img.shields.io/badge/spigot-%3E1.13-green?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
+
 # AstraLibs
 This is a library with helpful functions for AstraInteractive plugins
 
 As an example - you can see how it beign used in [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate)
 
 ### You can use AstraLibs as you want, but you are not allowed to use it in "pay to win projects"
+## [Wiki](https://github.com/Astra-Interactive/AstraLibs/wiki)
 ## Add a ktx-core dependency to your project
 This will allow you to use non-spigot utilities
 ```groovy
