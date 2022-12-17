@@ -6,12 +6,12 @@ import kotlin.reflect.KProperty
  * [IModule] could be used to create Singletons with only one initialization
  * If you want to use singleton which could be reloadable see [IReloadable]
  */
-abstract class IModule<T> {
+abstract class IModule<T>: IDependency<T> {
     protected abstract fun initializer(): T
     private val lazyValue by lazy {
         initializer()
     }
-    val value: T
+    override val value: T
         get() = lazyValue
 }
 fun <T> module(initializer: () -> T) = object : IModule<T>() {

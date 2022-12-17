@@ -6,10 +6,12 @@ import kotlin.reflect.KProperty
  * [IReloadable] can be used to create reloadable singletons with kotlin object
  * If you want to create non-reloadable singleton - see [IModule]
  */
-abstract class IReloadable<T> {
+abstract class IReloadable<T>: IDependency<T> {
     abstract fun initializer(): T
-    var value: T = initializer()
-        private set
+
+    final override var value: T by LazyMutable {
+        initializer()
+    }
 
     fun reload() {
         value = initializer()
