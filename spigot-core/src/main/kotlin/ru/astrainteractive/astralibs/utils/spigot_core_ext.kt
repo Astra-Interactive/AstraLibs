@@ -2,6 +2,7 @@ package ru.astrainteractive.astralibs.utils
 
 import ru.astrainteractive.astralibs.AstraLibs
 import net.md_5.bungee.api.ChatColor
+import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.ConfigurationSection
@@ -12,13 +13,25 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.util.io.BukkitObjectInputStream
 import org.bukkit.util.io.BukkitObjectOutputStream
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
+import ru.astrainteractive.astralibs.EmpireSerializer
+import ru.astrainteractive.astralibs.Logger
+import ru.astrainteractive.astralibs.file_manager.FileManager
+import java.io.*
 import java.util.regex.Pattern
 import kotlin.random.Random
 
+
+inline fun <reified T> EmpireSerializer.toClass(file: FileManager): T? = toClass(file.configFile)
+/**
+ * Setup bukkit logger
+ */
+fun Logger.setupWithSpigot(prefix: String) {
+    val logger = Bukkit.getLogger()
+    val path = "${AstraLibs.instance.dataFolder}${File.separator}logs"
+    Logger.logger = logger
+    Logger.logsFolder = path
+    Logger.prefix = prefix
+}
 
 /**
  * Simple replacement for CommandManager

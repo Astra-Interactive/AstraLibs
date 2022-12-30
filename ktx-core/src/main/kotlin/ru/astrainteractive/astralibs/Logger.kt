@@ -1,16 +1,25 @@
 package ru.astrainteractive.astralibs
 
 import ru.astrainteractive.astralibs.utils.catching
-import org.bukkit.Bukkit
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.logging.Level
+import java.util.logging.Logger
 
 /**
  * Logger file
  */
 object Logger {
+    /**
+     * Custom log path
+     */
+    var logsFolder = ".${File.separator}logs"
+
+    /**
+     * Custom logger implementation
+     */
+    var logger: Logger? = null
     var prefix = "[AstraLibs]"
         set(value) {
             field = "[$value]"
@@ -37,15 +46,14 @@ object Logger {
         val tag = tag ?: "Default"
 
         if (consolePrint)
-            catching { Bukkit.getLogger().log(type.level, "[$tag] $message") }?: println("[$tag] $message")
+            catching { logger?.log(type.level, "[$tag] $message") }?: println("[$tag] $message")
         logInFile(tag, message, type)
     }
 
     private fun logInFile(_tag: String?, message: String, type: Type) {
         val tag = "$_tag/$type"
-        File("${AstraLibs.instance.dataFolder}${File.separator}logs").apply { if (!exists()) mkdirs() }
-        val path =
-            "${AstraLibs.instance.dataFolder}${File.separator}logs${File.separator}$prefix ${getDate()}.log"
+        File(logsFolder).apply { if (!exists()) mkdirs() }
+        val path = "${logsFolder}${File.separator}$prefix ${getDate()}.log"
         val file = File(path)
         if (!file.exists())
             file.createNewFile()

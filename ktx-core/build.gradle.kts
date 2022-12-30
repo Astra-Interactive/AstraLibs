@@ -26,10 +26,10 @@ dependencies {
     testImplementation("org.xerial:sqlite-jdbc:3.34.0")
 }
 
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
-}
-
+//tasks.getByName<Test>("test") {
+//    useJUnitPlatform()
+//}
+    
 tasks.shadowJar {
     dependencies {
         exclude("kotlin")

@@ -34,7 +34,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         }
     }
 
-    val inventoryEventHandler =object: EventManager {
+    val inventoryEventHandler = object : EventManager {
         override val handlers: MutableList<EventListener> = mutableListOf()
     }
 
@@ -42,13 +42,11 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         inventory?.setItem(index, item)
     }
 
-    val onClickDetector = DSLEvent.event(InventoryClickEvent::class.java, inventoryEventHandler) { e ->
-        val holder = e.clickedInventory?.holder ?: return@event
-        if (e.clickedInventory?.holder != this) return@event
+    val onClickDetector = DSLEvent.event<InventoryClickEvent>(inventoryEventHandler) { e ->
         onInventoryClicked(e)
     }
 
-    val closeInventoryEventDetector = DSLEvent.event(InventoryCloseEvent::class.java, inventoryEventHandler) {
+    val closeInventoryEventDetector = DSLEvent.event<InventoryCloseEvent>(inventoryEventHandler) {
         if (it.inventory != inventory) return@event
         onInventoryClose(it)
         inventoryEventHandler.onDisable()

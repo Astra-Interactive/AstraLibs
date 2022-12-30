@@ -1,5 +1,6 @@
 package ru.astrainteractive.astralibs
 
+import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -22,4 +23,8 @@ object AstraLibs {
     fun rememberPlugin(plugin: JavaPlugin) {
         AstraLibs.plugin = plugin
     }
+}
+
+fun ass(){
+    Bukkit.getLogger()
 }

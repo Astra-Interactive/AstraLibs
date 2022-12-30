@@ -7,7 +7,7 @@ import kotlinx.coroutines.SupervisorJob
 abstract class AsyncComponent {
     private val closeableCoroutineScope = CloseableCoroutineScope(SupervisorJob() + Dispatchers.IO)
 
-    protected val scope: CoroutineScope
+    val scope: CoroutineScope
         get() = closeableCoroutineScope
 
     fun clear() {

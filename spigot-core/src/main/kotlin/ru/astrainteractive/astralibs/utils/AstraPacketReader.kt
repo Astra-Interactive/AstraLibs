@@ -35,16 +35,16 @@ abstract class AstraPacketReader<T : Packet<*>> {
     fun onEnable() {
         onDisable()
         Bukkit.getOnlinePlayers().forEach { inject(it) }
-        val joinEvent = DSLEvent.event(PlayerJoinEvent::class.java, eventManager) {
+        val joinEvent = DSLEvent.event<PlayerJoinEvent>(eventManager) {
             inject(it.player)
         }
-        val respawnEvent = DSLEvent.event(PlayerRespawnEvent::class.java, eventManager) {
+        val respawnEvent = DSLEvent.event<PlayerRespawnEvent>(eventManager) {
             inject(it.player)
         }
-        val quitEvent = DSLEvent.event(PlayerQuitEvent::class.java, eventManager) {
+        val quitEvent = DSLEvent.event<PlayerQuitEvent>(eventManager) {
             deInject(it.player.uniqueId)
         }
-        val deathEvent = DSLEvent.event(PlayerDeathEvent::class.java, eventManager) {
+        val deathEvent = DSLEvent.event<PlayerDeathEvent>(eventManager) {
             deInject(it.player.uniqueId)
         }
     }
