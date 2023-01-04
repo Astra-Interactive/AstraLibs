@@ -45,11 +45,17 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     }
 
     val onClickDetector = DSLEvent.event<InventoryClickEvent>(inventoryEventHandler) {
-        onInventoryClicked(it)
+        val topInventory = it.view.topInventory
+        if (topInventory == inventory)
+            onInventoryClicked(it)
     }
 
     val closeInventoryEventDetector = DSLEvent.event<InventoryCloseEvent>(inventoryEventHandler) {
-        onInventoryClose(it)
+        val topInventory = it.view.topInventory
+        if (topInventory == inventory) {
+            clear()
+            onInventoryClose(it)
+        }
     }
 
     abstract val playerMenuUtility: IPlayerHolder
@@ -77,11 +83,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     /**
      * Called when inventory was closed
      */
-    fun onInventoryClose(it: InventoryCloseEvent) {
-        val topInventory = it.view.topInventory
-        if (topInventory == inventory || topInventory.holder == this)
-            clear()
-    }
+    abstract fun onInventoryClose(it: InventoryCloseEvent)
 
     /**
      * Open inventory method for Menu class
