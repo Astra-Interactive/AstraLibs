@@ -42,3 +42,4 @@ rootProject.name = "astralibs"
 include("ktx-core")
 include("spigot-core")
 include("test-plugin")
+include("orm")
