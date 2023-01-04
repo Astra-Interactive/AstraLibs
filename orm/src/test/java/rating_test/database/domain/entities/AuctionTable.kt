@@ -1,6 +1,8 @@
 package rating_test.database.domain.entities
 
+import rating_test.database.entities.User
 import ru.astrainteractive.astralibs.orm.database.Column
+import ru.astrainteractive.astralibs.orm.database.Constructable
 import ru.astrainteractive.astralibs.orm.database.Entity
 import ru.astrainteractive.astralibs.orm.database.Table
 
@@ -24,4 +26,5 @@ class Auction : Entity<Long>(AuctionTable) {
     val item by AuctionTable.item
     val price by AuctionTable.price
     var expired by AuctionTable.expired
+    companion object: Constructable<Auction>(::Auction)
 }

@@ -17,7 +17,7 @@ object AuctionMapper : IMapper<Auction, AuctionDTO> {
     )
 
     override fun fromDTO(it: AuctionDTO): Auction {
-        return AuctionTable.find(constructor = ::Auction) {
+        return AuctionTable.find(constructor = Auction) {
             AuctionTable.id.eq(it.id)
         }.first()
     }

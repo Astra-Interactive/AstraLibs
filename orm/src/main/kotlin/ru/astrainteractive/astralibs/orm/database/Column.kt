@@ -26,12 +26,12 @@ sealed class Column<T>(val name: String, val type: String) {
     fun primaryKey(): Column<T> = apply {
         primaryKey = true
     }
-    class IntColumn(name: String) : Column<Int>(name, "INTEGER")
-    class LongColumn(name: String) : Column<Long>(name, "INTEGER")
-    class StringColumn(name: String) : Column<String>(name, "TEXT")
-    class BoolColumn(name: String) : Column<Int>(name, "BOOLEAN")
-    class DoubleColumn(name: String) : Column<Double>(name, "REAL")
-    class FloatColumn(name: String) : Column<Float>(name, "REAL")
-    class ByteArrayColumn(name: String) : Column<ByteArray>(name, "VARBINARY")
+    internal class IntColumn(name: String) : Column<Int>(name, "INTEGER")
+    internal class LongColumn(name: String) : Column<Long>(name, "INTEGER")
+    internal class StringColumn(name: String) : Column<String>(name, "TEXT")
+    internal class BoolColumn(name: String) : Column<Int>(name, "BOOLEAN")
+    internal class DoubleColumn(name: String) : Column<Double>(name, "REAL")
+    internal class FloatColumn(name: String) : Column<Float>(name, "REAL")
+    internal class ByteArrayColumn(name: String) : Column<ByteArray>(name, "VARBINARY")
 }
 

@@ -6,6 +6,7 @@ import kotlin.test.BeforeTest
 import ru.astrainteractive.astralibs.orm.expression.SQLExpressionBuilder.eq
 import ru.astrainteractive.astralibs.orm.*
 import ru.astrainteractive.astralibs.orm.database.Column
+import ru.astrainteractive.astralibs.orm.database.Constructable
 import ru.astrainteractive.astralibs.orm.database.Entity
 import ru.astrainteractive.astralibs.orm.database.Table
 import ru.astrainteractive.astralibs.orm.query.CreateQuery
@@ -13,6 +14,7 @@ import ru.astrainteractive.astralibs.orm.query.InsertQuery
 import ru.astrainteractive.astralibs.orm.statement.DBStatement
 import java.util.UUID
 import kotlin.test.*
+
 
 
 object UserTable : Table<Int>("user_table") {
@@ -23,6 +25,8 @@ object UserTable : Table<Int>("user_table") {
 class User : Entity<Int>(UserTable) {
     val id by UserTable.id
     var name by UserTable.name
+
+    companion object : Constructable<User>(::User)
 }
 
 class DatabaseV2 {
@@ -33,7 +37,7 @@ class DatabaseV2 {
             val id = UserTable.insert() {
                 this[UserTable.name] = uuid
             }
-            return@runBlocking UserTable.find(constructor = ::User) {
+            return@runBlocking UserTable.find(constructor = User) {
                 UserTable.id.eq(id)
             }.first()
         }
@@ -106,12 +110,12 @@ class DatabaseV2 {
     fun `Select statement`() {
         runBlocking {
             val user = randomUser
-            val selectedById = UserTable.find(constructor = ::User) {
+            val selectedById = UserTable.find(constructor = User) {
                 UserTable.id.eq(user.id)
             }.firstOrNull()
             assertEquals(user.name, selectedById?.name)
             // Select by ID
-            val byID = UserTable.find(constructor = ::User) {
+            val byID = UserTable.find(constructor = User) {
                 UserTable.id.eq(user.id)
             }.firstOrNull()
             assertEquals(byID?.name, selectedById?.name)
@@ -124,7 +128,7 @@ class DatabaseV2 {
             val newUUID = UUID.randomUUID().toString()
             val user = randomUser.apply { name = newUUID }
             UserTable.update(entity = user)
-            val updated = UserTable.find(constructor = ::User) {
+            val updated = UserTable.find(constructor = User) {
                 UserTable.id.eq(user.id)
             }.first()
             assertEquals(updated.name, newUUID)
@@ -140,7 +144,7 @@ class DatabaseV2 {
             UserTable.delete<User> {
                 UserTable.id.eq(user.id)
             }
-            var selected = UserTable.find(constructor = ::User) {
+            var selected = UserTable.find(constructor = User) {
                 UserTable.id.eq(user.id)
             }.firstOrNull()
             assert(selected == null)
@@ -149,7 +153,7 @@ class DatabaseV2 {
             UserTable.delete<User> {
                 UserTable.name.eq(user.name)
             }
-            selected = UserTable.find(constructor = ::User) {
+            selected = UserTable.find(constructor = User) {
                 UserTable.name.eq(user.name)
             }.firstOrNull()
             assert(selected == null)
@@ -158,7 +162,7 @@ class DatabaseV2 {
             UserTable.delete<User> {
                 UserTable.name.eq(user.name).and(UserTable.id.eq(user.id))
             }
-            selected = UserTable.find(constructor = ::User) {
+            selected = UserTable.find(constructor = User) {
                 UserTable.name.eq(user.name).and(UserTable.id.eq(user.id))
             }.firstOrNull()
             assert(selected == null)
@@ -184,7 +188,7 @@ class DatabaseV2 {
                 this[UserTable.name] = uuid
             }
 
-            val user: User? = UserTable.find(constructor = ::User) {
+            val user: User? = UserTable.find(constructor = User) {
                 UserTable.id.eq(id)
                     .and(UserTable.name.eq("$uuid"))
             }.firstOrNull()

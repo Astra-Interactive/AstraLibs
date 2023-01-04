@@ -62,8 +62,8 @@ abstract class Table<T>(val tableName: String) {
         return st.generatedKeys.getInt(1)
     }
 
-    fun <K : Entity<T>> wrap(it: ResultSet, constructor: () -> K): K {
-        val entity = constructor()
+    fun <K : Entity<T>> wrap(it: ResultSet, constructor: Constructable<K>): K {
+        val entity = constructor.construct()
         val table = entity.table
         table._columns.forEach { column ->
             val obj = it.getObject(column.name)
@@ -98,7 +98,7 @@ abstract class Table<T>(val tableName: String) {
 
     fun <K : Entity<T>> all(
         database: Database? = DatabaseHolder.value,
-        constructor: () -> K,
+        constructor: Constructable<K>,
     ): List<K> {
         val connection = assertConnected(database)
         val query = SelectQuery(this).generate()
@@ -109,7 +109,7 @@ abstract class Table<T>(val tableName: String) {
 
     fun <K : Entity<T>> find(
         database: Database? = DatabaseHolder.value,
-        constructor: () -> K,
+        constructor: Constructable<K>,
         op: SQLExpressionBuilder.() -> Expression<Boolean>
     ): List<K> {
         val query = SelectQuery(this, op).generate()

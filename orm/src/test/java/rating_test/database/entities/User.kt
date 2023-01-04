@@ -1,6 +1,7 @@
 package rating_test.database.entities
 
 import ru.astrainteractive.astralibs.orm.database.Column
+import ru.astrainteractive.astralibs.orm.database.Constructable
 import ru.astrainteractive.astralibs.orm.database.Entity
 import ru.astrainteractive.astralibs.orm.database.Table
 
@@ -14,4 +15,5 @@ class User : Entity<Int>(UserTable) {
     val id by UserTable.id
     var uuid by UserTable.uuid
     val lastUpdated by UserTable.lastUpdated
+    companion object: Constructable<User>(::User)
 }
