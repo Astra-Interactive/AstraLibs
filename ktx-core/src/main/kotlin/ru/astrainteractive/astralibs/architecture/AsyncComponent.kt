@@ -10,7 +10,7 @@ abstract class AsyncComponent {
     val scope: CoroutineScope
         get() = closeableCoroutineScope
 
-    fun clear() {
+    open fun clear() {
         closeableCoroutineScope.close()
     }
 }

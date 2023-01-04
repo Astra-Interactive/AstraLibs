@@ -15,16 +15,16 @@ object DSLEvent {
         eventManager: EventManager = GlobalEventManager,
         eventPriority: EventPriority = EventPriority.NORMAL,
         plugin: JavaPlugin = AstraLibs.instance,
-        noinline block: (T) -> Unit
-    ) = event(T::class.java, eventManager, eventPriority, plugin){
+        crossinline block: (T) -> Unit
+    ) = event(T::class.java, eventManager, eventPriority, plugin) {
         (it as? T)?.let(block)
     }
 
     fun <T : Event> event(
         clazz: Class<T>,
-        eventManager: EventManager = GlobalEventManager,
-        eventPriority: EventPriority = EventPriority.NORMAL,
-        plugin: JavaPlugin = AstraLibs.instance,
+        eventManager: EventManager,
+        eventPriority: EventPriority,
+        plugin: JavaPlugin,
         block: (Event) -> Unit
     ) = object : EventListener {
         override fun onEnable(manager: EventManager): EventListener {
@@ -36,10 +36,6 @@ object DSLEvent {
                 }, plugin
             )
             return this
-        }
-
-        override fun onDisable() {
-            HandlerList.unregisterAll(this)
         }
 
     }.onEnable(eventManager)

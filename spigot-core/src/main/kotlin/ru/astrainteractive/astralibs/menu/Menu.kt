@@ -8,8 +8,10 @@ import ru.astrainteractive.astralibs.events.DSLEvent
 import ru.astrainteractive.astralibs.events.EventListener
 import ru.astrainteractive.astralibs.events.EventManager
 import org.bukkit.Bukkit
+import org.bukkit.event.HandlerList
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import ru.astrainteractive.astralibs.architecture.AsyncComponent
@@ -42,15 +44,12 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         inventory?.setItem(index, item)
     }
 
-    val onClickDetector = DSLEvent.event<InventoryClickEvent>(inventoryEventHandler) { e ->
-        onInventoryClicked(e)
+    val onClickDetector = DSLEvent.event<InventoryClickEvent>(inventoryEventHandler) {
+        onInventoryClicked(it)
     }
 
     val closeInventoryEventDetector = DSLEvent.event<InventoryCloseEvent>(inventoryEventHandler) {
-        if (it.inventory != inventory) return@event
         onInventoryClose(it)
-        inventoryEventHandler.onDisable()
-        lifecycleScope.cancel()
     }
 
     abstract val playerMenuUtility: IPlayerHolder
@@ -76,6 +75,15 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     abstract fun onInventoryClicked(e: InventoryClickEvent)
 
     /**
+     * Called when inventory was closed
+     */
+    fun onInventoryClose(it: InventoryCloseEvent) {
+        val topInventory = it.view.topInventory
+        if (topInventory == inventory || topInventory.holder == this)
+            clear()
+    }
+
+    /**
      * Open inventory method for Menu class
      */
     suspend fun open() {
@@ -86,9 +94,21 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         }
     }
 
-    /**
-     * Called when inventory was closed
-     */
-    abstract fun onInventoryClose(it: InventoryCloseEvent)
+    override fun clear() {
+        super.clear()
+        // Stop handler
+        inventoryEventHandler.onDisable()
+        // Stop lifecycle
+        lifecycleScope.cancel()
+        // Stop click event listener
+        onClickDetector.also(EventListener::onDisable)
+        onClickDetector.also(HandlerList::unregisterAll)
+        onClickDetector.also(InventoryCloseEvent.getHandlerList()::unregister)
+        // Stop close inventory listener
+        closeInventoryEventDetector.also(EventListener::onDisable)
+        closeInventoryEventDetector.also(HandlerList::unregisterAll)
+        closeInventoryEventDetector.also(InventoryCloseEvent.getHandlerList()::unregister)
+    }
+
     abstract fun onCreated()
 }

@@ -177,27 +177,8 @@ fun convertHex(l: String): String {
 val Player.uuid: String
     get() = this.uniqueId.toString()
 
-
-fun ItemStack.editMeta(metaBuilder: (ItemMeta) -> Unit) {
-    val meta = itemMeta ?: return
-    metaBuilder(meta)
-    this.itemMeta = meta
-}
-
-fun Inventory.close() {
-    this.viewers?.toList()?.forEach {
-        it?.closeInventory()
-    }
-}
-
 val OfflinePlayer.uuid: String
     get() = uniqueId.toString()
 
 val randomColor: org.bukkit.ChatColor
     get() = org.bukkit.ChatColor.values()[Random.nextInt(org.bukkit.ChatColor.values().size)]
-
-fun ItemStack.setDisplayName(name: String) {
-    val meta = itemMeta!!
-    meta.setDisplayName(name)
-    itemMeta = meta
-}

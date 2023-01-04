@@ -1,4 +1,4 @@
-package ru.astrainteractive.astrashop.utils
+package ru.astrainteractive.astralibs.utils
 
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player

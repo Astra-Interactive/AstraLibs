@@ -10,6 +10,3 @@ interface IInventoryButton {
     val onClick: (e: InventoryClickEvent) -> Unit
 }
 
-fun IInventoryButton.set(inventory: Inventory) {
-    inventory.setItem(index, item)
-}

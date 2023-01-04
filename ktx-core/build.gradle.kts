@@ -19,16 +19,19 @@ dependencies {
     compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:${Dependencies.Kotlin.json}")
     compileOnly("com.charleskorn.kaml:kaml:${Dependencies.Kotlin.kaml}")
     // Test
-    testImplementation(kotlin("test"))
+//    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit"))
     testImplementation("org.testng:testng:7.1.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.Kotlin.coroutines}")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${Dependencies.Kotlin.coroutines}")
     testImplementation("org.xerial:sqlite-jdbc:3.34.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
 }
 
-//tasks.getByName<Test>("test") {
-//    useJUnitPlatform()
-//}
+tasks.getByName<Test>("test") {
+    useJUnitPlatform()
+}
     
 tasks.shadowJar {
     dependencies {

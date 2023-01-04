@@ -1,5 +1,7 @@
 package ru.astrainteractive.astralibs.events
 
+import org.bukkit.event.HandlerList
+
 /**
  * Event manager for event handling.
  *

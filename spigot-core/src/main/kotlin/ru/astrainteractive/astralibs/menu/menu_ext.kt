@@ -3,6 +3,7 @@ package ru.astrainteractive.astralibs.menu
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 
@@ -22,4 +23,7 @@ fun IInventoryButton.button(
     override val index: Int = index
     override val onClick: (e: InventoryClickEvent) -> Unit = onClick
 
+}
+fun IInventoryButton.set(inventory: Inventory) {
+    inventory.setItem(index, item)
 }

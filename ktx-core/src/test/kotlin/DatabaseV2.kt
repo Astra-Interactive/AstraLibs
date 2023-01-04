@@ -1,5 +1,8 @@
 import kotlinx.coroutines.runBlocking
+import kotlin.test.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 import ru.astrainteractive.astralibs.database.sqlString
 import ru.astrainteractive.astralibs.database_v2.*
 import ru.astrainteractive.astralibs.database_v2.expression.Expression

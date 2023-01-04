@@ -24,7 +24,3 @@ object AstraLibs {
         AstraLibs.plugin = plugin
     }
 }
-
-fun ass(){
-    Bukkit.getLogger()
-}

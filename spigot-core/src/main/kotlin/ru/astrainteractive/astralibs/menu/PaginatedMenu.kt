@@ -30,11 +30,11 @@ abstract class PaginatedMenu : Menu() {
     /**
      * Standart menu handler for close/back/next
      */
-    override fun onInventoryClicked(e: InventoryClickEvent) {
-        if (e.slot == prevPageButton.index)
+    fun handleChangePageClick(slot: Int) {
+        if (slot == prevPageButton.index)
             if (isFirstPage) return
             else loadPage(-1)
-        else if (e.slot == nextPageButton.index)
+        else if (slot == nextPageButton.index)
             if (isLastPage) return
             else loadPage(1)
     }

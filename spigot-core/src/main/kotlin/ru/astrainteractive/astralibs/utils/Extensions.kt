@@ -12,11 +12,6 @@ import org.bukkit.persistence.PersistentDataType
 import java.util.*
 
 object AstraLibsExtensions {
-    fun ItemStack.setDisplayName(name: String) {
-        val meta = itemMeta
-        meta?.setDisplayName(name.HEX())
-        itemMeta = meta
-    }
     fun ConfigurationSection.getDoubleOrNull(path:String): Double? =
         if (!this.contains(path))
             null

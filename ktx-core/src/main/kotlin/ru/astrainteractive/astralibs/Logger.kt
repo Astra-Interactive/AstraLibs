@@ -1,6 +1,5 @@
 package ru.astrainteractive.astralibs
 
-import ru.astrainteractive.astralibs.utils.catching
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -30,28 +29,28 @@ object Logger {
      * Log message with tag
      * @see Type
      */
-    fun log(message: String, tag: String? = null, consolePrint: Boolean = true) {
-        log(tag, message, Type.INFO, consolePrint)
+    fun log(tag: String, message: String, consolePrint: Boolean = true) {
+        log(tag, message, Level.INFO, consolePrint)
     }
 
-    fun warn(message: String, tag: String? = null, consolePrint: Boolean = true) {
-        log(tag, message, Type.WARN, consolePrint)
+    fun warn(tag: String, message: String, consolePrint: Boolean = true) {
+        log(tag, message, Level.WARNING, consolePrint)
     }
 
-    fun error(message: String, tag: String? = null, consolePrint: Boolean = true) {
-        log(tag, message, Type.ERROR, consolePrint)
+    fun error(tag: String, message: String, consolePrint: Boolean = true) {
+        log(tag, message, Level.SEVERE, consolePrint)
     }
 
-    private fun log(tag: String?, message: String, type: Type, consolePrint: Boolean) {
-        val tag = tag ?: "Default"
+    fun log(tag: String, message: String, logLevel: Level, consolePrint: Boolean) {
 
         if (consolePrint)
-            catching { logger?.log(type.level, "[$tag] $message") }?: println("[$tag] $message")
-        logInFile(tag, message, type)
+            logger?.log(logLevel, "[$tag] $message")
+        if (logLevel.intValue() >= Level.FINE.intValue())
+            logInFile(tag, message, logLevel)
     }
 
-    private fun logInFile(_tag: String?, message: String, type: Type) {
-        val tag = "$_tag/$type"
+    private fun logInFile(_tag: String?, message: String, logLevel: Level) {
+        val tag = "$_tag/$logLevel"
         File(logsFolder).apply { if (!exists()) mkdirs() }
         val path = "${logsFolder}${File.separator}$prefix ${getDate()}.log"
         val file = File(path)
@@ -63,8 +62,5 @@ object Logger {
     private fun getTime(): String = DateTimeFormatter.ofPattern("HH:mm:ss").format(LocalDateTime.now())
     private fun getDate(): String = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now())
 
-    enum class Type(val level: Level) {
-        WARN(Level.WARNING), INFO(Level.INFO), ERROR(Level.SEVERE)
-    }
 }
 

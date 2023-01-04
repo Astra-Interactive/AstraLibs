@@ -27,8 +27,6 @@ class MultiPageMenu(player: Player) : PaginatedMenu() {
         get() = AstraMenuSize.XL
 
     override fun onInventoryClicked(e: InventoryClickEvent) {
-        super.onInventoryClicked(e)
-
         e.isCancelled = true
         if (e.slot < 45)
             viewModel.onClicked()
