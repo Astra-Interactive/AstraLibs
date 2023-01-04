@@ -1,40 +1,56 @@
+import gradle.kotlin.dsl.accessors._89ec0d158481bcae4dcd9c3c9b1a7e18.sourceSets
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.bundling.Jar
+import org.gradle.kotlin.dsl.create
 import org.gradle.kotlin.dsl.`maven-publish`
+import org.gradle.kotlin.dsl.registering
 import org.gradle.kotlin.dsl.signing
 import java.util.*
 
 plugins {
     `maven-publish`
     signing
-    java
-    `java-library`
 }
+// Stub secrets to let the project sync and build without the publication values set up
+ext["signing.keyId"] = null
+ext["signing.password"] = null
+ext["signing.secretKeyRingFile"] = null
+ext["ossrhUsername"] = null
+ext["ossrhPassword"] = null
 
 // Grabbing secrets from local.properties file or from environment variables, which could be used on CI
-val secretPropsFile = project.rootProject.file(".gradle/gradle.properties")
-val properties = Properties().apply { load(secretPropsFile.reader()) }
-val signingKeyId = properties.getProperty("signing.keyId")
-val signingPassword = properties.getProperty("signing.password")
-val signingSecretKeyRingFile = properties.getProperty("signing.secretKeyRingFile")
-val ossrhUsername = properties.getProperty("ossrhUsername")
-val ossrhPassword = properties.getProperty("ossrhPassword")
-
-ext["signing.keyId"] = signingKeyId
-ext["signing.password"] = signingPassword
-ext["signing.secretKeyRingFile"] = signingSecretKeyRingFile
-ext["ossrhUsername"] = ossrhUsername
-ext["ossrhPassword"] = ossrhPassword
+val secretPropsFile = project.rootProject.file("local.properties")
+if (secretPropsFile.exists()) {
+    secretPropsFile.reader().use {
+        Properties().apply {
+            load(it)
+        }
+    }.onEach { (name, value) ->
+        ext[name.toString()] = value
+    }
+} else {
+    ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
+    ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
+    ext["signing.secretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
+    ext["ossrhUsername"] = System.getenv("OSSRH_USERNAME")
+    ext["ossrhPassword"] = System.getenv("OSSRH_PASSWORD")
+}
+fun getExtraString(name: String) = ext[name]?.toString()
+println("signing.keyId: ${getExtraString("signing.keyId")}")
+println("signing.password: ${getExtraString("signing.password")}")
+println("signing.secretKeyRingFile: ${getExtraString("signing.secretKeyRingFile")}")
+println("ossrhUsername: ${getExtraString("ossrhUsername")}")
+println("ossrhPassword: ${getExtraString("ossrhPassword")}")
 
 val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
 }
+
+
 artifacts {
-    archives(javadocJar)
-}
-java {
-    withSourcesJar()
-    withJavadocJar()
+//    archives(javadocJar)
+    archives(tasks["sourcesJar"])
+    archives(sourceSets.getByName("main"))
 }
 
 publishing {
@@ -43,8 +59,8 @@ publishing {
             name = "sonatype"
             setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
-                username = ossrhUsername
-                password = ossrhPassword
+                username = getExtraString("ossrhUsername")
+                password = getExtraString("ossrhPassword")
             }
 
         }
@@ -53,22 +69,18 @@ publishing {
             name = "sonatype"
             setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/")
             credentials {
-                username = ossrhUsername
-                password = ossrhPassword
+                username = getExtraString("ossrhUsername")
+                password = getExtraString("ossrhPassword")
             }
         }
     }
 
     publications.create<MavenPublication>("default") {
 
-        artifact(javadocJar.get())
-        artifact(tasks["sourcesJar"])
-
-        from(components["kotlin"])
         pom {
             artifactId = project.name
-            groupId = Dependencies.group
-            version = Dependencies.version
+            groupId = libs.versions.group.get()
+            version = libs.versions.plugin.get()
             name.set(project.name)
             description.set("Spigot core library written in kotlin")
             url.set("https://github.com/Astra-Interactive/AstraLibs")

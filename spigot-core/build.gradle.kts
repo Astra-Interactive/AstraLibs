@@ -1,55 +1,33 @@
-group = Dependencies.group
-version = Dependencies.version
-
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
     id("com.github.johnrengelman.shadow")
     id("org.jetbrains.dokka")
     id("convention.publication")
+    id("convention.library")
 }
 
 dependencies {
     // Kotlin
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.Kotlin.version}")
+    compileOnly(libs.kotlinGradlePlugin)
     // Coroutines
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.Kotlin.coroutines}")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${Dependencies.Kotlin.coroutines}")
+    compileOnly(libs.coroutines.coreJvm)
+    compileOnly(libs.coroutines.core)
     // Serialization
-    compileOnly("org.jetbrains.kotlin:kotlin-serialization:${Dependencies.Kotlin.version}")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:${Dependencies.Kotlin.json}")
-    compileOnly("com.charleskorn.kaml:kaml:${Dependencies.Kotlin.kaml}")
+    compileOnly(libs.kotlin.serialization)
+    compileOnly(libs.kotlin.serializationJson)
+    compileOnly(libs.kotlin.serializationKaml)
     // Documentation
-    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.20")
-    compileOnly("org.jetbrains.dokka:dokka-gradle-plugin:1.6.20")
+    dokkaHtmlPlugin(libs.kotlin.dokka.kotlinJavaPlugin)
+    compileOnly(libs.kotlin.dokka.plugin)
     // Spigot dependencies
-    compileOnly("io.papermc.paper:paper-api:${Dependencies.Spigot.version}")
-    compileOnly("org.spigotmc:spigot-api:${Dependencies.Spigot.version}")
-    compileOnly("org.spigotmc:spigot:${Dependencies.Spigot.version}")
-    compileOnly("com.github.MilkBowl:VaultAPI:${Dependencies.Spigot.vault}")
+    compileOnly(libs.paperApi)
+    compileOnly(libs.spigotApi)
+    compileOnly(libs.spigot)
+    compileOnly(libs.vaultapi)
     // Test
     testImplementation(kotlin("test"))
-    testImplementation("org.testng:testng:7.1.0")
+    testImplementation(libs.orgTesting)
 
     implementation(project(":ktx-core"))
-}
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-sourceSets {
-    main {
-        java {
-            setSrcDirs(listOf("src/kotlin"))
-        }
-        resources {
-            setSrcDirs(listOf("src/resources"))
-        }
-    }
-}
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
-}
-sourceSets.named("main") {
-    java.srcDir("src/main/kotlin")
 }

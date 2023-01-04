@@ -1,50 +1,27 @@
-group = Dependencies.group
-version = Dependencies.version
-
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
     id("com.github.johnrengelman.shadow")
     id("org.jetbrains.dokka")
     id("convention.publication")
+    id("convention.library")
 }
 dependencies {
     // Kotlin
-    compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:${Dependencies.Kotlin.version}")
+    compileOnly(libs.kotlinGradlePlugin)
     // Coroutines
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.Kotlin.coroutines}")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${Dependencies.Kotlin.coroutines}")
+    compileOnly(libs.coroutines.coreJvm)
+    compileOnly(libs.coroutines.core)
     // Serialization
-    compileOnly("org.jetbrains.kotlin:kotlin-serialization:${Dependencies.Kotlin.version}")
-    compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:${Dependencies.Kotlin.json}")
-    compileOnly("com.charleskorn.kaml:kaml:${Dependencies.Kotlin.kaml}")
-    // Test
-//    testImplementation(kotlin("test"))
-    testImplementation(kotlin("test-junit"))
-    testImplementation("org.testng:testng:7.1.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Dependencies.Kotlin.coroutines}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${Dependencies.Kotlin.coroutines}")
-    testImplementation("org.xerial:sqlite-jdbc:3.34.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.1")
-    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.1.9")
-}
-
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
-}
-    
-tasks.shadowJar {
-    dependencies {
-        exclude("kotlin")
-    }
-    isReproducibleFileOrder = true
-    from(sourceSets.main.get().output)
-    archiveClassifier.set(null as String?)
-    exclude("kotlin")
-    exclude("kotlin/")
-    exclude("/kotlin")
-    minimize()
-}
-sourceSets.named("main") {
-    java.srcDir("src/main/kotlin")
+    compileOnly(libs.kotlin.serialization)
+    compileOnly(libs.kotlin.serializationJson)
+    compileOnly(libs.kotlin.serializationKaml)
+    // Test-Core
+    testImplementation(kotlin("test-junit5"))
+    testImplementation(platform(libs.junit.bom))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    // Test-libs
+    testImplementation(libs.coroutines.core)
+    testImplementation(libs.coroutines.coreJvm)
+    testImplementation(libs.xerial.sqlite.jdbc)
 }

@@ -39,6 +39,7 @@ class DatabaseV2 {
         databaseV2 = Database()
         runBlocking {
             databaseV2.openConnection("jdbc:sqlite:dbv2.db", "org.sqlite.JDBC")
+            UserTable.create()
         }
     }
 
