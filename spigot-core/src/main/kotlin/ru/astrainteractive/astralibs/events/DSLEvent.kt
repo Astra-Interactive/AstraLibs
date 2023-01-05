@@ -1,10 +1,8 @@
 package ru.astrainteractive.astralibs.events
 
 import ru.astrainteractive.astralibs.AstraLibs
-import ru.astrainteractive.astralibs.utils.catching
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
-import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 
 /**

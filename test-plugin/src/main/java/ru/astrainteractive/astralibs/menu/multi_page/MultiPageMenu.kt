@@ -33,7 +33,7 @@ class MultiPageMenu(player: Player) : PaginatedMenu() {
     }
 
     override fun onInventoryClose(it: InventoryCloseEvent) {
-        viewModel.clear()
+        viewModel.close()
     }
 
     override fun onPageChanged() {

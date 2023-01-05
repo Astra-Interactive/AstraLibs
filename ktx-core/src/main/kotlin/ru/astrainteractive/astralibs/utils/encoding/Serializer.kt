@@ -1,63 +1,57 @@
 package ru.astrainteractive.astralibs.utils.encoding
 
-import ru.astrainteractive.astralibs.utils.catching
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
-import java.io.ObjectInputStream
 import java.util.*
 
 /**
  * Decoder/Encoder for [Serializable] objects
  * Consider use BukkitInputStreamProvider and BukkitOutputStreamProvider from spigot-core if using [Serializer] with bukkit objects
  */
-object Serializer {
-    fun <T> toByteArray(
-        obj: T,
-        outputStreamProvider: IOutputStreamProvider = DefaultOutputStreamProvider
-    ): ByteArray {
+class Serializer(
+    private val outputStreamProvider: IOutputStreamProvider,
+    private val inputStreamProvider: IInputStreamProvider = DefaultInputStreamProvider
+) {
+    sealed interface Wrapper {
+        @JvmInline
+        value class Base64(val value: String):Wrapper
+        @JvmInline
+        value class ByteArray(val value: kotlin.ByteArray):Wrapper
+
+    }
+
+    fun <T> toByteArray(obj: T): Wrapper.ByteArray {
         val io = ByteArrayOutputStream()
         val os = outputStreamProvider.provide(io)
         os.writeObject(obj)
         os.flush()
-        return io.toByteArray()
+        return Wrapper.ByteArray(io.toByteArray())
     }
 
-    fun <T> fromByteArray(
-        byteArray: ByteArray,
-        inputStreamProvider: IInputStreamProvider = DefaultInputStreamProvider
-    ): T {
-        val _in = ByteArrayInputStream(byteArray)
+    fun <T> fromByteArray(byteArray: Wrapper.ByteArray): T {
+        val _in = ByteArrayInputStream(byteArray.value)
         val _is = inputStreamProvider.provide(_in)
         return _is.readObject() as T
     }
 
-    fun <T> toBase64(
-        obj: T,
-        outputStreamProvider: IOutputStreamProvider = DefaultOutputStreamProvider
-    ): String {
-        val encoder = Base64.getEncoder()
-        return encoder.encodeToString(toByteArray(obj, outputStreamProvider))
+    fun <T> toBase64(obj: T): Wrapper.Base64 {
+        val encoder = java.util.Base64.getEncoder()
+        val byteArray = toByteArray(obj)
+        val encoded = encoder.encodeToString(byteArray.value)
+        return Wrapper.Base64(encoded)
     }
 
-    fun <T> fromBase64(
-        string: String,
-        inputStreamProvider: IInputStreamProvider = DefaultInputStreamProvider
-    ): T {
-        val decoder = Base64.getDecoder()
-        return fromByteArray<T>(decoder.decode(string), inputStreamProvider)
+    fun <T> fromBase64(base64: Wrapper.Base64): T {
+        val decoder = java.util.Base64.getDecoder()
+        val decoded = decoder.decode(base64.value)
+        return fromByteArray<T>(Wrapper.ByteArray(decoded))
     }
 
-    inline fun <reified T> encodeList(
-        objects: List<T>,
-        outputStreamProvider: IOutputStreamProvider = DefaultOutputStreamProvider
-    ): String {
-        return toBase64(objects, outputStreamProvider)
+    inline fun <reified T> encodeList(objects: List<T>): Wrapper.Base64 {
+        return toBase64(objects)
     }
 
-    inline fun <reified T> decodeList(
-        encoded: String,
-        inputStreamProvider: IInputStreamProvider = DefaultInputStreamProvider
-    ): List<T> {
-        return fromBase64(encoded, inputStreamProvider) ?: emptyList()
+    inline fun <reified T> decodeList(encoded: Wrapper.Base64): List<T> {
+        return fromBase64(encoded) ?: emptyList()
     }
 }

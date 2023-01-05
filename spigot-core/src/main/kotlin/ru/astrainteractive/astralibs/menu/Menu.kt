@@ -11,10 +11,9 @@ import org.bukkit.Bukkit
 import org.bukkit.event.HandlerList
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
-import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
-import ru.astrainteractive.astralibs.architecture.AsyncComponent
+import ru.astrainteractive.astralibs.async.AsyncComponent
 
 
 /**
@@ -24,7 +23,7 @@ import ru.astrainteractive.astralibs.architecture.AsyncComponent
 @SuppressWarnings("Don't forget to add MenuListener")
 abstract class Menu : InventoryHolder, AsyncComponent() {
     val lifecycleScope: CoroutineScope
-        get() = scope
+        get() = componentScope
 
     fun <T> StateFlow<T>.collectOn(scope: CoroutineDispatcher = Dispatchers.Main, block: (T) -> Unit) {
         lifecycleScope.launch(Dispatchers.IO) {
@@ -53,7 +52,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     val closeInventoryEventDetector = DSLEvent.event<InventoryCloseEvent>(inventoryEventHandler) {
         val topInventory = it.view.topInventory
         if (topInventory == inventory) {
-            clear()
+            close()
             onInventoryClose(it)
         }
     }
@@ -96,8 +95,8 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         }
     }
 
-    override fun clear() {
-        super.clear()
+    override fun close() {
+        super.close()
         // Stop handler
         inventoryEventHandler.onDisable()
         // Stop lifecycle

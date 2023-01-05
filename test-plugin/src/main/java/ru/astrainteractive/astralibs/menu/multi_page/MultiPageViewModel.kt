@@ -4,9 +4,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.architecture.ViewModel
+import ru.astrainteractive.astralibs.async.AsyncComponent
 
-class MultiPageViewModel : ViewModel() {
+class MultiPageViewModel : AsyncComponent() {
     private val generateList: List<ItemStack>
         get() = Material.values().toList().shuffled().subList(0, 120).map {
             ItemStack(it)

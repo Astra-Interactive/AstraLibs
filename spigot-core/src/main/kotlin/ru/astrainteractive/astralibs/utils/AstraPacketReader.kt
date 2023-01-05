@@ -3,7 +3,6 @@ package ru.astrainteractive.astralibs.utils
 import ru.astrainteractive.astralibs.events.DSLEvent
 import ru.astrainteractive.astralibs.events.EventManager
 import ru.astrainteractive.astralibs.events.GlobalEventManager
-import ru.astrainteractive.astralibs.utils.catching
 import io.netty.channel.Channel
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToMessageDecoder
@@ -95,12 +94,12 @@ abstract class AstraPacketReader<T : Packet<*>> {
     @Synchronized
     fun deInject(uuid: UUID) {
         val channel = channels[uuid] ?: return
-        catching { channel.pipeline().remove("PacketInjector") }
+        kotlin.runCatching { channel.pipeline().remove("PacketInjector") }
         channels.remove(uuid)
     }
 
     @Deprecated("Use ReflectionUtil instead", ReplaceWith("ReflectionUtil"))
-    fun getClassFieldValue(instance: Any, name: String): Any? = catching(false) {
+    fun getClassFieldValue(instance: Any, name: String): Any = kotlin.runCatching {
         val field: Field = instance.javaClass.getDeclaredField(name)
         field.isAccessible = true
         val result = field.get(instance)

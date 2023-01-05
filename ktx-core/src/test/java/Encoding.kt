@@ -1,9 +1,12 @@
+import ru.astrainteractive.astralibs.utils.encoding.DefaultInputStreamProvider
+import ru.astrainteractive.astralibs.utils.encoding.DefaultOutputStreamProvider
 import ru.astrainteractive.astralibs.utils.encoding.Serializer
 import java.io.Serializable
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class Encoding {
+    val Serializer = Serializer(DefaultOutputStreamProvider,DefaultInputStreamProvider)
     private inline fun <reified T> toFromByteArray(initial: T) {
         val encoded = Serializer.toByteArray(initial)
         val decoded: T = Serializer.fromByteArray(encoded)

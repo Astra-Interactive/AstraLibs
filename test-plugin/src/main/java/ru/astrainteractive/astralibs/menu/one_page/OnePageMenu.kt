@@ -38,8 +38,8 @@ class OnePageMenu(player: Player) : Menu(), IInventoryView {
     }
 
     override fun onInventoryClose(it: InventoryCloseEvent) {
-        viewModel.clear()
-        presenter.clear()
+        viewModel.close()
+        presenter.close()
     }
 
     override fun onCreated() {
