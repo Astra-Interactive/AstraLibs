@@ -25,4 +25,5 @@ dependencies {
     compileOnly(libs.vaultapi)
     implementation(project(":ktx-core"))
     implementation(project(":spigot-core"))
+    implementation(project(":spigot-gui"))
 }

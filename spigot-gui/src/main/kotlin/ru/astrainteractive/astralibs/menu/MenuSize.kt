@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.menu
 /**
  * Menu sizes of inventory
  */
-enum class AstraMenuSize(val size: Int) {
+enum class MenuSize(val size: Int) {
     /**
      * Size is 9
      */

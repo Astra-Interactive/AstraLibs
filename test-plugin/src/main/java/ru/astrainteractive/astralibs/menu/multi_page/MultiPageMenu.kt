@@ -17,14 +17,14 @@ class MultiPageMenu(player: Player) : PaginatedMenu() {
     override val prevPageButton: IInventoryButton = InventoryButton.fromString("Prev", 45){}
     override val backPageButton: IInventoryButton = InventoryButton.fromString("Back", 46){}
     override val nextPageButton: IInventoryButton = InventoryButton.fromString("Next", 47){}
-    override val playerMenuUtility: IPlayerHolder = DefaultPlayerHolder(player)
+    override val playerMenuUtility: IPlayerHolder = PlayerHolder(player)
     override var menuTitle: String = "Title Page: $page"
         get() = "Title Page: $page"
         set(value) {
             field = value
         }
-    override val menuSize: AstraMenuSize
-        get() = AstraMenuSize.XL
+    override val menuSize: MenuSize
+        get() = MenuSize.XL
 
     override fun onInventoryClicked(e: InventoryClickEvent) {
         e.isCancelled = true

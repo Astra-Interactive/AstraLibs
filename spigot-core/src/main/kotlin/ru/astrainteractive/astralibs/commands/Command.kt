@@ -1,10 +1,12 @@
 package ru.astrainteractive.astralibs.commands
 
 import org.bukkit.command.CommandSender
-import ru.astrainteractive.astralibs.AstraLibs
-import ru.astrainteractive.astralibs.utils.registerTabCompleter
 
-class TabCompleter(val alias: String, val sender: CommandSender, val args: Array<out String>) {
+
+
+
+class Command(val alias: String, val sender: CommandSender, val args: Array<out String>) {
+    class Argument<T>(val value: T, val rawValue: String?)
 
     fun <T> argument(
         index: Int,
@@ -20,10 +22,7 @@ class TabCompleter(val alias: String, val sender: CommandSender, val args: Array
 }
 
 
-object DSLTabCompleter {
-    operator fun invoke(alias: String, block: TabCompleter.() -> List<String>) =
-        AstraLibs.registerTabCompleter(alias) { sender, args ->
-            return@registerTabCompleter block.invoke(TabCompleter(alias, sender, args))
 
-        }
-}
+
+
+

@@ -41,5 +41,6 @@ dependencyResolutionManagement {
 rootProject.name = "astralibs"
 include("ktx-core")
 include("spigot-core")
+include("spigot-gui")
 include("test-plugin")
 include("orm")

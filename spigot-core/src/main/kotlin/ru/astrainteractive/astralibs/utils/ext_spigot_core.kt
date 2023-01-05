@@ -4,24 +4,25 @@ import ru.astrainteractive.astralibs.AstraLibs
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
+import org.bukkit.attribute.Attribute
+import org.bukkit.attribute.AttributeModifier
 import org.bukkit.command.CommandSender
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.entity.Player
-import org.bukkit.inventory.Inventory
-import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.meta.ItemMeta
-import org.bukkit.util.io.BukkitObjectInputStream
-import org.bukkit.util.io.BukkitObjectOutputStream
 import ru.astrainteractive.astralibs.EmpireSerializer
 import ru.astrainteractive.astralibs.Logger
 import ru.astrainteractive.astralibs.file_manager.FileManager
 import java.io.*
+import java.util.*
 import java.util.regex.Pattern
 import kotlin.random.Random
 
 
 inline fun <reified T> EmpireSerializer.toClass(file: FileManager): T? = toClass(file.configFile)
+
 /**
  * Setup bukkit logger
  */
@@ -32,34 +33,6 @@ fun Logger.setupWithSpigot(prefix: String) {
     Logger.logsFolder = path
     Logger.prefix = prefix
 }
-
-/**
- * Simple replacement for CommandManager
- */
-fun AstraLibs.registerCommand(
-    alias: String,
-    permission: String? = null,
-    callback: (CommandSender, args: Array<out String>) -> Unit,
-) =
-    instance.getCommand(alias)?.setExecutor { sender, command, label, args ->
-        if (permission != null && !sender.hasPermission(permission))
-            return@setExecutor true
-        callback(sender, args)
-        return@setExecutor true
-    }
-
-/**
- * Simple replacement for TabCompleter
- */
-fun AstraLibs.registerTabCompleter(
-    alias: String,
-    permission: String? = null,
-    callback: (CommandSender, args: Array<out String>) -> List<String>,
-) =
-    instance.getCommand(alias)?.setTabCompleter { commandSender, command, s, strings ->
-        return@setTabCompleter callback(commandSender, strings)
-    }
-
 
 /**
  * Get Float from ConfigurationSection
@@ -126,8 +99,7 @@ fun List<String>.withEntry(entry: String?, ignoreCase: Boolean = true): List<Str
     return this.filter { it.contains(entry ?: "", ignoreCase = true) }
 }
 
-private val hexPattern =
-    Pattern.compile("#[a-fA-F0-9]{6}|&#[a-fA-F0-9]{6}")
+private val hexPattern = Pattern.compile("#[a-fA-F0-9]{6}|&#[a-fA-F0-9]{6}")
 
 /**
  * Convert list of string to HEX list
@@ -170,13 +142,18 @@ fun convertHex(l: String): String {
     return org.bukkit.ChatColor.translateAlternateColorCodes('&', line)
 }
 
+fun ItemMeta.addAttribute(attr: Attribute, amount: Double, vararg slot: EquipmentSlot?) {
+    slot.forEach {
+        addAttributeModifier(
+            attr,
+            AttributeModifier(UUID.randomUUID(), attr.name, amount, AttributeModifier.Operation.ADD_NUMBER, it)
+        )
+    }
+}
 
 /**
  * Easy uuid get from player
  */
-val Player.uuid: String
-    get() = this.uniqueId.toString()
-
 val OfflinePlayer.uuid: String
     get() = uniqueId.toString()
 

@@ -14,6 +14,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import ru.astrainteractive.astralibs.async.AsyncComponent
+import java.lang.IllegalStateException
 
 
 /**
@@ -22,11 +23,9 @@ import ru.astrainteractive.astralibs.async.AsyncComponent
  */
 @SuppressWarnings("Don't forget to add MenuListener")
 abstract class Menu : InventoryHolder, AsyncComponent() {
-    val lifecycleScope: CoroutineScope
-        get() = componentScope
 
     fun <T> StateFlow<T>.collectOn(scope: CoroutineDispatcher = Dispatchers.Main, block: (T) -> Unit) {
-        lifecycleScope.launch(Dispatchers.IO) {
+        componentScope.launch(scope) {
             collectLatest {
                 withContext(Dispatchers.BukkitMain) {
                     block(it)
@@ -44,8 +43,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     }
 
     val onClickDetector = DSLEvent.event<InventoryClickEvent>(inventoryEventHandler) {
-        val topInventory = it.view.topInventory
-        if (topInventory == inventory)
+        if (it.view.topInventory == inventory)
             onInventoryClicked(it)
     }
 
@@ -59,10 +57,9 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
 
     abstract val playerMenuUtility: IPlayerHolder
 
-    object InventoryNotInitializedException : Exception("Inventory not initialized")
 
     private var inventory: Inventory? = null
-    override fun getInventory(): Inventory = inventory ?: throw InventoryNotInitializedException
+    override fun getInventory(): Inventory = inventory ?: throw IllegalStateException("Inventory not initialized")
 
     /**
      * Title of this inventory
@@ -72,7 +69,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     /**
      * Size of inventory
      */
-    abstract val menuSize: AstraMenuSize
+    abstract val menuSize: MenuSize
 
     /**
      * Menu handler
@@ -100,7 +97,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         // Stop handler
         inventoryEventHandler.onDisable()
         // Stop lifecycle
-        lifecycleScope.cancel()
+        componentScope.cancel()
         // Stop click event listener
         onClickDetector.also(EventListener::onDisable)
         onClickDetector.also(HandlerList::unregisterAll)

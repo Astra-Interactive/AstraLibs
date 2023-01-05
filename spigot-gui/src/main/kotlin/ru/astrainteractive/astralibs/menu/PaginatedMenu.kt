@@ -1,7 +1,5 @@
 package ru.astrainteractive.astralibs.menu
 
-import org.bukkit.event.inventory.InventoryClickEvent
-
 
 abstract class PaginatedMenu : Menu() {
 

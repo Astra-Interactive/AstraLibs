@@ -54,6 +54,7 @@ abstract class AstraPacketReader<T : Packet<*>> {
     fun onDisable() {
         channels.keys.toList().forEach { deInject(it) }
         channels.clear()
+        eventManager.onDisable()
     }
 
     /**

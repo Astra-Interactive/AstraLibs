@@ -4,11 +4,12 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import ru.astrainteractive.astralibs.AstraLibs
 
 // egive <player> <item> [amount]
 object EmpireGive {
 
-    fun register() = DSLCommand("egive") { player() }
+    fun register() = AstraLibs.instance.registerCommand("egive") { player() }
 
     private fun Command.player() = argument(
         index = 0,
@@ -41,7 +42,7 @@ object EmpireGive {
         }
     )
 
-    fun tabComplemter() = DSLTabCompleter("egive"){
-        return@DSLTabCompleter listOf()
+    fun tabComplemter() = AstraLibs.instance.registerTabCompleter("egive"){
+        return@registerTabCompleter listOf()
     }
 }
