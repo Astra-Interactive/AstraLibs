@@ -12,11 +12,15 @@ As an example - you can see how it beign used in [AstraTemplate](https://github.
 This will allow you to use non-spigot utilities
 ```groovy
 implementation("ru.astrainteractive.astralibs:ktx-core:<version>")
+// module with simple sqlite ORM
+implementation("ru.astrainteractive.astralibs:orm:<version>")
 ```
 ## Add a spigt-core dependency to your project
 This will allow you to use spigot utilities
 ```groovy
 implementation("ru.astrainteractive.astralibs:spigot-core:<version>")
+// Module with spigot GUI
+implementation("ru.astrainteractive.astralibs:spigot-gui:<version>")
 ```
 ## Also, add repository
 ```groovy
