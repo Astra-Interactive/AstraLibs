@@ -10,9 +10,9 @@ class Database {
     val isConnected: Boolean
         get() = connection?.isClosed == false
 
-    suspend fun openConnection(url: String, dbConnection: DBConnection): Connection? {
+    suspend fun openConnection(path: String, dbConnection: DBConnection): Connection? {
         Class.forName(dbConnection.driver)
-        connection = DriverManager.getConnection(dbConnection.url + url)
+        connection = DriverManager.getConnection(dbConnection.url + path)
         DatabaseHolder.remember(this@Database)
         return connection
     }

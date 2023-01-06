@@ -24,7 +24,7 @@ import java.lang.IllegalStateException
 @SuppressWarnings("Don't forget to add MenuListener")
 abstract class Menu : InventoryHolder, AsyncComponent() {
 
-    fun <T> StateFlow<T>.collectOn(scope: CoroutineDispatcher = Dispatchers.Main, block: (T) -> Unit) {
+    fun <T> StateFlow<T>.collectOn(scope: CoroutineDispatcher = Dispatchers.BukkitMain, block: (T) -> Unit) {
         componentScope.launch(scope) {
             collectLatest {
                 withContext(Dispatchers.BukkitMain) {
@@ -34,25 +34,8 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         }
     }
 
-    val inventoryEventHandler = object : EventManager {
-        override val handlers: MutableList<EventListener> = mutableListOf()
-    }
-
     fun IInventoryButton.setInventoryButton() {
         inventory?.setItem(index, item)
-    }
-
-    val onClickDetector = DSLEvent.event<InventoryClickEvent>(inventoryEventHandler) {
-        if (it.view.topInventory == inventory)
-            onInventoryClicked(it)
-    }
-
-    val closeInventoryEventDetector = DSLEvent.event<InventoryCloseEvent>(inventoryEventHandler) {
-        val topInventory = it.view.topInventory
-        if (topInventory == inventory) {
-            close()
-            onInventoryClose(it)
-        }
     }
 
     abstract val playerMenuUtility: IPlayerHolder
@@ -92,21 +75,6 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         }
     }
 
-    override fun close() {
-        super.close()
-        // Stop handler
-        inventoryEventHandler.onDisable()
-        // Stop lifecycle
-        componentScope.cancel()
-        // Stop click event listener
-        onClickDetector.also(EventListener::onDisable)
-        onClickDetector.also(HandlerList::unregisterAll)
-        onClickDetector.also(InventoryCloseEvent.getHandlerList()::unregister)
-        // Stop close inventory listener
-        closeInventoryEventDetector.also(EventListener::onDisable)
-        closeInventoryEventDetector.also(HandlerList::unregisterAll)
-        closeInventoryEventDetector.also(InventoryCloseEvent.getHandlerList()::unregister)
-    }
 
     abstract fun onCreated()
 }

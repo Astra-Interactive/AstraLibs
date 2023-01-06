@@ -7,10 +7,6 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.ItemStack
 import org.bukkit.inventory.meta.ItemMeta
 
-fun IPlayerHolder.hold(player: Player) = object : IPlayerHolder {
-    override val player: Player = player
-}
-
 fun IInventoryButton.button(
     material: Material,
     index: Int,
