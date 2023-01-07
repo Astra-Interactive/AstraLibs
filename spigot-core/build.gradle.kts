@@ -25,6 +25,7 @@ dependencies {
     compileOnly(libs.spigotApi)
     compileOnly(libs.spigot)
     compileOnly(libs.vaultapi)
+    compileOnly(libs.placeholderapi)
     // Test
     testImplementation(kotlin("test"))
     testImplementation(libs.orgTesting)

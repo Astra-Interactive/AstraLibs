@@ -14,6 +14,7 @@ object Logger {
      * Custom log path
      */
     var logsFolder = ".${File.separator}logs"
+    var fileLogEnabled: Boolean = false
 
     /**
      * Custom logger implementation
@@ -45,11 +46,11 @@ object Logger {
 
         if (consolePrint)
             logger?.log(logLevel, "[$tag] $message")
-        if (logLevel.intValue() >= Level.FINE.intValue())
-            logInFile(tag, message, logLevel)
+        logInFile(tag, message, logLevel)
     }
 
     private fun logInFile(_tag: String?, message: String, logLevel: Level) {
+        if (!fileLogEnabled) return
         val tag = "$_tag/$logLevel"
         File(logsFolder).apply { if (!exists()) mkdirs() }
         val path = "${logsFolder}${File.separator}$prefix ${getDate()}.log"

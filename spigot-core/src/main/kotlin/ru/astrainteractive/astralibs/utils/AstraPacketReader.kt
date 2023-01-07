@@ -6,6 +6,7 @@ import ru.astrainteractive.astralibs.events.GlobalEventManager
 import io.netty.channel.Channel
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToMessageDecoder
+import net.minecraft.network.PacketListener
 import net.minecraft.network.protocol.Packet
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -20,13 +21,21 @@ import kotlin.collections.HashMap
 /**
  * This packet reader class allows you to read minecraft packets without ProtocolLib
  */
-abstract class AstraPacketReader<T : Packet<*>> {
-    private val channels: MutableMap<UUID, Channel> = HashMap()
-
+abstract class AstraPacketReader<K : PacketListener, T : Packet<K>>(
+    /**
+     * Example: PacketPlayInUseEntity::class.java
+     */
+    val clazz: Class<out T>,
     /**
      * You can reassign eventManager to another event
      */
-    open val eventManager: EventManager = GlobalEventManager
+    val eventManager: EventManager = GlobalEventManager
+) {
+    private val channels: MutableMap<UUID, Channel> = HashMap()
+    companion object{
+        const val PACKET_ID = "PacketInjector"
+    }
+
 
     /**
      * In plugin initialization you should enable it
@@ -63,10 +72,7 @@ abstract class AstraPacketReader<T : Packet<*>> {
      */
     abstract val Player.provideChannel: Channel
 
-    /**
-     * Example: PacketPlayInUseEntity::class.java
-     */
-    abstract val clazz: Class<out T>
+
 
     /**
      * In your plugin you probably will need only this function
@@ -88,24 +94,14 @@ abstract class AstraPacketReader<T : Packet<*>> {
     fun inject(player: Player) {
         val channel = player.provideChannel
         channels[player.uniqueId] = channel
-        if (channel.pipeline().get("PacketInjector") != null) return
-        channel.pipeline().addAfter("decoder", "PacketInjector", decoder(player))
+        if (channel.pipeline().get(PACKET_ID) != null) return
+        channel.pipeline().addAfter("decoder", PACKET_ID, decoder(player))
     }
 
     @Synchronized
     fun deInject(uuid: UUID) {
         val channel = channels[uuid] ?: return
-        kotlin.runCatching { channel.pipeline().remove("PacketInjector") }
+        kotlin.runCatching { channel.pipeline().remove(PACKET_ID) }
         channels.remove(uuid)
     }
-
-    @Deprecated("Use ReflectionUtil instead", ReplaceWith("ReflectionUtil"))
-    fun getClassFieldValue(instance: Any, name: String): Any = kotlin.runCatching {
-        val field: Field = instance.javaClass.getDeclaredField(name)
-        field.isAccessible = true
-        val result = field.get(instance)
-        field.isAccessible = false
-        result
-    }
-
 }
