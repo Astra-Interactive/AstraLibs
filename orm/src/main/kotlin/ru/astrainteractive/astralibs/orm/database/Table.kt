@@ -2,7 +2,6 @@ package ru.astrainteractive.astralibs.orm.database
 
 import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astralibs.orm.exception.DatabaseException
-import ru.astrainteractive.astralibs.orm.DatabaseHolder
 import ru.astrainteractive.astralibs.orm.expression.Expression
 import ru.astrainteractive.astralibs.orm.expression.SQLExpressionBuilder
 import ru.astrainteractive.astralibs.orm.query.*
@@ -34,32 +33,36 @@ abstract class Table<T>(val tableName: String) {
     fun byteArray(name: String): Column<ByteArray> = Column.ByteArrayColumn(name).also(_columns::add)
 
 
-    private fun assertConnected(database: Database?): Connection {
-        val database by DatabaseHolder
+    private fun assertConnected(database: Database): Connection {
         val connection = database?.connection ?: throw DatabaseException.DatabaseNotConnectedException
         if (database?.isConnected != true) throw DatabaseException.DatabaseNotConnectedException
         return connection
     }
 
-    suspend fun create(database: Database? = DatabaseHolder.value) {
+    suspend fun create(database: Database) {
         val query = CreateQuery(this).generate()
         val connection = assertConnected(database)
-        connection.prepareStatement(query).execute()
+        connection.prepareStatement(query).also {
+            it.execute()
+            it.close()
+        }
     }
 
     fun insert(
-        database: Database? = DatabaseHolder.value,
+        database: Database,
         stmt: DBStatement.() -> Unit
     ): Int {
         val connection = assertConnected(database)
-        val statement = DBStatement().apply(stmt)
-        val query = InsertQuery(this, statement).generate()
-        val st = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
-        statement.values.values.forEachIndexed { i, v ->
-            st.setObject(i + 1, v)
+        val dbstatement = DBStatement().apply(stmt)
+        val query = InsertQuery(this, dbstatement).generate()
+        val statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
+        dbstatement.values.values.forEachIndexed { i, v ->
+            statement.setObject(i + 1, v)
         }
-        st.executeUpdate()
-        return st.generatedKeys.getInt(1)
+        statement.executeUpdate()
+        val key = statement.generatedKeys.getInt(1)
+        statement.close()
+        return key
     }
 
     fun <K : Entity<T>> wrap(it: ResultSet, constructor: Constructable<K>): K {
@@ -72,60 +75,75 @@ abstract class Table<T>(val tableName: String) {
         return entity
     }
 
-    fun <K : Entity<T>> update(database: Database? = DatabaseHolder.value, entity: K) {
+    fun <K : Entity<T>> update(database: Database, entity: K,) {
         val connection = assertConnected(database)
 
         val columns = entity.table._columns.filter { !it.primaryKey }
-        val query = UpdateQuery(entity).generate()
+        val query = UpdateQuery(this,entity).generate()
 
         val statement = connection.prepareStatement(query).also { statement ->
             columns.forEachIndexed { index, column ->
                 statement.setObject(index + 1, entity[column])
             }
         }
-        statement.executeUpdate()
+        statement.also {
+            it.executeUpdate()
+            it.close()
+        }
     }
 
     fun <K : Entity<T>> delete(
-        database: Database? = DatabaseHolder.value,
+        database: Database,
         op: SQLExpressionBuilder.() -> Expression<Boolean>
     ) {
         val connection = assertConnected(database)
         val query = DeleteQuery(this, op).generate()
         val statement = connection.prepareStatement(query)
-        statement.execute()
+        statement.also {
+            it.execute()
+            it.close()
+        }
     }
 
     fun <K : Entity<T>> all(
-        database: Database? = DatabaseHolder.value,
+        database: Database,
         constructor: Constructable<K>,
     ): List<K> {
         val connection = assertConnected(database)
         val query = SelectQuery(this).generate()
-        return connection.prepareStatement(query).executeQuery().mapNotNull {
+        val statement =connection.prepareStatement(query)
+        val wrapperd = statement.executeQuery().mapNotNull {
             wrap(it, constructor)
         }
+        statement.close()
+        return wrapperd
     }
 
     fun <K : Entity<T>> find(
-        database: Database? = DatabaseHolder.value,
+        database: Database,
         constructor: Constructable<K>,
         op: SQLExpressionBuilder.() -> Expression<Boolean>
     ): List<K> {
         val query = SelectQuery(this, op).generate()
         val connection = assertConnected(database)
-        return connection.prepareStatement(query).executeQuery().mapNotNull {
+        val statement = connection.prepareStatement(query)
+        val wrapped = statement.executeQuery().mapNotNull {
             wrap(it, constructor)
         }
+        statement.close()
+        return wrapped
     }
 
     fun count(
-        database: Database? = DatabaseHolder.value,
+        database: Database,
         op: SQLExpressionBuilder.() -> Expression<Boolean>
     ): Int {
         val connection = assertConnected(database)
         val query = CountQuery(this, op).generate()
-        return connection.prepareStatement(query).executeQuery().getInt("total")
+        val statement = connection.prepareStatement(query)
+        val total =  statement.executeQuery().getInt("total")
+        statement.close()
+        return total
     }
 }
 

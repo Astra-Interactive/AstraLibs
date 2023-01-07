@@ -19,17 +19,22 @@ val Dispatchers.BukkitMain: CoroutineDispatcher
 
 object BukkitMainDispatcher : CoroutineDispatcher() {
     private val plugin: Plugin = AstraLibs.instance
-    private val bukkitScheduler: BukkitScheduler
-        get() = Bukkit.getScheduler()
 
-    private val runTask: (Plugin, Runnable) -> BukkitTask = bukkitScheduler::runTask
-
-
-    override fun dispatch(context: CoroutineContext, block: Runnable) {
-        if (!context.isActive) return
-        if (Bukkit.isPrimaryThread()) block.run()
-        else runTask(plugin, block)
+    override fun isDispatchNeeded(context: CoroutineContext): Boolean {
+        return !plugin.server.isPrimaryThread && plugin.isEnabled
     }
 
+    override fun dispatch(context: CoroutineContext, block: Runnable) {
+        if (!plugin.isEnabled) {
+            return
+        }
+        val timedRunnable = context[AsyncComponent.Key]
+        if (timedRunnable == null) {
+            plugin.server.scheduler.runTask(plugin, block)
+        } else {
+            timedRunnable.queue.add(block)
+            plugin.server.scheduler.runTask(plugin, timedRunnable)
+        }
+    }
 }
 

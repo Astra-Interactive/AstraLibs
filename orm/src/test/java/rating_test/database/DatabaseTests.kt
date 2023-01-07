@@ -14,11 +14,11 @@ class DatabaseTests {
     val randomUser: User
         get() = runBlocking {
             val uuid = UUID.randomUUID().toString()
-            val id = UserTable.insert() {
+            val id = UserTable.insert(databaseV2) {
                 this[UserTable.uuid] = uuid
                 this[UserTable.lastUpdated] = System.currentTimeMillis()
             }
-            return@runBlocking UserTable.find(constructor = User) {
+            return@runBlocking UserTable.find(databaseV2,constructor = User) {
                 UserTable.id.eq(id)
             }.first()
         }
@@ -27,8 +27,8 @@ class DatabaseTests {
     fun setup(): Unit = runBlocking {
         databaseV2 = Database()
         databaseV2.openConnection("dbv2_2.db",DBConnection.SQLite)
-        UserTable.create()
-        UserRatingTable.create()
+        UserTable.create(databaseV2)
+        UserRatingTable.create(databaseV2)
     }
 
     @AfterTest
@@ -40,7 +40,7 @@ class DatabaseTests {
     fun `Test more expression`(){
         val timeMillis = System.currentTimeMillis()
         randomUser
-        val users = UserTable.find(constructor = User){
+        val users = UserTable.find(databaseV2,constructor = User){
             UserTable.lastUpdated.more(timeMillis-100)
         }
         assertEquals(1,users.size)

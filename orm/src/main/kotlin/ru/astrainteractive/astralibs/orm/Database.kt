@@ -13,13 +13,11 @@ class Database {
     suspend fun openConnection(path: String, dbConnection: DBConnection): Connection? {
         Class.forName(dbConnection.driver)
         connection = DriverManager.getConnection(dbConnection.url + path)
-        DatabaseHolder.remember(this@Database)
         return connection
     }
 
     suspend fun closeConnection() {
         connection?.close()
         connection = null
-        DatabaseHolder.forget(this@Database)
     }
 }

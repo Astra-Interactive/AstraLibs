@@ -33,7 +33,7 @@ class PluginEntryPoint : JavaPlugin() {
 
     override fun onDisable() {
         super.onDisable()
-        PluginScope.cancel()
+        PluginScope.close()
     }
 
 }

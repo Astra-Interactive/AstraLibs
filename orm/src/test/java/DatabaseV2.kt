@@ -34,10 +34,10 @@ class DatabaseV2 {
     val randomUser: User
         get() = runBlocking {
             val uuid = UUID.randomUUID().toString()
-            val id = UserTable.insert() {
+            val id = UserTable.insert(databaseV2) {
                 this[UserTable.name] = uuid
             }
-            return@runBlocking UserTable.find(constructor = User) {
+            return@runBlocking UserTable.find(databaseV2,constructor = User) {
                 UserTable.id.eq(id)
             }.first()
         }
@@ -47,7 +47,7 @@ class DatabaseV2 {
         databaseV2 = Database()
         runBlocking {
             databaseV2.openConnection("dbv2.db", DBConnection.SQLite)
-            UserTable.create()
+            UserTable.create(databaseV2)
         }
     }
 
@@ -80,12 +80,12 @@ class DatabaseV2 {
         val expectedQuery =
             "CREATE TABLE IF NOT EXISTS user_table (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name TEXT NOT NULL UNIQUE)"
         assertEquals(expectedQuery, CreateQuery(UserTable).generate())
-        assertDoesNotThrow { runBlocking { UserTable.create() } }
+        assertDoesNotThrow { runBlocking { UserTable.create(databaseV2) } }
     }
 
     @Test
     fun `Insert statement query`() {
-        assertDoesNotThrow { runBlocking { UserTable.create() } }
+        assertDoesNotThrow { runBlocking { UserTable.create(databaseV2) } }
         val query = runBlocking {
             InsertQuery(UserTable, DBStatement().apply {
                 this[UserTable.name] = UUID.randomUUID().toString()
@@ -96,10 +96,10 @@ class DatabaseV2 {
 
     @Test
     fun `Insert statement`() {
-        assertDoesNotThrow { runBlocking { UserTable.create() } }
+        assertDoesNotThrow { runBlocking { UserTable.create(databaseV2) } }
         assertDoesNotThrow {
             runBlocking {
-                UserTable.insert() {
+                UserTable.insert(databaseV2) {
                     this[UserTable.name] = UUID.randomUUID().toString()
                 }
             }
@@ -110,12 +110,12 @@ class DatabaseV2 {
     fun `Select statement`() {
         runBlocking {
             val user = randomUser
-            val selectedById = UserTable.find(constructor = User) {
+            val selectedById = UserTable.find(databaseV2,constructor = User) {
                 UserTable.id.eq(user.id)
             }.firstOrNull()
             assertEquals(user.name, selectedById?.name)
             // Select by ID
-            val byID = UserTable.find(constructor = User) {
+            val byID = UserTable.find(databaseV2,constructor = User) {
                 UserTable.id.eq(user.id)
             }.firstOrNull()
             assertEquals(byID?.name, selectedById?.name)
@@ -127,8 +127,8 @@ class DatabaseV2 {
         runBlocking {
             val newUUID = UUID.randomUUID().toString()
             val user = randomUser.apply { name = newUUID }
-            UserTable.update(entity = user)
-            val updated = UserTable.find(constructor = User) {
+            UserTable.update(databaseV2,entity = user)
+            val updated = UserTable.find(databaseV2,constructor = User) {
                 UserTable.id.eq(user.id)
             }.first()
             assertEquals(updated.name, newUUID)
@@ -141,28 +141,28 @@ class DatabaseV2 {
         runBlocking {
             // Delete by id
             var user = randomUser
-            UserTable.delete<User> {
+            UserTable.delete<User>(databaseV2) {
                 UserTable.id.eq(user.id)
             }
-            var selected = UserTable.find(constructor = User) {
+            var selected = UserTable.find(databaseV2,constructor = User) {
                 UserTable.id.eq(user.id)
             }.firstOrNull()
             assert(selected == null)
             // Delete by name
             user = randomUser
-            UserTable.delete<User> {
+            UserTable.delete<User>(databaseV2) {
                 UserTable.name.eq(user.name)
             }
-            selected = UserTable.find(constructor = User) {
+            selected = UserTable.find(databaseV2,constructor = User) {
                 UserTable.name.eq(user.name)
             }.firstOrNull()
             assert(selected == null)
             // Delete by name and id
             user = randomUser
-            UserTable.delete<User> {
+            UserTable.delete<User>(databaseV2) {
                 UserTable.name.eq(user.name).and(UserTable.id.eq(user.id))
             }
-            selected = UserTable.find(constructor = User) {
+            selected = UserTable.find(databaseV2,constructor = User) {
                 UserTable.name.eq(user.name).and(UserTable.id.eq(user.id))
             }.firstOrNull()
             assert(selected == null)
@@ -184,11 +184,11 @@ class DatabaseV2 {
     fun `Find`() {
         runBlocking {
             val uuid = UUID.randomUUID().toString()
-            val id = UserTable.insert() {
+            val id = UserTable.insert(databaseV2) {
                 this[UserTable.name] = uuid
             }
 
-            val user: User? = UserTable.find(constructor = User) {
+            val user: User? = UserTable.find(databaseV2,constructor = User) {
                 UserTable.id.eq(id)
                     .and(UserTable.name.eq("$uuid"))
             }.firstOrNull()

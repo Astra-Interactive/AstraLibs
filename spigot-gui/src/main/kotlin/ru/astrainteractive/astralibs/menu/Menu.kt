@@ -27,9 +27,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     fun <T> StateFlow<T>.collectOn(scope: CoroutineDispatcher = Dispatchers.BukkitMain, block: (T) -> Unit) {
         componentScope.launch(scope) {
             collectLatest {
-                withContext(Dispatchers.BukkitMain) {
-                    block(it)
-                }
+                block(it)
             }
         }
     }
@@ -62,17 +60,22 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     /**
      * Called when inventory was closed
      */
-    abstract fun onInventoryClose(it: InventoryCloseEvent)
+    open fun onInventoryClose(it: InventoryCloseEvent){
+        close()
+    }
 
     /**
      * Open inventory method for Menu class
      */
     suspend fun open() {
         inventory = Bukkit.createInventory(this, menuSize.size, menuTitle)
-        withContext(Dispatchers.BukkitMain) {
+        val open = {
             inventory?.let(playerMenuUtility.player::openInventory)
             onCreated()
         }
+        if (coroutineContext!=Dispatchers.BukkitMain)
+            withContext(Dispatchers.BukkitMain) { open() }
+        else open()
     }
 
 

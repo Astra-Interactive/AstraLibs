@@ -29,7 +29,7 @@ class AuctionsTests {
         File("dbv2_auction.db").delete()
         databaseV2 = Database()
         databaseV2.openConnection("dbv2_auction.db", DBConnection.SQLite)
-        AuctionTable.create()
+        AuctionTable.create(databaseV2)
         dataSource = DataSource(databaseV2)
     }
 
