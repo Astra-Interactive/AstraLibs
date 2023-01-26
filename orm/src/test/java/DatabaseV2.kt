@@ -1,6 +1,8 @@
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import org.junit.jupiter.api.assertDoesNotThrow
+import rating_test.database.domain.entities.SimpleUser
+import rating_test.database.domain.entities.SimpleUserTable
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import ru.astrainteractive.astralibs.orm.expression.SQLExpressionBuilder.eq
@@ -16,46 +18,26 @@ import java.util.UUID
 import kotlin.test.*
 
 
-
-object UserTable : Table<Int>("user_table") {
-    override val id: Column<Int> = integer("id").primaryKey().autoIncrement()
-    val name: Column<String> = text("name").unique()
-}
-
-class User : Entity<Int>(UserTable) {
-    val id by UserTable.id
-    var name by UserTable.name
-
-    companion object : Constructable<User>(::User)
-}
-
-class DatabaseV2 {
-    private lateinit var databaseV2: Database
-    val randomUser: User
+class DatabaseV2 : ORMTest() {
+    val randomUser: SimpleUser
         get() = runBlocking {
+            val database = assertConnected()
             val uuid = UUID.randomUUID().toString()
-            val id = UserTable.insert(databaseV2) {
-                this[UserTable.name] = uuid
+            val id = SimpleUserTable.insert(database) {
+                this[SimpleUserTable.name] = uuid
             }
-            return@runBlocking UserTable.find(databaseV2,constructor = User) {
-                UserTable.id.eq(id)
+            return@runBlocking SimpleUserTable.find(database, constructor = SimpleUser) {
+                SimpleUserTable.id.eq(id)
             }.first()
         }
+    override val builder: () -> Database
+        get() = { DefaultDatabase(DBConnection.SQLite("dbv2.db"), DBSyntax.SQLite) }
 
     @BeforeTest
-    fun setup() {
-        databaseV2 = Database()
-        runBlocking {
-            databaseV2.openConnection("dbv2.db", DBConnection.SQLite)
-            UserTable.create(databaseV2)
-        }
-    }
-
-    @AfterTest
-    fun destruct() {
-        runBlocking {
-            databaseV2.closeConnection()
-        }
+    override fun setup(): Unit = runBlocking {
+        super.setup()
+        val database = assertConnected()
+        SimpleUserTable.create(database)
     }
 
     @Test
@@ -68,27 +50,30 @@ class DatabaseV2 {
 
     @Test
     fun `Test database connection`() {
-        assertNotNull(databaseV2.connection)
-        assertEquals(databaseV2.isConnected, true)
-        runBlocking { databaseV2.closeConnection() }
-        assertNull(databaseV2.connection)
-        assertEquals(databaseV2.isConnected, false)
+        val database = assertConnected()
+        assertNotNull(database.connection)
+        assertEquals(database.isConnected, true)
+        runBlocking { database.closeConnection() }
+        assertNull(database.connection)
+        assertEquals(database.isConnected, false)
     }
 
     @Test
     fun `Create table`() {
+        val database = assertConnected()
         val expectedQuery =
             "CREATE TABLE IF NOT EXISTS user_table (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name TEXT NOT NULL UNIQUE)"
-        assertEquals(expectedQuery, CreateQuery(UserTable).generate())
-        assertDoesNotThrow { runBlocking { UserTable.create(databaseV2) } }
+        assertEquals(expectedQuery, CreateQuery(SimpleUserTable).generate())
+        assertDoesNotThrow { runBlocking { SimpleUserTable.create(database) } }
     }
 
     @Test
     fun `Insert statement query`() {
-        assertDoesNotThrow { runBlocking { UserTable.create(databaseV2) } }
+        val database = assertConnected()
+        assertDoesNotThrow { runBlocking { SimpleUserTable.create(database) } }
         val query = runBlocking {
-            InsertQuery(UserTable, DBStatement().apply {
-                this[UserTable.name] = UUID.randomUUID().toString()
+            InsertQuery(SimpleUserTable, DBStatement().apply {
+                this[SimpleUserTable.name] = UUID.randomUUID().toString()
             }).generate()
         }
         assertEquals("INSERT INTO user_table (name) VALUES (?)", query)
@@ -96,11 +81,12 @@ class DatabaseV2 {
 
     @Test
     fun `Insert statement`() {
-        assertDoesNotThrow { runBlocking { UserTable.create(databaseV2) } }
+        val database = assertConnected()
+        assertDoesNotThrow { runBlocking { SimpleUserTable.create(database) } }
         assertDoesNotThrow {
             runBlocking {
-                UserTable.insert(databaseV2) {
-                    this[UserTable.name] = UUID.randomUUID().toString()
+                SimpleUserTable.insert(database) {
+                    this[SimpleUserTable.name] = UUID.randomUUID().toString()
                 }
             }
         }
@@ -108,15 +94,16 @@ class DatabaseV2 {
 
     @Test
     fun `Select statement`() {
+        val database = assertConnected()
         runBlocking {
             val user = randomUser
-            val selectedById = UserTable.find(databaseV2,constructor = User) {
-                UserTable.id.eq(user.id)
+            val selectedById = SimpleUserTable.find(database, constructor = SimpleUser) {
+                SimpleUserTable.id.eq(user.id)
             }.firstOrNull()
             assertEquals(user.name, selectedById?.name)
             // Select by ID
-            val byID = UserTable.find(databaseV2,constructor = User) {
-                UserTable.id.eq(user.id)
+            val byID = SimpleUserTable.find(database, constructor = SimpleUser) {
+                SimpleUserTable.id.eq(user.id)
             }.firstOrNull()
             assertEquals(byID?.name, selectedById?.name)
         }
@@ -124,12 +111,13 @@ class DatabaseV2 {
 
     @Test
     fun `Update statement`() {
+        val database = assertConnected()
         runBlocking {
             val newUUID = UUID.randomUUID().toString()
             val user = randomUser.apply { name = newUUID }
-            UserTable.update(databaseV2,entity = user)
-            val updated = UserTable.find(databaseV2,constructor = User) {
-                UserTable.id.eq(user.id)
+            SimpleUserTable.update(database, entity = user)
+            val updated = SimpleUserTable.find(database, constructor = SimpleUser) {
+                SimpleUserTable.id.eq(user.id)
             }.first()
             assertEquals(updated.name, newUUID)
         }
@@ -138,32 +126,33 @@ class DatabaseV2 {
 
     @Test
     fun `Delete statement`() {
+        val database = assertConnected()
         runBlocking {
             // Delete by id
             var user = randomUser
-            UserTable.delete<User>(databaseV2) {
-                UserTable.id.eq(user.id)
+            SimpleUserTable.delete<SimpleUser>(database) {
+                SimpleUserTable.id.eq(user.id)
             }
-            var selected = UserTable.find(databaseV2,constructor = User) {
-                UserTable.id.eq(user.id)
+            var selected = SimpleUserTable.find(database, constructor = SimpleUser) {
+                SimpleUserTable.id.eq(user.id)
             }.firstOrNull()
             assert(selected == null)
             // Delete by name
             user = randomUser
-            UserTable.delete<User>(databaseV2) {
-                UserTable.name.eq(user.name)
+            SimpleUserTable.delete<SimpleUser>(database) {
+                SimpleUserTable.name.eq(user.name)
             }
-            selected = UserTable.find(databaseV2,constructor = User) {
-                UserTable.name.eq(user.name)
+            selected = SimpleUserTable.find(database, constructor = SimpleUser) {
+                SimpleUserTable.name.eq(user.name)
             }.firstOrNull()
             assert(selected == null)
             // Delete by name and id
             user = randomUser
-            UserTable.delete<User>(databaseV2) {
-                UserTable.name.eq(user.name).and(UserTable.id.eq(user.id))
+            SimpleUserTable.delete<SimpleUser>(database) {
+                SimpleUserTable.name.eq(user.name).and(SimpleUserTable.id.eq(user.id))
             }
-            selected = UserTable.find(databaseV2,constructor = User) {
-                UserTable.name.eq(user.name).and(UserTable.id.eq(user.id))
+            selected = SimpleUserTable.find(database, constructor = SimpleUser) {
+                SimpleUserTable.name.eq(user.name).and(SimpleUserTable.id.eq(user.id))
             }.firstOrNull()
             assert(selected == null)
         }
@@ -171,26 +160,27 @@ class DatabaseV2 {
 
     @Test
     fun `Check expression builder`() {
-        val columnName = UserTable.name.name
-        var ep = UserTable.name.eq("SomeEq")
+        val columnName = SimpleUserTable.name.name
+        var ep = SimpleUserTable.name.eq("SomeEq")
         var query = "$columnName = \"SomeEq\""
         assertEquals(ep.toString(), query)
         query = "$columnName = \"1\" AND ($columnName = \"2\")"
-        ep = UserTable.name.eq("1").and(UserTable.name.eq("2"))
+        ep = SimpleUserTable.name.eq("1").and(SimpleUserTable.name.eq("2"))
         assertEquals(ep.toString(), query)
     }
 
     @Test
     fun `Find`() {
+        val database = assertConnected()
         runBlocking {
             val uuid = UUID.randomUUID().toString()
-            val id = UserTable.insert(databaseV2) {
-                this[UserTable.name] = uuid
+            val id = SimpleUserTable.insert(database) {
+                this[SimpleUserTable.name] = uuid
             }
 
-            val user: User? = UserTable.find(databaseV2,constructor = User) {
-                UserTable.id.eq(id)
-                    .and(UserTable.name.eq("$uuid"))
+            val user: SimpleUser? = SimpleUserTable.find(database, constructor = SimpleUser) {
+                SimpleUserTable.id.eq(id)
+                    .and(SimpleUserTable.name.eq("$uuid"))
             }.firstOrNull()
             assertEquals(user?.id, id)
             assertEquals(user?.name, uuid)

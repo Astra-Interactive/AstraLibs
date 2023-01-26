@@ -7,6 +7,7 @@ plugins {
     id("convention.library")
 }
 dependencies {
+    testImplementation("org.testng:testng:7.1.0")
     // Kotlin
     compileOnly(libs.kotlinGradlePlugin)
     // Coroutines

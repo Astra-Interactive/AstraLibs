@@ -1,6 +1,5 @@
 package rating_test.database.domain.entities
 
-import rating_test.database.entities.User
 import ru.astrainteractive.astralibs.orm.database.Column
 import ru.astrainteractive.astralibs.orm.database.Constructable
 import ru.astrainteractive.astralibs.orm.database.Entity

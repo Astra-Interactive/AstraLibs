@@ -1,23 +1,12 @@
 package ru.astrainteractive.astralibs.orm
 
 import java.sql.Connection
-import java.sql.DriverManager
 
-
-class Database {
-    var connection: Connection? = null
-        private set
+interface Database{
+    val dbConnection: DBConnection
+    val dbSyntax: DBSyntax
     val isConnected: Boolean
-        get() = connection?.isClosed == false
-
-    suspend fun openConnection(path: String, dbConnection: DBConnection): Connection? {
-        Class.forName(dbConnection.driver)
-        connection = DriverManager.getConnection(dbConnection.url + path)
-        return connection
-    }
-
-    suspend fun closeConnection() {
-        connection?.close()
-        connection = null
-    }
+    val connection: Connection?
+    suspend fun openConnection()
+    suspend fun closeConnection()
 }
