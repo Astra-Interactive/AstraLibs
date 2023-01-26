@@ -20,7 +20,7 @@ abstract class Table<T>(val tableName: String) {
     abstract val id: Column<T>
     fun integer(name: String): Column<Int> = Column.IntColumn(name).also(_columns::add)
 
-    fun long(name: String): Column<Long> = Column.LongColumn(name).also(_columns::add)
+    fun bigint(name: String): Column<Long> = Column.BigIntColumn(name).also(_columns::add)
 
     fun text(name: String): Column<String> = Column.StringColumn(name).also(_columns::add)
 
@@ -40,9 +40,16 @@ abstract class Table<T>(val tableName: String) {
     }
 
     suspend fun create(database: Database) {
-        val query = CreateQuery(this).generate()
+        val query = CreateQuery(this, database.dbSyntax).generate()
         val connection = assertConnected(database)
         connection.prepareStatement(query).also {
+            it.execute()
+            it.close()
+        }
+    }
+    suspend fun drop(database: Database){
+        val connection = assertConnected(database)
+        connection.prepareStatement("DROP TABLE IF EXISTS $tableName").also {
             it.execute()
             it.close()
         }
@@ -60,9 +67,17 @@ abstract class Table<T>(val tableName: String) {
             statement.setObject(i + 1, v)
         }
         statement.executeUpdate()
-        val key = statement.generatedKeys.getInt(1)
+        val generatedKeys = statement.generatedKeys
+        if (generatedKeys.next()){
+            val id =  generatedKeys.getInt(1)
+            statement.close()
+            return id
+        }
         statement.close()
-        return key
+        throw DatabaseException.NoIdReturned
+//        val key = statement.generatedKeys.getString(1)
+//        println("Got key: $key")
+//        return key.toInt()
     }
 
     fun <K : Entity<T>> wrap(it: ResultSet, constructor: Constructable<K>): K {

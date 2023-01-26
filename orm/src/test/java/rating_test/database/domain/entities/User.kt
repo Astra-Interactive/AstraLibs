@@ -1,4 +1,4 @@
-package rating_test.database.entities
+package rating_test.database.domain.entities
 
 import ru.astrainteractive.astralibs.orm.database.Column
 import ru.astrainteractive.astralibs.orm.database.Constructable
@@ -8,7 +8,7 @@ import ru.astrainteractive.astralibs.orm.database.Table
 object UserTable : Table<Int>("rating_user") {
     override val id: Column<Int> = integer("user_id").primaryKey().autoIncrement()
     val uuid: Column<String> = text("minecraftUUID").unique()
-    val lastUpdated: Column<Long> = long("lastUpdated")
+    val lastUpdated: Column<Long> = bigint("lastUpdated")
 }
 
 class User : Entity<Int>(UserTable) {

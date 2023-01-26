@@ -1,21 +1,25 @@
-package rating_test.database.domain
+package rating_test.database
 
 import kotlinx.coroutines.runBlocking
+import rating_test.database.domain.DataSource
+import rating_test.database.domain.IDataSource
 import rating_test.database.domain.dto.AuctionDTO
 import rating_test.database.domain.entities.AuctionTable
 import ru.astrainteractive.astralibs.orm.DBConnection
+import ru.astrainteractive.astralibs.orm.DBSyntax
 import ru.astrainteractive.astralibs.orm.Database
+import ru.astrainteractive.astralibs.orm.DefaultDatabase
 import java.io.File
 import java.util.*
 import kotlin.random.Random
 import kotlin.test.*
 
-class AuctionsTests {
+class AuctionsDomainTests {
     private lateinit var databaseV2: Database
     private lateinit var dataSource: IDataSource
     val randomAuction: AuctionDTO
         get() = AuctionDTO(
-            id = -1L,
+            id = -1,
             discordId = UUID.randomUUID().toString(),
             minecraftUuid = UUID.randomUUID().toString(),
             time = System.currentTimeMillis(),
@@ -27,8 +31,8 @@ class AuctionsTests {
     @BeforeTest
     fun setup(): Unit = runBlocking {
         File("dbv2_auction.db").delete()
-        databaseV2 = Database()
-        databaseV2.openConnection("dbv2_auction.db", DBConnection.SQLite)
+        databaseV2 = DefaultDatabase(DBConnection.SQLite("dbv2_auction.db"),DBSyntax.SQLite)
+        databaseV2.openConnection()
         AuctionTable.create(databaseV2)
         dataSource = DataSource(databaseV2)
     }

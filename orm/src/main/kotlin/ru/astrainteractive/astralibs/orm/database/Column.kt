@@ -27,7 +27,7 @@ sealed class Column<T>(val name: String, val type: String) {
         primaryKey = true
     }
     internal class IntColumn(name: String) : Column<Int>(name, "INTEGER")
-    internal class LongColumn(name: String) : Column<Long>(name, "INTEGER")
+    internal class BigIntColumn(name: String) : Column<Long>(name, "BIGINT")
     internal class StringColumn(name: String) : Column<String>(name, "TEXT")
     internal class BoolColumn(name: String) : Column<Int>(name, "BOOLEAN")
     internal class DoubleColumn(name: String) : Column<Double>(name, "REAL")
