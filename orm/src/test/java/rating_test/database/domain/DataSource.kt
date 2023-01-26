@@ -7,17 +7,17 @@ import rating_test.database.domain.entities.AuctionTable
 import ru.astrainteractive.astralibs.orm.Database
 
 interface IDataSource {
-    suspend fun insertAuction(auctionDTO: AuctionDTO): Long?
+    suspend fun insertAuction(auctionDTO: AuctionDTO): Int?
     suspend fun expireAuction(auctionDTO: AuctionDTO)
     suspend fun getUserAuctions(uuid: String, expired: Boolean): List<AuctionDTO>
     suspend fun getAuctionsOlderThan(millis: Long): List<AuctionDTO>
-    suspend fun fetchAuction(id: Long): AuctionDTO?
+    suspend fun fetchAuction(id: Int): AuctionDTO?
     suspend fun deleteAuction(auction: AuctionDTO)
     suspend fun countPlayerAuctions(uuid: String): Int?
 }
 
 class DataSource(private val database: Database) : IDataSource {
-    override suspend fun insertAuction(auctionDTO: AuctionDTO): Long {
+    override suspend fun insertAuction(auctionDTO: AuctionDTO): Int {
         return AuctionTable.insert(database) {
             this[AuctionTable.discordId] = auctionDTO.discordId
             this[AuctionTable.minecraftUuid] = auctionDTO.minecraftUuid
@@ -25,7 +25,7 @@ class DataSource(private val database: Database) : IDataSource {
             this[AuctionTable.item] = auctionDTO.item
             this[AuctionTable.price] = auctionDTO.price
             this[AuctionTable.expired] = if (auctionDTO.expired) 1 else 0
-        }.toLong()
+        }
     }
 
     override suspend fun expireAuction(auctionDTO: AuctionDTO) {
@@ -53,7 +53,7 @@ class DataSource(private val database: Database) : IDataSource {
         }.map(AuctionMapper::toDTO)
     }
 
-    override suspend fun fetchAuction(id: Long): AuctionDTO? {
+    override suspend fun fetchAuction(id: Int): AuctionDTO? {
         return AuctionTable.find(database,constructor = Auction) {
             AuctionTable.id.eq(id)
         }.map(AuctionMapper::toDTO)?.firstOrNull()

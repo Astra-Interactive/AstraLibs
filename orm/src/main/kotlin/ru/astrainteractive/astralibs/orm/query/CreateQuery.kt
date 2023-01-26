@@ -1,19 +1,20 @@
 package ru.astrainteractive.astralibs.orm.query
 
+import ru.astrainteractive.astralibs.orm.DBSyntax
 import ru.astrainteractive.astralibs.orm.database.Table
 
-class CreateQuery(val table: Table<*>) : Query {
+class CreateQuery(val table: Table<*>,val syntax: DBSyntax) : Query {
     override fun generate(): String {
         val keys = table.columns.joinToString(",", "(", ")") { column ->
             buildList<String> {
                 add("${column.name} ${column.type}")
                 if (column.primaryKey) {
-                    add("PRIMARY KEY")
+                    add(syntax.PRIMARY_KEY)
                     if (column.autoIncrement)
-                        add("AUTOINCREMENT")
+                        add(syntax.AUTO_INCREMENT)
                 }
                 if (!column.nullable)
-                    add("NOT NULL")
+                    add(syntax.NOT_NULL)
                 if (column.unique)
                     add("UNIQUE")
             }.joinToString(" ")

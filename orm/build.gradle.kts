@@ -25,5 +25,6 @@ dependencies {
     testImplementation(libs.coroutines.core)
     testImplementation(libs.coroutines.coreJvm)
     testImplementation(libs.xerial.sqlite.jdbc)
+    testImplementation("mysql:mysql-connector-java:8.0.32")
     implementation(project(":ktx-core"))
 }

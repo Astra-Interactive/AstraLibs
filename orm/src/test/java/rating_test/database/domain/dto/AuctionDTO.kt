@@ -1,7 +1,7 @@
 package rating_test.database.domain.dto
 
 data class AuctionDTO(
-    val id: Long,
+    val id: Int,
     val discordId: String?,
     val minecraftUuid: String,
     val time: Long,

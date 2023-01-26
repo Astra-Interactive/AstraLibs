@@ -19,7 +19,7 @@ class AuctionsDomainTests {
     private lateinit var dataSource: IDataSource
     val randomAuction: AuctionDTO
         get() = AuctionDTO(
-            id = -1L,
+            id = -1,
             discordId = UUID.randomUUID().toString(),
             minecraftUuid = UUID.randomUUID().toString(),
             time = System.currentTimeMillis(),
