@@ -29,9 +29,9 @@ sealed class Column<T>(val name: String, val type: String) {
     internal class IntColumn(name: String) : Column<Int>(name, "INTEGER")
     internal class BigIntColumn(name: String) : Column<Long>(name, "BIGINT")
     internal class StringColumn(name: String) : Column<String>(name, "TEXT")
-    internal class BoolColumn(name: String) : Column<Int>(name, "BOOLEAN")
+    internal class BoolColumn(name: String) : Column<Int>(name, "TINYINT(2)")
     internal class DoubleColumn(name: String) : Column<Double>(name, "REAL")
     internal class FloatColumn(name: String) : Column<Float>(name, "REAL")
-    internal class ByteArrayColumn(name: String) : Column<ByteArray>(name, "VARBINARY")
+    internal class ByteArrayColumn(name: String,size: Int) : Column<ByteArray>(name, "VARBINARY($size)")
 }
 

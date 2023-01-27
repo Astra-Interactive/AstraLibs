@@ -1,10 +1,12 @@
-package rating_test.database
+package tests
 
+import ORMTest
+import Resource
 import kotlinx.coroutines.runBlocking
-import rating_test.database.domain.DataSource
-import rating_test.database.domain.IDataSource
-import rating_test.database.domain.dto.AuctionDTO
-import rating_test.database.domain.entities.AuctionTable
+import domain.DataSource
+import domain.IDataSource
+import domain.dto.AuctionDTO
+import domain.entities.AuctionTable
 import ru.astrainteractive.astralibs.orm.DBConnection
 import ru.astrainteractive.astralibs.orm.DBSyntax
 import ru.astrainteractive.astralibs.orm.Database
@@ -14,9 +16,9 @@ import java.util.*
 import kotlin.random.Random
 import kotlin.test.*
 
-class AuctionsDomainTests {
-    private lateinit var databaseV2: Database
-    private lateinit var dataSource: IDataSource
+class AuctionsDomainTests : ORMTest() {
+    private val dataSource: IDataSource
+        get() = DataSource(assertConnected())
     val randomAuction: AuctionDTO
         get() = AuctionDTO(
             id = -1,
@@ -29,17 +31,11 @@ class AuctionsDomainTests {
         )
 
     @BeforeTest
-    fun setup(): Unit = runBlocking {
-        File("dbv2_auction.db").delete()
-        databaseV2 = DefaultDatabase(DBConnection.SQLite("dbv2_auction.db"),DBSyntax.SQLite)
-        databaseV2.openConnection()
-        AuctionTable.create(databaseV2)
-        dataSource = DataSource(databaseV2)
-    }
-
-    @AfterTest
-    fun destruct(): Unit = runBlocking {
-        databaseV2.closeConnection()
+    override fun setup(): Unit = runBlocking {
+        super.setup()
+        assertConnected().also { database ->
+            AuctionTable.create(database)
+        }
     }
 
     @Test
@@ -72,8 +68,8 @@ class AuctionsDomainTests {
         assertEquals(amount, 0)
         val oldAuctionDTO = randomAuction.copy(time = 0)
         dataSource.insertAuction(oldAuctionDTO)
-        amount = dataSource.getAuctionsOlderThan(System.currentTimeMillis()-1).size
-        assertEquals(amount,1)
+        amount = dataSource.getAuctionsOlderThan(System.currentTimeMillis() - 1).size
+        assertEquals(amount, 1)
     }
 
 }

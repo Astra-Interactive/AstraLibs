@@ -28,3 +28,4 @@ astra.properties
 local.properties
 .gradle/
 build/
+orm/src/test/resources/mysql.json

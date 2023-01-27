@@ -1,4 +1,4 @@
-package rating_test.database.domain.dto
+package domain.dto
 
 data class AuctionDTO(
     val id: Int,

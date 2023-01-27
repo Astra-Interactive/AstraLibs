@@ -30,7 +30,7 @@ abstract class Table<T>(val tableName: String) {
 
     fun double(name: String): Column<Double> = Column.DoubleColumn(name).also(_columns::add)
 
-    fun byteArray(name: String): Column<ByteArray> = Column.ByteArrayColumn(name).also(_columns::add)
+    fun byteArray(name: String,size: Int): Column<ByteArray> = Column.ByteArrayColumn(name,size).also(_columns::add)
 
 
     private fun assertConnected(database: Database): Connection {
@@ -42,6 +42,7 @@ abstract class Table<T>(val tableName: String) {
     suspend fun create(database: Database) {
         val query = CreateQuery(this, database.dbSyntax).generate()
         val connection = assertConnected(database)
+        println(query)
         connection.prepareStatement(query).also {
             it.execute()
             it.close()
@@ -75,9 +76,6 @@ abstract class Table<T>(val tableName: String) {
         }
         statement.close()
         throw DatabaseException.NoIdReturned
-//        val key = statement.generatedKeys.getString(1)
-//        println("Got key: $key")
-//        return key.toInt()
     }
 
     fun <K : Entity<T>> wrap(it: ResultSet, constructor: Constructable<K>): K {
@@ -139,7 +137,7 @@ abstract class Table<T>(val tableName: String) {
         constructor: Constructable<K>,
         op: SQLExpressionBuilder.() -> Expression<Boolean>
     ): List<K> {
-        val query = SelectQuery(this, op).generate()
+        val query = SelectQuery(this,expression = op).generate()
         val connection = assertConnected(database)
         val statement = connection.prepareStatement(query)
         val wrapped = statement.executeQuery().mapNotNull {
@@ -156,9 +154,14 @@ abstract class Table<T>(val tableName: String) {
         val connection = assertConnected(database)
         val query = CountQuery(this, op).generate()
         val statement = connection.prepareStatement(query)
-        val total =  statement.executeQuery().getInt("total")
+        val rs =  statement.executeQuery()
+        if (rs.next()){
+            val id =  rs.getInt("total")
+            statement.close()
+            return id
+        }
         statement.close()
-        return total
+        throw DatabaseException.NoIdReturned
     }
 }
 

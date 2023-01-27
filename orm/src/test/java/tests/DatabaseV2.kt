@@ -1,16 +1,15 @@
+package tests
+
+import ORMTest
+import Resource
 import kotlinx.coroutines.runBlocking
 import kotlin.test.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import rating_test.database.domain.entities.SimpleUser
-import rating_test.database.domain.entities.SimpleUserTable
-import kotlin.test.AfterTest
+import domain.entities.SimpleUser
+import domain.entities.SimpleUserTable
 import kotlin.test.BeforeTest
 import ru.astrainteractive.astralibs.orm.expression.SQLExpressionBuilder.eq
 import ru.astrainteractive.astralibs.orm.*
-import ru.astrainteractive.astralibs.orm.database.Column
-import ru.astrainteractive.astralibs.orm.database.Constructable
-import ru.astrainteractive.astralibs.orm.database.Entity
-import ru.astrainteractive.astralibs.orm.database.Table
 import ru.astrainteractive.astralibs.orm.query.CreateQuery
 import ru.astrainteractive.astralibs.orm.query.InsertQuery
 import ru.astrainteractive.astralibs.orm.statement.DBStatement
@@ -30,8 +29,6 @@ class DatabaseV2 : ORMTest() {
                 SimpleUserTable.id.eq(id)
             }.first()
         }
-    override val builder: () -> Database
-        get() = { DefaultDatabase(DBConnection.SQLite("dbv2.db"), DBSyntax.SQLite) }
 
     @BeforeTest
     override fun setup(): Unit = runBlocking {
@@ -61,8 +58,9 @@ class DatabaseV2 : ORMTest() {
     @Test
     fun `Create table`() {
         val database = assertConnected()
+        val syntax = database.dbSyntax
         val expectedQuery =
-            "CREATE TABLE IF NOT EXISTS user_table (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,name TEXT NOT NULL UNIQUE)"
+            "CREATE TABLE IF NOT EXISTS user_table (id INTEGER ${syntax.PRIMARY_KEY} ${syntax.AUTO_INCREMENT} ${syntax.NOT_NULL},name TEXT ${syntax.NOT_NULL} UNIQUE)"
         assertEquals(expectedQuery, CreateQuery(SimpleUserTable, database.dbSyntax).generate())
         assertDoesNotThrow { runBlocking { SimpleUserTable.create(database) } }
     }
