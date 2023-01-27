@@ -1,9 +1,27 @@
 package ru.astrainteractive.astralibs.orm.expression
 
-class AndExpression<T>(val parent: Expression<*>, val child: Expression<*>) : Expression<T> {
-    override fun toString(): String {
-        val childExpression = SQLExpressionBuilder.resolveExpression(child)
-        val parentExpression = SQLExpressionBuilder.resolveExpression(parent)
-        return "$childExpression AND ($parentExpression)"
+import ru.astrainteractive.astralibs.orm.query.Query
+
+sealed interface AndExpression<T> : Expression<T> {
+    val realParent: Expression<*>
+    class ChildExpression<T>(
+        val realChild: Expression<*>,
+        override val realParent: Expression<*>
+    ) : AndExpression<T>{
+        override fun toString(): String {
+            val realParentExpression = SQLExpressionBuilder.resolveExpression(realParent)
+            val realChildExpression = SQLExpressionBuilder.resolveExpression(realChild)
+            return "$realParentExpression AND ($realChildExpression)"
+        }
     }
+    class ChildQuery<T>(
+        val realChild: Query,
+        override val realParent: Expression<*>
+    ) : AndExpression<T> {
+        override fun toString(): String {
+            val realParentExpression = SQLExpressionBuilder.resolveExpression(realParent)
+            return "$realParentExpression AND (${realChild.generate()})"
+        }
+    }
+
 }

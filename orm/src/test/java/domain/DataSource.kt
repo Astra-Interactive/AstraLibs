@@ -1,9 +1,9 @@
-package rating_test.database.domain
+package domain
 
-import rating_test.database.domain.dto.AuctionDTO
-import rating_test.database.domain.dto.AuctionMapper
-import rating_test.database.domain.entities.Auction
-import rating_test.database.domain.entities.AuctionTable
+import domain.dto.AuctionDTO
+import domain.dto.AuctionMapper
+import domain.entities.Auction
+import domain.entities.AuctionTable
 import ru.astrainteractive.astralibs.orm.Database
 
 interface IDataSource {

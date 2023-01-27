@@ -1,10 +1,10 @@
-package rating_test.database
+package tests
 
 import ORMTest
 import kotlinx.coroutines.runBlocking
-import rating_test.database.domain.entities.User
-import rating_test.database.domain.entities.UserRatingTable
-import rating_test.database.domain.entities.UserTable
+import domain.entities.User
+import domain.entities.UserRatingTable
+import domain.entities.UserTable
 import ru.astrainteractive.astralibs.orm.DBConnection
 import ru.astrainteractive.astralibs.orm.DBSyntax
 import ru.astrainteractive.astralibs.orm.Database
@@ -14,8 +14,6 @@ import kotlin.test.*
 
 
 class DatabaseTests : ORMTest() {
-    override val builder: () -> Database
-        get() = { DefaultDatabase(DBConnection.SQLite("dbv2_2.db"), DBSyntax.SQLite) }
 
     val randomUser: User
         get() = runBlocking {

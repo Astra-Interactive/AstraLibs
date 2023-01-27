@@ -1,4 +1,4 @@
-package rating_test.database.domain.entities
+package domain.entities
 
 import ru.astrainteractive.astralibs.orm.database.Column
 import ru.astrainteractive.astralibs.orm.database.Constructable
@@ -11,7 +11,7 @@ object AuctionTable : Table<Int>("auctions") {
     val discordId = text("discord_id").nullable()
     val minecraftUuid = text("minecraft_uuid")
     val time = bigint("time")
-    val item = byteArray("item")
+    val item = byteArray("item",4096)
     val price = float("price")
     val expired = bool("expired")
 }

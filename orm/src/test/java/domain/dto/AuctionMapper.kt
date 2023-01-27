@@ -1,7 +1,6 @@
-package rating_test.database.domain.dto
+package domain.dto
 
-import rating_test.database.domain.entities.Auction
-import rating_test.database.domain.entities.AuctionTable
+import domain.entities.Auction
 import ru.astrainteractive.astralibs.domain.mapping.IMapper
 
 object AuctionMapper : IMapper<Auction, AuctionDTO> {

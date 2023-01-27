@@ -27,4 +27,7 @@ dependencies {
     testImplementation(libs.xerial.sqlite.jdbc)
     testImplementation("mysql:mysql-connector-java:8.0.32")
     implementation(project(":ktx-core"))
+
+    testImplementation(libs.kotlin.serialization)
+    testImplementation(libs.kotlin.serializationJson)
 }

@@ -1,4 +1,4 @@
-package rating_test.database.domain.entities
+package domain.entities
 
 import ru.astrainteractive.astralibs.orm.database.Column
 import ru.astrainteractive.astralibs.orm.database.Entity
