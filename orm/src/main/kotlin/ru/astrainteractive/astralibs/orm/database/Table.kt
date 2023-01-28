@@ -22,7 +22,8 @@ abstract class Table<T>(val tableName: String) {
 
     fun bigint(name: String): Column<Long> = Column.BigIntColumn(name).also(_columns::add)
 
-    fun text(name: String): Column<String> = Column.StringColumn(name).also(_columns::add)
+    fun text(name: String, size: Int = 65535): Column<String> = Column.TextColumn(name, size).also(_columns::add)
+    fun varchar(name: String, size: Int): Column<String> = Column.StringColumn(name, size).also(_columns::add)
 
     fun bool(name: String): Column<Int> = Column.BoolColumn(name).also(_columns::add)
 

@@ -60,7 +60,7 @@ class DatabaseV2 : ORMTest() {
         val database = assertConnected()
         val syntax = database.dbSyntax
         val expectedQuery =
-            "CREATE TABLE IF NOT EXISTS user_table (id INTEGER ${syntax.PRIMARY_KEY} ${syntax.AUTO_INCREMENT} ${syntax.NOT_NULL},name TEXT ${syntax.NOT_NULL} UNIQUE)"
+            "CREATE TABLE IF NOT EXISTS user_table (id INTEGER ${syntax.PRIMARY_KEY} ${syntax.AUTO_INCREMENT} ${syntax.NOT_NULL},name VARCHAR(128) ${syntax.NOT_NULL} UNIQUE)"
         assertEquals(expectedQuery, CreateQuery(SimpleUserTable, database.dbSyntax).generate())
         assertDoesNotThrow { runBlocking { SimpleUserTable.create(database) } }
     }

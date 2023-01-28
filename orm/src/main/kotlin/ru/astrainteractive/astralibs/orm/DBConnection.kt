@@ -14,7 +14,7 @@ sealed class DBConnection(val driver: String) {
         val password: String
     ): DBConnection("com.mysql.cj.jdbc.Driver"){
         override val url: String
-            get() = "jdbc:mysql://$ip:$port/$database"
+            get() = "jdbc:mysql://$ip:$port/$database?sessionVariables=sql_mode=\'\'"
 
     }
 }

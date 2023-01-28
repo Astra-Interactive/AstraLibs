@@ -8,8 +8,8 @@ import ru.astrainteractive.astralibs.orm.database.Table
 
 object AuctionTable : Table<Int>("auctions") {
     override val id: Column<Int> = integer("id").primaryKey().autoIncrement()
-    val discordId = text("discord_id").nullable()
-    val minecraftUuid = text("minecraft_uuid")
+    val discordId = varchar("discord_id",128).nullable()
+    val minecraftUuid = varchar("minecraft_uuid",128)
     val time = bigint("time")
     val item = byteArray("item",4096)
     val price = float("price")

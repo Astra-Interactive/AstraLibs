@@ -7,7 +7,7 @@ import ru.astrainteractive.astralibs.orm.database.Table
 
 object UserTable : Table<Int>("rating_user") {
     override val id: Column<Int> = integer("user_id").primaryKey().autoIncrement()
-    val uuid: Column<String> = text("minecraftUUID").unique()
+    val uuid: Column<String> = varchar("minecraftUUID",128).unique()
     val lastUpdated: Column<Long> = bigint("lastUpdated")
 }
 

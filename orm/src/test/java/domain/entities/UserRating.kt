@@ -9,8 +9,8 @@ object UserRatingTable : Table<Int>("rating_user") {
     val userCreatedReport: Column<Int> = integer("user_created_report")
     val reportedUser: Column<Int> = integer("reported_user")
     val rating: Column<Int> = integer("rating")
-    val message: Column<String> = text("message")
-    val time: Column<String> = text("time")
+    val message: Column<String> = varchar("message",128)
+    val time: Column<String> = varchar("time",128)
 }
 
 class UserRating : Entity<Int>(UserRatingTable) {
