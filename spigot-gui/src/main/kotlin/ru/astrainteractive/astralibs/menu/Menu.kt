@@ -4,11 +4,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import ru.astrainteractive.astralibs.async.BukkitMain
-import ru.astrainteractive.astralibs.events.DSLEvent
-import ru.astrainteractive.astralibs.events.EventListener
-import ru.astrainteractive.astralibs.events.EventManager
 import org.bukkit.Bukkit
-import org.bukkit.event.HandlerList
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory

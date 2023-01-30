@@ -1,9 +1,8 @@
 package ru.astrainteractive.astralibs.utils.economy
 
-import org.bukkit.OfflinePlayer
 import java.util.UUID
 
-interface IEconomyProvider {
+interface EconomyProvider {
     /**
      * @param  uuid UUID of player
      * @return double - current balance of [uuid]

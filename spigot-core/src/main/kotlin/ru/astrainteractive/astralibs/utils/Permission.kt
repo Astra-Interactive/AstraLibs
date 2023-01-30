@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.utils
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-interface IPermission {
+interface Permission {
     val value: String
     fun hasPermission(player: CommandSender) = player.hasPermission(value)
 

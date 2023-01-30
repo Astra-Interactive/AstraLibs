@@ -10,13 +10,10 @@ import ru.astrainteractive.astralibs.menu.IPlayerHolder
 import ru.astrainteractive.astralibs.menu.Menu
 import ru.astrainteractive.astralibs.menu.multi_page.MultiPageMenu
 
-class OnePageMenu(player: Player) : Menu(), IInventoryView {
+class OnePageMenu(player: Player) : Menu() {
     override val playerMenuUtility: IPlayerHolder = PlayerHolder(player)
     val viewModel: OnePageViewModel by lazy {
         OnePageViewModel()
-    }
-    val presenter: OnePagePresenter by lazy {
-        OnePagePresenter(this)
     }
     override var menuTitle: String = "One page menu"
     override val menuSize: MenuSize
@@ -24,10 +21,8 @@ class OnePageMenu(player: Player) : Menu(), IInventoryView {
 
     override fun onInventoryClicked(e: InventoryClickEvent) {
         e.isCancelled = true
-//        if (e.slot == viewModel.item.value.index)
-//            viewModel.onItemClicked()
-//        if (e.slot == viewModel.item.value.index)
-//            presenter.onItemClicked()
+        if (e.slot == viewModel.item.value.index)
+            viewModel.onItemClicked()
         if (e.slot == viewModel.item.value.index)
             componentScope.launch(Dispatchers.IO) {
                 MultiPageMenu(playerMenuUtility.player).open()
@@ -36,17 +31,15 @@ class OnePageMenu(player: Player) : Menu(), IInventoryView {
 
     override fun onInventoryClose(it: InventoryCloseEvent) {
         viewModel.close()
-        presenter.close()
     }
 
     override fun onCreated() {
-        presenter.onBinded()
-//        viewModel.item.collectOn {
-//            showInventoryButton(it)
-//        }
+        viewModel.item.collectOn {
+            showInventoryButton(it)
+        }
     }
 
-    override fun showInventoryButton(inventoryButton: InventoryButton) {
+    fun showInventoryButton(inventoryButton: InventoryButton) {
         inventoryButton.setInventoryButton()
     }
 

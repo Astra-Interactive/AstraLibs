@@ -14,7 +14,6 @@ import java.io.File
 public class FileManager(
     val configName: String,
     val dataFolder: File = AstraLibs.instance.dataFolder,
-    val resourceProvider: IResourceProvider = DefaultResourceProvider(dataFolder)
 ) {
     /**
      * Reference for the file
@@ -27,15 +26,19 @@ public class FileManager(
      */
     var fileConfiguration: FileConfiguration = loadFileConfiguration()
         private set
-
+    private fun isResourceExists(configName: String) = AstraLibs.instance.getResource(configName) != null
+    private fun saveFromResource(fileName: String): File {
+        AstraLibs.instance.saveResource(fileName, false)
+        return File(dataFolder, fileName)
+    }
     /**
      * Initialization of file
      */
     private fun loadConfigFile(): File {
         var file = File(dataFolder, configName)
         if (file.exists()) return file
-        if (resourceProvider.isResourceExists(configName))
-            return resourceProvider.saveFromResource(configName)
+        if (isResourceExists(configName))
+            return saveFromResource(configName)
         file = File(dataFolder, configName)
         file.parentFile?.mkdirs()
         file.createNewFile()

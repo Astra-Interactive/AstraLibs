@@ -1,11 +1,8 @@
 package ru.astrainteractive.astralibs.configuration
 
-import kotlin.reflect.KProperty
+interface MutableConfiguration<T> : Configuration<T> {
+    override var value: T
+    fun saveValue(value: T)
+    fun immutable() = this as Configuration<T>
+}
 
-abstract class MutableConfiguration<T> : Configuration<T>() {
-    abstract override var value: T
-        public set
-}
-operator fun <K, T> MutableConfiguration<T>.setValue(instance: K, property: KProperty<*>, value: T) {
-    this.value = value
-}

@@ -18,7 +18,7 @@ class PluginEntryPoint : JavaPlugin() {
     override fun onEnable() {
         super.onEnable()
         AstraLibs.rememberPlugin(this)
-        Logger.setupWithSpigot("AstraLibsShowcase")
+        Logger.setupWithSpigot("AstraLibsShowcase",this)
         registerCommand("gui") {
             val player = (sender as? Player) ?: return@registerCommand
             PluginScope.launch(Dispatchers.IO) {

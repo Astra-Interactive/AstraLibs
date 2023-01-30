@@ -13,8 +13,7 @@ object Logger {
     /**
      * Custom log path
      */
-    var logsFolder = ".${File.separator}logs"
-    var fileLogEnabled: Boolean = false
+    var logsFolderPath: String? = null
 
     /**
      * Custom logger implementation
@@ -42,18 +41,22 @@ object Logger {
         log(tag, message, Level.SEVERE, consolePrint)
     }
 
+    /**
+     * Log message
+     * If [logLevel] >= [Level.WARNING] it will be saved into local log file
+     */
     fun log(tag: String, message: String, logLevel: Level, consolePrint: Boolean) {
-
         if (consolePrint)
             logger?.log(logLevel, "[$tag] $message")
-        logInFile(tag, message, logLevel)
+        if (logLevel.intValue() >= Level.WARNING.intValue())
+            logInFile(tag, message, logLevel)
     }
 
+
     private fun logInFile(_tag: String?, message: String, logLevel: Level) {
-        if (!fileLogEnabled) return
         val tag = "$_tag/$logLevel"
-        File(logsFolder).apply { if (!exists()) mkdirs() }
-        val path = "${logsFolder}${File.separator}$prefix ${getDate()}.log"
+        File(logsFolderPath).apply { if (!exists()) mkdirs() }
+        val path = "${logsFolderPath}${File.separator}$prefix ${getDate()}.log"
         val file = File(path)
         if (!file.exists())
             file.createNewFile()

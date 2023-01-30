@@ -4,9 +4,9 @@ import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astralibs.orm.exception.DatabaseException
 import ru.astrainteractive.astralibs.orm.expression.Expression
 import ru.astrainteractive.astralibs.orm.expression.SQLExpressionBuilder
+import ru.astrainteractive.astralibs.orm.mapNotNull
 import ru.astrainteractive.astralibs.orm.query.*
 import ru.astrainteractive.astralibs.orm.statement.DBStatement
-import ru.astrainteractive.astralibs.utils.mapNotNull
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement

@@ -1,8 +1,7 @@
 package ru.astrainteractive.astralibs.utils
 
 import ru.astrainteractive.astralibs.events.DSLEvent
-import ru.astrainteractive.astralibs.events.EventManager
-import ru.astrainteractive.astralibs.events.GlobalEventManager
+import ru.astrainteractive.astralibs.events.GlobalEventListener
 import io.netty.channel.Channel
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToMessageDecoder
@@ -14,7 +13,7 @@ import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.player.PlayerRespawnEvent
-import java.lang.reflect.Field
+import ru.astrainteractive.astralibs.events.EventListener
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -29,7 +28,7 @@ abstract class AstraPacketReader<K : PacketListener, T : Packet<K>>(
     /**
      * You can reassign eventManager to another event
      */
-    val eventManager: EventManager = GlobalEventManager
+    val eventListener: EventListener = GlobalEventListener
 ) {
     private val channels: MutableMap<UUID, Channel> = HashMap()
     companion object{
@@ -43,16 +42,16 @@ abstract class AstraPacketReader<K : PacketListener, T : Packet<K>>(
     fun onEnable() {
         onDisable()
         Bukkit.getOnlinePlayers().forEach { inject(it) }
-        val joinEvent = DSLEvent.event<PlayerJoinEvent>(eventManager) {
+        val joinEvent = DSLEvent.event<PlayerJoinEvent>(eventListener) {
             inject(it.player)
         }
-        val respawnEvent = DSLEvent.event<PlayerRespawnEvent>(eventManager) {
+        val respawnEvent = DSLEvent.event<PlayerRespawnEvent>(eventListener) {
             inject(it.player)
         }
-        val quitEvent = DSLEvent.event<PlayerQuitEvent>(eventManager) {
+        val quitEvent = DSLEvent.event<PlayerQuitEvent>(eventListener) {
             deInject(it.player.uniqueId)
         }
-        val deathEvent = DSLEvent.event<PlayerDeathEvent>(eventManager) {
+        val deathEvent = DSLEvent.event<PlayerDeathEvent>(eventListener) {
             deInject(it.player.uniqueId)
         }
     }
@@ -63,7 +62,7 @@ abstract class AstraPacketReader<K : PacketListener, T : Packet<K>>(
     fun onDisable() {
         channels.keys.toList().forEach { deInject(it) }
         channels.clear()
-        eventManager.onDisable()
+        eventListener.onDisable()
     }
 
     /**

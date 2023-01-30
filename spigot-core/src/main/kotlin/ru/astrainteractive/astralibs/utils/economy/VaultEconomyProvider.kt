@@ -7,7 +7,7 @@ import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import java.util.UUID
 
-object VaultEconomyProvider : IEconomyProvider {
+object VaultEconomyProvider : EconomyProvider {
     var econ: Economy? = null
         private set
     private const val TAG = "VaultHook"

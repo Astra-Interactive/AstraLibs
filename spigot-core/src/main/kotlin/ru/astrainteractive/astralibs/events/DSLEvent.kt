@@ -10,33 +10,26 @@ import org.bukkit.plugin.java.JavaPlugin
  */
 object DSLEvent {
     inline fun <reified T : Event> event(
-        eventManager: EventManager = GlobalEventManager,
+        eventController: EventListener = GlobalEventListener,
         eventPriority: EventPriority = EventPriority.NORMAL,
         plugin: JavaPlugin = AstraLibs.instance,
         crossinline block: (T) -> Unit
-    ) = event(T::class.java, eventManager, eventPriority, plugin) {
+    ) = event(T::class.java, eventController, eventPriority, plugin) {
         (it as? T)?.let(block)
     }
 
     fun <T : Event> event(
         clazz: Class<T>,
-        eventManager: EventManager,
+        eventController: EventListener,
         eventPriority: EventPriority,
         plugin: JavaPlugin,
         block: (Event) -> Unit
-    ) = object : EventListener {
-        override fun onEnable(manager: EventManager): EventListener {
-            eventManager.addHandler(this)
-            plugin.server.pluginManager.registerEvent(
-                clazz, this, eventPriority,
-                { _, event ->
-                    block(event)
-                }, plugin
-            )
-            return this
-        }
-
-    }.onEnable(eventManager)
+    ) = plugin.server.pluginManager.registerEvent(
+        clazz, eventController, eventPriority,
+        { _, event ->
+            block(event)
+        }, plugin
+    )
 
 
 }

@@ -9,8 +9,7 @@ import java.util.*
  * Consider use BukkitInputStreamProvider and BukkitOutputStreamProvider from spigot-core if using [Serializer] with bukkit objects
  */
 class Serializer(
-    private val outputStreamProvider: IOutputStreamProvider,
-    private val inputStreamProvider: IInputStreamProvider = DefaultInputStreamProvider
+    private val streamProvider: IOStreamProvider = JavaIOStreamProvider,
 ) {
     sealed interface Wrapper {
         @JvmInline
@@ -21,16 +20,16 @@ class Serializer(
     }
 
     fun <T> toByteArray(obj: T): Wrapper.ByteArray {
-        val io = ByteArrayOutputStream()
-        val os = outputStreamProvider.provide(io)
+        val bostream = ByteArrayOutputStream()
+        val os = streamProvider.provideOutputStream(bostream)
         os.writeObject(obj)
         os.flush()
-        return Wrapper.ByteArray(io.toByteArray())
+        return Wrapper.ByteArray(bostream.toByteArray())
     }
 
     fun <T> fromByteArray(byteArray: Wrapper.ByteArray): T {
         val _in = ByteArrayInputStream(byteArray.value)
-        val _is = inputStreamProvider.provide(_in)
+        val _is = streamProvider.provideInputStream(_in)
         return _is.readObject() as T
     }
 

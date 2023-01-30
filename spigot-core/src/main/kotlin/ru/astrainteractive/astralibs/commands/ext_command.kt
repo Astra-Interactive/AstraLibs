@@ -1,9 +1,10 @@
 package ru.astrainteractive.astralibs.commands
 
+import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.AstraLibs
 
-fun JavaPlugin.registerCommand(alias: String, block: Command.() -> Unit) {
+fun Plugin.registerCommand(alias: String, block: Command.() -> Unit) {
     AstraLibs.instance.getCommand(alias)?.setExecutor { sender, _, _, args ->
         Command(alias, sender, args).apply(block)
         return@setExecutor true

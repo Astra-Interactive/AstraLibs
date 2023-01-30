@@ -1,17 +1,15 @@
 package ru.astrainteractive.astralibs.utils
 
-import ru.astrainteractive.astralibs.AstraLibs
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
-import org.bukkit.command.CommandSender
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.FileConfiguration
-import org.bukkit.entity.Player
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.meta.ItemMeta
+import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.EmpireSerializer
 import ru.astrainteractive.astralibs.Logger
 import ru.astrainteractive.astralibs.file_manager.FileManager
@@ -26,11 +24,11 @@ inline fun <reified T> EmpireSerializer.toClass(file: FileManager): T? = toClass
 /**
  * Setup bukkit logger
  */
-fun Logger.setupWithSpigot(prefix: String) {
+fun Logger.setupWithSpigot(prefix: String,instance: Plugin) {
     val logger = Bukkit.getLogger()
-    val path = "${AstraLibs.instance.dataFolder}${File.separator}logs"
+    val path = "${instance.dataFolder}${File.separator}logs"
     Logger.logger = logger
-    Logger.logsFolder = path
+    Logger.logsFolderPath = path
     Logger.prefix = prefix
 }
 

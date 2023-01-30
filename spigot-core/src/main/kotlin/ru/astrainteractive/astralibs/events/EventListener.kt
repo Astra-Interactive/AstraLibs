@@ -1,24 +1,17 @@
 package ru.astrainteractive.astralibs.events
 
-import ru.astrainteractive.astralibs.AstraLibs
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
-/**
- * This interface provides you comfortability whe use events
- */
-interface EventListener:Listener {
+import org.bukkit.plugin.Plugin
 
-
-    fun onEnable(manager: EventManager): EventListener {
-        AstraLibs.instance.server.pluginManager.registerEvents(this, AstraLibs.instance)
-        manager.addHandler(this)
-        return this
+interface EventListener : Listener {
+    fun onEnable(plugin: Plugin) {
+        plugin.server.pluginManager.registerEvents(this, plugin)
     }
 
-    /**
-     * You should unregister all the listeners here
-     */
-    fun onDisable(){
+    fun onDisable() {
         HandlerList.unregisterAll(this)
     }
 }
+
+

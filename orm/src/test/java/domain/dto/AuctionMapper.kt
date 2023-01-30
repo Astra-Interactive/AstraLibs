@@ -1,9 +1,9 @@
 package domain.dto
 
 import domain.entities.Auction
-import ru.astrainteractive.astralibs.domain.mapping.IMapper
+import ru.astrainteractive.astralibs.domain.mapping.Mapper
 
-object AuctionMapper : IMapper<Auction, AuctionDTO> {
+object AuctionMapper : Mapper<Auction, AuctionDTO> {
 
     override fun toDTO(it: Auction): AuctionDTO = AuctionDTO(
         id = it.id,
