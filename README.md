@@ -8,6 +8,10 @@ As an example - you can see how it beign used in [AstraTemplate](https://github.
 
 ### You can use AstraLibs as you want, but you are not allowed to use it in "pay to win projects"
 ## [Wiki](https://github.com/Astra-Interactive/AstraLibs/wiki)
+You can see wiki[UNCOMPLETED] or even better - see [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate)
+
+AstraTemplate used as template in all plugins of AstraInteractive. Architecture of AstraTemplate is easy and allows develop Spigot plugins easily and fast
+
 ## Add a ktx-core dependency to your project
 This will allow you to use non-spigot utilities
 ```groovy
@@ -32,21 +36,23 @@ repositories {
 ## What can it do?
 - Advanced utility functions
 - valueOfOrNull for enums
-- dsl catching function to safely run your functions
+- Dependency containers such as Module, Reloadable and Factory
+- Domain utilities such as UseCase or Mapper
 - dsl command executor
 - dsl event handler
+- advanced class to handle Configuration values
 - advanced functions for ConfigurationSection such as getFloat, getHexString,
 - advanced extensions such as String.HEX(), Player.uuid
-- advanced function for ResultSet - for working with database such as ResultSet.forEach or ResultSet.map
+- self written simple but useful ORM wrapper on SQLite and MySQL
+- simple httpClient(with get and post) over java URL
 - File management - You can easily create config files with one line: FileManager("data/config.yml")
-- Time estimator: AstraEstimator{ block() }
 - Logging in file
 - Serializer with kotlinx - allow you to create data classes and forget about parsing config files by hand
-- Cooldown class - allows you to set cooldowns for any object or event
-- Licence checker - allows you to add servers with their unique keys to whitelist
 - Menu and paginated menu
-- Async work with coroutines
-- And other minor things
+- Async work with coroutines - PluginScope and AsyncComponent, which can be used as ViewModel
+- Reflection util - setField, getField etc
+- Serializer - allows to encode values into byteArray or string with custom IOProvider
+- And other awesome things - look in AstraTemplate
 
 As an example - you can see how it beign used in [AstraAuction](https://github.com/Astra-Interactive/AstraAuctions)
 
