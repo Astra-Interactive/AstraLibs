@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.menu
+package ru.astrainteractive.astralibs.menu.menu
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.StateFlow
@@ -10,6 +10,9 @@ import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import ru.astrainteractive.astralibs.async.AsyncComponent
+import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
+import ru.astrainteractive.astralibs.menu.utils.InventoryButton
+import ru.astrainteractive.astralibs.menu.utils.MenuSize
 import java.lang.IllegalStateException
 
 
@@ -28,11 +31,11 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         }
     }
 
-    fun IInventoryButton.setInventoryButton() {
+    fun InventoryButton.setInventoryButton() {
         inventory?.setItem(index, item)
     }
 
-    abstract val playerMenuUtility: IPlayerHolder
+    abstract val playerHolder: PlayerHolder
 
 
     private var inventory: Inventory? = null
@@ -66,7 +69,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     suspend fun open() {
         inventory = Bukkit.createInventory(this, menuSize.size, menuTitle)
         val open = {
-            inventory?.let(playerMenuUtility.player::openInventory)
+            inventory?.let(playerHolder.player::openInventory)
             onCreated()
         }
         if (coroutineContext!=Dispatchers.BukkitMain)

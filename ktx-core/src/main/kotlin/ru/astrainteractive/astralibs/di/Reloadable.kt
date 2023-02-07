@@ -6,7 +6,7 @@ import kotlin.reflect.KProperty
  * [Reloadable] can be used to create reloadable singletons with kotlin object
  * If you want to create non-reloadable singleton - see [Module]
  */
-abstract class Reloadable<T>: Dependency<T> {
+abstract class Reloadable<T>(): Dependency<T> {
     abstract fun initializer(): T
 
     final override var value: T by LazyMutable {

@@ -1,12 +1,12 @@
-package ru.astrainteractive.astralibs.menu
+package ru.astrainteractive.astralibs.menu.holder
 
 import org.bukkit.entity.Player
 
 /**
- * PlayerMenuUtility data class
+ * PlayerHolder interface
  *
  * Can be extended to add stuff like opened page etc
  */
-interface IPlayerHolder {
+interface PlayerHolder {
     val player: Player
 }

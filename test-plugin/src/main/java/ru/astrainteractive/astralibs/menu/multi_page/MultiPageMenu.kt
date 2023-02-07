@@ -4,7 +4,10 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.menu.*
+import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
+import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
+import ru.astrainteractive.astralibs.menu.utils.MenuSize
+import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
 import ru.astrainteractive.astralibs.menu.one_page.InventoryButton
 
 class MultiPageMenu(player: Player) : PaginatedMenu() {
@@ -14,10 +17,10 @@ class MultiPageMenu(player: Player) : PaginatedMenu() {
     override var page: Int = 0
     override val maxItemsAmount: Int
         get() = viewModel.items.value.size
-    override val prevPageButton: IInventoryButton = InventoryButton.fromString("Prev", 45){}
-    override val backPageButton: IInventoryButton = InventoryButton.fromString("Back", 46){}
-    override val nextPageButton: IInventoryButton = InventoryButton.fromString("Next", 47){}
-    override val playerMenuUtility: IPlayerHolder = PlayerHolder(player)
+    override val prevPageButton: ru.astrainteractive.astralibs.menu.utils.InventoryButton = InventoryButton.fromString("Prev", 45){}
+    override val backPageButton: ru.astrainteractive.astralibs.menu.utils.InventoryButton = InventoryButton.fromString("Back", 46){}
+    override val nextPageButton: ru.astrainteractive.astralibs.menu.utils.InventoryButton = InventoryButton.fromString("Next", 47){}
+    override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
     override var menuTitle: String = "Title Page: $page"
         get() = "Title Page: $page"
         set(value) {
@@ -48,7 +51,7 @@ class MultiPageMenu(player: Player) : PaginatedMenu() {
     }
 
     private fun setItems(items: List<ItemStack>) {
-        setManageButtons()
+//        setManageButtons()
         for (i in 0 until maxItemsPerPage) {
             val index = getIndex(i)
             val item = items.getOrNull(index) ?: continue

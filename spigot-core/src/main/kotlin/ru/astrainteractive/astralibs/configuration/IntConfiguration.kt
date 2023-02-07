@@ -6,9 +6,7 @@ class IntConfiguration(
     fileConfiguration: FileConfiguration,
     path: String,
     default: Int
-) : MutableConfiguration<Int> by BukkitConfiguration(
-    fileConfiguration = fileConfiguration,
-    path = path,
+) : MutableConfiguration<Int> by DefaultConfiguration(
     default = default,
     save = { fileConfiguration.set(path, value) },
     load = { fileConfiguration.getInt(path, default) }

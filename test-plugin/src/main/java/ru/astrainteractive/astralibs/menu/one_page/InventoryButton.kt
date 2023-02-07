@@ -3,13 +3,14 @@ package ru.astrainteractive.astralibs.menu.one_page
 import org.bukkit.Material
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.menu.IInventoryButton
+import ru.astrainteractive.astralibs.menu.utils.InventoryButton
+import ru.astrainteractive.astralibs.menu.utils.click.Click
 
 data class InventoryButton(
     override val item: ItemStack,
     override val index: Int = 4,
-    override val onClick: (e: InventoryClickEvent) -> Unit
-) : IInventoryButton {
+    override val onClick: Click
+) : InventoryButton {
     companion object {
         fun fromString(title: String, index: Int, onClick: (e: InventoryClickEvent) -> Unit): InventoryButton {
             val itemStack = ItemStack(Material.PAPER).apply {

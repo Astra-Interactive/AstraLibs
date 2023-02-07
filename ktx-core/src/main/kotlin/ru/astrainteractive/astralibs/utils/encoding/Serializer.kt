@@ -13,9 +13,10 @@ class Serializer(
 ) {
     sealed interface Wrapper {
         @JvmInline
-        value class Base64(val value: String):Wrapper
+        value class Base64(val value: String) : Wrapper
+
         @JvmInline
-        value class ByteArray(val value: kotlin.ByteArray):Wrapper
+        value class ByteArray(val value: kotlin.ByteArray) : Wrapper
 
     }
 

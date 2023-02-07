@@ -4,14 +4,14 @@ import kotlinx.coroutines.*
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
-import ru.astrainteractive.astralibs.menu.MenuSize
-import ru.astrainteractive.astralibs.menu.PlayerHolder
-import ru.astrainteractive.astralibs.menu.IPlayerHolder
-import ru.astrainteractive.astralibs.menu.Menu
+import ru.astrainteractive.astralibs.menu.utils.MenuSize
+import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
+import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
+import ru.astrainteractive.astralibs.menu.menu.Menu
 import ru.astrainteractive.astralibs.menu.multi_page.MultiPageMenu
 
 class OnePageMenu(player: Player) : Menu() {
-    override val playerMenuUtility: IPlayerHolder = PlayerHolder(player)
+    override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
     val viewModel: OnePageViewModel by lazy {
         OnePageViewModel()
     }
@@ -25,7 +25,7 @@ class OnePageMenu(player: Player) : Menu() {
             viewModel.onItemClicked()
         if (e.slot == viewModel.item.value.index)
             componentScope.launch(Dispatchers.IO) {
-                MultiPageMenu(playerMenuUtility.player).open()
+                MultiPageMenu(playerHolder.player).open()
             }
     }
 
