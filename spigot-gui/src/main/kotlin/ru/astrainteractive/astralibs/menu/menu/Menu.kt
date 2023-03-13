@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import ru.astrainteractive.astralibs.async.BukkitMain
 import org.bukkit.Bukkit
+import org.bukkit.Warning
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
@@ -58,23 +59,18 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
 
     /**
      * Called when inventory was closed
+     * After [onInventoryClose] executed - [componentScope] will be closed
      */
-    open fun onInventoryClose(it: InventoryCloseEvent){
-        close()
-    }
+    abstract fun onInventoryClose(it: InventoryCloseEvent)
 
     /**
      * Open inventory method for Menu class
+     * Should be executed on main thread
      */
-    suspend fun open() {
+    fun open() {
         inventory = Bukkit.createInventory(this, menuSize.size, menuTitle)
-        val open = {
-            inventory?.let(playerHolder.player::openInventory)
-            onCreated()
-        }
-        if (coroutineContext!=Dispatchers.BukkitMain)
-            withContext(Dispatchers.BukkitMain) { open() }
-        else open()
+        inventory?.let(playerHolder.player::openInventory)
+        onCreated()
     }
 
 
