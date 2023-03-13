@@ -1,12 +1,12 @@
 [versions]
-plugin = "2.3.0-RC3"
+plugin = "2.4.0"
 name = "AstraLibs"
 group =  "ru.astrainteractive.astralibs"
 description = "Core utilities for spigot development"
 wear-gms = "18.0.0"
 destinationDirectoryPath = "D:\\Minecraft Servers\\EmpireProjekt_remake\\smp\\plugins"
 # Kotlin
-kotlin = "1.7.0"
+kotlin = "1.8.10"
 jetbrainsCompose = "1.2.0"
 coroutines = "1.6.3"
 json = "1.5.0-RC"
