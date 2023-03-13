@@ -1,9 +1,10 @@
 package ru.astrainteractive.astralibs.configuration
 
 import org.bukkit.configuration.file.FileConfiguration
+import ru.astrainteractive.astralibs.configuration.api.MutableConfiguration
 
 sealed interface StringConfiguration {
-    class Nullable(
+    class Default(
         fileConfiguration: FileConfiguration,
         path: String,
         default: String
@@ -13,7 +14,7 @@ sealed interface StringConfiguration {
         load = { fileConfiguration.getString(path, default) ?: default }
     )
 
-    class Optional(
+    class Nullable(
         fileConfiguration: FileConfiguration,
         path: String,
     ) : MutableConfiguration<String?> by DefaultConfiguration(

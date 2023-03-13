@@ -3,11 +3,12 @@ package ru.astrainteractive.astralibs.configuration
 import org.bukkit.configuration.file.FileConfiguration
 import ru.astrainteractive.astralibs.configuration.api.MutableConfiguration
 
-class StringListConfiguration(
+inline fun <reified T> AnyConfiguration(
     fileConfiguration: FileConfiguration,
     path: String,
-) : MutableConfiguration<List<String>> by DefaultConfiguration(
-    default = emptyList(),
+    default: T
+) = object : MutableConfiguration<T> by DefaultConfiguration(
+    default = default,
     save = { fileConfiguration.set(path, value) },
-    load = { fileConfiguration.getStringList(path) }
-)
+    load = { fileConfiguration.get(path, default) as? T ?: default }
+) {}
