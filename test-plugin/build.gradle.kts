@@ -23,6 +23,7 @@ dependencies {
     compileOnly(libs.spigotApi)
     compileOnly(libs.spigot)
     compileOnly(libs.vaultapi)
+    // Local
     implementation(project(":ktx-core"))
     implementation(project(":spigot-core"))
     implementation(project(":spigot-gui"))
