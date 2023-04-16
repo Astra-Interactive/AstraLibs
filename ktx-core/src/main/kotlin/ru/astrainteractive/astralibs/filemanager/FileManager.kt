@@ -10,9 +10,13 @@ interface FileManager {
     val configFile: File
 
     val isResourceExists: Boolean
-    fun loadFromResource(fileName: String): File
+    fun loadFromResource(): File
     fun loadConfigFile(): File
     fun save()
     fun reload()
+    sealed class Exception(msg: String) : Throwable(msg) {
+        class ResourceNotExists(resourceName: String) : kotlin.Exception("Resource $resourceName not exists")
+
+    }
 }
 

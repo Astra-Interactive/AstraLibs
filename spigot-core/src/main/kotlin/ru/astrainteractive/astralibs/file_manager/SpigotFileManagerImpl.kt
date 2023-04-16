@@ -7,7 +7,6 @@ import ru.astrainteractive.astralibs.filemanager.FileManager
 import java.io.File
 
 
-
 /**
  * File manager for every single file
  * You can create new files, change them, save/load them
@@ -30,9 +29,9 @@ internal class SpigotFileManagerImpl(
         private set
 
     override val isResourceExists = AstraLibs.instance.getResource(name) != null
-    override fun loadFromResource(fileName: String): File {
-        AstraLibs.instance.saveResource(fileName, false)
-        return File(dataFolder, fileName)
+    override fun loadFromResource(): File {
+        AstraLibs.instance.saveResource(name, false)
+        return File(dataFolder, name)
     }
 
     /**
@@ -40,12 +39,10 @@ internal class SpigotFileManagerImpl(
      */
     override fun loadConfigFile(): File {
         var file = File(dataFolder, name)
-        if (file.exists()) {
+        if (file.exists())
             return file
-        }
-        if (isResourceExists) {
-            return loadFromResource(name)
-        }
+        if (isResourceExists)
+            return loadFromResource()
         file = File(dataFolder, name)
         file.parentFile?.mkdirs()
         file.createNewFile()
@@ -66,9 +63,5 @@ internal class SpigotFileManagerImpl(
     override fun reload() {
         this.configFile = loadConfigFile()
         this.fileConfiguration = loadFileConfiguration()
-    }
-
-    init {
-        reload()
     }
 }

@@ -28,7 +28,7 @@ tasks {
         useJUnitPlatform()
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_17.majorVersion
     }
     withType<Jar> {
         archiveClassifier.set("min")
