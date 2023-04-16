@@ -12,14 +12,15 @@ import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.EmpireSerializer
 import ru.astrainteractive.astralibs.Logger
-import ru.astrainteractive.astralibs.file_manager.FileManager
+import ru.astrainteractive.astralibs.file_manager.SpigotFileManager
+import ru.astrainteractive.astralibs.file_manager.SpigotFileManagerImpl
 import java.io.*
 import java.util.*
 import java.util.regex.Pattern
 import kotlin.random.Random
 
 
-inline fun <reified T> EmpireSerializer.toClass(file: FileManager): T? = toClass(file.configFile)
+inline fun <reified T> EmpireSerializer.toClass(file: SpigotFileManager): T? = toClass(file.configFile)
 
 /**
  * Setup bukkit logger
