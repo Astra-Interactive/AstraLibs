@@ -12,8 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.EmpireSerializer
 import ru.astrainteractive.astralibs.Logger
-import ru.astrainteractive.astralibs.file_manager.SpigotFileManager
-import ru.astrainteractive.astralibs.file_manager.SpigotFileManagerImpl
+import ru.astrainteractive.astralibs.filemanager.SpigotFileManager
 import java.io.*
 import java.util.*
 import java.util.regex.Pattern

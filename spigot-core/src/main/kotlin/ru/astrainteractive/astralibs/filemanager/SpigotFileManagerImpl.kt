@@ -1,10 +1,8 @@
-package ru.astrainteractive.astralibs.file_manager
+package ru.astrainteractive.astralibs.filemanager
 
 import ru.astrainteractive.astralibs.AstraLibs
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
-import ru.astrainteractive.astralibs.filemanager.FileManager
-import ru.astrainteractive.astralibs.filemanager.ResourceFileManager
 import java.io.File
 
 

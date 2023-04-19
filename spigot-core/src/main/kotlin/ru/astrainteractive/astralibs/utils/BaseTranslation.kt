@@ -1,8 +1,7 @@
 package ru.astrainteractive.astralibs.utils
 
 import org.bukkit.configuration.file.FileConfiguration
-import ru.astrainteractive.astralibs.file_manager.SpigotFileManager
-import ru.astrainteractive.astralibs.file_manager.SpigotFileManagerImpl
+import ru.astrainteractive.astralibs.filemanager.SpigotFileManager
 
 abstract class BaseTranslation {
     protected abstract val translationFile: SpigotFileManager
