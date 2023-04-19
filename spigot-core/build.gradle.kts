@@ -26,9 +26,15 @@ dependencies {
     compileOnly(libs.spigot)
     compileOnly(libs.vaultapi)
     compileOnly(libs.placeholderapi)
-    // Test
-    testImplementation(kotlin("test"))
-    testImplementation(libs.orgTesting)
-
+    // Test-Core
+    testImplementation(kotlin("test-junit5"))
+    testImplementation(platform(libs.junit.bom))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    // Test-libs
+    testImplementation(libs.coroutines.core)
+    testImplementation(libs.coroutines.coreJvm)
+    testImplementation(libs.xerial.sqlite.jdbc)
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.29.0")
+    // Local
     implementation(project(":ktx-core"))
 }

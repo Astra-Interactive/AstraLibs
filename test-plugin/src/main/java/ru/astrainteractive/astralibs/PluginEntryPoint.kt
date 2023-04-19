@@ -8,6 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.async.PluginScope
 import ru.astrainteractive.astralibs.commands.EmpireGive
 import ru.astrainteractive.astralibs.commands.registerCommand
+import ru.astrainteractive.astralibs.file_manager.SpigotFileManager
 import ru.astrainteractive.astralibs.menu.multi_page.MultiPageMenu
 import ru.astrainteractive.astralibs.menu.one_page.OnePageMenu
 import ru.astrainteractive.astralibs.utils.setupWithSpigot
@@ -29,6 +30,8 @@ class PluginEntryPoint : JavaPlugin() {
 
         }
         EmpireGive.register()
+        val spigotFileManager = SpigotFileManager("config.yml")
+        spigotFileManager.reload()
     }
 
     override fun onDisable() {
