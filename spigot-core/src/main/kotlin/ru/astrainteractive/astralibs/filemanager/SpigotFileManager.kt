@@ -28,9 +28,11 @@ interface SpigotFileManager : ResourceFileManager {
         operator fun invoke(
             name: String,
             dataFolder: File = AstraLibs.instance.dataFolder,
+            isOptional: Boolean = false
         ): SpigotFileManager = SpigotFileManagerImpl(
             name = name,
-            dataFolder = dataFolder
+            dataFolder = dataFolder,
+            isOptional = isOptional
         )
     }
 }

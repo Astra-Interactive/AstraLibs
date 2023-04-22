@@ -11,10 +11,12 @@ import java.io.File
  * You can create new files, change them, save/load them
  * If file not exist in resouces, it will be created anyway
  * @param name is name of the file with file type
+ * @param isOptional - is config file placed from .jar is optional
  */
 internal class SpigotFileManagerImpl(
     override val name: String,
     override val dataFolder: File = AstraLibs.instance.dataFolder,
+    val isOptional: Boolean = false
 ) : SpigotFileManager {
     override var configFile: File = loadConfigFile()
 
@@ -30,8 +32,12 @@ internal class SpigotFileManagerImpl(
     private fun loadConfigFile(): File {
         val file = File(dataFolder, name)
         if (file.exists()) return file
-        if (!isResourceExists) throw ResourceFileManager.Exception.ResourceNotExists(name)
-        return loadFromResource()
+        return if (!isResourceExists && !isOptional) throw ResourceFileManager.Exception.ResourceNotExists(name)
+        else if (isResourceExists) loadFromResource()
+        else File(dataFolder, name).also {
+            it.parentFile.mkdirs()
+            it.createNewFile()
+        }
     }
 
     private fun loadFileConfiguration(): FileConfiguration {
