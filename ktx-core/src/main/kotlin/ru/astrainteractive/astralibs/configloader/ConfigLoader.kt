@@ -36,6 +36,7 @@ object ConfigLoader {
         return kotlin.runCatching {
             unsafeParse<T>(file)
         }.onFailure {
+            it.printStackTrace()
             val yamlText = yamlDecoder.encodeToString(default)
             file.parentFile.mkdirs()
             file.createNewFile()
