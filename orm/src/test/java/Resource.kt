@@ -34,7 +34,7 @@ object Resource {
     }
 
     fun getDatabase(): Database {
-        return readMySqlConnection()
-//        return sqliteConnection()
+//        return readMySqlConnection()
+        return sqliteConnection()
     }
 }
