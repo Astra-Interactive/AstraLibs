@@ -1,7 +1,6 @@
 package ru.astrainteractive.astralibs.utils
 
 import net.md_5.bungee.api.ChatColor
-import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.attribute.Attribute
 import org.bukkit.attribute.AttributeModifier
@@ -10,7 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.Plugin
-import ru.astrainteractive.astralibs.filemanager.SpigotFileManager
+import ru.astrainteractive.astralibs.logging.Logger
 import java.io.*
 import java.util.*
 import java.util.regex.Pattern

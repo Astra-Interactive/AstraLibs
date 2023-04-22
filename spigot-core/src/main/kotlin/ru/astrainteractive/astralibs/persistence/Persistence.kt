@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.utils.persistence
+package ru.astrainteractive.astralibs.persistence
 
 import org.bukkit.inventory.meta.ItemMeta
 

@@ -2,6 +2,9 @@ package ru.astrainteractive.astralibs.configuration
 
 import ru.astrainteractive.astralibs.configuration.api.MutableConfiguration
 
+/**
+ * DefaultConfiguration which can help to implement custom types configurations via delegation
+ */
 class DefaultConfiguration<T>(
     val default: T,
     private val load: MutableConfiguration<T>.() -> T,

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.utils.encoding
+package ru.astrainteractive.astralibs.encoding
 
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream

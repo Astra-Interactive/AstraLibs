@@ -3,8 +3,8 @@ package ru.astrainteractive.astralibs.di
 import kotlin.reflect.KProperty
 
 /**
- * [Reloadable] can be used to create reloadable singletons with kotlin object
- * If you want to create non-reloadable singleton - see [Module]
+ * [Reloadable] can be used to create reloadable components with kotlin object
+ * If you want to create non-reloadable component - see [Module]
  */
 abstract class Reloadable<T>(): Dependency<T> {
     abstract fun initializer(): T

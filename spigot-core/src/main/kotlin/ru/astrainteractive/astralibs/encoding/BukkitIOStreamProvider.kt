@@ -1,7 +1,8 @@
-package ru.astrainteractive.astralibs.utils.encoding
+package ru.astrainteractive.astralibs.encoding
 
 import org.bukkit.util.io.BukkitObjectInputStream
 import org.bukkit.util.io.BukkitObjectOutputStream
+import ru.astrainteractive.astralibs.encoding.IOStreamProvider
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream

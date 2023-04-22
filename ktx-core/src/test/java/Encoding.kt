@@ -1,5 +1,5 @@
-import ru.astrainteractive.astralibs.utils.encoding.JavaIOStreamProvider
-import ru.astrainteractive.astralibs.utils.encoding.Serializer
+import ru.astrainteractive.astralibs.encoding.JavaIOStreamProvider
+import ru.astrainteractive.astralibs.encoding.Serializer
 import java.io.Serializable
 import kotlin.test.Test
 import kotlin.test.assertEquals

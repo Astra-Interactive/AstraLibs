@@ -1,7 +1,6 @@
-package ru.astrainteractive.astralibs.utils
+package ru.astrainteractive.astralibs.logging
 
 import java.io.File
-import java.util.logging.Level
 
 class JUtilLogger(
     override val tag: String,

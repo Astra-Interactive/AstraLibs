@@ -1,6 +1,5 @@
-package ru.astrainteractive.astralibs.utils
+package ru.astrainteractive.astralibs.logging
 
-import ru.astrainteractive.astralibs.di.Lateinit
 import ru.astrainteractive.astralibs.di.Singleton
 import java.io.File
 import java.time.LocalDateTime

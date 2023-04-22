@@ -14,5 +14,3 @@ abstract class Factory<T> : Dependency<T> {
 fun <T> factory(initializer: () -> T) = object : Factory<T>() {
     override fun initializer(): T = initializer()
 }
-
-inline operator fun <reified T, K> Factory<T>.getValue(t: K?, property: KProperty<*>): T = value

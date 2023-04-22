@@ -32,6 +32,9 @@ object ConfigLoader {
         unsafeParse<T>(file)
     }
 
+    /**
+     * Trying to parse [file] via [safeParse] and loadng [default] if failure happened
+     */
     inline fun <reified T : Any> toClassOrDefault(file: File, default: T): T {
         return kotlin.runCatching {
             unsafeParse<T>(file)

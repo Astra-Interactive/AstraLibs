@@ -1,13 +1,12 @@
-package ru.astrainteractive.astralibs.utils.economy
+package ru.astrainteractive.astralibs.economy
 
 import net.milkbowl.vault.economy.Economy
 import net.milkbowl.vault.economy.EconomyResponse
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import ru.astrainteractive.astralibs.di.Singleton
-import ru.astrainteractive.astralibs.utils.Logger
+import ru.astrainteractive.astralibs.economy.EconomyProvider
+import ru.astrainteractive.astralibs.logging.Logger
 import java.util.UUID
-import kotlin.reflect.KProperty
 
 object VaultEconomyProvider : EconomyProvider {
     private val logger

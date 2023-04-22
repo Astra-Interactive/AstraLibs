@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.utils.economy
+package ru.astrainteractive.astralibs.economy
 
 import java.util.UUID
 
