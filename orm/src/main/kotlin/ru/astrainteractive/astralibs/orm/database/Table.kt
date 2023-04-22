@@ -43,7 +43,6 @@ abstract class Table<T>(val tableName: String) {
     suspend fun create(database: Database) {
         val query = CreateQuery(this, database.dbSyntax).generate()
         val connection = assertConnected(database)
-        println(query)
         connection.prepareStatement(query).also {
             it.execute()
             it.close()

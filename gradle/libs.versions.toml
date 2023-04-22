@@ -1,5 +1,5 @@
 [versions]
-plugin = "2.4.2-RC4"
+plugin = "2.4.3"
 name = "AstraLibs"
 group =  "ru.astrainteractive.astralibs"
 description = "Core utilities for spigot development"
