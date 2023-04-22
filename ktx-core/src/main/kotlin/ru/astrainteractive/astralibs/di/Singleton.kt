@@ -1,10 +1,11 @@
-package ru.astrainteractive.astralibs.utils
+package ru.astrainteractive.astralibs.di
 
 import kotlin.reflect.KProperty
 
 abstract class Singleton<T : Any> {
     lateinit var instance: T
 }
+
 private operator fun <T : Any> Singleton<T>.getValue(t: T?, property: KProperty<*>): T {
     return instance
 }

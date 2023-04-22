@@ -16,7 +16,6 @@ import java.io.File
 internal class SpigotFileManagerImpl(
     override val name: String,
     override val dataFolder: File = AstraLibs.instance.dataFolder,
-    val isOptional: Boolean = false
 ) : SpigotFileManager {
     override var configFile: File = loadConfigFile()
 
@@ -32,12 +31,8 @@ internal class SpigotFileManagerImpl(
     private fun loadConfigFile(): File {
         val file = File(dataFolder, name)
         if (file.exists()) return file
-        return if (!isResourceExists && !isOptional) throw ResourceFileManager.Exception.ResourceNotExists(name)
-        else if (isResourceExists) loadFromResource()
-        else File(dataFolder, name).also {
-            it.parentFile.mkdirs()
-            it.createNewFile()
-        }
+        if (!isResourceExists) throw ResourceFileManager.Exception.ResourceNotExists(name)
+        return loadFromResource()
     }
 
     private fun loadFileConfiguration(): FileConfiguration {

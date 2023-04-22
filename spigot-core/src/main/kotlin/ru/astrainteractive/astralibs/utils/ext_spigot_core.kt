@@ -10,8 +10,6 @@ import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.Plugin
-import ru.astrainteractive.astralibs.EmpireSerializer
-import ru.astrainteractive.astralibs.Logger
 import ru.astrainteractive.astralibs.filemanager.SpigotFileManager
 import java.io.*
 import java.util.*
@@ -19,17 +17,15 @@ import java.util.regex.Pattern
 import kotlin.random.Random
 
 
-inline fun <reified T> EmpireSerializer.toClass(file: SpigotFileManager): T? = toClass(file.configFile)
-
 /**
  * Setup bukkit logger
  */
-fun Logger.setupWithSpigot(prefix: String,instance: Plugin) {
-    val logger = Bukkit.getLogger()
-    val path = "${instance.dataFolder}${File.separator}logs"
-    Logger.logger = logger
-    Logger.logsFolderPath = path
-    Logger.prefix = prefix
+fun Logger.Companion.setupWithSpigot(tag: String, instance: Plugin) {
+    Logger.withJavaLogger(
+        tag = tag,
+        folder = File(instance.dataFolder, "logs").also { it.mkdirs() },
+        logger = instance.logger
+    )
 }
 
 /**

@@ -1,13 +1,17 @@
 package ru.astrainteractive.astralibs.utils.economy
 
-import ru.astrainteractive.astralibs.Logger
 import net.milkbowl.vault.economy.Economy
 import net.milkbowl.vault.economy.EconomyResponse
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
+import ru.astrainteractive.astralibs.di.Singleton
+import ru.astrainteractive.astralibs.utils.Logger
 import java.util.UUID
+import kotlin.reflect.KProperty
 
 object VaultEconomyProvider : EconomyProvider {
+    private val logger
+        get() = Logger.instance
     var econ: Economy? = null
         private set
     private const val TAG = "VaultHook"
@@ -46,15 +50,15 @@ object VaultEconomyProvider : EconomyProvider {
 
     fun onEnable() {
         if (Bukkit.getPluginManager().getPlugin("Vault") == null) {
-            Logger.error("Vault is not installed!", TAG)
+            logger.error("Vault is not installed!", TAG)
             return
         }
         val rsp = Bukkit.getServer().servicesManager.getRegistration(Economy::class.java) ?: run {
-            Logger.error("Could not get economy provider", TAG)
+            logger.error("Could not get economy provider", TAG)
             return
         }
         econ = rsp.provider
-        Logger.log("Vault hook enabled", TAG)
+        logger.info("Vault hook enabled", TAG)
     }
 
     fun onDisable() {

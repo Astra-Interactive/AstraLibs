@@ -10,6 +10,7 @@ import ru.astrainteractive.astralibs.commands.registerCommand
 import ru.astrainteractive.astralibs.filemanager.SpigotFileManager
 import ru.astrainteractive.astralibs.menu.multi_page.MultiPageMenu
 import ru.astrainteractive.astralibs.menu.one_page.OnePageMenu
+import ru.astrainteractive.astralibs.utils.Logger
 import ru.astrainteractive.astralibs.utils.setupWithSpigot
 
 
