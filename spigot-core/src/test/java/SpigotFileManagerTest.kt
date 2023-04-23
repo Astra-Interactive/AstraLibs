@@ -2,7 +2,7 @@ import be.seeseemelk.mockbukkit.MockBukkit
 import be.seeseemelk.mockbukkit.ServerMock
 import org.bukkit.plugin.java.JavaPlugin
 import org.junit.jupiter.api.assertThrows
-import ru.astrainteractive.astralibs.AstraLibs
+import ru.astrainteractive.astralibs.filemanager.DefaultSpigotFileManager
 import ru.astrainteractive.astralibs.filemanager.SpigotFileManager
 import ru.astrainteractive.astralibs.filemanager.ResourceFileManager
 import kotlin.test.Test
@@ -18,8 +18,6 @@ class SpigotFileManagerTest {
     public fun setUp() {
         server = MockBukkit.mock();
         plugin = MockBukkit.createMockPlugin()
-        AstraLibs.rememberPlugin(plugin)
-
     }
 
     @AfterTest
@@ -30,7 +28,7 @@ class SpigotFileManagerTest {
     @Test
     fun sample() {
         assertThrows<ResourceFileManager.Exception.ResourceNotExists> {
-            SpigotFileManager("test.yml", plugin.dataFolder)
+            DefaultSpigotFileManager(plugin, "test.yml", plugin.dataFolder)
         }
     }
 }

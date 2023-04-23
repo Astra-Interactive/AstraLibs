@@ -2,11 +2,10 @@ package ru.astrainteractive.astralibs.async
 
 
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitScheduler
-import ru.astrainteractive.astralibs.AstraLibs
 import kotlin.coroutines.CoroutineContext
+
 /**
  * Bukkit async dispatcher implementation which will dispatch on [BukkitScheduler.runTaskAsynchronously]
  */

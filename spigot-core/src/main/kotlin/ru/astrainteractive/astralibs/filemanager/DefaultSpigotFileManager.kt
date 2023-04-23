@@ -1,8 +1,8 @@
 package ru.astrainteractive.astralibs.filemanager
 
-import ru.astrainteractive.astralibs.AstraLibs
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
+import org.bukkit.plugin.Plugin
 import java.io.File
 
 
@@ -11,20 +11,20 @@ import java.io.File
  * You can create new files, change them, save/load them
  * If file not exist in resouces, it will be created anyway
  * @param name is name of the file with file type
- * @param isOptional - is config file placed from .jar is optional
  */
-internal class SpigotFileManagerImpl(
+class DefaultSpigotFileManager(
+    private val plugin: Plugin,
     override val name: String,
-    override val dataFolder: File = AstraLibs.instance.dataFolder,
+    override val dataFolder: File = plugin.dataFolder,
 ) : SpigotFileManager {
     override var configFile: File = loadConfigFile()
 
     override var fileConfiguration: FileConfiguration = loadFileConfiguration()
         private set
 
-    override val isResourceExists = AstraLibs.instance.getResource(name) != null
+    override val isResourceExists = plugin.getResource(name) != null
     private fun loadFromResource(): File {
-        AstraLibs.instance.saveResource(name, true)
+        plugin.saveResource(name, true)
         return File(dataFolder, name)
     }
 

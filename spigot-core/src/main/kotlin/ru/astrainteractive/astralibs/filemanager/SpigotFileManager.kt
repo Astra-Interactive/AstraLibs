@@ -1,8 +1,6 @@
 package ru.astrainteractive.astralibs.filemanager
 
 import org.bukkit.configuration.file.FileConfiguration
-import ru.astrainteractive.astralibs.AstraLibs
-import java.io.File
 
 /**
  * This [SpigotFileManager] designed for spigot
@@ -23,14 +21,4 @@ interface SpigotFileManager : ResourceFileManager {
      * This function will load configuration from [FileManager.configFile] into [fileConfiguration]
      */
     fun reload()
-
-    companion object {
-        operator fun invoke(
-            name: String,
-            dataFolder: File = AstraLibs.instance.dataFolder,
-        ): SpigotFileManager = SpigotFileManagerImpl(
-            name = name,
-            dataFolder = dataFolder,
-        )
-    }
 }

@@ -1,13 +1,8 @@
 package ru.astrainteractive.astralibs.async
 
-import ru.astrainteractive.astralibs.AstraLibs
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
-import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitScheduler
-import org.bukkit.scheduler.BukkitTask
 import kotlin.coroutines.CoroutineContext
 
 /**

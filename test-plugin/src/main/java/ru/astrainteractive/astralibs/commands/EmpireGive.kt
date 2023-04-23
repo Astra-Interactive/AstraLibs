@@ -2,14 +2,13 @@ package ru.astrainteractive.astralibs.commands
 
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.AstraLibs
+import ru.astrainteractive.astralibs.PluginEntryPoint
 
 // egive <player> <item> [amount]
 object EmpireGive {
 
-    fun register() = AstraLibs.instance.registerCommand("egive") {
+    fun register() = PluginEntryPoint.instance.registerCommand("egive") {
         val player = argument(0) {
             it?.let(Bukkit::getPlayer)
         }.onFailure {
@@ -31,7 +30,7 @@ object EmpireGive {
         }
     }
 
-    fun tabComplemter() = AstraLibs.instance.registerTabCompleter("egive") {
+    fun tabComplemter() = PluginEntryPoint.instance.registerTabCompleter("egive") {
         return@registerTabCompleter listOf()
     }
 }

@@ -1,18 +1,23 @@
 package ru.astrainteractive.astralibs.menu.multi_page
 
+import kotlinx.coroutines.cancel
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
+import org.bukkit.plugin.Plugin
+import ru.astrainteractive.astralibs.async.BukkitMainDispatcher
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
 import ru.astrainteractive.astralibs.menu.menu.MenuSize
 import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
 import ru.astrainteractive.astralibs.menu.one_page.InventoryButton
 
-class MultiPageMenu(player: Player) : PaginatedMenu() {
+class MultiPageMenu(plugin: Plugin, player: Player) : PaginatedMenu() {
+    private val mainDispatcher = BukkitMainDispatcher(plugin)
     private val viewModel by lazy {
         MultiPageViewModel()
+
     }
     override var page: Int = 0
     override val maxItemsAmount: Int
@@ -45,9 +50,14 @@ class MultiPageMenu(player: Player) : PaginatedMenu() {
     }
 
     override fun onCreated() {
-        viewModel.items.collectOn {
+        viewModel.items.collectOn(mainDispatcher) {
             setItems(it)
         }
+    }
+
+    override fun close() {
+        super.close()
+        mainDispatcher.cancel()
     }
 
     private fun setItems(items: List<ItemStack>) {
