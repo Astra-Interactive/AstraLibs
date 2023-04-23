@@ -9,7 +9,7 @@ plugins {
 }
 dependencies {
     compileOnly(files(libs.javaClass.superclass.protectionDomain.codeSource.location))
-    implementation(libs.kotlinGradlePlugin)
+    implementation(libs.kotlin.gradle)
     implementation(libs.kotlin.serialization)
     implementation(libs.shadow)
 }

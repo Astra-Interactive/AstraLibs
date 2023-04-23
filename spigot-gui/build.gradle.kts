@@ -8,27 +8,13 @@ plugins {
 }
 
 dependencies {
-    // Kotlin
-    compileOnly(libs.kotlinGradlePlugin)
-    // Coroutines
-    compileOnly(libs.coroutines.coreJvm)
-    compileOnly(libs.coroutines.core)
-    // Serialization
-    compileOnly(libs.kotlin.serialization)
-    compileOnly(libs.kotlin.serializationJson)
-    compileOnly(libs.kotlin.serializationKaml)
-    // Documentation
-    dokkaHtmlPlugin(libs.kotlin.dokka.kotlinJavaPlugin)
-    compileOnly(libs.kotlin.dokka.plugin)
+    compileOnly(libs.bundles.kotlin)
     // Spigot dependencies
-    compileOnly(libs.paperApi)
-    compileOnly(libs.spigotApi)
-    compileOnly(libs.spigot)
-    compileOnly(libs.vaultapi)
-    // Test
-    testImplementation(kotlin("test"))
-    testImplementation(libs.orgTesting)
-
+    compileOnly(libs.bundles.minecraft.bukkit)
+    // Test-Core
+    testImplementation(platform(libs.tests.junit.bom))
+    testImplementation(libs.bundles.testing.libs)
+    // Local
     implementation(project(":ktx-core"))
     implementation(project(":spigot-core"))
 }

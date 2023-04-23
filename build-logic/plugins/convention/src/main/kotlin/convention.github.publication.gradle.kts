@@ -79,8 +79,8 @@ publishing {
 
         pom {
             artifactId = project.name
-            groupId = libs.versions.group.get()
-            version = libs.versions.plugin.get()
+            groupId = libs.versions.plugin.group.get()
+            version = libs.versions.plugin.version.get()
             name.set(project.name)
             description.set("Spigot core library written in kotlin")
             url.set("https://github.com/Astra-Interactive/AstraLibs")

@@ -7,27 +7,13 @@ plugins {
     id("convention.library")
 }
 dependencies {
-    testImplementation("org.testng:testng:7.1.0")
-    // Kotlin
-    compileOnly(libs.kotlinGradlePlugin)
-    // Coroutines
-    compileOnly(libs.coroutines.coreJvm)
-    compileOnly(libs.coroutines.core)
-    // Serialization
-    compileOnly(libs.kotlin.serialization)
-    compileOnly(libs.kotlin.serializationJson)
-    compileOnly(libs.kotlin.serializationKaml)
-    // Test-Core
+    compileOnly(libs.bundles.kotlin)
+    // Test
+    testImplementation(platform(libs.tests.junit.bom))
+    testImplementation(libs.bundles.testing.libs)
+    testImplementation(libs.bundles.testing.kotlin)
     testImplementation(kotlin("test-junit5"))
-    testImplementation(platform(libs.junit.bom))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    // Test-libs
-    testImplementation(libs.coroutines.core)
-    testImplementation(libs.coroutines.coreJvm)
-    testImplementation(libs.xerial.sqlite.jdbc)
-    testImplementation("mysql:mysql-connector-java:8.0.32")
+    // Local
     implementation(project(":ktx-core"))
-
-    testImplementation(libs.kotlin.serialization)
-    testImplementation(libs.kotlin.serializationJson)
 }

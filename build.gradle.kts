@@ -1,9 +1,9 @@
 import org.jetbrains.dokka.gradle.DokkaTask
 import kotlin.collections.mutableMapOf
 
-group = libs.versions.group.get()
-version = libs.versions.plugin.get()
-description = libs.versions.description.get()
+group = libs.versions.plugin.group.get()
+version = libs.versions.plugin.version.get()
+description = libs.versions.plugin.description.get()
 
 plugins {
     java

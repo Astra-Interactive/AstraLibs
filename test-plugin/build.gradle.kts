@@ -10,19 +10,12 @@ plugins {
 
 dependencies {
     // Kotlin
-    implementation(libs.kotlinGradlePlugin)
-    // Coroutines
-    implementation(libs.coroutines.coreJvm)
-    implementation(libs.coroutines.core)
-    // Serialization
-    implementation(libs.kotlin.serialization)
-    implementation(libs.kotlin.serializationJson)
-    implementation(libs.kotlin.serializationKaml)
+    compileOnly(libs.bundles.kotlin)
     // Spigot dependencies
-    compileOnly(libs.paperApi)
-    compileOnly(libs.spigotApi)
-    compileOnly(libs.spigot)
-    compileOnly(libs.vaultapi)
+    compileOnly(libs.bundles.minecraft.bukkit)
+    // Tests
+    testImplementation(platform(libs.tests.junit.bom))
+    testImplementation(libs.bundles.testing.libs)
     // Local
     implementation(project(":ktx-core"))
     implementation(project(":spigot-core"))
