@@ -20,7 +20,7 @@ import kotlin.random.Random
  * Setup bukkit logger
  */
 fun Logger.Companion.setupWithSpigot(tag: String, instance: Plugin) {
-    Logger.withJavaLogger(
+    Logger.rememberJavaLogger(
         tag = tag,
         folder = File(instance.dataFolder, "logs").also { it.mkdirs() },
         logger = instance.logger

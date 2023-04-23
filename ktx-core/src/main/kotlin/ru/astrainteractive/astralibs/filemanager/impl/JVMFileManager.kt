@@ -2,8 +2,11 @@ package ru.astrainteractive.astralibs.filemanager.impl
 
 import ru.astrainteractive.astralibs.filemanager.FileManager
 import java.io.File
-
-internal class FileManagerImpl(
+/**
+ * @param name - name of the file or name with path to file
+ * @param dataFolder - folder where file will be stored
+ */
+class JVMFileManager(
     override val name: String,
     override val dataFolder: File,
 ) : FileManager {

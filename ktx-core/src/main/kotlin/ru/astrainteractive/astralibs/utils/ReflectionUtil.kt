@@ -1,10 +1,15 @@
 package ru.astrainteractive.astralibs.utils
 
+import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 
+/**
+ * This class will help to use java reflection
+ */
+@UnsafeApi("Use on your own risk!")
 object ReflectionUtil {
     @Suppress("UNCHECKED_CAST")
     fun <T, K> getDeclaredField(clazz: Class<T>, name: String) = kotlin.runCatching {

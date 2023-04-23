@@ -21,7 +21,11 @@ interface Logger {
          * Returns current date in yyyy-MM-dd format
          */
         fun getDate(): String = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now())
-        fun withJavaLogger(
+
+        /**
+         * This function will return logger and remember it into [instance]
+         */
+        fun rememberJavaLogger(
             tag: String,
             folder: File,
             logger: java.util.logging.Logger = java.util.logging.Logger.getGlobal()

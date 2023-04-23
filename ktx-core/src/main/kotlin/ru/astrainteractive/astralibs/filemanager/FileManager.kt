@@ -1,6 +1,6 @@
 package ru.astrainteractive.astralibs.filemanager
 
-import ru.astrainteractive.astralibs.filemanager.impl.FileManagerImpl
+import ru.astrainteractive.astralibs.filemanager.impl.JVMFileManager
 import java.io.File
 
 /**
@@ -28,17 +28,5 @@ interface FileManager {
      * Delete [configFile]
      */
     fun delete()
-
-
-    companion object {
-        /**
-         * @param name - name of the file or name with path to file
-         * @param dataFolder - folder where file will be stored
-         */
-        operator fun invoke(
-            name: String,
-            dataFolder: File,
-        ): FileManager = FileManagerImpl(name, dataFolder)
-    }
 }
 

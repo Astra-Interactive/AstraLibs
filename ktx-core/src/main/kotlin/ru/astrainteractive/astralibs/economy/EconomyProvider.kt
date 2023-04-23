@@ -22,4 +22,11 @@ interface EconomyProvider {
      * @return boolean - true if [amount] has been added false if not
      */
     fun addMoney(uuid: UUID, amount: Double): Boolean
+
+    /**
+     * @param uuid - UUID of player
+     * @param amount - amount of requested money
+     * @return boolean - true if player has at least [amount] money, false if not
+     */
+    fun hasAtLeast(uuid: UUID, amount: Double): Boolean
 }

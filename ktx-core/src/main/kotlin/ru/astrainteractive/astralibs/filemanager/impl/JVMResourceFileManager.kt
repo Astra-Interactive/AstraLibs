@@ -4,8 +4,12 @@ import ru.astrainteractive.astralibs.filemanager.ResourceFileManager
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
-
-internal class ResourceFileManagerImpl(
+/**
+ * @param name - name of the file or name with path to file
+ * @param dataFolder - folder where file will be stored
+ * @param clazz - class loader where resource is located
+ */
+class JVMResourceFileManager(
     override val name: String,
     override val dataFolder: File,
     clazz: Class<*>

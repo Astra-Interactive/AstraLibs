@@ -10,6 +10,11 @@ import java.util.concurrent.ConcurrentLinkedQueue
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * If you're familiar with AndroidViewModel - this is similar
+ *
+ * This component has [CoroutineScope] inside so you can use it as ViewModel's and etc
+ */
 abstract class AsyncComponent: Closeable, CoroutineScope, AbstractCoroutineContextElement(AsyncComponent), Runnable {
     override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
     val componentScope: CoroutineScope
