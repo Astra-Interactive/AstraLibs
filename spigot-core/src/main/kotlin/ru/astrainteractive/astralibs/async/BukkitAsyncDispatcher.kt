@@ -1,5 +1,6 @@
 package ru.astrainteractive.astralibs.async
 
+
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import org.bukkit.plugin.Plugin
@@ -7,12 +8,9 @@ import org.bukkit.scheduler.BukkitScheduler
 import ru.astrainteractive.astralibs.AstraLibs
 import kotlin.coroutines.CoroutineContext
 /**
- * Use this dispatcher insted of [Dispatchers.IO] for example, to use bukkit-scheduled tasks
+ * Bukkit async dispatcher implementation which will dispatch on [BukkitScheduler.runTaskAsynchronously]
  */
-val Dispatchers.BukkitAsync: CoroutineDispatcher
-    get() = BukkitAsyncDispatcher
-object BukkitAsyncDispatcher : CoroutineDispatcher() {
-    private val plugin: Plugin = AstraLibs.instance
+class BukkitAsyncDispatcher(private val plugin: Plugin) : CoroutineDispatcher() {
 
     override fun isDispatchNeeded(context: CoroutineContext): Boolean {
         return plugin.server.isPrimaryThread && plugin.isEnabled

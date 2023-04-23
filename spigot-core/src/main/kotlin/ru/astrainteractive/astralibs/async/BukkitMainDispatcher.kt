@@ -11,14 +11,9 @@ import org.bukkit.scheduler.BukkitTask
 import kotlin.coroutines.CoroutineContext
 
 /**
- * Use this dispatcher to call bukkit main thread
- * For some reason it faster than [BukkitScheduler.callSyncMethod]
+ * Bukkit main dispatcher implementation which will dispatch on [BukkitScheduler.runTask]
  */
-val Dispatchers.BukkitMain: CoroutineDispatcher
-    get() = BukkitMainDispatcher
-
-object BukkitMainDispatcher : CoroutineDispatcher() {
-    private val plugin: Plugin = AstraLibs.instance
+class BukkitMainDispatcher(private val plugin: Plugin) : CoroutineDispatcher() {
 
     override fun isDispatchNeeded(context: CoroutineContext): Boolean {
         return !plugin.server.isPrimaryThread && plugin.isEnabled

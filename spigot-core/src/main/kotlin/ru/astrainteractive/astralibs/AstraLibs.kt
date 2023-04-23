@@ -8,11 +8,4 @@ import ru.astrainteractive.astralibs.di.Singleton
  * Main instance of AstraLibs
  * You can see AstraTemplate for examples of use
  */
-object AstraLibs: Singleton<JavaPlugin>() {
-    /**
-     * Initializer for AstraLibs
-     */
-    fun rememberPlugin(plugin: JavaPlugin) {
-        this.instance = plugin
-    }
-}
+object AstraLibs: Singleton<JavaPlugin>()

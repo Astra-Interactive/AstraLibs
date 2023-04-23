@@ -13,6 +13,7 @@ import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.player.PlayerRespawnEvent
+import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.events.EventListener
 import java.util.*
 import kotlin.collections.HashMap
@@ -26,12 +27,17 @@ abstract class AstraPacketReader<K : PacketListener, T : Packet<K>>(
      */
     val clazz: Class<out T>,
     /**
-     * You can reassign eventManager to another event
+     * You can reassign eventListener to another event
      */
-    val eventListener: EventListener = GlobalEventListener
+    val eventListener: EventListener,
+    /**
+     * Instance of your plugin
+     */
+    val plugin: Plugin
 ) {
     private val channels: MutableMap<UUID, Channel> = HashMap()
-    companion object{
+
+    companion object {
         const val PACKET_ID = "PacketInjector"
     }
 
@@ -42,16 +48,16 @@ abstract class AstraPacketReader<K : PacketListener, T : Packet<K>>(
     fun onEnable() {
         onDisable()
         Bukkit.getOnlinePlayers().forEach { inject(it) }
-        val joinEvent = DSLEvent.event<PlayerJoinEvent>(eventListener) {
+        val joinEvent = DSLEvent<PlayerJoinEvent>(eventListener, plugin) {
             inject(it.player)
         }
-        val respawnEvent = DSLEvent.event<PlayerRespawnEvent>(eventListener) {
+        val respawnEvent = DSLEvent<PlayerRespawnEvent>(eventListener, plugin) {
             inject(it.player)
         }
-        val quitEvent = DSLEvent.event<PlayerQuitEvent>(eventListener) {
+        val quitEvent = DSLEvent<PlayerQuitEvent>(eventListener, plugin) {
             deInject(it.player.uniqueId)
         }
-        val deathEvent = DSLEvent.event<PlayerDeathEvent>(eventListener) {
+        val deathEvent = DSLEvent<PlayerDeathEvent>(eventListener, plugin) {
             deInject(it.player.uniqueId)
         }
     }
@@ -70,7 +76,6 @@ abstract class AstraPacketReader<K : PacketListener, T : Packet<K>>(
      * Example, for v1_19_R1 it's (this as CraftPlayer).handle.b.b.m
      */
     abstract val Player.provideChannel: Channel
-
 
 
     /**

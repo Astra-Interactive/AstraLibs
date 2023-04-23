@@ -69,4 +69,8 @@ object VaultEconomyProvider : EconomyProvider {
     override fun takeMoney(uuid: UUID, amount: Double): Boolean = takeMoney(offlinePlayer(uuid), amount)
 
     override fun addMoney(uuid: UUID, amount: Double): Boolean = addMoney(offlinePlayer(uuid), amount)
+    override fun hasAtLeast(uuid: UUID, amount: Double): Boolean {
+        val balance = getBalance(uuid) ?: return false
+        return balance >= amount
+    }
 }
