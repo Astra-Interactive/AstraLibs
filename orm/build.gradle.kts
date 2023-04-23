@@ -7,6 +7,7 @@ plugins {
     id("convention.library")
 }
 dependencies {
+    // Kotlin
     compileOnly(libs.bundles.kotlin)
     // Test
     testImplementation(platform(libs.tests.junit.bom))

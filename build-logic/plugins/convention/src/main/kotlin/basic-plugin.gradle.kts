@@ -1,5 +1,4 @@
 
-import org.gradle.ide.visualstudio.tasks.internal.RelativeFileNameTransformer
 
 plugins {
     java

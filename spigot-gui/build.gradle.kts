@@ -8,6 +8,7 @@ plugins {
 }
 
 dependencies {
+    // Kotlin
     compileOnly(libs.bundles.kotlin)
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
