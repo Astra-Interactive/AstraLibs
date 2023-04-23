@@ -4,13 +4,14 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.plugin.java.JavaPlugin
+import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import ru.astrainteractive.astralibs.events.EventListener
 import ru.astrainteractive.astralibs.menu.menu.Menu
 
 /**
  * To be able to use inventory events - you need to register this class somewhere. For example in [JavaPlugin.onEnable]
  */
-object SharedInventoryClickEvent : EventListener {
+class DefaultInventoryClickEvent : EventListener {
     @EventHandler
     fun onInventoryClicked(e: InventoryClickEvent) {
         val holder = e.view.topInventory.holder as? Menu ?: return

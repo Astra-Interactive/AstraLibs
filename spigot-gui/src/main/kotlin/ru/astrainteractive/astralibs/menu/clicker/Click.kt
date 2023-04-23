@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.menu.utils.click
+package ru.astrainteractive.astralibs.menu.clicker
 
 import org.bukkit.event.inventory.InventoryClickEvent
 

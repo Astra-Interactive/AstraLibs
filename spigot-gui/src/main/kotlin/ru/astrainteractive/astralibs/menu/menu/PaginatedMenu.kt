@@ -1,7 +1,6 @@
 package ru.astrainteractive.astralibs.menu.menu
 
-import ru.astrainteractive.astralibs.menu.utils.InventoryButton
-import ru.astrainteractive.astralibs.menu.utils.click.ClickListener
+import ru.astrainteractive.astralibs.menu.clicker.ClickListener
 
 
 abstract class PaginatedMenu : Menu() {

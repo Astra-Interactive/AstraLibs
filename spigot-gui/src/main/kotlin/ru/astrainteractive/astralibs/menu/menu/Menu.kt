@@ -3,17 +3,13 @@ package ru.astrainteractive.astralibs.menu.menu
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import ru.astrainteractive.astralibs.async.BukkitMain
 import org.bukkit.Bukkit
-import org.bukkit.Warning
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
-import ru.astrainteractive.astralibs.menu.utils.InventoryButton
-import ru.astrainteractive.astralibs.menu.utils.MenuSize
 import java.lang.IllegalStateException
 
 
@@ -24,7 +20,7 @@ import java.lang.IllegalStateException
 @SuppressWarnings("Don't forget to add MenuListener")
 abstract class Menu : InventoryHolder, AsyncComponent() {
 
-    fun <T> StateFlow<T>.collectOn(scope: CoroutineDispatcher = Dispatchers.BukkitMain, block: (T) -> Unit) {
+    fun <T> StateFlow<T>.collectOn(scope: CoroutineDispatcher, block: (T) -> Unit) {
         componentScope.launch(scope) {
             collectLatest {
                 block(it)

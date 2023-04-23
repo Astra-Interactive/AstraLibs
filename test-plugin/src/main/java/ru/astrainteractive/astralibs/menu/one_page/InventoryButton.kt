@@ -3,8 +3,8 @@ package ru.astrainteractive.astralibs.menu.one_page
 import org.bukkit.Material
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.menu.utils.InventoryButton
-import ru.astrainteractive.astralibs.menu.utils.click.Click
+import ru.astrainteractive.astralibs.menu.menu.InventoryButton
+import ru.astrainteractive.astralibs.menu.clicker.Click
 
 data class InventoryButton(
     override val item: ItemStack,
