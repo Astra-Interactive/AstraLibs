@@ -16,6 +16,6 @@ dependencies {
     testImplementation(platform(libs.tests.junit.bom))
     testImplementation(libs.bundles.testing.libs)
     // Local
-    implementation(project(":ktx-core"))
-    implementation(project(":spigot-core"))
+    compileOnly(project(":ktx-core"))
+    compileOnly(project(":spigot-core"))
 }

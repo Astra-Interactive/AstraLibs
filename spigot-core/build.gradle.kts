@@ -20,5 +20,5 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.29.0")
     // Local
-    implementation(project(":ktx-core"))
+    compileOnly(project(":ktx-core"))
 }

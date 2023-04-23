@@ -1,11 +1,9 @@
-
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
-    id("com.github.johnrengelman.shadow")
     id("basic-plugin")
-    id("basic-shadow")
     id("basic-resource-processor")
+    alias(libs.plugins.shadow)
 }
 
 dependencies {
@@ -18,6 +16,18 @@ dependencies {
     testImplementation(libs.bundles.testing.libs)
     // Local
     implementation(project(":ktx-core"))
+    implementation(project(":orm"))
     implementation(project(":spigot-core"))
     implementation(project(":spigot-gui"))
+}
+
+tasks.shadowJar {
+    dependencies {
+        include {
+            it.moduleGroup == libs.versions.plugin.group.get() || it.moduleGroup.contains("astralibs")
+        }
+    }
+    archiveClassifier.set(null as String?)
+    archiveBaseName.set(libs.versions.plugin.name.get())
+    destinationDirectory.set(File(libs.versions.destionation.spigot.get()))
 }

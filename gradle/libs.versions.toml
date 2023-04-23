@@ -3,6 +3,9 @@ plugin-version = "2.6.0-RC1"
 plugin-name = "AstraLibs"
 plugin-group = "ru.astrainteractive.astralibs"
 plugin-description = "Core utilities for spigot development"
+plugin-url = "AstraInteractive.ru"
+plugin-authors = "Roman Makeev"
+plugin-author = "Roman Makeev"
 destionation-spigot = "D:\\Minecraft Servers\\Servers\\esmp-configuration\\smp\\plugins"
 
 # Kotlin
