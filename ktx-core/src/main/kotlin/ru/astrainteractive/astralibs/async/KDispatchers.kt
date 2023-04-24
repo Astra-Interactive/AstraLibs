@@ -1,10 +1,10 @@
 package ru.astrainteractive.astralibs.async
 
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 
-interface KDispatchers {
-    val IO: CoroutineDispatcher
-    val Default: CoroutineDispatcher
-    val Unconfined: CoroutineDispatcher
+object KDispatchers: KotlinDispatchers {
+    override val IO: CoroutineDispatcher = Dispatchers.IO
+    override val Default: CoroutineDispatcher = Dispatchers.Default
+    override val Unconfined: CoroutineDispatcher = Dispatchers.Unconfined
 }
