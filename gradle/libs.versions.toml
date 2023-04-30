@@ -1,5 +1,5 @@
 [versions]
-plugin-version = "2.7.0-RC7"
+plugin-version = "2.7.0-RC8"
 plugin-name = "AstraLibs"
 plugin-group = "ru.astrainteractive.astralibs"
 plugin-description = "Core utilities for spigot development"
