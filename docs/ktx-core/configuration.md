@@ -47,9 +47,11 @@ fun function() {
     configuration.reset()
 }
 ```
-Well, that's awesome, but how about Bukkit configurations? 
+
+Well, that's awesome, but how about Bukkit configurations?
 
 Good news! It's already implemented. Configurations for bukkit can be created easily:
+
 ```kotlin
 // Use this to create your own configuration
 class CustomIntConfiguration(
@@ -61,6 +63,7 @@ class CustomIntConfiguration(
     save = { fileConfiguration.set(path, value) },
     load = { fileConfiguration.getInt(path, default) }
 )
+
 // Or use existed one for Any configuration
 fun customAnyConfiguration(fc: FileConfiguration) {
     val intValueConfiguration = AnyConfiguration(fc, "config.int_value", 0)
