@@ -2,38 +2,51 @@
 [![spigot_version](https://img.shields.io/badge/spigot-%3E1.16-green?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
 
 # AstraLibs
+
 This is a library with helpful functions for AstraInteractive plugins
 
 As an example - you can see how it beign used in [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate)
 
 ### You can use AstraLibs as you want, but you are not allowed to use it in "pay to win projects"
-## [Wiki](https://github.com/Astra-Interactive/AstraLibs/wiki)
-You can see wiki[UNCOMPLETED] or even better - see [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate)
 
-AstraTemplate used as template in all plugins of AstraInteractive. Architecture of AstraTemplate is easy and allows develop Spigot plugins easily and fast
+### What about wiki?
 
-## Add a ktx-core dependency to your project
-This will allow you to use non-spigot utilities
-```groovy
-implementation("ru.astrainteractive.astralibs:ktx-core:<version>")
-// module with simple sqlite ORM
-implementation("ru.astrainteractive.astralibs:orm:<version>")
-```
-## Add a spigt-core dependency to your project
-This will allow you to use spigot utilities
-```groovy
-implementation("ru.astrainteractive.astralibs:spigot-core:<version>")
-// Module with spigot GUI
-implementation("ru.astrainteractive.astralibs:spigot-gui:<version>")
-```
-## Also, add repository
-```groovy
+It's really hard to write documentation for such kind of plugin. Better
+see [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate) - it uses almost everything from this library.
+Also you can see other plugin, which are presented on AstraTemplate page
+
+Anyway, I'm trying to write docs, so you can see [wiki [WIP]](https://github.com/Astra-Interactive/AstraLibs/wiki)
+
+AstraTemplate used as template in all plugins of AstraInteractive. Architecture of AstraTemplate is easy and allows
+develop Spigot plugins easily and fast
+
+### Installation
+
+Firstly, add a mavenCentral repository
+
+```kotlin
 repositories {
-  mavenCentral()
+    mavenCentral()
 }
 ```
 
-## What can it do?
+Next, add required repositories into `dependencies { ... }`
+
+```groovy
+// ktx-core with basic kotlin-only dependencies
+implementation("ru.astrainteractive.astralibs:ktx-core:<version>")
+// Manual DI with kotlin-only dependencies
+implementation("ru.astrainteractive.astralibs:di:<version>")
+// Lightweight simple ORM with kotlin-only dependencies
+implementation("ru.astrainteractive.astralibs:orm:<version>")
+// Spigot-core dependencies
+implementation("ru.astrainteractive.astralibs:spigot-core:<version>")
+// Spigot module which focused on GUI
+implementation("ru.astrainteractive.astralibs:spigot-gui:<version>")
+```
+
+### What can it do? Almost everything you need!
+
 - Advanced utility functions
 - valueOfOrNull for enums
 - Dependency containers such as Module, Reloadable and Factory
@@ -54,6 +67,4 @@ repositories {
 - Serializer - allows to encode values into byteArray or string with custom IOProvider
 - And other awesome things - look in AstraTemplate
 
-As an example - you can see how it beign used in [AstraAuction](https://github.com/Astra-Interactive/AstraAuctions)
-
-You can check auto generated documentation [HERE](https://astrainteractive.ru/documentation/)
+As an example - you can see how it beign used in [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate)

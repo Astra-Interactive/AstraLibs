@@ -18,6 +18,8 @@ fun func() {
 }
 ```
 
+## Mutable Configuration
+
 But what if we want it to be mutable?
 
 ```kotlin
@@ -47,6 +49,8 @@ fun function() {
     configuration.reset()
 }
 ```
+
+## Bukkit configurations
 
 Well, that's awesome, but how about Bukkit configurations?
 

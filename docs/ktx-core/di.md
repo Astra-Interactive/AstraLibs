@@ -4,7 +4,9 @@ This package will help you to create manual di
 
 With this manual di you can easily(almost) implement your di in Dagger style
 
-Firstly, create a module class, which will contains necessary dependencies
+## Declaring a module
+
+Firstly, create a module interface, which will contains necessary dependencies
 
 ```kotlin
 /**
@@ -14,7 +16,24 @@ interface PluginModule : Module {
     val simpleDatabase: Single<Database>
     val pluginTranslation: Single<PluginTranslation>
 }
+```
 
+After that, you will need to create implementation
+
+```kotlin
+object PluginModuleImpl : PluginModule {
+    override val simpleDatabase: Single<Database> = Single {
+        TODO()
+    }
+    override val pluginTranslation: Single<PluginTranslation> = Single {
+        TODO()
+    }
+}
+```
+
+## Using module in function
+
+```kotlin
 /**
  * This if your function, in which you need [PluginModule.simpleDatabase]
  * and [PluginModule.pluginTranslation]
@@ -24,55 +43,49 @@ fun myPluginFunction(module: PluginModule) {
 }
 ```
 
-Next you need to create your root ApplicationModule
+## Using SubModules
 
 ```kotlin
-object ApplicationModule : Module {
-    /**
-     * Lateinit property for plugin instance
-     */
-    val plugin = Lateinit<Plugin>()
-
-    /**
-     * Provider of random integer
-     */
-    val randomIntProvider = Provider { Random.nextInt() }
-
-    /**
-     * Integer factory which will add 10 to every integer provided by [randomIntProvider]
-     */
-    val intFactory = Factory {
-        val providedInt = randomIntProvider.provide()
-        providedInt + 10
+/**
+ * This is our custom subModule, which contains factory, which will return random UUID
+ */
+object SubModule : Module {
+    val randomUUID = Factory {
+        UUID.randomUUID()
     }
+}
+
+/**
+ * This is our root module
+ */
+object RootModule : Module {
+    /**
+     * Here we getting via kotlin's ReadProperty SubModule;
+     */
+    val subModule by SubModule
 
     /**
-     * This file will create reloadable instance of plugin translation
+     * Thing above actually equals to this commented expression
      */
-    private val pluginTranslation = Reloadable {
-        parse(File("./translation.yml")) as PluginTranslation
-    }
-
+//    val subModule: SubModule
+//        get() = SubModule
     /**
-     * This will bind instance of Database
+     * Here we remember uuid, provided by SubModule's factory
      */
-    private val simpleDatabase = Single {
-        Database("...")
-    }
-
-    /**
-     * This will create submodule
-     */
-    val pluginModule: PluginModule by lazy {
-        PluginModuleImpl
-    }
-
-    /**
-     * Private submovule implementation
-     */
-    private object PluginModuleImpl : PluginModule {
-        override val pluginTranslation = ApplicationModule.pluginTranslation
-        override val simpleDatabase = ApplicationModule.simpleDatabase
+    val uuid = Single {
+        subModule.randomUUID.build()
     }
 }
 ```
+
+That's it! As easy as it looks
+
+## DI Components
+
+- `Dependency` - is an interface which has getValueProperty, so can be used by `val expression by dependency`
+- `Factory` - is a fun interface which can build data for your classes
+- `Lateinit` - is used for components which can't be initialized internall
+- `Module` - is an interface is a definition for module package, which will contains
+- `Provider` - is a fun interface which can provider some data for your dependency
+- `Reloadable` - can be used to create reloadable components with kotlin object
+- `Single` - is a singleton value which will be a unique and single instant
