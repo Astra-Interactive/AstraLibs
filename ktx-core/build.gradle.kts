@@ -13,8 +13,6 @@ dependencies {
     testImplementation(platform(libs.tests.junit.bom))
     testImplementation(libs.bundles.testing.libs)
     testImplementation(libs.bundles.testing.kotlin)
-    testImplementation(kotlin("test-junit5"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
     // Local
     implementation(projects.di)
 }
