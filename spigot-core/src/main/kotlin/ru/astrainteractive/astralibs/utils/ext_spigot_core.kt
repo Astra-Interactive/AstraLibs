@@ -9,6 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.Plugin
+import ru.astrainteractive.astralibs.logging.JUtilLogger
 import ru.astrainteractive.astralibs.logging.Logger
 import java.io.*
 import java.util.*
@@ -19,8 +20,8 @@ import kotlin.random.Random
 /**
  * Setup bukkit logger
  */
-fun Logger.Companion.setupWithSpigot(tag: String, instance: Plugin) {
-    Logger.rememberJavaLogger(
+fun Logger.Companion.buildWithSpigot(tag: String, instance: Plugin): Logger {
+    return JUtilLogger(
         tag = tag,
         folder = File(instance.dataFolder, "logs").also { it.mkdirs() },
         logger = instance.logger

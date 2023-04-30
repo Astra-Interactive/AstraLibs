@@ -16,5 +16,5 @@ dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // Local
-    compileOnly(project(":ktx-core"))
+    implementation(projects.ktxCore)
 }

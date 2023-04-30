@@ -38,9 +38,11 @@ dependencyResolutionManagement {
         maven("https://jitpack.io")
     }
 }
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "astralibs"
 include("ktx-core")
 include("spigot-core")
 include("spigot-gui")
+include("di")
 include("orm")
 include("bukkit")

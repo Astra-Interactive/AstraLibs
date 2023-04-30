@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.di
+package ru.astrainteractive.astralibs
 
 import kotlin.reflect.KProperty
 

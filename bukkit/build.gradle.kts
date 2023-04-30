@@ -15,10 +15,11 @@ dependencies {
     testImplementation(platform(libs.tests.junit.bom))
     testImplementation(libs.bundles.testing.libs)
     // Local
-    implementation(project(":ktx-core"))
-    implementation(project(":orm"))
-    implementation(project(":spigot-core"))
-    implementation(project(":spigot-gui"))
+    implementation(projects.ktxCore)
+    implementation(projects.orm)
+    implementation(projects.spigotCore)
+    implementation(projects.spigotGui)
+    implementation(projects.di)
 }
 
 tasks.shadowJar {

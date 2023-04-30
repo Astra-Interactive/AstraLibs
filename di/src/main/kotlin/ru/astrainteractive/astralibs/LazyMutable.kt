@@ -1,8 +1,13 @@
-package ru.astrainteractive.astralibs.di
+package ru.astrainteractive.astralibs
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
+/**
+ * This class is implementing [Lazy] property but also allows to use var
+ *
+ * Only for internal usage and only for [Reloadable]
+ */
 internal class LazyMutable<T>(val initializer: () -> T) : ReadWriteProperty<Any?, T> {
     private object UNINITIALIZED_VALUE
     private var prop: Any? = UNINITIALIZED_VALUE

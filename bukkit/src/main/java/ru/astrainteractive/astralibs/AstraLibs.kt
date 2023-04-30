@@ -5,19 +5,22 @@ package ru.astrainteractive.astralibs
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import ru.astrainteractive.astralibs.async.PluginScope
-import ru.astrainteractive.astralibs.di.Singleton
 import ru.astrainteractive.astralibs.events.GlobalEventListener
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.menu.event.GlobalInventoryClickEvent
-import ru.astrainteractive.astralibs.utils.setupWithSpigot
+import ru.astrainteractive.astralibs.utils.buildWithSpigot
 
 class AstraLibs : JavaPlugin() {
-    companion object : Singleton<AstraLibs>()
+    companion object : Module {
+        val instance = Lateinit<AstraLibs>()
+        val logger = Lateinit<Logger>()
+    }
 
     override fun onEnable() {
         super.onEnable()
-        AstraLibs.instance = this
-        Logger.setupWithSpigot("AstraLibs", this)
+
+        this.also(AstraLibs.instance::initialize)
+        Logger.buildWithSpigot("AstraLibs", this).also(AstraLibs.logger::initialize)
     }
 
     override fun onDisable() {

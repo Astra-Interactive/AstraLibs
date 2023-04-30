@@ -1,9 +1,9 @@
 package ru.astrainteractive.astralibs.logging
 
-import ru.astrainteractive.astralibs.di.Singleton
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 interface Logger {
     val tag: String
     val folder: File
@@ -11,7 +11,7 @@ interface Logger {
     fun error(tag: String, msg: String, logInFile: Boolean = false)
     fun info(tag: String, msg: String, logInFile: Boolean = false)
 
-    companion object : Singleton<Logger>() {
+    companion object {
         /**
          * Returns current time in HH:mm:ss format
          */
@@ -22,15 +22,5 @@ interface Logger {
          */
         fun getDate(): String = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now())
 
-        /**
-         * This function will return logger and remember it into [instance]
-         */
-        fun rememberJavaLogger(
-            tag: String,
-            folder: File,
-            logger: java.util.logging.Logger = java.util.logging.Logger.getGlobal()
-        ): Logger = JUtilLogger(tag, folder, logger).also {
-            this.instance = it
-        }
     }
 }
