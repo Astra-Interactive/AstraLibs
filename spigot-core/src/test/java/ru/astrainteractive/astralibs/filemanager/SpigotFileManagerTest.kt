@@ -1,3 +1,5 @@
+package ru.astrainteractive.astralibs.filemanager
+
 import be.seeseemelk.mockbukkit.MockBukkit
 import be.seeseemelk.mockbukkit.ServerMock
 import org.bukkit.plugin.java.JavaPlugin

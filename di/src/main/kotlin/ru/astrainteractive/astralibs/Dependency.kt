@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs
 
 import kotlin.reflect.KProperty
 
-interface Dependency<T> {
+interface Dependency<out T> {
     val value: T
 }
 

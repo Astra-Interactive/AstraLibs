@@ -5,7 +5,7 @@ package ru.astrainteractive.astralibs
  *
  * This can be helpful for repository storing, DB connection and etc
  */
-class Single<T>(factory: Factory<T>) : Dependency<T> {
+class Single<out T>(factory: Factory<T>) : Dependency<T> {
     private val instance by lazy {
         factory.build()
     }

@@ -22,7 +22,9 @@ class DefaultSpigotFileManager(
     override var fileConfiguration: FileConfiguration = loadFileConfiguration()
         private set
 
-    override val isResourceExists = plugin.getResource(name) != null
+    override val isResourceExists: Boolean
+        get() = plugin.getResource(name) != null
+
     private fun loadFromResource(): File {
         plugin.saveResource(name, true)
         return File(dataFolder, name)

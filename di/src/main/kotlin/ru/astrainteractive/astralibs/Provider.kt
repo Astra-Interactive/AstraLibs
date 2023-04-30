@@ -5,6 +5,6 @@ package ru.astrainteractive.astralibs
  *
  * It's look similar to [Factory] but it's more convenient to use different naming for this two
  */
-fun interface Provider<T> {
+fun interface Provider<out T> {
     fun provide(): T
 }

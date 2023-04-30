@@ -39,7 +39,7 @@ dependencyResolutionManagement {
     }
 }
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
-rootProject.name = "astralibs"
+rootProject.name = "AstraLibs"
 include("ktx-core")
 include("spigot-core")
 include("spigot-gui")

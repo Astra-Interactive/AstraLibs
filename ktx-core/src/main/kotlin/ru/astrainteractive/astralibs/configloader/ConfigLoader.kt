@@ -4,6 +4,7 @@ import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
+import ru.astrainteractive.astralibs.Factory
 import java.io.File
 
 /**
@@ -38,15 +39,15 @@ object ConfigLoader {
     /**
      * Trying to parse [file] via [safeParse] and loadng [default] if failure happened
      */
-    inline fun <reified T : Any> toClassOrDefault(file: File, default: T, yaml: Yaml = defaultYaml): T {
+    inline fun <reified T : Any> toClassOrDefault(file: File, default: Factory<T>, yaml: Yaml = defaultYaml): T {
         return kotlin.runCatching {
             unsafeParse<T>(file, yaml)
         }.onFailure {
             it.printStackTrace()
-            val yamlText = yaml.encodeToString(default)
+            val yamlText = yaml.encodeToString(default.build())
             file.parentFile.mkdirs()
             file.createNewFile()
             file.writeText(yamlText)
-        }.getOrNull() ?: default
+        }.getOrNull() ?: default.build()
     }
 }
