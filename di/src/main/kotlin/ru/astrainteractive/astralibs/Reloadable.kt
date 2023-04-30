@@ -1,7 +1,5 @@
 package ru.astrainteractive.astralibs
 
-import kotlin.reflect.KProperty
-
 /**
  * [Reloadable] can be used to create reloadable components with kotlin object
  *
@@ -16,5 +14,4 @@ class Reloadable<T>(private val factory: Factory<T>) : Dependency<T> {
     fun reload() {
         value = factory.build()
     }
-
 }

@@ -1,5 +1,5 @@
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
-//enableFeaturePreview("VERSION_CATALOGS")
+// enableFeaturePreview("VERSION_CATALOGS")
 
 pluginManagement {
     repositories {
@@ -33,7 +33,6 @@ dependencyResolutionManagement {
         maven("https://jitpack.io")
     }
     versionCatalogs { create("libs") { from(files("../gradle/libs.versions.toml")) } }
-
 }
 rootProject.name = "build-logic"
 

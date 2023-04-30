@@ -6,12 +6,12 @@ import java.io.ByteArrayOutputStream
 /**
  * Decoder/Encoder for [Serializable] objects
  *
- * Consider use BukkitInputStreamProvider and BukkitOutputStreamProvider from spigot-core if using [Serializer] with bukkit objects
+ * Consider use BukkitInputStreamProvider and BukkitOutputStreamProvider
+ * from spigot-core if using [Serializer] with bukkit objects
  */
 class Serializer(
     private val streamProvider: IOStreamProvider = JavaIOStreamProvider,
 ) {
-
 
     fun <T> toByteArray(obj: T): IO.ByteArray {
         val bostream = ByteArrayOutputStream()
@@ -22,9 +22,9 @@ class Serializer(
     }
 
     fun <T> fromByteArray(byteArray: IO.ByteArray): T {
-        val _in = ByteArrayInputStream(byteArray.value)
-        val _is = streamProvider.provideInputStream(_in)
-        return _is.readObject() as T
+        val byteArrayInputStream = ByteArrayInputStream(byteArray.value)
+        val objectInputStream = streamProvider.provideInputStream(byteArrayInputStream)
+        return objectInputStream.readObject() as T
     }
 
     fun <T> toBase64(obj: T): IO.Base64 {

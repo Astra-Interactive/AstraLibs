@@ -1,11 +1,8 @@
 package ru.astrainteractive.astralibs.commands
 
 import org.bukkit.command.CommandSender
-import org.bukkit.entity.Player
-
 
 class Command(val alias: String, val sender: CommandSender, val args: Array<out String>) {
-
 
     fun <T> argument(
         index: Int,
@@ -17,9 +14,3 @@ class Command(val alias: String, val sender: CommandSender, val args: Array<out 
         return argumentValue?.let { Argument.Success(it, argumentRawValue) } ?: Argument.Failure(argumentRawValue)
     }
 }
-
-
-
-
-
-

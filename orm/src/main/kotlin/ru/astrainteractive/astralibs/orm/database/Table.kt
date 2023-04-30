@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package ru.astrainteractive.astralibs.orm.database
 
 import ru.astrainteractive.astralibs.orm.Database
@@ -5,12 +7,16 @@ import ru.astrainteractive.astralibs.orm.exception.DatabaseException
 import ru.astrainteractive.astralibs.orm.expression.Expression
 import ru.astrainteractive.astralibs.orm.expression.SQLExpressionBuilder
 import ru.astrainteractive.astralibs.orm.mapNotNull
-import ru.astrainteractive.astralibs.orm.query.*
+import ru.astrainteractive.astralibs.orm.query.CountQuery
+import ru.astrainteractive.astralibs.orm.query.CreateQuery
+import ru.astrainteractive.astralibs.orm.query.DeleteQuery
+import ru.astrainteractive.astralibs.orm.query.InsertQuery
+import ru.astrainteractive.astralibs.orm.query.SelectQuery
+import ru.astrainteractive.astralibs.orm.query.UpdateQuery
 import ru.astrainteractive.astralibs.orm.statement.DBStatement
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement
-
 
 abstract class Table<T>(val tableName: String) {
     private val _columns = mutableListOf<Column<*>>()
@@ -31,8 +37,7 @@ abstract class Table<T>(val tableName: String) {
 
     fun double(name: String): Column<Double> = Column.DoubleColumn(name).also(_columns::add)
 
-    fun byteArray(name: String,size: Int): Column<ByteArray> = Column.ByteArrayColumn(name,size).also(_columns::add)
-
+    fun byteArray(name: String, size: Int): Column<ByteArray> = Column.ByteArrayColumn(name, size).also(_columns::add)
 
     private fun assertConnected(database: Database): Connection {
         val connection = database?.connection ?: throw DatabaseException.DatabaseNotConnectedException
@@ -48,7 +53,8 @@ abstract class Table<T>(val tableName: String) {
             it.close()
         }
     }
-    suspend fun drop(database: Database){
+
+    suspend fun drop(database: Database) {
         val connection = assertConnected(database)
         connection.prepareStatement("DROP TABLE IF EXISTS $tableName").also {
             it.execute()
@@ -69,8 +75,8 @@ abstract class Table<T>(val tableName: String) {
         }
         statement.executeUpdate()
         val generatedKeys = statement.generatedKeys
-        if (generatedKeys.next()){
-            val id =  generatedKeys.getInt(1)
+        if (generatedKeys.next()) {
+            val id = generatedKeys.getInt(1)
             statement.close()
             return id
         }
@@ -88,11 +94,11 @@ abstract class Table<T>(val tableName: String) {
         return entity
     }
 
-    fun <K : Entity<T>> update(database: Database, entity: K,) {
+    fun <K : Entity<T>> update(database: Database, entity: K) {
         val connection = assertConnected(database)
 
         val columns = entity.table._columns.filter { !it.primaryKey }
-        val query = UpdateQuery(this,entity).generate()
+        val query = UpdateQuery(this, entity).generate()
 
         val statement = connection.prepareStatement(query).also { statement ->
             columns.forEachIndexed { index, column ->
@@ -124,7 +130,7 @@ abstract class Table<T>(val tableName: String) {
     ): List<K> {
         val connection = assertConnected(database)
         val query = SelectQuery(this).generate()
-        val statement =connection.prepareStatement(query)
+        val statement = connection.prepareStatement(query)
         val wrapperd = statement.executeQuery().mapNotNull {
             wrap(it, constructor)
         }
@@ -137,7 +143,7 @@ abstract class Table<T>(val tableName: String) {
         constructor: Constructable<K>,
         op: SQLExpressionBuilder.() -> Expression<Boolean>
     ): List<K> {
-        val query = SelectQuery(this,expression = op).generate()
+        val query = SelectQuery(this, expression = op).generate()
         val connection = assertConnected(database)
         val statement = connection.prepareStatement(query)
         val wrapped = statement.executeQuery().mapNotNull {
@@ -154,9 +160,9 @@ abstract class Table<T>(val tableName: String) {
         val connection = assertConnected(database)
         val query = CountQuery(this, op).generate()
         val statement = connection.prepareStatement(query)
-        val rs =  statement.executeQuery()
-        if (rs.next()){
-            val id =  rs.getInt("total")
+        val rs = statement.executeQuery()
+        if (rs.next()) {
+            val id = rs.getInt("total")
             statement.close()
             return id
         }
@@ -164,4 +170,3 @@ abstract class Table<T>(val tableName: String) {
         throw DatabaseException.NoIdReturned
     }
 }
-

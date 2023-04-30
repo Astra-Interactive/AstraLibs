@@ -1,6 +1,5 @@
 package ru.astrainteractive.astralibs.async
 
-
 import kotlinx.coroutines.CoroutineDispatcher
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitScheduler
@@ -28,4 +27,3 @@ class BukkitAsyncDispatcher(private val plugin: Plugin) : CoroutineDispatcher() 
         }
     }
 }
-

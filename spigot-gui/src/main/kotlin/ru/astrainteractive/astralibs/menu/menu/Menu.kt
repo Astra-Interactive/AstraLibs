@@ -1,8 +1,9 @@
 package ru.astrainteractive.astralibs.menu.menu
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
@@ -10,8 +11,6 @@ import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
-import java.lang.IllegalStateException
-
 
 /**
  * Default menu abstract class
@@ -34,9 +33,8 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
 
     abstract val playerHolder: PlayerHolder
 
-
     private var inventory: Inventory? = null
-    override fun getInventory(): Inventory = inventory ?: throw IllegalStateException("Inventory not initialized")
+    override fun getInventory(): Inventory = checkNotNull(inventory) { "Inventory not initialized" }
 
     /**
      * Title of this inventory
@@ -68,7 +66,6 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         inventory?.let(playerHolder.player::openInventory)
         onCreated()
     }
-
 
     abstract fun onCreated()
 }

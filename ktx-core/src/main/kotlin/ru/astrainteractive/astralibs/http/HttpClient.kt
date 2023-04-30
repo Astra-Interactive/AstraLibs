@@ -1,9 +1,7 @@
 package ru.astrainteractive.astralibs.http
 
-import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
-
 
 /**
  * Very simple http client to perform some requests into network with java [URL]

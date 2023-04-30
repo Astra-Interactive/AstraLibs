@@ -19,7 +19,6 @@ class ItemStackButtonBuilder {
             override val item: ItemStack = builder.itemStack
             override val index: Int = builder.index
             override val onClick: Click = Click { builder.onClick(it) }
-
         }
     }
 }

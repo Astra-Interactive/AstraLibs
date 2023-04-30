@@ -5,24 +5,26 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class Encoding {
-    val Serializer = Serializer(JavaIOStreamProvider)
+    private val serializer = Serializer(JavaIOStreamProvider)
     private inline fun <reified T> toFromByteArray(initial: T) {
-        val encoded = Serializer.toByteArray(initial)
-        val decoded: T = Serializer.fromByteArray(encoded)
+        val encoded = serializer.toByteArray(initial)
+        val decoded: T = serializer.fromByteArray(encoded)
         assertEquals(initial, decoded)
     }
     private inline fun <reified T> toFromBase64(initial: T) {
-        val encoded = Serializer.toBase64(initial)
-        val decoded: T = Serializer.fromBase64(encoded)
+        val encoded = serializer.toBase64(initial)
+        val decoded: T = serializer.fromBase64(encoded)
         assertEquals(initial, decoded)
     }
 
+    @Suppress("SerialVersionUIDInSerializableClass")
     data class CustomClass(
         val string: String = "Hello word",
         val list: List<String> = listOf("Hello"),
         val innerClass: InnerClass = InnerClass("hello")
     ) : Serializable
 
+    @Suppress("SerialVersionUIDInSerializableClass")
     data class InnerClass(val string: String) : Serializable
 
     @Test

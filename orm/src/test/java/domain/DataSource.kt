@@ -29,16 +29,16 @@ class DataSource(private val database: Database) : IDataSource {
     }
 
     override suspend fun expireAuction(auctionDTO: AuctionDTO) {
-        AuctionTable.find(database,constructor = Auction) {
+        AuctionTable.find(database, constructor = Auction) {
             AuctionTable.id.eq(auctionDTO.id)
         }?.firstOrNull()?.let {
             it.expired = 1
-            AuctionTable.update(database,entity = it)
+            AuctionTable.update(database, entity = it)
         }
     }
 
     override suspend fun getUserAuctions(uuid: String, expired: Boolean): List<AuctionDTO> {
-        return AuctionTable.find(database,constructor = Auction) {
+        return AuctionTable.find(database, constructor = Auction) {
             AuctionTable.minecraftUuid.eq(uuid).and(
                 AuctionTable.expired.eq(if (expired) 1 else 0)
             )
@@ -48,13 +48,13 @@ class DataSource(private val database: Database) : IDataSource {
     override suspend fun getAuctionsOlderThan(millis: Long): List<AuctionDTO> {
         val currentTime = System.currentTimeMillis()
         val time = currentTime - millis
-        return AuctionTable.find(database,constructor = Auction) {
+        return AuctionTable.find(database, constructor = Auction) {
             AuctionTable.time.less(time)
         }.map(AuctionMapper::toDTO)
     }
 
     override suspend fun fetchAuction(id: Int): AuctionDTO? {
-        return AuctionTable.find(database,constructor = Auction) {
+        return AuctionTable.find(database, constructor = Auction) {
             AuctionTable.id.eq(id)
         }.map(AuctionMapper::toDTO)?.firstOrNull()
     }

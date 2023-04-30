@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.commands
 import org.bukkit.command.CommandSender
 
 class TabCompleter(val alias: String, val sender: CommandSender, val args: Array<out String>) {
-        fun <T> argument(
+    fun <T> argument(
         index: Int,
         converter: (String?) -> T?,
     ): Argument<T> {
@@ -13,5 +13,3 @@ class TabCompleter(val alias: String, val sender: CommandSender, val args: Array
         return argumentValue?.let { Argument.Success(it, argumentRawValue) } ?: Argument.Failure(argumentRawValue)
     }
 }
-
-

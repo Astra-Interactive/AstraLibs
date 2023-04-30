@@ -27,4 +27,3 @@ class BukkitMainDispatcher(private val plugin: Plugin) : CoroutineDispatcher() {
         }
     }
 }
-

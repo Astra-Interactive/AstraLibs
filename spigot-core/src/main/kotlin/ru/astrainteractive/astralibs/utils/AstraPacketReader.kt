@@ -1,7 +1,5 @@
 package ru.astrainteractive.astralibs.utils
 
-import ru.astrainteractive.astralibs.events.DSLEvent
-import ru.astrainteractive.astralibs.events.GlobalEventListener
 import io.netty.channel.Channel
 import io.netty.channel.ChannelHandlerContext
 import io.netty.handler.codec.MessageToMessageDecoder
@@ -14,6 +12,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.plugin.Plugin
+import ru.astrainteractive.astralibs.events.DSLEvent
 import ru.astrainteractive.astralibs.events.EventListener
 import java.util.*
 import kotlin.collections.HashMap
@@ -41,23 +40,22 @@ abstract class AstraPacketReader<K : PacketListener, T : Packet<K>>(
         const val PACKET_ID = "PacketInjector"
     }
 
-
     /**
      * In plugin initialization you should enable it
      */
     fun onEnable() {
         onDisable()
         Bukkit.getOnlinePlayers().forEach { inject(it) }
-        val joinEvent = DSLEvent<PlayerJoinEvent>(eventListener, plugin) {
+        DSLEvent<PlayerJoinEvent>(eventListener, plugin) {
             inject(it.player)
         }
-        val respawnEvent = DSLEvent<PlayerRespawnEvent>(eventListener, plugin) {
+        DSLEvent<PlayerRespawnEvent>(eventListener, plugin) {
             inject(it.player)
         }
-        val quitEvent = DSLEvent<PlayerQuitEvent>(eventListener, plugin) {
+        DSLEvent<PlayerQuitEvent>(eventListener, plugin) {
             deInject(it.player.uniqueId)
         }
-        val deathEvent = DSLEvent<PlayerDeathEvent>(eventListener, plugin) {
+        DSLEvent<PlayerDeathEvent>(eventListener, plugin) {
             deInject(it.player.uniqueId)
         }
     }
@@ -76,7 +74,6 @@ abstract class AstraPacketReader<K : PacketListener, T : Packet<K>>(
      * Example, for v1_19_R1 it's (this as CraftPlayer).handle.b.b.m
      */
     abstract val Player.provideChannel: Channel
-
 
     /**
      * In your plugin you probably will need only this function

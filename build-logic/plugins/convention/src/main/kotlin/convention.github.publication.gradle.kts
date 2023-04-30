@@ -46,7 +46,6 @@ val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
 }
 
-
 artifacts {
 //    archives(javadocJar)
     archives(tasks["sourcesJar"])
@@ -62,7 +61,6 @@ publishing {
                 username = getExtraString("ossrhUsername")
                 password = getExtraString("ossrhPassword")
             }
-
         }
 
         maven {

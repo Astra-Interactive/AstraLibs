@@ -3,6 +3,7 @@ package ru.astrainteractive.astralibs.configuration
 import org.bukkit.configuration.file.FileConfiguration
 import ru.astrainteractive.astralibs.configuration.api.MutableConfiguration
 
+@Suppress("FunctionNaming")
 inline fun <reified T> AnyConfiguration(
     fileConfiguration: FileConfiguration,
     path: String,

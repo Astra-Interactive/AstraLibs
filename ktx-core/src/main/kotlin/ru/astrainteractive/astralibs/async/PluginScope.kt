@@ -1,6 +1,7 @@
 package ru.astrainteractive.astralibs.async
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
 
 /**

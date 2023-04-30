@@ -9,5 +9,4 @@ sealed interface IO {
 
     @JvmInline
     value class ByteArray(val value: kotlin.ByteArray) : IO
-
 }

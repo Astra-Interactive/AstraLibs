@@ -29,6 +29,4 @@ class AstraLibs : JavaPlugin() {
         GlobalEventListener.onDisable()
         GlobalInventoryClickEvent.onDisable()
     }
-
 }
-

@@ -10,7 +10,7 @@ class Lateinit<T : Any> : Dependency<T> {
     private lateinit var instance: T
 
     fun initialize(value: T) {
-        if (::instance.isInitialized) throw IllegalStateException("Value already initialized")
+        check(!::instance.isInitialized) { "Value already initialized" }
         this.instance = value
     }
 
@@ -21,7 +21,7 @@ class Lateinit<T : Any> : Dependency<T> {
 
     override val value: T
         get() {
-            if (!::instance.isInitialized) throw IllegalStateException("Value is not initialized yet")
+            check(::instance.isInitialized) { "Value is not initialized yet" }
             return instance
         }
 }

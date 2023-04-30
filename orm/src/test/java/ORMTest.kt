@@ -1,12 +1,15 @@
-import domain.DataSource
-import domain.IDataSource
-import domain.entities.*
+
+import domain.entities.AuctionTable
+import domain.entities.SimpleUserTable
+import domain.entities.UserRatingTable
+import domain.entities.UserTable
 import kotlinx.coroutines.runBlocking
 import ru.astrainteractive.astralibs.orm.DBConnection
 import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astralibs.orm.exception.DatabaseException
 import java.io.File
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
 
 abstract class ORMTest(
     val builder: () -> Database = Resource::getDatabase
@@ -37,5 +40,4 @@ abstract class ORMTest(
         }
         database = null
     }
-
 }

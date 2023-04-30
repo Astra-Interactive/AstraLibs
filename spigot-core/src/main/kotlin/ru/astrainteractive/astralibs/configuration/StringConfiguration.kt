@@ -22,5 +22,4 @@ sealed interface StringConfiguration {
         save = { fileConfiguration.set(path, value) },
         load = { fileConfiguration.getString(path) }
     )
-
 }

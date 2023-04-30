@@ -20,9 +20,7 @@ object SQLExpressionBuilder {
         return LessExpression(this, value)
     }
 
-
     fun resolveExpression(ep: Expression<*>): String {
         return ep.toString()
     }
-
 }

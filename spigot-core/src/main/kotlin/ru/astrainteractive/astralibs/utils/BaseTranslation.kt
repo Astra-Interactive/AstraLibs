@@ -14,7 +14,7 @@ abstract class BaseTranslation {
      * Just run plugin with this function and translation file will be generated automatically
      */
     fun translationValue(path: String, default: String): String {
-        val msg = translationConfiguration.getHEXString(path) ?: default.HEX()
+        val msg = translationConfiguration.getHEXString(path) ?: default.hex()
         if (!translationConfiguration.contains(path)) {
             translationConfiguration.set(path, default)
             translationFile.save()

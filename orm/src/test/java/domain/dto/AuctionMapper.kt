@@ -12,7 +12,7 @@ object AuctionMapper : Mapper<Auction, AuctionDTO> {
         time = it.time,
         item = it.item,
         price = it.price,
-        expired = it.expired==1
+        expired = it.expired == 1
     )
 
     override fun fromDTO(it: AuctionDTO): Auction {

@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package ru.astrainteractive.astralibs.utils
 
 import net.md_5.bungee.api.ChatColor
@@ -11,11 +13,10 @@ import org.bukkit.inventory.meta.ItemMeta
 import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.logging.JUtilLogger
 import ru.astrainteractive.astralibs.logging.Logger
-import java.io.*
-import java.util.*
+import java.io.File
+import java.util.UUID
 import java.util.regex.Pattern
 import kotlin.random.Random
-
 
 /**
  * Setup bukkit logger
@@ -44,9 +45,11 @@ fun ConfigurationSection.getFloat(path: String, defaultValue: Float): Float =
  * Get double or null from ConfigurationSection
  */
 fun ConfigurationSection.getDoubleOrNull(path: String): Double? =
-    if (!this.contains(path))
+    if (!this.contains(path)) {
         null
-    else getDouble(path)
+    } else {
+        getDouble(path)
+    }
 
 /**
  * Converting string from file configuration to hex with default param
@@ -72,7 +75,7 @@ fun ConfigurationSection.getHEXStringList(path: String): List<String> {
 /**
  * Converting string to hex
  */
-fun String.HEX(): String {
+fun String.hex(): String {
     return convertHex(this)
 }
 
@@ -84,13 +87,14 @@ fun FileConfiguration.getHEXString(path: String, def: String): String {
 }
 
 /**
- * If you have list with entries {"entry","ementry","emementry"} and entry="me", you'll have returned list {"ementry","emementry"}.
+ * If you have list with entries {"entry","ementry","emementry"} and entry="me",
+ * you'll have returned list {"ementry","emementry"}.
  *
  * Very useful for TabCompleter
  *
  */
 fun List<String>.withEntry(entry: String?, ignoreCase: Boolean = true): List<String> {
-    return this.filter { it.contains(entry ?: "", ignoreCase = true) }
+    return this.filter { it.contains(entry ?: "", ignoreCase = ignoreCase) }
 }
 
 private val hexPattern = Pattern.compile("#[a-fA-F0-9]{6}|&#[a-fA-F0-9]{6}")
@@ -127,7 +131,8 @@ fun convertHex(l: String): String {
     while (match.find()) {
         val color = line.substring(match.start(), match.end())
         line = line.replace(
-            color, ChatColor.of(
+            color,
+            ChatColor.of(
                 if (color.startsWith("&")) color.substring(1) else color
             ).toString() + ""
         )

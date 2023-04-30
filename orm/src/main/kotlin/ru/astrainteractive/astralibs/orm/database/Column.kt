@@ -2,7 +2,6 @@ package ru.astrainteractive.astralibs.orm.database
 
 import ru.astrainteractive.astralibs.orm.exception.DatabaseException
 
-
 sealed class Column<T>(val name: String, val type: String) {
     var primaryKey: Boolean = false
         private set
@@ -39,4 +38,3 @@ sealed class Column<T>(val name: String, val type: String) {
     internal class FloatColumn(name: String) : Column<Float>(name, "REAL")
     internal class ByteArrayColumn(name: String, size: Int) : Column<ByteArray>(name, "VARBINARY($size)")
 }
-

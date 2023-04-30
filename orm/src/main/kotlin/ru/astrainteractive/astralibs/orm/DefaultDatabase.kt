@@ -3,11 +3,10 @@ package ru.astrainteractive.astralibs.orm
 import java.sql.Connection
 import java.sql.DriverManager
 
-
 class DefaultDatabase(
     override val dbConnection: DBConnection,
     override val dbSyntax: DBSyntax
-): Database {
+) : Database {
     override var connection: Connection? = null
         private set
     override val isConnected: Boolean
@@ -15,8 +14,12 @@ class DefaultDatabase(
 
     override suspend fun openConnection() {
         Class.forName(dbConnection.driver)
-        connection = when(dbConnection){
-            is DBConnection.MySQL -> DriverManager.getConnection(dbConnection.url, dbConnection.username, dbConnection.password)
+        connection = when (dbConnection) {
+            is DBConnection.MySQL -> DriverManager.getConnection(
+                dbConnection.url,
+                dbConnection.username,
+                dbConnection.password
+            )
             is DBConnection.SQLite -> DriverManager.getConnection(dbConnection.url)
         }
     }

@@ -22,5 +22,4 @@ sealed interface IntConfiguration {
         save = { fileConfiguration.set(path, value) },
         load = { if (fileConfiguration.contains(path)) fileConfiguration.getInt(path) else null }
     )
-
 }

@@ -14,4 +14,3 @@ interface Configuration<T> {
      */
     fun loadValue(): T
 }
-

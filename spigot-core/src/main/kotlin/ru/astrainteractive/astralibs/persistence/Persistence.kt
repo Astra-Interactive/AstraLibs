@@ -22,6 +22,4 @@ object Persistence {
             b.value,
             b.dataType
         )
-
 }
-

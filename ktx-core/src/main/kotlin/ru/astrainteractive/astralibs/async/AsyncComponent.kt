@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
  *
  * This component has [CoroutineScope] inside so you can use it as ViewModel's and etc
  */
-abstract class AsyncComponent: Closeable, CoroutineScope, AbstractCoroutineContextElement(AsyncComponent), Runnable {
+abstract class AsyncComponent : Closeable, CoroutineScope, AbstractCoroutineContextElement(AsyncComponent), Runnable {
     override val coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO
     val componentScope: CoroutineScope
         get() = this
@@ -29,5 +29,4 @@ abstract class AsyncComponent: Closeable, CoroutineScope, AbstractCoroutineConte
         (this as AbstractCoroutineContextElement).cancel()
     }
     companion object Key : CoroutineContext.Key<AsyncComponent>
-
 }

@@ -1,5 +1,4 @@
-import org.jetbrains.dokka.gradle.DokkaTask
-import kotlin.collections.mutableMapOf
+
 
 group = libs.versions.plugin.group.get()
 version = libs.versions.plugin.version.get()
@@ -13,4 +12,5 @@ plugins {
     alias(libs.plugins.shadow) apply false
     alias(libs.plugins.kotlin.dokka) apply false
     id("convention.publication") apply false
+    id("detekt-convention")
 }

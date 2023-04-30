@@ -2,7 +2,6 @@ package ru.astrainteractive.astralibs.menu.menu
 
 import ru.astrainteractive.astralibs.menu.clicker.ClickListener
 
-
 abstract class PaginatedMenu : Menu() {
 
     /**
@@ -50,10 +49,12 @@ abstract class PaginatedMenu : Menu() {
      * Function for handling pages
      */
     fun showPage(page: Int) {
-        if (page > maxPages)
-            throw IllegalStateException("You are trying to load page $page when only $maxPages avaliable")
-        if (page < 0)
-            throw IllegalStateException("You are trying to load page $page which is negative")
+        check(page <= maxPages) {
+            "You are trying to load page $page when only $maxPages avaliable"
+        }
+        check(page >= 0) {
+            "You are trying to load page $page which is negative"
+        }
         this.page = page
         onPageChanged()
     }
@@ -63,7 +64,6 @@ abstract class PaginatedMenu : Menu() {
     abstract val prevPageButton: InventoryButton
     abstract val backPageButton: InventoryButton
     abstract val nextPageButton: InventoryButton
-
 
     /**
      * This function will set:
@@ -77,22 +77,23 @@ abstract class PaginatedMenu : Menu() {
      * Also it will remember clicks
      */
     fun setManageButtons(clickListener: ClickListener) {
-        if (page >= 1)
+        if (page >= 1) {
             prevPageButton.also {
                 it.setInventoryButton()
                 clickListener.remember(it)
             }
+        }
 
         backPageButton.also {
             it.setInventoryButton()
             clickListener.remember(it)
         }
 
-        if (page < maxPages)
+        if (page < maxPages) {
             nextPageButton.also {
                 it.setInventoryButton()
                 clickListener.remember(it)
             }
-
+        }
     }
 }

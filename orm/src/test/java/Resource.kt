@@ -16,6 +16,7 @@ object Resource {
         val password: String
     )
 
+    @Suppress("UnusedPrivateMember")
     private fun readMySqlConnection(): Database {
         val fileContent = this::class.java.classLoader.getResource("mysql.json").readText()
         val connection: Connection = Json.decodeFromString(fileContent)

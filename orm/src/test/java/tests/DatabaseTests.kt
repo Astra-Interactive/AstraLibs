@@ -1,17 +1,14 @@
 package tests
 
 import ORMTest
-import kotlinx.coroutines.runBlocking
 import domain.entities.User
 import domain.entities.UserRatingTable
 import domain.entities.UserTable
-import ru.astrainteractive.astralibs.orm.DBConnection
-import ru.astrainteractive.astralibs.orm.DBSyntax
-import ru.astrainteractive.astralibs.orm.Database
-import ru.astrainteractive.astralibs.orm.DefaultDatabase
-import java.util.*
-import kotlin.test.*
-
+import kotlinx.coroutines.runBlocking
+import java.util.UUID
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class DatabaseTests : ORMTest() {
 
@@ -47,6 +44,5 @@ class DatabaseTests : ORMTest() {
         assertEquals(1, users.size)
 
         randomUser
-
     }
 }

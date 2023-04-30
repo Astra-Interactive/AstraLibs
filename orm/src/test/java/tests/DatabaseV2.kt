@@ -1,21 +1,20 @@
 package tests
 
 import ORMTest
-import Resource
-import kotlinx.coroutines.runBlocking
-import kotlin.test.Test
-import org.junit.jupiter.api.assertDoesNotThrow
 import domain.entities.SimpleUser
 import domain.entities.SimpleUserTable
-import kotlin.test.BeforeTest
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.assertDoesNotThrow
 import ru.astrainteractive.astralibs.orm.expression.SQLExpressionBuilder.eq
-import ru.astrainteractive.astralibs.orm.*
 import ru.astrainteractive.astralibs.orm.query.CreateQuery
 import ru.astrainteractive.astralibs.orm.query.InsertQuery
 import ru.astrainteractive.astralibs.orm.statement.DBStatement
 import java.util.UUID
-import kotlin.test.*
-
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class DatabaseV2 : ORMTest() {
     val randomUser: SimpleUser
@@ -59,8 +58,9 @@ class DatabaseV2 : ORMTest() {
     fun `Create table`() {
         val database = assertConnected()
         val syntax = database.dbSyntax
-        val expectedQuery =
-            "CREATE TABLE IF NOT EXISTS user_table (id INTEGER ${syntax.PRIMARY_KEY} ${syntax.AUTO_INCREMENT} ${syntax.NOT_NULL},name VARCHAR(128) ${syntax.NOT_NULL} UNIQUE)"
+        val expectedQuery = """
+            CREATE TABLE IF NOT EXISTS user_table (id INTEGER ${syntax.PRIMARY_KEY} ${syntax.AUTO_INCREMENT} ${syntax.NOT_NULL},name VARCHAR(128) ${syntax.NOT_NULL} UNIQUE)
+        """.trimIndent()
         assertEquals(expectedQuery, CreateQuery(SimpleUserTable, database.dbSyntax).generate())
         assertDoesNotThrow { runBlocking { SimpleUserTable.create(database) } }
     }
@@ -70,9 +70,12 @@ class DatabaseV2 : ORMTest() {
         val database = assertConnected()
         assertDoesNotThrow { runBlocking { SimpleUserTable.create(database) } }
         val query = runBlocking {
-            InsertQuery(SimpleUserTable, DBStatement().apply {
-                this[SimpleUserTable.name] = UUID.randomUUID().toString()
-            }).generate()
+            InsertQuery(
+                SimpleUserTable,
+                DBStatement().apply {
+                    this[SimpleUserTable.name] = UUID.randomUUID().toString()
+                }
+            ).generate()
         }
         assertEquals("INSERT INTO user_table (name) VALUES (?)", query)
     }
@@ -120,7 +123,6 @@ class DatabaseV2 : ORMTest() {
             assertEquals(updated.name, newUUID)
         }
     }
-
 
     @Test
     fun `Delete statement`() {
@@ -185,5 +187,3 @@ class DatabaseV2 : ORMTest() {
         }
     }
 }
-
-

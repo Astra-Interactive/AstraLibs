@@ -1,20 +1,16 @@
 package tests
 
 import ORMTest
-import Resource
-import kotlinx.coroutines.runBlocking
 import domain.DataSource
 import domain.IDataSource
 import domain.dto.AuctionDTO
 import domain.entities.AuctionTable
-import ru.astrainteractive.astralibs.orm.DBConnection
-import ru.astrainteractive.astralibs.orm.DBSyntax
-import ru.astrainteractive.astralibs.orm.Database
-import ru.astrainteractive.astralibs.orm.DefaultDatabase
-import java.io.File
-import java.util.*
+import kotlinx.coroutines.runBlocking
+import java.util.UUID
 import kotlin.random.Random
-import kotlin.test.*
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class AuctionsDomainTests : ORMTest() {
     private val dataSource: IDataSource
@@ -71,5 +67,4 @@ class AuctionsDomainTests : ORMTest() {
         amount = dataSource.getAuctionsOlderThan(System.currentTimeMillis() - 1).size
         assertEquals(amount, 1)
     }
-
 }

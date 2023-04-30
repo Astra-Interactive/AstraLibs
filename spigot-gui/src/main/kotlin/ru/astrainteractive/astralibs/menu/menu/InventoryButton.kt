@@ -12,8 +12,3 @@ interface InventoryButton {
     val index: Int
     val onClick: Click
 }
-
-
-
-
-

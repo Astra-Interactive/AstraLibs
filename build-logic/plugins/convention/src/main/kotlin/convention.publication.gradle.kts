@@ -1,7 +1,6 @@
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.api.tasks.bundling.Jar
-import org.gradle.kotlin.dsl.*
-import java.util.*
+import java.util.Properties
 
 plugins {
     `maven-publish`
@@ -45,7 +44,6 @@ publishing {
                 username = ossrhUsername
                 password = ossrhPassword
             }
-
         }
 
         maven {

@@ -22,5 +22,3 @@ interface EventListener : Listener {
         HandlerList.unregisterAll(this)
     }
 }
-
-

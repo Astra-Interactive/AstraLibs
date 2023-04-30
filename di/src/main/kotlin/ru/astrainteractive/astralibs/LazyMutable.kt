@@ -18,7 +18,9 @@ internal class LazyMutable<T>(val initializer: () -> T) : ReadWriteProperty<Any?
             synchronized(this) {
                 return if (prop == UNINITIALIZED_VALUE) initializer().also { prop = it } else prop as T
             }
-        } else prop as T
+        } else {
+            prop as T
+        }
     }
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {

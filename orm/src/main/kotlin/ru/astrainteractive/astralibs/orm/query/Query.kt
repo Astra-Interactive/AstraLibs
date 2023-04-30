@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.orm.query
 
 interface Query {
     fun generate(): String
-    companion object{
+    companion object {
         val Count = ::CountQuery
         val Create = ::CreateQuery
         val Delete = ::DeleteQuery
@@ -11,4 +11,3 @@ interface Query {
         val Update = ::UpdateQuery
     }
 }
-

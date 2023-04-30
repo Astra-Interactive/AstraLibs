@@ -21,6 +21,5 @@ interface Logger {
          * Returns current date in yyyy-MM-dd format
          */
         fun getDate(): String = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now())
-
     }
 }

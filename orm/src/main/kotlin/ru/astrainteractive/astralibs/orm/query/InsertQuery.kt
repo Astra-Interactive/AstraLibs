@@ -11,5 +11,4 @@ class InsertQuery(private val table: Table<*>, private val statement: DBStatemen
         val query = "INSERT INTO ${table.tableName} $keys VALUES $valuesQuery"
         return query
     }
-
 }

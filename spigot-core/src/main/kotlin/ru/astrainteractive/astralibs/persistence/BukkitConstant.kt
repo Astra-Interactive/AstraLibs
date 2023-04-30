@@ -11,7 +11,8 @@ class BukkitConstant<T, Z>(
 ) {
     constructor(
         plugin: Plugin,
-        key: String, dataType: PersistentDataType<T, Z>
+        key: String,
+        dataType: PersistentDataType<T, Z>
     ) : this(
         plugin = plugin,
         value = NamespacedKey(plugin, key),

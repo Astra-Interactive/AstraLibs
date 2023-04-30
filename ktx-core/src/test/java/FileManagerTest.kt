@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.assertThrows
-import ru.astrainteractive.astralibs.filemanager.FileManager
 import ru.astrainteractive.astralibs.filemanager.ResourceFileManager
 import ru.astrainteractive.astralibs.filemanager.impl.JVMFileManager
 import ru.astrainteractive.astralibs.filemanager.impl.JVMResourceFileManager

@@ -4,7 +4,6 @@ import net.milkbowl.vault.economy.Economy
 import net.milkbowl.vault.economy.EconomyResponse
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import ru.astrainteractive.astralibs.logging.Logger
 import java.util.UUID
 
 class VaultEconomyProvider(
@@ -13,7 +12,7 @@ class VaultEconomyProvider(
     private fun offlinePlayer(uuid: UUID) = Bukkit.getOfflinePlayer(uuid)
 
     /**
-     * @param  player player
+     * @param player player
      * @return double - current balance of [player]
      */
     private fun getBalance(player: OfflinePlayer): Double {
@@ -21,21 +20,22 @@ class VaultEconomyProvider(
     }
 
     /**
-     * @param  player player
-     * @param  amount amount to take from balance
+     * @param player player
+     * @param amount amount to take from balance
      * @return boolean - true if [amount] has been taken false if not
      */
     private fun takeMoney(player: OfflinePlayer, amount: Double): Boolean {
         val maxBalance = getBalance(player) ?: return false
-        if (amount > maxBalance)
+        if (amount > maxBalance) {
             return false
+        }
         val response = econ.withdrawPlayer(player, amount)
         return (response?.type == EconomyResponse.ResponseType.SUCCESS)
     }
 
     /**
-     * @param  player player
-     * @param  amount amount to add to balance
+     * @param player player
+     * @param amount amount to add to balance
      * @return boolean - true if [amount] has been added false if not
      */
     private fun addMoney(player: OfflinePlayer, amount: Double): Boolean {

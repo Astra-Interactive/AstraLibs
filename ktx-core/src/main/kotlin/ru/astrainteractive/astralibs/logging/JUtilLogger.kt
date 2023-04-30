@@ -10,20 +10,23 @@ class JUtilLogger(
 
     override fun warning(tag: String, msg: String, logInFile: Boolean) {
         logger.warning("[$tag]: $msg")
-        if (logInFile)
+        if (logInFile) {
             logInFile(tag, msg)
+        }
     }
 
     override fun error(tag: String, msg: String, logInFile: Boolean) {
         logger.severe("[$tag]: $msg")
-        if (logInFile)
+        if (logInFile) {
             logInFile(tag, msg)
+        }
     }
 
     override fun info(tag: String, msg: String, logInFile: Boolean) {
         logger.info("[$tag]: $msg")
-        if (logInFile)
+        if (logInFile) {
             logInFile(tag, msg)
+        }
     }
 
     private fun logInFile(tag: String, msg: String) {
@@ -32,8 +35,6 @@ class JUtilLogger(
         val file = File(folder, "$data.log")
         if (!folder.exists()) folder.mkdirs()
         if (!file.exists()) file.createNewFile()
-        file.appendText("[${time}] [$tag]: $msg\n")
+        file.appendText("[$time] [$tag]: $msg\n")
     }
-
-
 }

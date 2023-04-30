@@ -24,8 +24,10 @@ object DSLEvent {
         eventPriority: EventPriority,
         block: (Event) -> Unit
     ) = plugin.server.pluginManager.registerEvent(
-        clazz, eventController, eventPriority, { _, event -> block.invoke(event) }, plugin
+        clazz,
+        eventController,
+        eventPriority,
+        { _, event -> block.invoke(event) },
+        plugin
     )
-
-
 }

@@ -7,7 +7,7 @@ sealed interface AndExpression<T> : Expression<T> {
     class ChildExpression<T>(
         val realChild: Expression<*>,
         override val realParent: Expression<*>
-    ) : AndExpression<T>{
+    ) : AndExpression<T> {
         override fun toString(): String {
             val realParentExpression = SQLExpressionBuilder.resolveExpression(realParent)
             val realChildExpression = SQLExpressionBuilder.resolveExpression(realChild)
@@ -23,5 +23,4 @@ sealed interface AndExpression<T> : Expression<T> {
             return "$realParentExpression AND (${realChild.generate()})"
         }
     }
-
 }

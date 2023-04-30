@@ -19,7 +19,6 @@ class JVMResourceFileManager(
 
     override val configFile: File = loadConfigFile()
 
-
     private fun loadFromResource(): File {
         val resource = resource ?: throw ResourceFileManager.Exception.ResourceNotExists(name)
         val connection = resource.openConnection()
@@ -50,7 +49,8 @@ class JVMResourceFileManager(
     }
 
     override fun delete() {
-        if (configFile.exists())
+        if (configFile.exists()) {
             configFile.delete()
+        }
     }
 }

@@ -26,12 +26,13 @@ sealed class DBConnection(val driver: String) {
     ) : DBConnection("com.mysql.cj.jdbc.Driver") {
         override val url: String
             get() {
-                val sv = if (sessionVariables.isEmpty()) ""
-                else sessionVariables.joinToString("&", "?sessionVariables=") { it }
+                val sv = if (sessionVariables.isEmpty()) {
+                    ""
+                } else {
+                    sessionVariables.joinToString("&", "?sessionVariables=") { it }
+                }
 
                 return "jdbc:mysql://$ip:$port/$database$sv"
             }
-
     }
 }
-

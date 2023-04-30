@@ -1,5 +1,5 @@
 [versions]
-plugin-version = "2.7.0-RC5"
+plugin-version = "2.7.0-RC6"
 plugin-name = "AstraLibs"
 plugin-group = "ru.astrainteractive.astralibs"
 plugin-description = "Core utilities for spigot development"
@@ -43,7 +43,17 @@ tests-mockito = "4.0.0"
 tests-junit-jupiter-api = "5.9.1"
 tests-junit-bom = "5.7.0"
 
+# Linter
+lint-detekt = "1.22.0"
+lint-detekt-ruleset-compiler = "0.0.2"
+lint-detekt-ruleset-ktlint = "0.48.0"
+
 [libraries]
+# Linter
+lint-detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "lint-detekt" }
+lint-detekt-ruleset-compiler = { module = "com.braisgabin.detekt:kotlin-compiler-wrapper", version.ref = "lint-detekt-ruleset-compiler" }
+lint-detekt-ruleset-ktlint = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "lint-detekt" }
+
 # Shadow
 shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "shadow" }
 

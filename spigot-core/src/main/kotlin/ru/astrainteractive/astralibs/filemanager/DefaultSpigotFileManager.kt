@@ -5,7 +5,6 @@ import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.Plugin
 import java.io.File
 
-
 /**
  * File manager for every single file
  * You can create new files, change them, save/load them

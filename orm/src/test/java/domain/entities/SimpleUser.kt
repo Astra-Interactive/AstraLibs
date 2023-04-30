@@ -7,7 +7,7 @@ import ru.astrainteractive.astralibs.orm.database.Table
 
 object SimpleUserTable : Table<Int>("user_table") {
     override val id: Column<Int> = integer("id").primaryKey().autoIncrement()
-    val name: Column<String> = varchar("name",128).unique()
+    val name: Column<String> = varchar("name", 128).unique()
 }
 
 class SimpleUser : Entity<Int>(SimpleUserTable) {

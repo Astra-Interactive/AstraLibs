@@ -1,6 +1,5 @@
 package ru.astrainteractive.astralibs.filemanager
 
-import ru.astrainteractive.astralibs.filemanager.impl.JVMFileManager
 import java.io.File
 
 /**
@@ -29,4 +28,3 @@ interface FileManager {
      */
     fun delete()
 }
-

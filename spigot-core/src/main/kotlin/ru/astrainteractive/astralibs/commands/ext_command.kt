@@ -14,4 +14,3 @@ fun JavaPlugin.registerTabCompleter(alias: String, block: TabCompleter.() -> Lis
         return@setTabCompleter block.invoke(TabCompleter(alias, sender, args))
     }
 }
-

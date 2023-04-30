@@ -24,8 +24,8 @@ class JVMFileManager(
     }
 
     override fun delete() {
-        if (configFile.exists())
+        if (configFile.exists()) {
             configFile.delete()
+        }
     }
-
 }

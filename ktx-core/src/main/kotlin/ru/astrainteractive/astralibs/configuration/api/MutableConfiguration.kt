@@ -34,4 +34,3 @@ interface MutableConfiguration<T> : Configuration<T> {
      */
     fun toImmutable() = this as Configuration<T>
 }
-
