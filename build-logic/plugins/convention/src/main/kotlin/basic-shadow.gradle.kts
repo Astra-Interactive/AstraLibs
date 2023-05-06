@@ -14,6 +14,6 @@ tasks.shadowJar {
     from(sourceSets.main.get().output)
     from(project.configurations.runtimeClasspath)
     minimize()
-    archiveBaseName.set(libs.versions.plugin.name.get())
+    archiveBaseName.set(libs.versions.project.name.get())
     destinationDirectory.set(File(libs.versions.destionation.spigot.get()))
 }

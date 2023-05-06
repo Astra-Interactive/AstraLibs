@@ -19,14 +19,14 @@ tasks.processResources {
         ).map { it.get() }
         filesMatching("plugin.yml") {
             expand(
-                "main" to "${libs.versions.plugin.group.get()}.${libs.versions.plugin.name.get()}",
-                "name" to libs.versions.plugin.name.get(),
-                "prefix" to libs.versions.plugin.name.get(),
-                "version" to libs.versions.plugin.version.get(),
-                "description" to libs.versions.plugin.description.get(),
-                "url" to libs.versions.plugin.url.get(),
-                "author" to libs.versions.plugin.author.get(),
-                "authors" to libs.versions.plugin.authors.get().split(";").joinToString("\",\""),
+                "main" to "${libs.versions.project.group.get()}.${libs.versions.project.name.get()}",
+                "name" to libs.versions.project.name.get(),
+                "prefix" to libs.versions.project.name.get(),
+                "version" to libs.versions.project.version.get(),
+                "description" to libs.versions.project.description.get(),
+                "url" to libs.versions.project.url.get(),
+                "author" to libs.versions.project.author.get(),
+                "authors" to libs.versions.project.authors.get().split(";").joinToString("\",\""),
                 "libraries" to implementations.joinToString("\",\""),
             )
         }

@@ -47,12 +47,12 @@ jobs:
         id: version
         with:
           file: 'gradle/libs.versions.toml'
-          field: 'versions.plugin-version'
+          field: 'versions.project-version'
       - uses: SebRollen/toml-action@v1.0.2
         id: name
         with:
           file: 'gradle/libs.versions.toml'
-          field: 'versions.plugin-name'
+          field: 'versions.project-name'
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1

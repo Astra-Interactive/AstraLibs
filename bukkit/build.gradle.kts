@@ -25,10 +25,10 @@ dependencies {
 tasks.shadowJar {
     dependencies {
         include {
-            it.moduleGroup == libs.versions.plugin.group.get() || it.moduleGroup.contains("astralibs")
+            it.moduleGroup == libs.versions.project.group.get() || it.moduleGroup.contains("astralibs")
         }
     }
     archiveClassifier.set(null as String?)
-    archiveBaseName.set(libs.versions.plugin.name.get())
+    archiveBaseName.set(libs.versions.project.name.get())
     destinationDirectory.set(File(libs.versions.destionation.spigot.get()))
 }

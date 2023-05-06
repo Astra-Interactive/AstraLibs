@@ -61,10 +61,10 @@ publishing {
         pom {
             name.set(project.name)
             artifactId = project.name
-            group = libs.versions.plugin.group.get()
-            groupId = libs.versions.plugin.group.get()
-            version = libs.versions.plugin.version.get()
-            description.set(libs.versions.plugin.description.get())
+            group = libs.versions.project.group.get()
+            groupId = libs.versions.project.group.get()
+            version = libs.versions.project.version.get()
+            description.set(libs.versions.project.description.get())
             url.set("https://github.com/Astra-Interactive/AstraLibs")
 
             licenses {
