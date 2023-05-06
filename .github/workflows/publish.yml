@@ -6,7 +6,15 @@ on:
       - master
 
 jobs:
+  validate_gradle:
+    name: Validate gradle
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@v1
   detekt:
+    needs: [ validate_gradle ]
     name: "Check project by detekt"
     runs-on: ubuntu-latest
     steps:
@@ -19,10 +27,11 @@ jobs:
       - name: Give gradle permission
         run: chmod +x gradlew
       - name: detekt
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@2.4.2
         with:
           arguments: detekt
   tests:
+    needs: [ detekt ]
     name: "Run tests"
     runs-on: ubuntu-latest
     steps:
@@ -35,11 +44,11 @@ jobs:
       - name: Give gradle permission
         run: chmod +x gradlew
       - name: Run tests
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@2.4.2
         with:
           arguments: test
   publish:
-    needs: [ detekt ]
+    needs: [ detekt, tests ]
     name: Publish library at mavenCentral
     runs-on: ubuntu-latest
     env:
