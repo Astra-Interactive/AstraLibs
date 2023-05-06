@@ -31,7 +31,7 @@ jobs:
       - name: Publish library
         run: ./gradlew publish --no-parallel --stacktrace
   release:
-    needs: [ publish, detekt ]
+    needs: [ publish ]
     name: Create release
     runs-on: ubuntu-latest
     steps:
