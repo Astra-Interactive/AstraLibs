@@ -1,11 +1,9 @@
 name: Publish release
 
 on:
-  workflow_run:
-    workflows: [ tests ]
-    branches: [ master ]
-    types:
-      - completed
+  push:
+    branches:
+      - master
 
 jobs:
   gradle_validation:
