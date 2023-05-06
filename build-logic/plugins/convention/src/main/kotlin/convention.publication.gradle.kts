@@ -1,12 +1,8 @@
 @file:Suppress("VariableNaming")
 
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.api.tasks.bundling.Jar
-import org.gradle.kotlin.dsl.`maven-publish`
-import org.gradle.kotlin.dsl.registering
-import org.gradle.kotlin.dsl.signing
-import org.gradle.kotlin.dsl.withType
-import java.util.*
+import java.util.Base64
+import java.util.Properties
+
 
 plugins {
     `maven-publish`
