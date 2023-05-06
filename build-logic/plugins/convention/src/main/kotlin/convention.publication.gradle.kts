@@ -11,6 +11,8 @@ import java.util.*
 plugins {
     `maven-publish`
     signing
+    java
+    `java-library`
 }
 
 // Grabbing secrets from local.properties file or from environment variables, which could be used on CI
@@ -34,6 +36,13 @@ val SIGNING_KEY = System.getenv("SIGNING_KEY") ?: properties.getProperty("signin
 val javadocJar by tasks.registering(Jar::class) {
     archiveClassifier.set("javadoc")
 }
+artifacts {
+    archives(javadocJar)
+}
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
 
 publishing {
     repositories {
@@ -47,13 +56,17 @@ publishing {
         }
     }
 
-    publications.withType<MavenPublication> {
+    publications.create<MavenPublication>("default") {
 
         artifact(javadocJar.get())
+        artifact(tasks["sourcesJar"])
+        from(components["kotlin"])
 
         pom {
             name.set(project.name)
+            artifactId = project.name
             group = libs.versions.plugin.group.get()
+            groupId = libs.versions.plugin.group.get()
             version = libs.versions.plugin.version.get()
             description.set(libs.versions.plugin.description.get())
             url.set("https://github.com/Astra-Interactive/AstraLibs")

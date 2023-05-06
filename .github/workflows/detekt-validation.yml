@@ -1,9 +1,6 @@
 name: "detekt-validation"
 on:
-  workflow_run:
-    workflows: [ gradle-wrapper-validation ]
-    types:
-      - completed
+  workflow_call:
 jobs:
   detekt:
     name: "Check project by detekt"
