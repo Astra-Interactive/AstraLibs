@@ -2,7 +2,7 @@ name: Publish release
 
 on:
   workflow_run:
-    workflows: [ tests, gradle-wrapper-validation, detekt-validation ]
+    workflows: [ tests ]
     branches: [ master ]
     types:
       - completed

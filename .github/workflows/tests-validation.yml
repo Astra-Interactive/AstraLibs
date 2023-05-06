@@ -1,9 +1,11 @@
 name: "tests"
-on: [ push, pull_request ]
-
+on:
+  workflow_run:
+    workflows: [ detekt-validation ]
+    types:
+      - completed
 jobs:
   tests:
-    needs: [ detekt ]
     name: "Run tests"
     runs-on: ubuntu-latest
     steps:
