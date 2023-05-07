@@ -13,8 +13,8 @@ dependencies {
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
     // Test-Core
-    testImplementation(platform(libs.tests.junit.bom))
-    testImplementation(libs.bundles.testing.libs)
+    testImplementation(libs.bundles.testing.kotlin)
+    testImplementation(libs.tests.kotlin.test)
     // Local
     compileOnly(projects.ktxCore)
     compileOnly(projects.spigotCore)

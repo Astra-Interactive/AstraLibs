@@ -10,9 +10,6 @@ dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
     // Test
-    testImplementation(platform(libs.tests.junit.bom))
-    testImplementation(libs.bundles.testing.libs)
     testImplementation(libs.bundles.testing.kotlin)
-    testImplementation(kotlin("test-junit5"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(libs.tests.kotlin.test)
 }

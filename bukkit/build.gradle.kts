@@ -12,8 +12,8 @@ dependencies {
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
     // Tests
-    testImplementation(platform(libs.tests.junit.bom))
-    testImplementation(libs.bundles.testing.libs)
+    testImplementation(libs.bundles.testing.kotlin)
+    testImplementation(libs.tests.kotlin.test)
     // Local
     implementation(projects.ktxCore)
     implementation(projects.orm)

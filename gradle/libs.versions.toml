@@ -1,6 +1,6 @@
 [versions]
 # Project
-project-version = "2.7.3"
+project-version = "2.7.4"
 project-name = "AstraLibs"
 project-group = "ru.astrainteractive.astralibs"
 project-description = "Core utilities for spigot development"
@@ -82,6 +82,7 @@ tests-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", vers
 tests-org-testing = { module = "org.testng:testng", version.ref = "tests-org-testing" }
 tests-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
 tests-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+tests-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 
 # Exposed
 exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
@@ -104,7 +105,6 @@ minecraft-vaultapi = { module = "com.github.MilkBowl:VaultAPI", version.ref = "m
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
 minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-spigot-core", "minecraft-vaultapi", "minecraft-papi"]
 testing-kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
-testing-libs = ["tests-junit-jupiter-api", "tests-org-testing", "tests-junit5", "tests-junit-jupiter"]
 kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-dokka-kotlinJavaPlugin", "kotlin-gradle"]
 
 [plugins]

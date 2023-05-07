@@ -10,9 +10,8 @@ dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
     // Test
-    testImplementation(platform(libs.tests.junit.bom))
-    testImplementation(libs.bundles.testing.libs)
     testImplementation(libs.bundles.testing.kotlin)
+    testImplementation(libs.tests.kotlin.test)
     // Local
     implementation(projects.di)
 }

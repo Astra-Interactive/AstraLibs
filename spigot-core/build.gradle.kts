@@ -13,9 +13,8 @@ dependencies {
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
     // Test
-    testImplementation(platform(libs.tests.junit.bom))
-    testImplementation(libs.bundles.testing.libs)
     testImplementation(libs.bundles.testing.kotlin)
+    testImplementation(libs.tests.kotlin.test)
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.29.0")
     // Local
     implementation(projects.ktxCore)

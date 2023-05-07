@@ -22,9 +22,6 @@ tasks {
     withType<JavaCompile>() {
         options.encoding = "UTF-8"
     }
-    withType<Test>().configureEach {
-        useJUnitPlatform()
-    }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = JavaVersion.VERSION_17.majorVersion
     }
