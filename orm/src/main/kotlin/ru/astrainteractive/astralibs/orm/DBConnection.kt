@@ -8,6 +8,10 @@ sealed class DBConnection(val driver: String) {
             get() = "jdbc:sqlite:$dbName"
     }
 
+    class InMemory(val dbName: String) : DBConnection("org.sqlite.JDBC") {
+        override val url: String = "jdbc:sqlite:file:$dbName?mode=memory&cache=shared"
+    }
+
     /**
      * @property database database name
      * @property ip ip address of your MySql server

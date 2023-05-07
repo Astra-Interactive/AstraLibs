@@ -1,6 +1,6 @@
 [versions]
 # Project
-project-version = "2.7.2"
+project-version = "2.7.3"
 project-name = "AstraLibs"
 project-group = "ru.astrainteractive.astralibs"
 project-description = "Core utilities for spigot development"

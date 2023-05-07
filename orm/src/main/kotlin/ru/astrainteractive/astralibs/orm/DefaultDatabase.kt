@@ -21,6 +21,7 @@ class DefaultDatabase(
                 dbConnection.password
             )
             is DBConnection.SQLite -> DriverManager.getConnection(dbConnection.url)
+            is DBConnection.InMemory -> DriverManager.getConnection(dbConnection.url)
         }
     }
 
