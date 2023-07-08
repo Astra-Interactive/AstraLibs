@@ -10,7 +10,8 @@ project-author = "Roman Makeev"
 destionation-spigot = "D:\\Minecraft Servers\\Servers\\esmp-configuration\\smp\\plugins"
 
 # Kotlin
-kotlin-version = "1.8.10"
+kotlin-version = "1.9.0"
+kotlin-dokka = "1.8.10"
 kotlin-coroutines = "1.6.3"
 kotlin-json = "1.5.0-RC"
 kotlin-kaml = "0.50.0"
@@ -64,8 +65,8 @@ kotlin-coroutines-coreJvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin-version" }
 kotlin-serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-json" }
 kotlin-serializationKaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kotlin-kaml" }
-kotlin-dokka-kotlinJavaPlugin = { module = "org.jetbrains.dokka:kotlin-as-java-plugin", version.ref = "kotlin-version" }
-kotlin-dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlin-version" }
+kotlin-dokka-kotlinJavaPlugin = { module = "org.jetbrains.dokka:kotlin-as-java-plugin", version.ref = "kotlin-dokka" }
+kotlin-dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlin-dokka" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version" }
 
 # AstraLibs
@@ -104,13 +105,13 @@ minecraft-vaultapi = { module = "com.github.MilkBowl:VaultAPI", version.ref = "m
 [bundles]
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
 minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-spigot-core", "minecraft-vaultapi", "minecraft-papi"]
-testing-kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
+testing-kotlin = ["tests-junit-jupiter-api", "kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
 kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-dokka-kotlinJavaPlugin", "kotlin-gradle"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-version" }
 kotlin-gradle = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version" }
-kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin-version" }
+kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin-dokka" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
