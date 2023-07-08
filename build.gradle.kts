@@ -1,4 +1,4 @@
-import ru.astrainteractive.gradleplugin.util.BaseProperty
+
 
 group = libs.versions.project.group.get()
 version = libs.versions.project.version.get()

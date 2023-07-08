@@ -1,3 +1,5 @@
+@file:Suppress("Filename")
+
 package ru.astrainteractive.astralibs.orm
 
 import java.sql.ResultSet
