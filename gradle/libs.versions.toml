@@ -1,14 +1,4 @@
 [versions]
-# Project
-project-version = "2.7.4"
-project-name = "AstraLibs"
-project-group = "ru.astrainteractive.astralibs"
-project-description = "Core utilities for spigot development"
-project-url = "AstraInteractive.ru"
-project-authors = "Roman Makeev"
-project-author = "Roman Makeev"
-destionation-spigot = "D:\\Minecraft Servers\\Servers\\esmp-configuration\\smp\\plugins"
-
 # Kotlin
 kotlin-version = "1.9.0"
 kotlin-dokka = "1.8.10"

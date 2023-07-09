@@ -1,12 +1,9 @@
 
 
-group = libs.versions.project.group.get()
-version = libs.versions.project.version.get()
-description = libs.versions.project.description.get()
-
 buildscript {
     dependencies {
-        classpath("ru.astrainteractive.gradleplugin:convention:0.0.2")
+        classpath("ru.astrainteractive.gradleplugin:convention:0.0.5")
+        classpath("ru.astrainteractive.gradleplugin:minecraft:0.0.5")
     }
 }
 
