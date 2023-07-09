@@ -14,17 +14,32 @@ jobs:
   tests_validation:
     needs: gradle_validation
     uses: ./.github/workflows/tests-validation.yml
-  publish:
-    name: Publish library at mavenCentral
+  properties:
     runs-on: ubuntu-latest
-    needs: [gradle_validation, detekt_validation, tests_validation]
+    name: Get gradle properties
+    steps:
+      - uses: christian-draeger/read-properties@1.1.1
+        id: properties
+        with:
+          path: '/gradle.properties'
+          properties: 'makeevrserg.project.name makeevrserg.project.version.string'
+  build_env:
+    name: Create enviroment variables
+    runs-on: ubuntu-latest
+    needs: [ gradle_validation, detekt_validation, tests_validation ]
     env:
       SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
       SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
       OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
       OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
       SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      PROJECT_NAME: ${{ steps.properties.outputs.makeevrserg.project.name }}
+      PROJECT_VERSION_STRING: ${{ steps.properties.outputs.makeevrserg.project.version.string }}
 
+  publish:
+    name: Publish library at mavenCentral
+    runs-on: ubuntu-latest
+    needs: [ gradle_validation, detekt_validation, tests_validation, build_env ]
     steps:
       - uses: actions/checkout@v1
       - name: Set up JDK 11
@@ -43,23 +58,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: SebRollen/toml-action@v1.0.2
-        id: version
-        with:
-          file: 'gradle/libs.versions.toml'
-          field: 'versions.project-version'
-      - uses: SebRollen/toml-action@v1.0.2
-        id: name
-        with:
-          file: 'gradle/libs.versions.toml'
-          field: 'versions.project-name'
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+          GITHUB_TOKEN: ${{ env.PROJECT_VERSION_STRING }}
         with:
-          tag_name: ${{ steps.version.outputs.value }}
-          name: ${{ steps.name.outputs.value }} - ${{ steps.version.outputs.value }}
+          tag_name: ${{ env.PROJECT_VERSION_STRING }}
+          name: ${{ env.PROJECT_VERSION_STRING }} - ${{ env.PROJECT_VERSION_STRING }}
           draft: false
           prerelease: false
