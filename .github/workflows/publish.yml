@@ -11,9 +11,9 @@ jobs:
   detekt_validation:
     needs: gradle_validation
     uses: ./.github/workflows/detekt-validation.yml
-  #tests_validation:
-  #  needs: gradle_validation
-  #  uses: ./.github/workflows/tests-validation.yml
+  tests_validation:
+    needs: gradle_validation
+    uses: ./.github/workflows/tests-validation.yml
 
   publish:
     name: Publish library at mavenCentral

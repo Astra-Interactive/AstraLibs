@@ -86,7 +86,6 @@ exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "e
 # Minecraft
 minecraft-paper-api = { module = "io.papermc.paper:paper-api", version.ref = "minecraft-spigot" }
 minecraft-spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "minecraft-spigot" }
-minecraft-spigot-core = { module = "org.spigotmc:spigot", version.ref = "minecraft-spigot" }
 minecraft-velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "minecraft-velocity" }
 minecraft-protocollib = { module = "com.comphenix.protocol:ProtocolLib", version.ref = "minecraft-protocollib" }
 minecraft-papi = { module = "me.clip:placeholderapi", version.ref = "minecraft-papi" }
@@ -94,7 +93,7 @@ minecraft-vaultapi = { module = "com.github.MilkBowl:VaultAPI", version.ref = "m
 
 [bundles]
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
-minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-spigot-core", "minecraft-vaultapi", "minecraft-papi"]
+minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-vaultapi", "minecraft-papi"]
 testing-kotlin = ["tests-junit-jupiter-api", "kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
 kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-dokka-kotlinJavaPlugin", "kotlin-gradle"]
 
