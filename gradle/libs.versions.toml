@@ -21,7 +21,7 @@ shadow = "7.1.2"
 
 # Minecraft
 minecraft-velocity = "3.1.1"
-minecraft-spigot = "1.19.3-R0.1-SNAPSHOT"
+minecraft-spigot = "1.20.1-R0.1-SNAPSHOT"
 minecraft-papi = "2.11.2"
 minecraft-protocollib = "4.8.0"
 minecraft-wg = "7.0.7"
