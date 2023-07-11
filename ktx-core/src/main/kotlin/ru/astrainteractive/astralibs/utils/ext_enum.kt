@@ -1,3 +1,5 @@
+@file:Suppress("Filename")
+
 package ru.astrainteractive.astralibs.utils
 /**
  * Safely get value from enum with type [T]

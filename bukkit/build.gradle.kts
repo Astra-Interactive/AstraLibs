@@ -1,9 +1,10 @@
+import ru.astrainteractive.gradleplugin.setupSpigotProcessor
+import ru.astrainteractive.gradleplugin.setupSpigotShadow
+
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
-    id("basic-plugin")
-    id("basic-resource-processor")
-    alias(libs.plugins.shadow)
+    id("ru.astrainteractive.gradleplugin.minecraft.empty")
 }
 
 dependencies {
@@ -22,13 +23,5 @@ dependencies {
     implementation(projects.di)
 }
 
-tasks.shadowJar {
-    dependencies {
-        include {
-            it.moduleGroup == libs.versions.project.group.get() || it.moduleGroup.contains("astralibs")
-        }
-    }
-    archiveClassifier.set(null as String?)
-    archiveBaseName.set(libs.versions.project.name.get())
-    destinationDirectory.set(File(libs.versions.destionation.spigot.get()))
-}
+setupSpigotShadow()
+setupSpigotProcessor()

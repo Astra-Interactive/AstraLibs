@@ -1,4 +1,4 @@
-@file:Suppress("TooManyFunctions")
+@file:Suppress("TooManyFunctions", "Filename")
 
 package ru.astrainteractive.astralibs.utils
 
