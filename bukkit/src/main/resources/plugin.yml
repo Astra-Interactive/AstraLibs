@@ -1,4 +1,5 @@
-main: '${main}'
+#main: '${main}' todo bug with relocation
+main: 'ru.astrainteractive.astralibs.ru.astrainteractive.astralibs.AstraLibs'
 prefix: '${prefix}'
 description: '${description}'
 name: '${name}'
@@ -10,4 +11,4 @@ api-version: 1.18
 softdepend: [ ]
 depend: [ ]
 loadbefore: [ ]
-libraries: [ "${libraries}" ]
+#libraries: [ "${libraries}" ] # todo bug with empty libraries
