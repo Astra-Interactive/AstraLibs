@@ -6,6 +6,8 @@ plugins {
 dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
+    // kdi
+    compileOnly(libs.klibs.kdi)
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
     // Test
@@ -14,5 +16,4 @@ dependencies {
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.29.0")
     // Local
     implementation(projects.ktxCore)
-    implementation(projects.di)
 }

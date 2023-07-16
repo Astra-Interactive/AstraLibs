@@ -4,7 +4,7 @@ import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import ru.astrainteractive.astralibs.Factory
+import ru.astrainteractive.klibs.kdi.Factory
 import java.io.File
 
 /**
@@ -44,10 +44,10 @@ object ConfigLoader {
             unsafeParse<T>(file, yaml)
         }.onFailure {
             it.printStackTrace()
-            val yamlText = yaml.encodeToString(default.build())
+            val yamlText = yaml.encodeToString(default.create())
             file.parentFile.mkdirs()
             file.createNewFile()
             file.writeText(yamlText)
-        }.getOrNull() ?: default.build()
+        }.getOrNull() ?: default.create()
     }
 }

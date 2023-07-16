@@ -63,6 +63,9 @@ kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 astralibs-ktxCore = { module = "ru.astrainteractive.astralibs:ktx-core", version.ref = "astralibs" }
 astralibs-spigotCore = { module = "ru.astrainteractive.astralibs:spigot-core", version.ref = "astralibs" }
 
+# klibs
+klibs-kdi = { module = "ru.astrainteractive.klibs:kdi", version.strictly = "1.0.1" }
+
 # Drivers
 driver-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "driver-jdbc" }
 driver-mysql = { module = "mysql:mysql-connector-java", version.ref = "driver-mysql" }
