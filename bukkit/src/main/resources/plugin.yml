@@ -12,3 +12,5 @@ softdepend: [ ]
 depend: [ ]
 loadbefore: [ ]
 #libraries: [ "${libraries}" ] # todo bug with empty libraries
+commands:
+  test:

@@ -1,7 +1,7 @@
 package domain.dto
 
 import domain.entities.Auction
-import ru.astrainteractive.astralibs.domain.mapping.Mapper
+import ru.astrainteractive.klibs.mikro.core.domain.Mapper
 
 object AuctionMapper : Mapper<Auction, AuctionDTO> {
 

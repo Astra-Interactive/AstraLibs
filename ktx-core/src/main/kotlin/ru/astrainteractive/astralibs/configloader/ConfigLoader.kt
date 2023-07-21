@@ -10,17 +10,16 @@ import java.io.File
 /**
  * This [ConfigLoader] will help you to parse data from your config.yml file
  */
-object ConfigLoader {
-    val defaultYamlConfiguration: YamlConfiguration
-        get() = Yaml.default.configuration.copy(
-            encodeDefaults = true,
-            strictMode = false
-        )
-    val defaultYaml: Yaml
-        get() = Yaml(
-            serializersModule = Yaml.default.serializersModule,
-            configuration = defaultYamlConfiguration
-        )
+class ConfigLoader(
+    val defaultYamlConfiguration: YamlConfiguration = Yaml.default.configuration.copy(
+        encodeDefaults = true,
+        strictMode = false
+    ),
+    val defaultYaml: Yaml = Yaml(
+        serializersModule = Yaml.default.serializersModule,
+        configuration = defaultYamlConfiguration
+    )
+) {
 
     /**
      * Parses [file] into [T] and throws exception if can't

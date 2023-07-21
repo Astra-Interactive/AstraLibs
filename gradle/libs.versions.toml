@@ -40,7 +40,20 @@ lint-detekt = "1.22.0"
 lint-detekt-ruleset-compiler = "0.0.2"
 lint-detekt-ruleset-ktlint = "0.48.0"
 
+# klibs
+klibs-gradleplugin = "0.1.1"
+klibs-kstorage = "1.0.0"
+klibs-mikro = "1.0.0"
+klibs-kdi = "1.0.1"
+
 [libraries]
+# klibs
+klibs-kdi = { module = "ru.astrainteractive.klibs:kdi", version.ref = "klibs-kdi" }
+klibs-kstorage = { module = "ru.astrainteractive.klibs:kstorage", version.ref = "klibs-kstorage" }
+klibs-mikro-core = { module = "ru.astrainteractive.klibs:mikro-core", version.ref = "klibs-mikro" }
+klibs-mikro-platform = { module = "ru.astrainteractive.klibs:mikro-platform", version.ref = "klibs-mikro" }
+klibs-gradleplugin-convention = { module = "ru.astrainteractive.gradleplugin:convention", version.ref = "klibs-gradleplugin" }
+klibs-gradleplugin-minecraft = { module = "ru.astrainteractive.gradleplugin:minecraft", version.ref = "klibs-gradleplugin" }
 # Linter
 lint-detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "lint-detekt" }
 lint-detekt-ruleset-compiler = { module = "com.braisgabin.detekt:kotlin-compiler-wrapper", version.ref = "lint-detekt-ruleset-compiler" }
@@ -62,9 +75,6 @@ kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.
 # AstraLibs
 astralibs-ktxCore = { module = "ru.astrainteractive.astralibs:ktx-core", version.ref = "astralibs" }
 astralibs-spigotCore = { module = "ru.astrainteractive.astralibs:spigot-core", version.ref = "astralibs" }
-
-# klibs
-klibs-kdi = { module = "ru.astrainteractive.klibs:kdi", version.strictly = "1.0.1" }
 
 # Drivers
 driver-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "driver-jdbc" }
@@ -95,6 +105,7 @@ minecraft-papi = { module = "me.clip:placeholderapi", version.ref = "minecraft-p
 minecraft-vaultapi = { module = "com.github.MilkBowl:VaultAPI", version.ref = "minecraft-vault" }
 
 [bundles]
+klibs = ["klibs-kdi", "klibs-kstorage", "klibs-mikro-core", "klibs-mikro-platform"]
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
 minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-vaultapi", "minecraft-papi"]
 testing-kotlin = ["tests-junit-jupiter-api", "kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
