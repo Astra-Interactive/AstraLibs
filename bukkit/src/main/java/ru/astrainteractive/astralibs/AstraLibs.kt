@@ -9,6 +9,8 @@ import ru.astrainteractive.astralibs.events.GlobalEventListener
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.menu.event.GlobalInventoryClickEvent
 import ru.astrainteractive.astralibs.utils.buildWithSpigot
+import ru.astrainteractive.klibs.kdi.Lateinit
+import ru.astrainteractive.klibs.kdi.Module
 
 class AstraLibs : JavaPlugin() {
     companion object : Module {

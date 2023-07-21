@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.economy
 
 import net.milkbowl.vault.economy.Economy
 import org.bukkit.Bukkit
-import ru.astrainteractive.astralibs.Provider
+import ru.astrainteractive.klibs.kdi.Provider
 
 /**
  * This is a default provider for vault Economy

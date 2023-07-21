@@ -42,6 +42,5 @@ rootProject.name = "AstraLibs"
 include("ktx-core")
 include("spigot-core")
 include("spigot-gui")
-include("di")
 include("orm")
 include("bukkit")

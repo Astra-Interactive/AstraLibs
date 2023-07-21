@@ -23,10 +23,17 @@ abstract class AsyncComponent : Closeable, CoroutineScope, AbstractCoroutineCont
     override fun run() {
         queue.poll()?.run()
     }
+
     override fun close() {
         coroutineContext.cancel()
         (this as CoroutineScope).cancel()
         (this as AbstractCoroutineContextElement).cancel()
     }
+
     companion object Key : CoroutineContext.Key<AsyncComponent>
+
+    /**
+     * Default implementation of [AsyncComponent]
+     */
+    class Default : AsyncComponent()
 }

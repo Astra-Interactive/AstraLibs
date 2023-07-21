@@ -1,24 +1,15 @@
-[![version](https://img.shields.io/maven-central/v/ru.astrainteractive.astralibs/ktx-core?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)[![kotlin_version](https://img.shields.io/badge/kotlin-1.8.10-blueviolet?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
+[![version](https://img.shields.io/maven-central/v/ru.astrainteractive.astralibs/ktx-core?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)[![kotlin_version](https://img.shields.io/badge/kotlin-1.9.0-blueviolet?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
 [![spigot_version](https://img.shields.io/badge/spigot-%3E1.16-green?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
 
 # AstraLibs
 
 This is a library with helpful functions for AstraInteractive plugins
 
-As an example - you can see how it beign used in [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate)
+As an example - you can see how it being used in [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate)
+
+For some documentation see [docs](./docs/home.md)
 
 ### You can use AstraLibs as you want, but you are not allowed to use it in "pay to win projects"
-
-### What about wiki?
-
-It's really hard to write documentation for such kind of plugin. Better
-see [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate) - it uses almost everything from this library.
-Also you can see other plugin, which are presented on AstraTemplate page
-
-Anyway, I'm trying to write docs, so you can see [wiki [WIP]](https://github.com/Astra-Interactive/AstraLibs/wiki)
-
-AstraTemplate used as template in all plugins of AstraInteractive. Architecture of AstraTemplate is easy and allows
-develop Spigot plugins easily and fast
 
 ### Installation
 
@@ -32,11 +23,9 @@ repositories {
 
 Next, add required repositories into `dependencies { ... }`
 
-```groovy
+```kotlin
 // ktx-core with basic kotlin-only dependencies
 implementation("ru.astrainteractive.astralibs:ktx-core:<version>")
-// Manual DI with kotlin-only dependencies
-implementation("ru.astrainteractive.astralibs:di:<version>")
 // Lightweight simple ORM with kotlin-only dependencies
 implementation("ru.astrainteractive.astralibs:orm:<version>")
 // Spigot-core dependencies
@@ -45,26 +34,72 @@ implementation("ru.astrainteractive.astralibs:spigot-core:<version>")
 implementation("ru.astrainteractive.astralibs:spigot-gui:<version>")
 ```
 
-### What can it do? Almost everything you need!
+Version catalogs
 
-- Advanced utility functions
-- valueOfOrNull for enums
-- Dependency containers such as Module, Reloadable and Factory
-- Domain utilities such as UseCase or Mapper
-- dsl command executor
-- dsl event handler
-- advanced class to handle Configuration values
-- advanced functions for ConfigurationSection such as getFloat, getHexString,
-- advanced extensions such as String.HEX(), Player.uuid
-- self written simple but useful ORM wrapper on SQLite and MySQL
-- simple httpClient(with get and post) over java URL
-- File management - You can easily create config files with one line: FileManager("data/config.yml")
-- Logging in file
-- Serializer with kotlinx - allow you to create data classes and forget about parsing config files by hand
-- Menu and paginated menu
-- Async work with coroutines - PluginScope and AsyncComponent, which can be used as ViewModel
-- Reflection util - setField, getField etc
-- Serializer - allows to encode values into byteArray or string with custom IOProvider
-- And other awesome things - look in AstraTemplate
+```toml
+[versions]
+astralibs = "<latest-version>"
 
-As an example - you can see how it beign used in [AstraTemplate](https://github.com/Astra-Interactive/AstraTemplate)
+[libraries]
+astralibs-orm = { module = "ru.astrainteractive.astralibs:orm", version.ref = "astralibs" }
+astralibs-ktx-core = { module = "ru.astrainteractive.astralibs:ktx-core", version.ref = "astralibs" }
+astralibs-spigot-gui = { module = "ru.astrainteractive.astralibs:spigot-gui", version.ref = "astralibs" }
+astralibs-spigot-core = { module = "ru.astrainteractive.astralibs:spigot-core", version.ref = "astralibs" }
+```
+
+### Command [WIP]
+Create tab completer
+```kotlin
+//effect give <player> <effect>
+//effect clear <player>
+plugin.registerTabCompleter("test") {
+    label(0) {
+        listOf("give", "clear")
+    }
+    label(1) {
+        Bukkit.getOnlinePlayers().map(Player::getName)
+    }
+    predicate(0, "give") {
+        label(2) {
+            PotionEffectType.values().map { it.name }
+        }
+    }
+    hints()
+}
+```
+Create command
+```kotlin
+registerCommand("test") {
+    //effect give <player> <effect>
+    //effect clear <player>
+    label(0, "give") {
+        argument(1, OnlinePlayerArgument).onResult { player ->
+            argument(2, PotionEffectTypeArgument).onResult { potionEffectType ->
+                // execute logic
+            }.onFailure {
+                sender.sendMessage("${it.rawValue} not potion effect")
+            }
+        }.onFailure {
+            sender.sendMessage("${it.rawValue} not a player")
+        }
+    }
+    label(0, "clear") {
+        argument(1, OnlinePlayerArgument).onResult { player ->
+            // execute logic
+        }.onFailure {
+            sender.sendMessage("${it.rawValue} not a player")
+        }
+    }
+}
+```
+### Permission
+```kotlin
+sealed class Permissions(override val value: String) : Permission {
+    data object Reload : Permissions("command.reload")
+    data object Counts : Permissions("command.counts.2")
+}
+fun checkPerm(player: Player) {
+    Permissions.Reload.hasPermission(sender) // -> bool
+    Permissions.Counts.permissionSize(sender) // -> 2
+}
+```

@@ -1,16 +1,34 @@
 package ru.astrainteractive.astralibs.commands
 
 import org.bukkit.command.CommandSender
+import ru.astrainteractive.astralibs.commands.types.ArgumentType
 
 class Command(val alias: String, val sender: CommandSender, val args: Array<out String>) {
 
     fun <T> argument(
         index: Int,
-        converter: (String?) -> T?,
-    ): Argument<T> {
+        argumentType: ArgumentType<T>,
+    ): ArgumentResult<out T> {
         val argumentRawValue = args.getOrNull(index)
-        val argumentValue = converter.invoke(argumentRawValue)
+        val argumentValue = runCatching {
+            argumentRawValue?.let(argumentType::transform)
+        }.getOrNull()
 
-        return argumentValue?.let { Argument.Success(it, argumentRawValue) } ?: Argument.Failure(argumentRawValue)
+        return argumentValue?.let { ArgumentResult.Success(it, argumentRawValue) } ?: ArgumentResult.Failure(
+            argumentRawValue
+        )
+    }
+
+    inline fun label(
+        index: Int,
+        label: String,
+        block: () -> Unit
+    ) {
+        val argument = args.getOrNull(index)
+        if (argument != label) {
+            println("argument not equal label $argument $label")
+            return
+        }
+        block.invoke()
     }
 }

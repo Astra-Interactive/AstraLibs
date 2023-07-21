@@ -1,3 +1,5 @@
+[Home](../home.md) | Async | [Configuration](./configuration.md)
+
 ## AstraLibs Coroutines package
 
 This package allows you to handle dispatchers and coroutine scope. It contains:
@@ -8,9 +10,9 @@ Is like ViewModel from Android - you can launch coroutines from it, you can clos
 
 ```kotlin
 class MyCustomScope : AsyncComponent {
-    fun launch() = componentScope.launch {
-        println("I'm launched in scope: $this!")
-    }
+  fun launch() = componentScope.launch {
+    println("I'm launched in scope: $this!")
+  }
 }
 ```
 

@@ -4,23 +4,22 @@ import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import ru.astrainteractive.astralibs.Factory
+import ru.astrainteractive.klibs.kdi.Factory
 import java.io.File
 
 /**
  * This [ConfigLoader] will help you to parse data from your config.yml file
  */
-object ConfigLoader {
-    val defaultYamlConfiguration: YamlConfiguration
-        get() = Yaml.default.configuration.copy(
-            encodeDefaults = true,
-            strictMode = false
-        )
-    val defaultYaml: Yaml
-        get() = Yaml(
-            serializersModule = Yaml.default.serializersModule,
-            configuration = defaultYamlConfiguration
-        )
+class ConfigLoader(
+    val defaultYamlConfiguration: YamlConfiguration = Yaml.default.configuration.copy(
+        encodeDefaults = true,
+        strictMode = false
+    ),
+    val defaultYaml: Yaml = Yaml(
+        serializersModule = Yaml.default.serializersModule,
+        configuration = defaultYamlConfiguration
+    )
+) {
 
     /**
      * Parses [file] into [T] and throws exception if can't
@@ -44,10 +43,10 @@ object ConfigLoader {
             unsafeParse<T>(file, yaml)
         }.onFailure {
             it.printStackTrace()
-            val yamlText = yaml.encodeToString(default.build())
+            val yamlText = yaml.encodeToString(default.create())
             file.parentFile.mkdirs()
             file.createNewFile()
             file.writeText(yamlText)
-        }.getOrNull() ?: default.build()
+        }.getOrNull() ?: default.create()
     }
 }

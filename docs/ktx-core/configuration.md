@@ -1,3 +1,5 @@
+[Home](../home.md) | [Async](./async.md) | Configuration
+
 ## Configuration
 
 Configuration is a safe key-value storage interface. It can be Mutable or Immutable
