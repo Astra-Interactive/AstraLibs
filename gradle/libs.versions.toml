@@ -41,7 +41,7 @@ lint-detekt-ruleset-compiler = "0.0.2"
 lint-detekt-ruleset-ktlint = "0.48.0"
 
 # klibs
-klibs-gradleplugin = "0.1.1"
+klibs-gradleplugin = "0.1.0"
 klibs-kstorage = "1.0.0"
 klibs-mikro = "1.0.0"
 klibs-kdi = "1.0.1"

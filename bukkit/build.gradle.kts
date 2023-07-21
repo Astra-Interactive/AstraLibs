@@ -22,7 +22,6 @@ dependencies {
     implementation(projects.orm)
     implementation(projects.spigotCore)
     implementation(projects.spigotGui)
-    implementation(projects.di)
 }
 
 setupSpigotShadow()

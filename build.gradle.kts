@@ -17,7 +17,6 @@ apply(plugin = "ru.astrainteractive.gradleplugin.root.info")
 
 subprojects.forEach {
     it.apply(plugin = "ru.astrainteractive.gradleplugin.dokka.module")
-    it.apply(plugin = "ru.astrainteractive.gradleplugin.stub.javadoc")
     if (it.name != "bukkit") {
         it.apply(plugin = "ru.astrainteractive.gradleplugin.publication")
     }
