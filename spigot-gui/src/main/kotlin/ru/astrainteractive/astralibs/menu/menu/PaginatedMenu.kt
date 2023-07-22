@@ -2,6 +2,7 @@ package ru.astrainteractive.astralibs.menu.menu
 
 import ru.astrainteractive.astralibs.menu.clicker.ClickListener
 
+@Deprecated("Pages must be controlled by state, not GUI")
 abstract class PaginatedMenu : Menu() {
 
     /**
@@ -61,9 +62,9 @@ abstract class PaginatedMenu : Menu() {
 
     abstract fun onPageChanged()
 
-    abstract val prevPageButton: InventoryButton
-    abstract val backPageButton: InventoryButton
-    abstract val nextPageButton: InventoryButton
+    abstract val prevPageButton: InventorySlot
+    abstract val backPageButton: InventorySlot
+    abstract val nextPageButton: InventorySlot
 
     /**
      * This function will set:

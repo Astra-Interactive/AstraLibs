@@ -1,6 +1,6 @@
 @file:Suppress("TooManyFunctions", "Filename")
 
-package ru.astrainteractive.astralibs.utils
+package ru.astrainteractive.astralibs.util
 
 import net.md_5.bungee.api.ChatColor
 import org.bukkit.OfflinePlayer

@@ -1,6 +1,6 @@
 @file:Suppress("Filename")
 
-package ru.astrainteractive.astralibs.commands
+package ru.astrainteractive.astralibs.command
 
 import org.bukkit.plugin.java.JavaPlugin
 

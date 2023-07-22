@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.commands.types
+package ru.astrainteractive.astralibs.command.types
 
 import org.bukkit.potion.PotionEffectType
 

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.utils
+package ru.astrainteractive.astralibs.util
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion
 
