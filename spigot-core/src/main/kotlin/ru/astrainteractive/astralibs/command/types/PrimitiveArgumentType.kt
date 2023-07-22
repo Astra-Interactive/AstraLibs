@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.commands.types
+package ru.astrainteractive.astralibs.command.types
 
 sealed interface PrimitiveArgumentType<T> : ArgumentType<T> {
     data object Integer : PrimitiveArgumentType<kotlin.Int> {

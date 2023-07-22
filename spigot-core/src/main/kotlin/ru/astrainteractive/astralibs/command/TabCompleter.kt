@@ -1,7 +1,7 @@
-package ru.astrainteractive.astralibs.commands
+package ru.astrainteractive.astralibs.command
 
 import org.bukkit.command.CommandSender
-import ru.astrainteractive.astralibs.utils.withEntry
+import ru.astrainteractive.astralibs.util.withEntry
 
 class TabCompleter(val alias: String, val sender: CommandSender, val args: Array<out String>) {
     private val set = HashMap<Int, List<String>>()

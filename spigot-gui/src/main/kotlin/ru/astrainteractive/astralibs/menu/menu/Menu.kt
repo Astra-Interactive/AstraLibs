@@ -27,13 +27,14 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         }
     }
 
-    fun InventoryButton.setInventoryButton() {
+    fun InventorySlot.setInventoryButton() {
         inventory?.setItem(index, item)
     }
 
     abstract val playerHolder: PlayerHolder
 
     private var inventory: Inventory? = null
+
     override fun getInventory(): Inventory = checkNotNull(inventory) { "Inventory not initialized" }
 
     /**
@@ -53,6 +54,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
 
     /**
      * Called when inventory was closed
+     *
      * After [onInventoryClose] executed - [componentScope] will be closed
      */
     abstract fun onInventoryClose(it: InventoryCloseEvent)
@@ -67,5 +69,8 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         onCreated()
     }
 
+    /**
+     * This method called after inventory created and opened
+     */
     abstract fun onCreated()
 }

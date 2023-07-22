@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.events
+package ru.astrainteractive.astralibs.event
 
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
@@ -13,7 +13,7 @@ object DSLEvent {
         plugin: Plugin,
         eventPriority: EventPriority = EventPriority.NORMAL,
         crossinline block: (T) -> Unit
-    ) = DSLEvent(T::class.java, eventListener, plugin, eventPriority) {
+    ) = invoke(T::class.java, eventListener, plugin, eventPriority) {
         (it as? T)?.let(block)
     }
 

@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.menu.clicker
 
 import org.bukkit.event.inventory.InventoryClickEvent
-import ru.astrainteractive.astralibs.menu.menu.InventoryButton
+import ru.astrainteractive.astralibs.menu.menu.InventorySlot
 import ru.astrainteractive.astralibs.menu.menu.Menu
 
 /**
@@ -14,7 +14,7 @@ class MenuClickListener : ClickListener {
         clicksMap[e.slot]?.invoke(e)
     }
 
-    override fun remember(button: InventoryButton) {
+    override fun remember(button: InventorySlot) {
         clicksMap[button.index] = button.onClick
     }
 

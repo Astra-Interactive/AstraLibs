@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.commands
+package ru.astrainteractive.astralibs.command
 
 sealed class ArgumentResult<T>(val rawValue: String?) {
 

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.utils
+package ru.astrainteractive.astralibs.util
 
 import org.bukkit.configuration.file.FileConfiguration
 import ru.astrainteractive.astralibs.filemanager.SpigotFileManager

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.events
+package ru.astrainteractive.astralibs.event
 
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
 

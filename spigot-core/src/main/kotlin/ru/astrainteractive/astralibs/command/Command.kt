@@ -1,7 +1,7 @@
-package ru.astrainteractive.astralibs.commands
+package ru.astrainteractive.astralibs.command
 
 import org.bukkit.command.CommandSender
-import ru.astrainteractive.astralibs.commands.types.ArgumentType
+import ru.astrainteractive.astralibs.command.types.ArgumentType
 
 class Command(val alias: String, val sender: CommandSender, val args: Array<out String>) {
 
