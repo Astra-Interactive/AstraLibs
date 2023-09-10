@@ -2,9 +2,12 @@
 
 package ru.astrainteractive.astralibs
 
+import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import ru.astrainteractive.astralibs.async.PluginScope
+import ru.astrainteractive.astralibs.command.registerCommand
+import ru.astrainteractive.astralibs.economy.AnyEconomyProvider
 import ru.astrainteractive.astralibs.event.GlobalEventListener
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.menu.event.GlobalInventoryClickEvent
@@ -23,6 +26,14 @@ class AstraLibs : JavaPlugin() {
 
         this.also(AstraLibs.instance::initialize)
         Logger.buildWithSpigot("AstraLibs", this).also(AstraLibs.logger::initialize)
+        val economy = AnyEconomyProvider(this)
+        registerCommand("test") {
+            val player = sender as Player
+            economy.addMoney(player.uniqueId, 100.0)
+            economy.takeMoney(player.uniqueId, 100.0)
+            economy.getBalance(player.uniqueId)
+            economy.hasAtLeast(player.uniqueId, 100.0)
+        }
     }
 
     override fun onDisable() {

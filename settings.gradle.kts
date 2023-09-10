@@ -30,6 +30,7 @@ dependencyResolutionManagement {
         maven("https://repo.dmulloy2.net/repository/public/")
         maven("https://oss.sonatype.org/content/groups/public/")
         maven("https://repo.essentialsx.net/snapshots/")
+        maven("https://repo.essentialsx.net/releases/")
         maven("https://repo.maven.apache.org/maven2/")
         maven("https://maven.enginehub.org/repo/")
         maven("https://repo1.maven.org/maven2/")

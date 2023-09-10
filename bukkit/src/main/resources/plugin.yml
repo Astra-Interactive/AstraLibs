@@ -8,7 +8,7 @@ authors: [ "${authors}" ]
 author: "${author}"
 website: "${url}"
 api-version: 1.18
-softdepend: [ ]
+softdepend: [ Vault, Essentials ]
 depend: [ ]
 loadbefore: [ ]
 #libraries: [ "${libraries}" ] # todo bug with empty libraries
