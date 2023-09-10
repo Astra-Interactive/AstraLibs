@@ -11,36 +11,36 @@ import java.io.File
  * This [ConfigLoader] will help you to parse data from your config.yml file
  */
 class ConfigLoader(
-    val defaultYamlConfiguration: YamlConfiguration = Yaml.default.configuration.copy(
+    val configuration: YamlConfiguration = Yaml.default.configuration.copy(
         encodeDefaults = true,
         strictMode = false
     ),
-    val defaultYaml: Yaml = Yaml(
+    val yaml: Yaml = Yaml(
         serializersModule = Yaml.default.serializersModule,
-        configuration = defaultYamlConfiguration
+        configuration = configuration
     )
 ) {
 
     /**
      * Parses [file] into [T] and throws exception if can't
      */
-    inline fun <reified T> unsafeParse(file: File, yaml: Yaml = defaultYaml): T {
+    inline fun <reified T> unsafeParse(file: File): T {
         return yaml.decodeFromString(file.readText())
     }
 
     /**
      * Return kotlin's [Result]
      */
-    inline fun <reified T> safeParse(file: File, yaml: Yaml = defaultYaml) = kotlin.runCatching {
-        unsafeParse<T>(file, yaml)
+    inline fun <reified T> safeParse(file: File) = kotlin.runCatching {
+        unsafeParse<T>(file)
     }
 
     /**
      * Trying to parse [file] via [safeParse] and loadng [default] if failure happened
      */
-    inline fun <reified T : Any> toClassOrDefault(file: File, default: Factory<T>, yaml: Yaml = defaultYaml): T {
+    inline fun <reified T : Any> toClassOrDefault(file: File, default: Factory<T>): T {
         return kotlin.runCatching {
-            unsafeParse<T>(file, yaml)
+            unsafeParse<T>(file)
         }.onFailure {
             it.printStackTrace()
             val yamlText = yaml.encodeToString(default.create())

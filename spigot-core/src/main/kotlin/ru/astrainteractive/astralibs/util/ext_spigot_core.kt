@@ -32,24 +32,23 @@ fun Logger.Companion.buildWithSpigot(tag: String, instance: Plugin): Logger {
 /**
  * Get Float from ConfigurationSection
  */
-fun ConfigurationSection.getFloat(path: String): Float =
-    getDouble(path).toFloat()
+fun ConfigurationSection.getFloat(path: String): Float {
+    return getDouble(path).toFloat()
+}
 
 /**
  * Get float or default value from ConfigurationSection
  */
-fun ConfigurationSection.getFloat(path: String, defaultValue: Float): Float =
-    getDouble(path, defaultValue.toDouble()).toFloat()
+fun ConfigurationSection.getFloat(path: String, defaultValue: Float): Float {
+    return getDouble(path, defaultValue.toDouble()).toFloat()
+}
 
 /**
  * Get double or null from ConfigurationSection
  */
-fun ConfigurationSection.getDoubleOrNull(path: String): Double? =
-    if (!this.contains(path)) {
-        null
-    } else {
-        getDouble(path)
-    }
+fun ConfigurationSection.getDoubleOrNull(path: String): Double? {
+    return getDouble(path).takeIf { contains(path) }
+}
 
 /**
  * Converting string from file configuration to hex with default param

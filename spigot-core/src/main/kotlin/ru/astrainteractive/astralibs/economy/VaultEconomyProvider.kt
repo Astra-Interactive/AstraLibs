@@ -4,11 +4,18 @@ import net.milkbowl.vault.economy.Economy
 import net.milkbowl.vault.economy.EconomyResponse
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
+import org.bukkit.plugin.Plugin
+import org.bukkit.plugin.java.JavaPlugin
+import ru.astrainteractive.klibs.kdi.Factory
 import java.util.UUID
 
-class VaultEconomyProvider(
-    private val econ: Economy = VaultEconomyServiceProvider.provide()
-) : EconomyProvider {
+class VaultEconomyProvider(plugin: JavaPlugin, vault: Plugin) : EconomyProvider {
+    private val econ = Factory {
+        val rsp = plugin.server.servicesManager.getRegistration(Economy::class.java)
+        checkNotNull(rsp) { "Could not get economy provider" }
+        rsp.provider
+    }.create()
+
     private fun offlinePlayer(uuid: UUID) = Bukkit.getOfflinePlayer(uuid)
 
     /**
