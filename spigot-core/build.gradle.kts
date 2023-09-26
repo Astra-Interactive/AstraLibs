@@ -17,4 +17,6 @@ dependencies {
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.29.0")
     // Local
     implementation(projects.ktxCore)
+    implementation("ru.astrainteractive.astralibs:shared:2.11.0")
+    implementation("ru.astrainteractive.astralibs:shared-bukkit:2.11.0")
 }

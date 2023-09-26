@@ -45,3 +45,5 @@ include("spigot-core")
 include("spigot-gui")
 include("orm")
 include("bukkit")
+
+include("shared")
