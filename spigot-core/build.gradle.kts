@@ -11,6 +11,7 @@ dependencies {
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
     compileOnly("net.essentialsx:EssentialsX:2.20.1")
+    compileOnly("net.luckperms:api:5.4")
     // Test
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)

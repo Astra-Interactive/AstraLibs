@@ -11,14 +11,20 @@ interface EventListener : Listener {
     /**
      * Register event listener so events could be delivered
      */
-    fun onEnable(plugin: Plugin) {
-        plugin.server.pluginManager.registerEvents(this, plugin)
-    }
+    fun onEnable(plugin: Plugin)
 
     /**
      * Remove event listener
      */
-    fun onDisable() {
-        HandlerList.unregisterAll(this)
+    fun onDisable()
+
+    class Default : EventListener {
+        override fun onEnable(plugin: Plugin) {
+            plugin.server.pluginManager.registerEvents(this, plugin)
+        }
+
+        override fun onDisable() {
+            HandlerList.unregisterAll(this)
+        }
     }
 }

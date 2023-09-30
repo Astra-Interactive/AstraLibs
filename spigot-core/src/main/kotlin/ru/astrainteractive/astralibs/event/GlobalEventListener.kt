@@ -7,4 +7,4 @@ import org.jetbrains.kotlin.tooling.core.UnsafeApi
  * Don't forget to call [GlobalEventListener.onDisable] when disabling your plugin
  */
 @UnsafeApi("Consider create your own Singleton EventListener")
-object GlobalEventListener : EventListener
+object GlobalEventListener : EventListener by EventListener.Default()
