@@ -11,7 +11,8 @@ import ru.astrainteractive.astralibs.menu.menu.Menu
 /**
  * To be able to use inventory events - you need to register this class somewhere. For example in [JavaPlugin.onEnable]
  */
-class DefaultInventoryClickEvent : EventListener {
+class DefaultInventoryClickEvent : EventListener by EventListener.Default() {
+
     @EventHandler
     fun onInventoryClicked(e: InventoryClickEvent) {
         val holder = e.view.topInventory.holder as? Menu ?: return

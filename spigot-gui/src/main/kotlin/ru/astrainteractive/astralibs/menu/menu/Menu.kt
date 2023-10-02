@@ -27,7 +27,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         }
     }
 
-    fun InventorySlot.setInventoryButton() {
+    fun InventorySlot.setInventorySlot() {
         inventory?.setItem(index, item)
     }
 

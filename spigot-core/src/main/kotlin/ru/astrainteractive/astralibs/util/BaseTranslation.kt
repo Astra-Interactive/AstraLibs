@@ -3,6 +3,7 @@ package ru.astrainteractive.astralibs.util
 import org.bukkit.configuration.file.FileConfiguration
 import ru.astrainteractive.astralibs.filemanager.SpigotFileManager
 
+@Deprecated("Use KyoriComponentSerializer with yaml parser")
 abstract class BaseTranslation {
     protected abstract val translationFile: SpigotFileManager
     protected val translationConfiguration: FileConfiguration

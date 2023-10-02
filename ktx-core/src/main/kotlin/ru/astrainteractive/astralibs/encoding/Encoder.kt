@@ -7,9 +7,9 @@ import java.io.ByteArrayOutputStream
  * Decoder/Encoder for [Serializable] objects
  *
  * Consider use BukkitInputStreamProvider and BukkitOutputStreamProvider
- * from spigot-core if using [Serializer] with bukkit objects
+ * from spigot-core if using [Encoder] with bukkit objects
  */
-class Serializer(
+class Encoder(
     private val streamProvider: IOStreamProvider = JavaIOStreamProvider,
 ) {
 
