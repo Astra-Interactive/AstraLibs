@@ -15,7 +15,7 @@ class MenuClickListener : ClickListener {
     }
 
     override fun remember(button: InventorySlot) {
-        clicksMap[button.index] = button.onClick
+        clicksMap[button.index] = button.click
     }
 
     override fun clearClickListener() {

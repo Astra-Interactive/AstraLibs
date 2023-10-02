@@ -11,7 +11,7 @@ import ru.astrainteractive.astralibs.menu.clicker.Click
 interface InventorySlot {
     val item: ItemStack
     val index: Int
-    val onClick: Click
+    val click: Click
 
     class Builder private constructor() {
         var itemStack = ItemStack(Material.AIR)
@@ -23,7 +23,7 @@ interface InventorySlot {
                 val builder = Builder().apply(block)
                 override val item: ItemStack = builder.itemStack
                 override val index: Int = builder.index
-                override val onClick: Click = builder.click
+                override val click: Click = builder.click
             }
         }
     }

@@ -80,19 +80,19 @@ abstract class PaginatedMenu : Menu() {
     fun setManageButtons(clickListener: ClickListener) {
         if (page >= 1) {
             prevPageButton.also {
-                it.setInventoryButton()
+                it.setInventorySlot()
                 clickListener.remember(it)
             }
         }
 
         backPageButton.also {
-            it.setInventoryButton()
+            it.setInventorySlot()
             clickListener.remember(it)
         }
 
         if (page < maxPages) {
             nextPageButton.also {
-                it.setInventoryButton()
+                it.setInventorySlot()
                 clickListener.remember(it)
             }
         }

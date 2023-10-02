@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.configloader
+package ru.astrainteractive.astralibs.serialization
 
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
@@ -8,9 +8,9 @@ import ru.astrainteractive.klibs.kdi.Factory
 import java.io.File
 
 /**
- * This [ConfigLoader] will help you to parse data from your config.yml file
+ * This [YamlSerializer] will help you to parse data from your config.yml file
  */
-class ConfigLoader(
+class YamlSerializer(
     val configuration: YamlConfiguration = Yaml.default.configuration.copy(
         encodeDefaults = true,
         strictMode = false

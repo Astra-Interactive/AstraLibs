@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.encoding
 
 /**
- * Wrapper for IO classes to handle [Serializer] more safely
+ * Wrapper for IO classes to handle [Encoder] more safely
  */
 sealed interface IO {
     @JvmInline

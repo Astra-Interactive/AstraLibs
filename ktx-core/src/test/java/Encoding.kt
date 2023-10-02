@@ -1,19 +1,19 @@
+import ru.astrainteractive.astralibs.encoding.Encoder
 import ru.astrainteractive.astralibs.encoding.JavaIOStreamProvider
-import ru.astrainteractive.astralibs.encoding.Serializer
 import java.io.Serializable
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class Encoding {
-    private val serializer = Serializer(JavaIOStreamProvider)
+    private val encoder = Encoder(JavaIOStreamProvider)
     private inline fun <reified T> toFromByteArray(initial: T) {
-        val encoded = serializer.toByteArray(initial)
-        val decoded: T = serializer.fromByteArray(encoded)
+        val encoded = encoder.toByteArray(initial)
+        val decoded: T = encoder.fromByteArray(encoded)
         assertEquals(initial, decoded)
     }
     private inline fun <reified T> toFromBase64(initial: T) {
-        val encoded = serializer.toBase64(initial)
-        val decoded: T = serializer.fromBase64(encoded)
+        val encoded = encoder.toBase64(initial)
+        val decoded: T = encoder.fromBase64(encoded)
         assertEquals(initial, decoded)
     }
 
