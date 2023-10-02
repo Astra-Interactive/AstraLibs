@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
@@ -40,7 +41,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     /**
      * Title of this inventory
      */
-    abstract var menuTitle: String
+    abstract var menuTitle: Component
 
     /**
      * Size of inventory

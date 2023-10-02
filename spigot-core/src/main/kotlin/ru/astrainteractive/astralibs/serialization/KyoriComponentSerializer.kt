@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.serialization
 
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.TextComponent
+import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
@@ -39,8 +39,11 @@ sealed class KyoriComponentSerializer(val type: KyoriComponentSerializerType) {
     }
 
     data object Legacy : KyoriComponentSerializer(KyoriComponentSerializerType.Legacy) {
-        override fun toComponent(string: String): TextComponent {
-            return LegacyComponentSerializer.legacy(LegacyComponentSerializer.AMPERSAND_CHAR).deserialize(string)
+        override fun toComponent(string: String): Component {
+            return LegacyComponentSerializer
+                .legacy(LegacyComponentSerializer.AMPERSAND_CHAR)
+                .deserialize(string)
+                .decoration(TextDecoration.ITALIC, false)
         }
     }
 
