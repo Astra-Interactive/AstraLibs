@@ -6,6 +6,7 @@ import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
+import ru.astrainteractive.astralibs.string.StringDesc
 
 /**
  * [KyoriComponentSerializer] is a wrapper for [net.kyori.adventure] serializer
@@ -13,6 +14,12 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 sealed class KyoriComponentSerializer(val type: KyoriComponentSerializerType) {
 
     abstract fun toComponent(string: String): Component
+
+    fun toComponent(stringDesc: StringDesc): Component {
+        return when (stringDesc) {
+            is StringDesc.Raw -> toComponent(stringDesc.raw)
+        }
+    }
 
     data object Json : KyoriComponentSerializer(KyoriComponentSerializerType.Json) {
         override fun toComponent(string: String): Component {
