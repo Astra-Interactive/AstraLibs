@@ -6,7 +6,7 @@ import ru.astrainteractive.astralibs.command.registerCommand
 /**
  * Command interface is a store for your command
  *
- * It should contain [CommandParser],[CommandExecutor],[CommandParser.ResultHandler]
+ * It should contain [CommandParser], [CommandExecutor], [CommandParser.ResultHandler]
  */
 interface Command {
 
