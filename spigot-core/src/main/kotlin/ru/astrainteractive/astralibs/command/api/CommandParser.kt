@@ -30,5 +30,9 @@ interface CommandParser<R : Any> {
      */
     fun interface ResultHandler<R : Any> {
         fun handle(commandSender: CommandSender, result: R)
+
+        class NoOp<R : Any> : ResultHandler<R> {
+            override fun handle(commandSender: CommandSender, result: R) = Unit
+        }
     }
 }
