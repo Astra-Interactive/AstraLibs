@@ -37,6 +37,7 @@ dependencyResolutionManagement {
         maven("https://maven.playpro.com")
         maven("https://jitpack.io")
     }
+    versionCatalogs { create("klibs") { from(files("./gradle/klibs.versions.toml")) } }
 }
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "AstraLibs"

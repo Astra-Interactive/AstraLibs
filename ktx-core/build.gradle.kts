@@ -7,7 +7,7 @@ dependencies {
     // Kotlin
     api(libs.bundles.kotlin)
     // kdi
-    api(libs.bundles.klibs)
+    api(klibs.bundles.klibs)
     // Test
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)
