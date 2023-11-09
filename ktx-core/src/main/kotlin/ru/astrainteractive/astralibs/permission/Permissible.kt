@@ -1,25 +1,23 @@
 package ru.astrainteractive.astralibs.permission
 
-import java.util.UUID
-
-interface PermissionManager {
+interface Permissible {
     /**
      * Checks whether player has permission or not
      */
-    fun hasPermission(uuid: UUID, permission: Permission): Boolean
+    fun hasPermission(permission: Permission): Boolean
 
     /**
      * Get max permission size: com.example.permission.7
      */
-    fun maxPermissionSize(uuid: UUID, permission: Permission): Int?
+    fun maxPermissionSize(permission: Permission): Int?
 
     /**
      * Get min permission size: com.example.permission.7
      */
-    fun minPermissionSize(uuid: UUID, permission: Permission): Int?
+    fun minPermissionSize(permission: Permission): Int?
 
     /**
      * Get all permission sizes: com.example.permission.7
      */
-    fun permissionSizes(uuid: UUID, permission: Permission): List<Int>
+    fun permissionSizes(permission: Permission): List<Int>
 }
