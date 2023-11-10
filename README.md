@@ -48,7 +48,9 @@ astralibs-spigot-core = { module = "ru.astrainteractive.astralibs:spigot-core", 
 ```
 
 ### Command [WIP]
+
 Create tab completer
+
 ```kotlin
 //effect give <player> <effect>
 //effect clear <player>
@@ -67,39 +69,76 @@ plugin.registerTabCompleter("test") {
     hints()
 }
 ```
+
 Create command
+
 ```kotlin
-registerCommand("test") {
-    //effect give <player> <effect>
-    //effect clear <player>
-    label(0, "give") {
-        argument(1, OnlinePlayerArgument).onResult { player ->
-            argument(2, PotionEffectTypeArgument).onResult { potionEffectType ->
-                // execute logic
-            }.onFailure {
-                sender.sendMessage("${it.rawValue} not potion effect")
-            }
-        }.onFailure {
-            sender.sendMessage("${it.rawValue} not a player")
-        }
+interface SampleCommand : Command<SampleCommand.Result, SampleCommand.Input> {
+
+    sealed interface Result {
+        data object NoOp : Result
+        data object NoPermission : Result
+        data object PlayerNotExists : Result
+        data object Success : Result
     }
-    label(0, "clear") {
-        argument(1, OnlinePlayerArgument).onResult { player ->
-            // execute logic
-        }.onFailure {
-            sender.sendMessage("${it.rawValue} not a player")
-        }
-    }
+
+    class Input()
 }
+
+class SampleCommandFactory(private val plugin: JavaPlugin) : Factory<SampleCommand> {
+
+    override fun create(): SampleCommand {
+        return SampleCommandImpl()
+    }
+
+    private inner class MyCommandExecutor : CommandExecutor<SampleCommand.Input> {
+        override fun execute(input: SampleCommand.Input) {
+            TODO()
+        }
+    }
+
+    private inner class MyCommandParser : CommandParser<SampleCommand.Result> {
+        override fun parse(args: Array<out String>, sender: CommandSender): SampleCommand.Result {
+            TODO("Not yet implemented")
+        }
+    }
+
+    private inner class MyCommandMapper : Command.Mapper<SampleCommand.Result, SampleCommand.Input> {
+        override fun toInput(result: SampleCommand.Result): SampleCommand.Input? {
+            TODO("Not yet implemented")
+        }
+    }
+
+    inner class SampleCommandImpl :
+        SampleCommand,
+        Command<SampleCommand.Result, SampleCommand.Input> by DefaultCommandFactory.create(
+            plugin = plugin,
+            alias = "damage",
+            commandParser = { args, sender ->
+                SampleCommand.Result.NoOp
+            },
+            commandExecutor = {
+            },
+            resultHandler = Command.ResultHandler.NoOp(),
+            mapper = {
+                SampleCommand.Input()
+            }
+        )
+}
+
 ```
+
 ### Permission
+
 ```kotlin
 sealed class Permissions(override val value: String) : Permission {
     data object Reload : Permissions("command.reload")
     data object Counts : Permissions("command.counts.2")
 }
+
 fun checkPerm(player: Player) {
-    Permissions.Reload.hasPermission(sender) // -> bool
-    Permissions.Counts.permissionSize(sender) // -> 2
+    val permissible = player.toPermissible()
+    permissible.hasPermission(sender) // -> bool
+    permissible.permissionSize(sender) // -> 2
 }
 ```

@@ -1,34 +1,46 @@
 package ru.astrainteractive.astralibs.command.api
 
+import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.astralibs.command.registerCommand
 
-/**
- * Command interface is a store for your command
- *
- * It should contain [CommandParser], [CommandExecutor], [CommandParser.ResultHandler]
- */
-interface Command {
+fun interface Command<R : Any, I : Any> {
+    /**
+     * Register Bukkit command
+     */
+    fun register(javaPlugin: JavaPlugin)
 
-    fun register(plugin: JavaPlugin)
-
-    companion object {
+    /**
+     * Result handler will handle [CommandParser] output
+     *
+     * It can send a message to executor if parsing was not successful
+     */
+    fun interface ResultHandler<R : Any> {
         /**
-         * Register command and execute it with default hierarchy
+         * Handle your parsed result. Send message etc
          */
-        fun <R : Any, I : Any> registerDefault(
-            plugin: JavaPlugin,
-            commandParser: CommandParser<R>,
-            commandExecutor: CommandExecutor<I>,
-            resultHandler: CommandParser.ResultHandler<R>,
-            transform: (R) -> I?
-        ) {
-            plugin.registerCommand(commandParser.alias) {
-                commandParser.parse(args, sender)
-                    .also { resultHandler.handle(sender, it) }
-                    .let(transform)
-                    ?.let(commandExecutor::execute)
-            }
+        fun handle(commandSender: CommandSender, result: R)
+
+        class NoOp<R : Any> : ResultHandler<R> {
+            override fun handle(commandSender: CommandSender, result: R) = Unit
+        }
+    }
+
+    /**
+     * This mapper is used to map Result from [CommandParser] to Input of [CommandExecutor]
+     */
+    fun interface Mapper<R : Any, I : Any> {
+        /**
+         * Transform result of type [R] into input [I]
+         *
+         * Since we can't guarantee the safety of [I] it's nullable
+         */
+        fun toInput(result: R): I?
+
+        /**
+         * Use [NoOp] if you don't have input [I] type
+         */
+        class NoOp<R : Any> : Mapper<R, R> {
+            override fun toInput(result: R): R = result
         }
     }
 }
