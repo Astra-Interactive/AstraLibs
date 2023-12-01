@@ -4,7 +4,6 @@ import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import ru.astrainteractive.klibs.kdi.Factory
 import java.io.File
 
 /**
@@ -22,31 +21,31 @@ class YamlSerializer(
 ) {
 
     /**
-     * Parses [file] into [T] and throws exception if can't
+     * Attempts to parse content of [file] and return [T] as kotlin's result
      */
-    inline fun <reified T> unsafeParse(file: File): T {
-        return yaml.decodeFromString(file.readText())
+    inline fun <reified T> parse(file: File) = kotlin.runCatching {
+        yaml.decodeFromString<T>(file.readText())
     }
 
     /**
-     * Return kotlin's [Result]
+     * Attempt to parse. Returns default [factory] value on failure
      */
-    inline fun <reified T> safeParse(file: File) = kotlin.runCatching {
-        unsafeParse<T>(file)
+    inline fun <reified T> parseOrDefault(file: File, factory: () -> T): T {
+        return parse<T>(file).getOrElse { factory.invoke() }
     }
 
     /**
-     * Trying to parse [file] via [safeParse] and loadng [default] if failure happened
+     * Convert [value] into pure yaml string
      */
-    inline fun <reified T : Any> toClassOrDefault(file: File, default: Factory<T>): T {
-        return kotlin.runCatching {
-            unsafeParse<T>(file)
-        }.onFailure {
-            it.printStackTrace()
-            val yamlText = yaml.encodeToString(default.create())
-            file.parentFile.mkdirs()
-            file.createNewFile()
-            file.writeText(yamlText)
-        }.getOrNull() ?: default.create()
+    inline fun <reified T> encodeToString(value: T): String {
+        return yaml.encodeToString(value)
+    }
+
+    /**
+     * Converts [value] into string by [encodeToString] and write text into file [file]
+     */
+    inline fun <reified T> writeIntoFile(value: T, file: File) {
+        val string = encodeToString(value)
+        file.writeText(string)
     }
 }
