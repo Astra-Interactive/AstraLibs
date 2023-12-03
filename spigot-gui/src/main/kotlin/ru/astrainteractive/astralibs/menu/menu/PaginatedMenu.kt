@@ -1,14 +1,23 @@
 package ru.astrainteractive.astralibs.menu.menu
 
-import ru.astrainteractive.astralibs.menu.clicker.ClickListener
-
-@Deprecated("Pages must be controlled by state, not GUI")
 abstract class PaginatedMenu : Menu() {
-
     /**
      * Page of current menu. Must be 0 by default
      */
     abstract var page: Int
+
+    /**
+     * Max items in this menu
+     */
+    abstract val maxItemsAmount: Int
+
+    abstract fun onPageChanged()
+
+    abstract val prevPageButton: InventorySlot
+
+    abstract val backPageButton: InventorySlot
+
+    abstract val nextPageButton: InventorySlot
 
     /**
      * Max items allowed in current page. No more than 45 for paginated. Final row is for pagination
@@ -17,21 +26,14 @@ abstract class PaginatedMenu : Menu() {
         get() = menuSize.size - 9
 
     /**
-     * Max items in this menu
-     */
-    abstract val maxItemsAmount: Int
-
-    /**
      * Max pages in this menu
      */
-    val maxPages
+    open val maxPages
         get() = maxItemsAmount / maxItemsPerPage
 
-    /**
-     * Index of current item
-     */
-    fun getIndex(i: Int): Int {
-        return maxItemsPerPage * page + i
+    override fun render() {
+        super.render()
+        setManageButtons()
     }
 
     /**
@@ -47,6 +49,13 @@ abstract class PaginatedMenu : Menu() {
         get() = page >= maxPages
 
     /**
+     * Index of current item
+     */
+    fun getIndex(i: Int): Int {
+        return maxItemsPerPage * page + i
+    }
+
+    /**
      * Function for handling pages
      */
     fun showPage(page: Int) {
@@ -60,11 +69,19 @@ abstract class PaginatedMenu : Menu() {
         onPageChanged()
     }
 
-    abstract fun onPageChanged()
+    /**
+     * Shows next page
+     */
+    fun showNextPage() {
+        showPage(page + 1)
+    }
 
-    abstract val prevPageButton: InventorySlot
-    abstract val backPageButton: InventorySlot
-    abstract val nextPageButton: InventorySlot
+    /**
+     * Shows previous page
+     */
+    fun showPrevPage() {
+        showPage(page - 1)
+    }
 
     /**
      * This function will set:
@@ -77,24 +94,9 @@ abstract class PaginatedMenu : Menu() {
      *
      * Also it will remember clicks
      */
-    fun setManageButtons(clickListener: ClickListener) {
-        if (page >= 1) {
-            prevPageButton.also {
-                it.setInventorySlot()
-                clickListener.remember(it)
-            }
-        }
-
-        backPageButton.also {
-            it.setInventorySlot()
-            clickListener.remember(it)
-        }
-
-        if (page < maxPages) {
-            nextPageButton.also {
-                it.setInventorySlot()
-                clickListener.remember(it)
-            }
-        }
+    fun setManageButtons() {
+        if (page >= 1) prevPageButton.setInventorySlot()
+        backPageButton.setInventorySlot()
+        if (page < maxPages) nextPageButton.setInventorySlot()
     }
 }

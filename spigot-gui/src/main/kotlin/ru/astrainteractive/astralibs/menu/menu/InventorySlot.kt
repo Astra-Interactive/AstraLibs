@@ -13,17 +13,20 @@ interface InventorySlot {
     val index: Int
     val click: Click
 
-    class Builder private constructor() {
+    class Builder {
         var itemStack = ItemStack(Material.AIR)
         var index = 0
         var click: Click = Click.Empty
 
+        fun build(): InventorySlot = object : InventorySlot {
+            override val item: ItemStack = this@Builder.itemStack
+            override val index: Int = this@Builder.index
+            override val click: Click = this@Builder.click
+        }
+
         companion object {
-            operator fun invoke(block: Builder.() -> Unit): InventorySlot = object : InventorySlot {
-                val builder = Builder().apply(block)
-                override val item: ItemStack = builder.itemStack
-                override val index: Int = builder.index
-                override val click: Click = builder.click
+            operator fun invoke(block: Builder.() -> Unit): InventorySlot {
+                return Builder().apply(block).build()
             }
         }
     }

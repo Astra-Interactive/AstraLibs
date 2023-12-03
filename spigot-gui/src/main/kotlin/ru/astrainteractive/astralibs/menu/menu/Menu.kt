@@ -1,9 +1,5 @@
 package ru.astrainteractive.astralibs.menu.menu
 
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -11,6 +7,8 @@ import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.Inventory
 import org.bukkit.inventory.InventoryHolder
 import ru.astrainteractive.astralibs.async.AsyncComponent
+import ru.astrainteractive.astralibs.menu.clicker.ClickListener
+import ru.astrainteractive.astralibs.menu.clicker.MenuClickListener
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
 
 /**
@@ -20,23 +18,13 @@ import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
 @SuppressWarnings("Don't forget to add MenuListener")
 abstract class Menu : InventoryHolder, AsyncComponent() {
 
-    fun <T> StateFlow<T>.collectOn(scope: CoroutineDispatcher, block: (T) -> Unit) {
-        componentScope.launch(scope) {
-            collectLatest {
-                block(it)
-            }
-        }
-    }
-
-    fun InventorySlot.setInventorySlot() {
-        inventory?.setItem(index, item)
-    }
-
-    abstract val playerHolder: PlayerHolder
+    private val clickListener: ClickListener = MenuClickListener()
 
     private var inventory: Inventory? = null
 
     override fun getInventory(): Inventory = checkNotNull(inventory) { "Inventory not initialized" }
+
+    abstract val playerHolder: PlayerHolder
 
     /**
      * Title of this inventory
@@ -61,6 +49,27 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     abstract fun onInventoryClose(it: InventoryCloseEvent)
 
     /**
+     * This method called after inventory created and opened
+     */
+    abstract fun onCreated()
+
+    /**
+     * Render and reset the content of GUI
+     */
+    open fun render() {
+        inventory?.clear()
+        clickListener.clearClickListener()
+    }
+
+    /**
+     * This function will add [InventorySlot] into GUI and remember clickEvent
+     */
+    fun InventorySlot.setInventorySlot() {
+        clickListener.remember(this)
+        inventory?.setItem(index, item)
+    }
+
+    /**
      * Open inventory method for Menu class
      * Should be executed on main thread
      */
@@ -69,9 +78,4 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
         inventory?.let(playerHolder.player::openInventory)
         onCreated()
     }
-
-    /**
-     * This method called after inventory created and opened
-     */
-    abstract fun onCreated()
 }
