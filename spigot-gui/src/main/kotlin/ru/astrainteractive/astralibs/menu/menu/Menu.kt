@@ -39,7 +39,9 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     /**
      * Menu handler
      */
-    abstract fun onInventoryClicked(e: InventoryClickEvent)
+    open fun onInventoryClicked(e: InventoryClickEvent) {
+        clickListener.onClick(e)
+    }
 
     /**
      * Called when inventory was closed
