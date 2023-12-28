@@ -21,4 +21,6 @@ interface EventListener : Listener {
     fun onDisable() {
         HandlerList.unregisterAll(this)
     }
+
+    class Default : EventListener
 }
