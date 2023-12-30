@@ -11,4 +11,6 @@ import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 class DefaultBukkitDispatchers(plugin: Plugin) : BukkitDispatchers, KotlinDispatchers by DefaultKotlinDispatchers {
     override val BukkitMain: CoroutineDispatcher = BukkitMainDispatcher(plugin)
     override val BukkitAsync: CoroutineDispatcher = BukkitAsyncDispatcher(plugin)
+    override val Main: CoroutineDispatcher
+        get() = BukkitMain
 }

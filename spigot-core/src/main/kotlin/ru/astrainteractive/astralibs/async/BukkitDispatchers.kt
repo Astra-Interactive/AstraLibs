@@ -10,4 +10,6 @@ import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 interface BukkitDispatchers : KotlinDispatchers {
     val BukkitMain: CoroutineDispatcher
     val BukkitAsync: CoroutineDispatcher
+    override val Main: CoroutineDispatcher
+        get() = BukkitMain
 }
