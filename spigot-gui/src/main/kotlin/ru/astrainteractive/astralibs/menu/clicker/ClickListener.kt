@@ -21,5 +21,5 @@ interface ClickListener {
     /**
      * Place this in re-render of menu content
      */
-    fun clearClickListener()
+    fun clear()
 }

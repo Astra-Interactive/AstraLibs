@@ -18,7 +18,7 @@ class MenuClickListener : ClickListener {
         clicksMap[button.index] = button.click
     }
 
-    override fun clearClickListener() {
+    override fun clear() {
         clicksMap.clear()
     }
 }

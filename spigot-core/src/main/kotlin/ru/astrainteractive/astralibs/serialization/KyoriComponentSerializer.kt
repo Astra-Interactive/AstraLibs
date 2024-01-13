@@ -11,9 +11,11 @@ import ru.astrainteractive.astralibs.string.StringDesc
 /**
  * [KyoriComponentSerializer] is a wrapper for [net.kyori.adventure] serializer
  */
-sealed class KyoriComponentSerializer(val type: KyoriComponentSerializerType) {
+interface KyoriComponentSerializer {
 
-    abstract fun toComponent(string: String): Component
+    val type: KyoriComponentSerializerType
+
+    fun toComponent(string: String): Component
 
     fun toComponent(stringDesc: StringDesc): Component {
         return when (stringDesc) {
@@ -21,31 +23,36 @@ sealed class KyoriComponentSerializer(val type: KyoriComponentSerializerType) {
         }
     }
 
-    data object Json : KyoriComponentSerializer(KyoriComponentSerializerType.Json) {
+    data object Json : KyoriComponentSerializer {
+        override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Json
         override fun toComponent(string: String): Component {
             return JSONComponentSerializer.json().deserialize(string)
         }
     }
 
-    data object Gson : KyoriComponentSerializer(KyoriComponentSerializerType.Gson) {
+    data object Gson : KyoriComponentSerializer {
+        override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Gson
         override fun toComponent(string: String): Component {
             return GsonComponentSerializer.gson().deserialize(string)
         }
     }
 
-    data object Plain : KyoriComponentSerializer(KyoriComponentSerializerType.Plain) {
+    data object Plain : KyoriComponentSerializer {
+        override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Plain
         override fun toComponent(string: String): Component {
             return PlainTextComponentSerializer.plainText().deserialize(string)
         }
     }
 
-    data object MiniMessage : KyoriComponentSerializer(KyoriComponentSerializerType.MiniMessage) {
+    data object MiniMessage : KyoriComponentSerializer {
+        override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.MiniMessage
         override fun toComponent(string: String): Component {
             return net.kyori.adventure.text.minimessage.MiniMessage.miniMessage().deserialize(string)
         }
     }
 
-    data object Legacy : KyoriComponentSerializer(KyoriComponentSerializerType.Legacy) {
+    data object Legacy : KyoriComponentSerializer {
+        override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Legacy
         override fun toComponent(string: String): Component {
             return LegacyComponentSerializer
                 .legacy(LegacyComponentSerializer.AMPERSAND_CHAR)

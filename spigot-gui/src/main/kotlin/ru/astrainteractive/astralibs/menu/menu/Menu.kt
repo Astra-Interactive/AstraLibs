@@ -1,5 +1,7 @@
 package ru.astrainteractive.astralibs.menu.menu
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
 import net.kyori.adventure.text.Component
 import org.bukkit.Bukkit
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -16,13 +18,10 @@ import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
  * Don't forget to add [MenuListener]
  */
 @SuppressWarnings("Don't forget to add MenuListener")
-abstract class Menu : InventoryHolder, AsyncComponent() {
+abstract class Menu : InventoryHolder {
+    val menuScope: CoroutineScope = AsyncComponent.Default()
 
-    private val clickListener: ClickListener = MenuClickListener()
-
-    private var inventory: Inventory? = null
-
-    override fun getInventory(): Inventory = checkNotNull(inventory) { "Inventory not initialized" }
+    open val childComponents: List<CoroutineScope> = emptyList()
 
     abstract val playerHolder: PlayerHolder
 
@@ -36,6 +35,19 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
      */
     abstract val menuSize: MenuSize
 
+    private val clickListener: ClickListener = MenuClickListener()
+
+    private val menuInventory: Inventory by lazy {
+        Bukkit.createInventory(this, menuSize.size, menuTitle)
+    }
+
+    override fun getInventory(): Inventory = menuInventory
+
+    /**
+     * This method called after inventory created and opened
+     */
+    abstract fun onCreated()
+
     /**
      * Menu handler
      */
@@ -46,21 +58,20 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
     /**
      * Called when inventory was closed
      *
-     * After [onInventoryClose] executed - [componentScope] will be closed
+     * After [onInventoryClose] executed - [menuScope] will be closed
      */
-    abstract fun onInventoryClose(it: InventoryCloseEvent)
-
-    /**
-     * This method called after inventory created and opened
-     */
-    abstract fun onCreated()
+    open fun onInventoryClose(it: InventoryCloseEvent) {
+        menuScope.cancel()
+        childComponents.forEach(CoroutineScope::cancel)
+        clickListener.clear()
+    }
 
     /**
      * Render and reset the content of GUI
      */
     open fun render() {
-        inventory?.clear()
-        clickListener.clearClickListener()
+        inventory.clear()
+        clickListener.clear()
     }
 
     /**
@@ -68,7 +79,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
      */
     fun InventorySlot.setInventorySlot() {
         clickListener.remember(this)
-        inventory?.setItem(index, item)
+        inventory.setItem(index, item)
     }
 
     /**
@@ -76,8 +87,7 @@ abstract class Menu : InventoryHolder, AsyncComponent() {
      * Should be executed on main thread
      */
     fun open() {
-        inventory = Bukkit.createInventory(this, menuSize.size, menuTitle)
-        inventory?.let(playerHolder.player::openInventory)
+        playerHolder.player.openInventory(inventory)
         onCreated()
     }
 }
