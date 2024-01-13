@@ -23,11 +23,5 @@ interface InventorySlot {
             override val index: Int = this@Builder.index
             override val click: Click = this@Builder.click
         }
-
-        companion object {
-            operator fun invoke(block: Builder.() -> Unit): InventorySlot {
-                return Builder().apply(block).build()
-            }
-        }
     }
 }

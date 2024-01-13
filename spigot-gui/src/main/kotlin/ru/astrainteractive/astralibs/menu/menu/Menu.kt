@@ -17,7 +17,6 @@ import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
  * Default menu abstract class
  * Don't forget to add [MenuListener]
  */
-@SuppressWarnings("Don't forget to add MenuListener")
 abstract class Menu : InventoryHolder {
     val menuScope: CoroutineScope = AsyncComponent.Default()
 

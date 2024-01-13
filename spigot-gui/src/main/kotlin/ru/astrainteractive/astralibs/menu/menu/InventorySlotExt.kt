@@ -105,3 +105,14 @@ fun InventorySlot.Builder.addLore(loreComponent: Component): InventorySlot.Build
     }
     return this
 }
+
+/**
+ * Add a predicate for computed builder action
+ */
+fun InventorySlot.Builder.predicate(
+    condition: Boolean,
+    block: InventorySlot.Builder.() -> Unit
+): InventorySlot.Builder {
+    if (condition) block.invoke(this)
+    return this
+}

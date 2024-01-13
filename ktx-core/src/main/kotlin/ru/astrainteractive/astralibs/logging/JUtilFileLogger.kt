@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.logging
 
 import java.io.File
 
-class JUtilLogger(
+class JUtilFileLogger(
     override val tag: String,
     override val folder: File,
     private val logger: java.util.logging.Logger = java.util.logging.Logger.getGlobal()
@@ -30,6 +30,9 @@ class JUtilLogger(
     }
 
     private fun logInFile(tag: String, msg: String) {
+        if (!folder.exists()) {
+            folder.mkdirs()
+        }
         val data = Logger.getDate()
         val time = Logger.getTime()
         val file = File(folder, "$data.log")
