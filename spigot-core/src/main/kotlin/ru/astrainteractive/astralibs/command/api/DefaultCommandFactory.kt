@@ -1,7 +1,5 @@
 package ru.astrainteractive.astralibs.command.api
 
-import ru.astrainteractive.astralibs.command.registerCommand
-
 object DefaultCommandFactory : CommandFactory {
     override fun <R : Any, I : Any> create(
         alias: String,
@@ -10,11 +8,12 @@ object DefaultCommandFactory : CommandFactory {
         resultHandler: Command.ResultHandler<R>,
         mapper: Command.Mapper<R, I>
     ) = Command<R, I> { plugin ->
-        plugin.registerCommand(alias) {
+        plugin.getCommand(alias)?.setExecutor { sender, command, label, args ->
             commandParser.parse(args, sender)
                 .also { resultHandler.handle(sender, it) }
                 .let(mapper::toInput)
                 ?.let(commandExecutor::execute)
+            true
         }
     }
 }

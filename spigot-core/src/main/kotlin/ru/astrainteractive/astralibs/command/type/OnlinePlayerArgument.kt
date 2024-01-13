@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.command.types
+package ru.astrainteractive.astralibs.command.type
 
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
