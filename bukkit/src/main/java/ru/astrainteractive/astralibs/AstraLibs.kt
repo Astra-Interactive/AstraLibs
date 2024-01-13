@@ -3,7 +3,6 @@ package ru.astrainteractive.astralibs
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.async.AsyncComponent
-import ru.astrainteractive.astralibs.economy.AnyEconomyProvider
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
 import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
@@ -24,7 +23,6 @@ class AstraLibs : JavaPlugin() {
 
         this.also(AstraLibs.instance::initialize)
         Logger.buildWithSpigot("AstraLibs", this).also(AstraLibs.logger::initialize)
-        val economy = AnyEconomyProvider(this)
         getCommand("test")?.setExecutor { sender, command, label, args ->
             val player = sender as Player
             KyoriComponentSerializer.Legacy.toComponent("&2Hello!").run(player::sendMessage)

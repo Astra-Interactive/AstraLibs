@@ -10,7 +10,7 @@ import ru.astrainteractive.klibs.kdi.Factory
 import java.util.UUID
 
 class VaultEconomyProvider(plugin: JavaPlugin, vault: Plugin) : EconomyProvider {
-    private val econ = Factory {
+    private val economy = Factory {
         val rsp = plugin.server.servicesManager.getRegistration(Economy::class.java)
         checkNotNull(rsp) { "Could not get economy provider" }
         rsp.provider
@@ -23,7 +23,7 @@ class VaultEconomyProvider(plugin: JavaPlugin, vault: Plugin) : EconomyProvider 
      * @return double - current balance of [player]
      */
     private fun getBalance(player: OfflinePlayer): Double {
-        return econ.getBalance(player)
+        return economy.getBalance(player)
     }
 
     /**
@@ -36,7 +36,7 @@ class VaultEconomyProvider(plugin: JavaPlugin, vault: Plugin) : EconomyProvider 
         if (amount > maxBalance) {
             return false
         }
-        val response = econ.withdrawPlayer(player, amount)
+        val response = economy.withdrawPlayer(player, amount)
         return (response?.type == EconomyResponse.ResponseType.SUCCESS)
     }
 
@@ -46,7 +46,7 @@ class VaultEconomyProvider(plugin: JavaPlugin, vault: Plugin) : EconomyProvider 
      * @return boolean - true if [amount] has been added false if not
      */
     private fun addMoney(player: OfflinePlayer, amount: Double): Boolean {
-        val response = econ.depositPlayer(player, amount)
+        val response = economy.depositPlayer(player, amount)
         return (response?.type == EconomyResponse.ResponseType.SUCCESS)
     }
 
