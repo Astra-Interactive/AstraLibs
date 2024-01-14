@@ -27,7 +27,7 @@ abstract class Menu : InventoryHolder {
     /**
      * Title of this inventory
      */
-    abstract var menuTitle: Component
+    abstract val menuTitle: Component
 
     /**
      * Size of inventory
