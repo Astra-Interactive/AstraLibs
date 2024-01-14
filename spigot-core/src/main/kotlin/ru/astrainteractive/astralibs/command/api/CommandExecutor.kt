@@ -6,7 +6,7 @@ package ru.astrainteractive.astralibs.command.api
 fun interface CommandExecutor<I : Any> {
     fun execute(input: I)
 
-    object NoOp : CommandExecutor<Nothing> {
-        override fun execute(input: Nothing) = Unit
+    class NoOp<I : Any> : CommandExecutor<I> {
+        override fun execute(input: I) = Unit
     }
 }

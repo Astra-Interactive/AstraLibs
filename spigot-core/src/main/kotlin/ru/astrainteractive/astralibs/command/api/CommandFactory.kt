@@ -8,8 +8,8 @@ interface CommandFactory {
     fun <R : Any, I : Any> create(
         alias: String,
         commandParser: CommandParser<R>,
-        commandExecutor: CommandExecutor<I>,
-        resultHandler: Command.ResultHandler<R>,
+        commandExecutor: CommandExecutor<I> = CommandExecutor.NoOp(),
+        resultHandler: Command.ResultHandler<R> = Command.ResultHandler.NoOp(),
         mapper: Command.Mapper<R, I>
     ): Command<R, I>
 }
