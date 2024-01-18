@@ -3,10 +3,10 @@ package ru.astrainteractive.astralibs.filemanager
 import org.bukkit.configuration.file.FileConfiguration
 
 /**
- * This [SpigotFileManager] designed for spigot
- * It contains [fileConfiguration] which can be reloaded via [reload] and saved via [save]
+ * This [FileConfigurationManager] designed for spigot
+ * It contains [fileConfiguration] which can be reloaded via [load] and saved via [save]
  */
-interface SpigotFileManager : ResourceFileManager {
+interface FileConfigurationManager : ResourceFileManager {
     /**
      * File configuration of file [FileManager.configFile]
      */
@@ -20,5 +20,5 @@ interface SpigotFileManager : ResourceFileManager {
     /**
      * This function will load configuration from [FileManager.configFile] into [fileConfiguration]
      */
-    fun reload()
+    fun load()
 }

@@ -17,16 +17,19 @@ class JVMResourceFileManager(
     private val resource: URL? = clazz.getResource("/$name")
     override val isResourceExists: Boolean = resource != null
 
-    override val configFile: File = loadConfigFile()
+    override val configFile: File
+        get() = loadFromResource()
 
     private fun loadFromResource(): File {
-        val resource = resource ?: throw ResourceFileManager.Exception.ResourceNotExists(name)
-        val connection = resource.openConnection()
-        connection?.useCaches = false
-        val istream = connection?.getInputStream() ?: throw ResourceFileManager.Exception.ResourceNotExists(name)
         val file = File(dataFolder, name)
-
         if (file.exists()) return file
+
+        val resource = resource ?: throw ResourceFileManager.Exception.ResourceNotExists(name)
+        val connection = resource.openConnection()?.apply {
+            useCaches = false
+        }
+        val istream = connection?.getInputStream() ?: throw ResourceFileManager.Exception.ResourceNotExists(name)
+
         if (!file.exists()) {
             file.parentFile.mkdirs()
             file.createNewFile()
@@ -40,12 +43,6 @@ class JVMResourceFileManager(
         out.close()
         istream.close()
         return file
-    }
-
-    private fun loadConfigFile(): File {
-        val file = File(dataFolder, name)
-        if (file.exists()) return file
-        return loadFromResource()
     }
 
     override fun delete() {

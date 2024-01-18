@@ -8,6 +8,7 @@ import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
+@Suppress("TestFunctionName")
 class MutableStorageValueTest {
 
     private inline fun <reified T : Any> testLoadSaveReset(name: String, expectedValue: T) {
@@ -28,7 +29,7 @@ class MutableStorageValueTest {
     }
 
     @Test
-    fun testPrimitives() {
+    fun GIVEN_primitives_WHEN_save_load_THEN_success() {
         // Primitive
         testLoadSaveReset("string", "Hello world")
         testLoadSaveReset("int", 10)
@@ -39,7 +40,7 @@ class MutableStorageValueTest {
     }
 
     @Test
-    fun testLists() {
+    fun GIVEN_primitives_lists_WHEN_save_load_THEN_success() {
         testLoadSaveReset("stringList", listOf("1", "2"))
         testLoadSaveReset("intList", listOf(1, 2))
         testLoadSaveReset("boolList", listOf(true, false))
@@ -55,7 +56,7 @@ class MutableStorageValueTest {
     value class TestValueClass(val value: Int)
 
     @Test
-    fun testValueClass() {
+    fun GIVEN_value_class_WHEN_save_load_THEN_success() {
         testLoadSaveReset("valueClass", TestValueClass(10))
     }
 
@@ -66,9 +67,9 @@ class MutableStorageValueTest {
     )
 
     @Test
-    fun testDataClass() {
+    fun GIVEN_data_class_WHEN_save_load_THEN_success() {
         testLoadSaveReset(
-            name = "valueClass",
+            name = "dataClass",
             expectedValue = TestDataClass(
                 valueInt = 10,
                 valueString = "HelloWorld",
