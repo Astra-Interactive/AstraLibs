@@ -7,7 +7,9 @@ import ru.astrainteractive.klibs.kstorage.api.MutableStorageValue
 import ru.astrainteractive.klibs.kstorage.api.StateFlowMutableStorageValue
 
 object BukkitMutableStorageValue {
-    inline fun <reified T> FileConfiguration.anyStateFlowMutableStorageValue(path: String): StateFlowMutableStorageValue<T?> {
+    inline fun <reified T> FileConfiguration.anyStateFlowMutableStorageValue(
+        path: String
+    ): StateFlowMutableStorageValue<T?> {
         return StateFlowMutableStorageValue(
             default = null,
             saveSettingsValue = { set(path, it) },
@@ -15,7 +17,9 @@ object BukkitMutableStorageValue {
         )
     }
 
-    inline fun <reified T> FileConfiguration.anyMutableStorageValue(path: String): MutableStorageValue<T?> {
+    inline fun <reified T> FileConfiguration.anyMutableStorageValue(
+        path: String
+    ): MutableStorageValue<T?> {
         return MutableStorageValue(
             default = null,
             saveSettingsValue = { set(path, it) },
