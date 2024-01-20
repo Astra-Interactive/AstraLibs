@@ -4,7 +4,6 @@ import kotlinx.serialization.serializer
 import java.io.File
 
 object SerializerExt {
-
     /**
      * Inline extension for [Serializer]
      */

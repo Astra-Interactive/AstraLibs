@@ -18,5 +18,5 @@ dependencies {
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.29.0")
     testImplementation("org.mockito:mockito-core:5.8.0")
     // Local
-    implementation(projects.ktxCore)
+    implementation(projects.core)
 }

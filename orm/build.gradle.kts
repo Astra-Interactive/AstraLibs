@@ -9,5 +9,5 @@ dependencies {
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)
     // Local
-    implementation(projects.ktxCore)
+    implementation(projects.core)
 }

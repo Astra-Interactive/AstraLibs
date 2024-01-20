@@ -7,6 +7,6 @@ It contains ktx module which is based only on kotlin, so you can use it in JVM e
 Select something from navigation to open wiki page
 
 - Home
-- [Async](./ktx-core/async.md)
-- [Configuration](./ktx-core/configuration.md)
-- [Command](./ktx-core/command.md)
+- [Async](./core/async.md)
+- [Configuration](./core/configuration.md)
+- [Command](./core/command.md)

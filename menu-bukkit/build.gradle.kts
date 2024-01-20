@@ -14,6 +14,6 @@ dependencies {
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)
     // Local
-    compileOnly(projects.ktxCore)
-    compileOnly(projects.spigotCore)
+    compileOnly(projects.core)
+    compileOnly(projects.coreBukkit)
 }
