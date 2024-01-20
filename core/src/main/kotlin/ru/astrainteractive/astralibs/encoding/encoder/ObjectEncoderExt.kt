@@ -10,5 +10,4 @@ object ObjectEncoderExt {
     inline fun <reified T> ObjectEncoder.decodeList(encoded: EncodedObject.Base64): List<T> {
         return fromBase64(encoded) ?: emptyList()
     }
-
 }
