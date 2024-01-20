@@ -2,11 +2,4 @@
 
 AstraLibs is a kotlin library for `(not only)` spigot-based minecraft servers.
 
-It contains ktx module which is based only on kotlin, so you can use it in JVM enviroment
-
-Select something from navigation to open wiki page
-
-- Home
-- [Async](./core/async.md)
-- [Configuration](./core/configuration.md)
-- [Command](./core/command.md)
+# TODO
