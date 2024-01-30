@@ -1,15 +1,15 @@
 package ru.astrainteractive.astralibs.menu.clicker
 
 import org.bukkit.event.inventory.InventoryClickEvent
-import ru.astrainteractive.astralibs.menu.menu.InventorySlot
-import ru.astrainteractive.astralibs.menu.menu.Menu
+import ru.astrainteractive.astralibs.menu.inventory.InventoryMenu
+import ru.astrainteractive.astralibs.menu.slot.InventorySlot
 
 /**
- * Click listener for [Menu]
+ * Click listener for [InventoryMenu]
  */
 interface ClickListener {
     /**
-     * Place this in [Menu.onInventoryClicked]
+     * Place this in [InventoryMenu.onInventoryClicked]
      */
     fun onClick(e: InventoryClickEvent)
 

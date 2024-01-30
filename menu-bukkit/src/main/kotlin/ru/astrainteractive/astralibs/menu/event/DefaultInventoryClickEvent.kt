@@ -5,7 +5,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.event.EventListener
-import ru.astrainteractive.astralibs.menu.menu.Menu
+import ru.astrainteractive.astralibs.menu.core.Menu
 
 /**
  * To be able to use inventory events - you need to register this class somewhere. For example in [JavaPlugin.onEnable]
