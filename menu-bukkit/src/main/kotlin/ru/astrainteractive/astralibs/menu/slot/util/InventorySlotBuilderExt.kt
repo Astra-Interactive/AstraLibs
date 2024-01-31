@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta
 import ru.astrainteractive.astralibs.menu.clicker.Click
 import ru.astrainteractive.astralibs.menu.slot.InventorySlot
 
-object InventorySlotExt {
+object InventorySlotBuilderExt {
     /**
      * Set new material for current [InventorySlot.Builder.itemStack]
      */

@@ -3,8 +3,8 @@ package ru.astrainteractive.astralibs.menu.inventory
 import org.bukkit.Bukkit
 import org.bukkit.inventory.Inventory
 import ru.astrainteractive.astralibs.menu.core.Menu
-import ru.astrainteractive.astralibs.menu.core.MenuSize
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
+import ru.astrainteractive.astralibs.menu.inventory.model.MenuSize
 
 /**
  * Default menu abstract class

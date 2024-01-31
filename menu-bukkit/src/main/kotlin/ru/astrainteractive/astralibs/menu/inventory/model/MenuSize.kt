@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.menu.core
+package ru.astrainteractive.astralibs.menu.inventory.model
 
 /**
  * Menu sizes of inventory

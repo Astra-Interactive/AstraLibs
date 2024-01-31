@@ -21,6 +21,6 @@ class DefaultInventoryClickEvent : EventListener {
     @EventHandler
     fun onInventoryClosed(e: InventoryCloseEvent) {
         val holder = e.view.topInventory.holder as? Menu ?: return
-        holder.onInventoryClose(e)
+        holder.onInventoryClosed(e)
     }
 }

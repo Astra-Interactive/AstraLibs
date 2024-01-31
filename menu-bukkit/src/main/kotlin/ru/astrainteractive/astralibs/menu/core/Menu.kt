@@ -19,9 +19,6 @@ import ru.astrainteractive.astralibs.menu.slot.InventorySlot
  * Don't forget to add [DefaultInventoryClickEvent]
  */
 abstract class Menu : InventoryHolder {
-    val menuScope: CoroutineScope = AsyncComponent.Default()
-
-    open val childComponents: List<CoroutineScope> = emptyList()
 
     private val clickListener: ClickListener = MenuClickListener()
 
@@ -29,10 +26,14 @@ abstract class Menu : InventoryHolder {
 
     abstract val title: Component
 
+    open val childComponents: List<CoroutineScope> = emptyList()
+
+    val menuScope: CoroutineScope = AsyncComponent.Default()
+
     /**
      * This method called after inventory created and opened
      */
-    abstract fun onCreated()
+    abstract fun onInventoryCreated()
 
     /**
      * Menu handler
@@ -44,9 +45,9 @@ abstract class Menu : InventoryHolder {
     /**
      * Called when inventory was closed
      *
-     * After [onInventoryClose] executed - [menuScope] will be closed
+     * After [onInventoryClosed] executed - [menuScope] will be closed
      */
-    open fun onInventoryClose(it: InventoryCloseEvent) {
+    open fun onInventoryClosed(it: InventoryCloseEvent) {
         menuScope.cancel()
         childComponents.forEach(CoroutineScope::cancel)
         clickListener.clear()
@@ -66,7 +67,7 @@ abstract class Menu : InventoryHolder {
      */
     fun open() {
         playerHolder.player.openInventory(inventory)
-        onCreated()
+        onInventoryCreated()
     }
 
     /**

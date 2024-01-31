@@ -3,11 +3,11 @@ package ru.astrainteractive.astralibs.menu.slot
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.menu.clicker.Click
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotExt
+import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt
 
 /**
  * Basic inventory button from which you can inherit
- * @see InventorySlotExt
+ * @see InventorySlotBuilderExt
  */
 interface InventorySlot {
     val item: ItemStack
