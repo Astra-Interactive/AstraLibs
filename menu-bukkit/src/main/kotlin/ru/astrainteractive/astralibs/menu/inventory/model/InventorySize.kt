@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.menu.inventory.model
 /**
  * Menu sizes of inventory
  */
-enum class MenuSize(val size: Int) {
+enum class InventorySize(val size: Int) {
     /**
      * Size is 9
      */
