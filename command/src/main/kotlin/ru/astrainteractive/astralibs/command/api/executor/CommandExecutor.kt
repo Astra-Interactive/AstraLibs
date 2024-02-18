@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.command.api
+package ru.astrainteractive.astralibs.command.api.executor
 
 /**
  * Executor will execute command depending on it's input

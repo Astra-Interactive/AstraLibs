@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.command.type
+package ru.astrainteractive.astralibs.command.api.argumenttype
 
 interface PrimitiveArgumentType<T> : ArgumentType<T> {
     data object Int : PrimitiveArgumentType<kotlin.Int?> {
