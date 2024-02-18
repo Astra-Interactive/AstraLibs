@@ -2,12 +2,12 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
 }
+
 dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
-    // Test
-    testImplementation(libs.bundles.testing.kotlin)
-    testImplementation(libs.tests.kotlin.test)
+    // Spigot dependencies
+    compileOnly(libs.bundles.minecraft.bukkit)
     // Local
-    implementation(projects.core)
+    implementation(projects.command)
 }

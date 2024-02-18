@@ -60,8 +60,8 @@ kotlin-dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", vers
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version" }
 
 # AstraLibs
-astralibs-ktxCore = { module = "ru.astrainteractive.astralibs:ktx-core", version.ref = "astralibs" }
-astralibs-spigotCore = { module = "ru.astrainteractive.astralibs:spigot-core", version.ref = "astralibs" }
+astralibs-core = { module = "ru.astrainteractive.astralibs:core", version.ref = "astralibs" }
+astralibs-coreBukkit = { module = "ru.astrainteractive.astralibs:core-bukkit", version.ref = "astralibs" }
 
 # Drivers
 driver-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "driver-jdbc" }
