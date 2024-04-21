@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.serialization
+package ru.astrainteractive.astralibs.kyori
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration

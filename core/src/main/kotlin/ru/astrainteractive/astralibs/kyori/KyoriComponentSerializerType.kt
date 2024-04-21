@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.serialization
+package ru.astrainteractive.astralibs.kyori
 
 import kotlinx.serialization.Serializable
 

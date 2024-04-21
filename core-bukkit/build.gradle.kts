@@ -7,16 +7,18 @@ dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
     // kdi
-    compileOnly(klibs.klibs.kdi)
+    implementation(klibs.klibs.kdi)
+    implementation(klibs.klibs.mikro.core)
+    implementation(klibs.klibs.kstorage)
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
-    compileOnly("net.essentialsx:EssentialsX:2.20.1")
-    compileOnly("net.luckperms:api:5.4")
+    compileOnly(libs.minecraft.essentialsx)
+    compileOnly(libs.minecraft.luckperms)
     // Test
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)
     testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.29.0")
-    testImplementation("org.mockito:mockito-core:5.8.0")
+    testImplementation(libs.tests.mockito)
     // Local
     implementation(projects.core)
 }

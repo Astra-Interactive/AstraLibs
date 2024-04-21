@@ -5,10 +5,16 @@ plugins {
 
 dependencies {
     // Kotlin
-    api(libs.bundles.kotlin)
+    compileOnly(libs.bundles.kotlin)
     // kdi
-    api(klibs.bundles.klibs)
+    implementation(klibs.bundles.klibs)
+    compileOnly(libs.kyori.api)
+    compileOnly(libs.kyori.gson)
+    compileOnly(libs.kyori.legacy)
+    compileOnly(libs.kyori.plain)
+    compileOnly(libs.kyori.minimessage)
     // Test
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)
+    testImplementation(libs.kotlin.serializationKaml)
 }
