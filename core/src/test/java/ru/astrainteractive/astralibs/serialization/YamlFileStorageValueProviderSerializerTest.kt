@@ -11,7 +11,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @Suppress("TestFunctionName")
-class YamlSerializerTest {
+class YamlFileStorageValueProviderSerializerTest {
 
     private inline fun <reified T> assertEncodeDecode(serializer: Serializer, value: T) {
         val encodedString = serializer.encodeToString(value)

@@ -26,8 +26,6 @@ abstract class AsyncComponent : Closeable, CoroutineScope, AbstractCoroutineCont
 
     override fun close() {
         coroutineContext.cancel()
-        (this as CoroutineScope).cancel()
-        (this as AbstractCoroutineContextElement).cancel()
     }
 
     companion object Key : CoroutineContext.Key<AsyncComponent>
