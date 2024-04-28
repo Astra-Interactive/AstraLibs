@@ -1,25 +1,26 @@
 package ru.astrainteractive.astralibs.serialization
 
 import kotlinx.serialization.Serializable
-import ru.astrainteractive.astralibs.serialization.SerializerExt.decodeFromString
-import ru.astrainteractive.astralibs.serialization.SerializerExt.encodeToString
-import ru.astrainteractive.astralibs.serialization.SerializerExt.parse
-import ru.astrainteractive.astralibs.serialization.SerializerExt.writeIntoFile
+import kotlinx.serialization.StringFormat
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import ru.astrainteractive.astralibs.serialization.StringFormatExt.parse
+import ru.astrainteractive.astralibs.serialization.StringFormatExt.writeIntoFile
 import java.io.File
 import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @Suppress("TestFunctionName")
-class YamlFileStorageValueProviderSerializerTest {
+class YamlKrateFactoryWrapperSerializerTest {
 
-    private inline fun <reified T> assertEncodeDecode(serializer: Serializer, value: T) {
+    private inline fun <reified T> assertEncodeDecode(serializer: StringFormat, value: T) {
         val encodedString = serializer.encodeToString(value)
         val decodedValue = serializer.decodeFromString<T>(encodedString)
         assertEquals(value, decodedValue)
     }
 
-    private inline fun <reified T> assertWriteReadFile(serializer: Serializer, value: T) {
+    private inline fun <reified T> assertWriteReadFile(serializer: StringFormat, value: T) {
         val file = File.createTempFile(UUID.randomUUID().toString(), UUID.randomUUID().toString())
         serializer.writeIntoFile(value, file)
         assertEquals(value, serializer.parse<T>(file).getOrThrow())
@@ -40,7 +41,7 @@ class YamlFileStorageValueProviderSerializerTest {
 
     @Test
     fun GIVEN_classes_WHEN_read_write_THEN_success() {
-        val serializer: Serializer = YamlSerializer()
+        val serializer: StringFormat = YamlStringFormat()
         assertEncodeDecode(serializer, 1)
         assertEncodeDecode(serializer, 1L)
         assertEncodeDecode(serializer, "Hello String")
@@ -53,7 +54,7 @@ class YamlFileStorageValueProviderSerializerTest {
 
     @Test
     fun GIVEN_file_WHEN_read_write_THEN_success() {
-        val serializer: Serializer = YamlSerializer()
+        val serializer: StringFormat = YamlStringFormat()
         assertWriteReadFile(serializer, 1)
         assertWriteReadFile(serializer, 1L)
         assertWriteReadFile(serializer, "Hello String")

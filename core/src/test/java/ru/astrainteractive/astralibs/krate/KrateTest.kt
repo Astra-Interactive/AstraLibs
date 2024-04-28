@@ -1,17 +1,17 @@
-package ru.astrainteractive.astralibs.filestorage
+package ru.astrainteractive.astralibs.krate
 
 import kotlinx.serialization.Serializable
 import org.junit.Test
-import ru.astrainteractive.astralibs.filestorage.FileStorageExt.delete
-import ru.astrainteractive.astralibs.filestorage.FileStorageExt.provide
-import ru.astrainteractive.astralibs.serialization.YamlSerializer
+import ru.astrainteractive.astralibs.krate.KrateExt.create
+import ru.astrainteractive.astralibs.krate.KrateExt.delete
+import ru.astrainteractive.astralibs.serialization.YamlStringFormat
 import java.io.File
 import java.util.UUID
 import kotlin.random.Random
 import kotlin.test.assertEquals
 
 @Suppress("TestFunctionName")
-class FileStorageValueTest {
+class KrateTest {
 
     @Serializable
     private data class TestStorage(
@@ -23,11 +23,11 @@ class FileStorageValueTest {
     @Test
     fun GIVEN_cache_storage_WHEN_serialized_THEN_success() {
         val initial = TestStorage()
-        val serializer = YamlSerializer()
-        val storage = FileStorageValue(
-            serializer = serializer,
+        val serializer = YamlStringFormat()
+        val storage = Krate(
+            stringFormat = serializer,
             kSerializer = TestStorage.serializer(),
-            default = { initial },
+            default = initial,
             key = UUID.randomUUID().toString(),
             folder = File("./temp")
         )
@@ -43,7 +43,7 @@ class FileStorageValueTest {
     @Test
     fun GIVEN_yaml_storage_provider_WHEN_serialized_THEN_success() {
         val initial = TestStorage()
-        val storage = YamlFileStorageValueProvider.provide(
+        val storage = YamlKrateFactory(File("./temp")).create(
             default = { initial },
             key = UUID.randomUUID().toString(),
         )
