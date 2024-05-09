@@ -12,7 +12,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 @Suppress("TestFunctionName")
-class YamlKrateFactoryWrapperSerializerTest {
+class YamlTextKrateFactoryWrapperSerializerTest {
 
     private inline fun <reified T> assertEncodeDecode(serializer: StringFormat, value: T) {
         val encodedString = serializer.encodeToString(value)

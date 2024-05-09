@@ -4,6 +4,7 @@ kotlin-version = "1.9.23" # https://github.com/JetBrains/kotlin
 kotlin-coroutines = "1.8.0" # https://github.com/Kotlin/kotlinx.coroutines
 kotlin-json = "1.6.3" # https://github.com/Kotlin/kotlinx.serialization
 kotlin-kaml = "0.58.0" # https://github.com/charleskorn/kaml
+kotlin-benchmark = "0.4.10" # https://github.com/Kotlin/kotlinx-benchmark
 
 # Drivers
 driver-jdbc = "3.45.3.0" # https://github.com/xerial/sqlite-jdbc
@@ -35,7 +36,10 @@ kotlin-coroutines-coreJvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin-version" }
 kotlin-serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-json" }
 kotlin-serializationKaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kotlin-kaml" }
+kotlin-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlin-json" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version" }
+
+kotlin-benchmark-runtime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime", version.ref = "kotlin-benchmark" }
 
 # Drivers
 driver-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "driver-jdbc" }
@@ -75,3 +79,5 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-version" }
 kotlin-gradle = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
+kotlin-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "kotlin-benchmark" }
+kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin-version" }

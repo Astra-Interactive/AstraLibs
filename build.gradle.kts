@@ -22,7 +22,7 @@ apply(plugin = "ru.astrainteractive.gradleplugin.root.info")
 
 subprojects.forEach {
     it.apply(plugin = "ru.astrainteractive.gradleplugin.dokka.module")
-    if (it.name != "bukkit") {
+    if (it.name != "bukkit" || it.name != "benchmarks") {
         it.apply(plugin = "ru.astrainteractive.gradleplugin.publication")
     }
     it.plugins.withId("org.jetbrains.kotlin.jvm") {

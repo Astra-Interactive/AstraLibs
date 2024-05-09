@@ -6,6 +6,7 @@ plugins {
 dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
+    compileOnly(libs.kotlin.serialization.protobuf)
     // kdi
     implementation(klibs.bundles.klibs)
     compileOnly(libs.kyori.api)
