@@ -21,7 +21,7 @@ jobs:
       makeevrserg_SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Set up JDK 17
         uses: actions/setup-java@v1
         with:
@@ -37,7 +37,7 @@ jobs:
     name: Create release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - uses: christian-draeger/read-properties@1.1.1
         id: properties
         with:
