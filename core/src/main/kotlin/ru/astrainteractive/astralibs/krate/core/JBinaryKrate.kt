@@ -2,16 +2,17 @@ package ru.astrainteractive.astralibs.krate.core
 
 import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoder
 import ru.astrainteractive.astralibs.encoding.model.EncodedObject
+import ru.astrainteractive.klibs.kstorage.api.value.ValueFactory
 import java.io.File
 import java.io.Serializable
 
 class JBinaryKrate<T : Serializable>(
-    default: T,
+    factory: ValueFactory<T>,
     objectEncoder: ObjectEncoder,
     fileName: String,
     folder: File,
 ) : FileKrate<T> by FileKrate.Default(
-    default = default,
+    factory = factory,
     folder = folder,
     fileName = fileName,
     save = save@{ file, value ->

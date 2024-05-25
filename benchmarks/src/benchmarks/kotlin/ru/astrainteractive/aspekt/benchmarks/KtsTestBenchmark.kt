@@ -113,7 +113,7 @@ class KtsTestBenchmark {
     fun protoBufKrateBenchmark(): SomeObject = withTempFolder { currentFolder ->
         val initialValue = SomeObject()
         val krate = BinaryFormatKrate(
-            default = initialValue,
+            factory = initialValue,
             key = "proto_krate.proto",
             folder = currentFolder,
             binaryFormat = ProtoBuf,

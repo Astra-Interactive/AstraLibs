@@ -11,9 +11,9 @@ object BukkitMutableStorageValue {
         path: String
     ): StateFlowMutableStorageValue<T?> {
         return StateFlowMutableStorageValue(
-            default = null,
-            saveSettingsValue = { set(path, it) },
-            loadSettingsValue = { getObject(path, T::class.java).takeIf { contains(path) } }
+            factory = { null },
+            saver = { set(path, it) },
+            loader = { getObject(path, T::class.java).takeIf { contains(path) } }
         )
     }
 
@@ -21,9 +21,9 @@ object BukkitMutableStorageValue {
         path: String
     ): MutableStorageValue<T?> {
         return MutableStorageValue(
-            default = null,
-            saveSettingsValue = { set(path, it) },
-            loadSettingsValue = { getObject(path, T::class.java).takeIf { contains(path) } }
+            factory = { null },
+            saver = { set(path, it) },
+            loader = { getObject(path, T::class.java).takeIf { contains(path) } }
         )
     }
 }

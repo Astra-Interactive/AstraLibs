@@ -24,7 +24,7 @@ class MutableStorageValueTest {
             storageValue.reset()
             assertNull(storageValue.load())
             // Test withDefault value is as expected
-            assertEquals(expectedValue, storageValue.withDefault(expectedValue).load())
+            assertEquals(expectedValue, storageValue.withDefault { expectedValue }.load())
         }
     }
 
