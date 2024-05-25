@@ -6,6 +6,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import java.math.BigDecimal
 import java.util.UUID
 
+@Suppress("UnusedPrivateProperty")
 class EssentialsEconomyProvider(plugin: JavaPlugin, essentials: Plugin) : EconomyProvider {
 
     override fun addMoney(uuid: UUID, amount: Double): Boolean = runCatching {

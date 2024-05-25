@@ -17,7 +17,7 @@ dependencies {
     // Test
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.29.0")
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:3.1.0")
     testImplementation(libs.tests.mockito)
     // Local
     implementation(projects.core)

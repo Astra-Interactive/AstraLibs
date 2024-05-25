@@ -39,7 +39,7 @@ sourceSets {
 }
 
 dependencies {
-    "benchmarksImplementation"("org.openjdk.jmh:jmh-core:1.21")
+    "benchmarksImplementation"("org.openjdk.jmh:jmh-core:1.37")
     "benchmarksImplementation"(libs.kotlin.benchmark.runtime)
 
     "benchmarksImplementation"(sourceSets.getByName("main").output + sourceSets.getByName("main").runtimeClasspath)
