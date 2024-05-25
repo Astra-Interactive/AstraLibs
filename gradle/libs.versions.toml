@@ -26,7 +26,7 @@ tests-junit-jupiter-api = "5.9.1"
 tests-junit-bom = "5.7.0"
 
 # Kyori-adventure-text
-kyori = "4.16.0" # https://github.com/KyoriPowered/adventure-platform
+kyori = "4.17.0" # https://github.com/KyoriPowered/adventure-platform
 
 [libraries]
 
