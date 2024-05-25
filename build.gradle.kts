@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.shadow) apply false
 
     // klibs - core
     alias(klibs.plugins.klibs.gradle.detekt) apply false
@@ -23,7 +22,7 @@ apply(plugin = "ru.astrainteractive.gradleplugin.root.info")
 
 subprojects.forEach {
     it.apply(plugin = "ru.astrainteractive.gradleplugin.dokka.module")
-    if (it.name != "bukkit") {
+    if (it.name != "bukkit" || it.name != "benchmarks") {
         it.apply(plugin = "ru.astrainteractive.gradleplugin.publication")
     }
     it.plugins.withId("org.jetbrains.kotlin.jvm") {

@@ -1,53 +1,34 @@
 [versions]
 # Kotlin
-kotlin-version = "1.9.0"
-kotlin-dokka = "1.8.10"
-kotlin-coroutines = "1.6.3"
-kotlin-json = "1.5.0-RC"
-kotlin-kaml = "0.50.0"
-
-# Exposed
-exposed = "0.38.1"
+kotlin-version = "2.0.0" # https://github.com/JetBrains/kotlin
+kotlin-coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
+kotlin-json = "1.7.0-RC" # https://github.com/Kotlin/kotlinx.serialization
+kotlin-kaml = "0.59.0" # https://github.com/charleskorn/kaml
+kotlin-benchmark = "0.4.10" # https://github.com/Kotlin/kotlinx-benchmark
 
 # Drivers
-driver-jdbc = "3.36.0.3"
-driver-mysql = "8.0.20"
-
-# Dependencues
-astralibs = "2.0.16-4"
-
-# Shadow
-shadow = "7.1.2"
+driver-jdbc = "3.45.3.0" # https://github.com/xerial/sqlite-jdbc
+driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
-minecraft-velocity = "3.1.1"
-minecraft-spigot = "1.20.1-R0.1-SNAPSHOT"
-minecraft-papi = "2.11.2"
-minecraft-protocollib = "4.8.0"
-minecraft-wg = "7.0.7"
-minecraft-vault = "1.7"
-minecraft-coreprotect = "21.2"
+minecraft-velocity = "3.3.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
+minecraft-spigot = "1.20.4-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
+minecraft-papi = "2.11.5" # https://github.com/PlaceholderAPI/PlaceholderAPI
+minecraft-vault = "1.7" # https://github.com/MilkBowl/VaultAPI
+minecraft-essentialsx = "2.20.1" # https://github.com/EssentialsX/Essentials
+minecraft-luckperms = "5.4" # https://github.com/LuckPerms/LuckPerms
 
 # Testing
 tests-org-testing = "7.1.0"
 tests-junit = "4.12"
-tests-mockito = "4.0.0"
+tests-mockito = "5.8.0"
 tests-junit-jupiter-api = "5.9.1"
 tests-junit-bom = "5.7.0"
 
-# Linter
-lint-detekt = "1.22.0"
-lint-detekt-ruleset-compiler = "0.0.2"
-lint-detekt-ruleset-ktlint = "0.48.0"
+# Kyori-adventure-text
+kyori = "4.16.0" # https://github.com/KyoriPowered/adventure-platform
 
 [libraries]
-# Linter
-lint-detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "lint-detekt" }
-lint-detekt-ruleset-compiler = { module = "com.braisgabin.detekt:kotlin-compiler-wrapper", version.ref = "lint-detekt-ruleset-compiler" }
-lint-detekt-ruleset-ktlint = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "lint-detekt" }
-
-# Shadow
-shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "shadow" }
 
 # Kotlin
 kotlin-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
@@ -55,13 +36,10 @@ kotlin-coroutines-coreJvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines
 kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", version.ref = "kotlin-version" }
 kotlin-serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlin-json" }
 kotlin-serializationKaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kotlin-kaml" }
-kotlin-dokka-kotlinJavaPlugin = { module = "org.jetbrains.dokka:kotlin-as-java-plugin", version.ref = "kotlin-dokka" }
-kotlin-dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlin-dokka" }
+kotlin-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlin-json" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version" }
 
-# AstraLibs
-astralibs-ktxCore = { module = "ru.astrainteractive.astralibs:ktx-core", version.ref = "astralibs" }
-astralibs-spigotCore = { module = "ru.astrainteractive.astralibs:spigot-core", version.ref = "astralibs" }
+kotlin-benchmark-runtime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime", version.ref = "kotlin-benchmark" }
 
 # Drivers
 driver-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "driver-jdbc" }
@@ -74,33 +52,32 @@ tests-org-testing = { module = "org.testng:testng", version.ref = "tests-org-tes
 tests-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
 tests-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
 tests-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
-
-# Exposed
-exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
-
-
+tests-mockito = { module = "org.mockito:mockito-core", version.ref = "tests-mockito" }
 
 # Minecraft
 minecraft-paper-api = { module = "io.papermc.paper:paper-api", version.ref = "minecraft-spigot" }
 minecraft-spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "minecraft-spigot" }
 minecraft-velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "minecraft-velocity" }
-minecraft-protocollib = { module = "com.comphenix.protocol:ProtocolLib", version.ref = "minecraft-protocollib" }
 minecraft-papi = { module = "me.clip:placeholderapi", version.ref = "minecraft-papi" }
 minecraft-vaultapi = { module = "com.github.MilkBowl:VaultAPI", version.ref = "minecraft-vault" }
+minecraft-essentialsx = { module = "net.essentialsx:EssentialsX", version.ref = "minecraft-essentialsx" }
+minecraft-luckperms = { module = "net.luckperms:api", version.ref = "minecraft-luckperms" }
+
+kyori-api = { module = "net.kyori:adventure-api", version.ref = "kyori" }
+kyori-gson = { module = "net.kyori:adventure-text-serializer-gson", version.ref = "kyori" }
+kyori-legacy = { module = "net.kyori:adventure-text-serializer-legacy", version.ref = "kyori" }
+kyori-plain = { module = "net.kyori:adventure-text-serializer-plain", version.ref = "kyori" }
+kyori-minimessage = { module = "net.kyori:adventure-text-minimessage", version.ref = "kyori" }
 
 [bundles]
-exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
 minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-vaultapi", "minecraft-papi"]
 testing-kotlin = ["tests-junit-jupiter-api", "kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
-kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-dokka-kotlinJavaPlugin", "kotlin-gradle"]
+kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-gradle"]
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin-version" }
 kotlin-gradle = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version" }
-kotlin-dokka = { id = "org.jetbrains.dokka", version.ref = "kotlin-dokka" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
-shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
+kotlin-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "kotlin-benchmark" }
+kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin-version" }

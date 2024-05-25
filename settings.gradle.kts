@@ -41,7 +41,10 @@ dependencyResolutionManagement {
 }
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "AstraLibs"
-include("ktx-core")
-include("spigot-core")
-include("spigot-gui")
+include("core")
+include("core-bukkit")
+include("menu-bukkit")
 include("orm")
+include("command")
+include("command-bukkit")
+include(":benchmarks")
