@@ -2,6 +2,7 @@ package ru.astrainteractive.astralibs.krate.core
 
 import ru.astrainteractive.klibs.kstorage.MutableStorageValue
 import ru.astrainteractive.klibs.kstorage.api.MutableStorageValue
+import ru.astrainteractive.klibs.kstorage.api.value.ValueFactory
 import java.io.File
 
 /**
@@ -14,24 +15,24 @@ interface FileKrate<T> : MutableStorageValue<T> {
     val folder: File
 
     class Default<T>(
-        val default: T,
+        val factory: ValueFactory<T>,
         override val fileName: String,
         override val folder: File,
         save: (file: File, value: T) -> Unit,
         load: (file: File) -> T
     ) : FileKrate<T>,
         MutableStorageValue<T> by MutableStorageValue(
-            default = default,
-            saveSettingsValue = saveSettingsValue@{ value ->
+            factory = factory,
+            saver = saver@{ value ->
                 val file = File(folder, fileName)
                 file.parentFile.mkdirs()
                 file.createNewFile()
                 save.invoke(file, value)
             },
-            loadSettingsValue = loadSettingsValue@{
+            loader = loader@{
                 val file = File(folder, fileName)
-                if (!file.exists()) return@loadSettingsValue default
-                runCatching { load.invoke(file) }.getOrElse { default }
+                if (!file.exists()) return@loader factory.create()
+                runCatching { load.invoke(file) }.getOrElse { factory.create() }
             }
         )
 }

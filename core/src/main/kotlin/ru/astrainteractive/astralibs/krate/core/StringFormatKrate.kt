@@ -4,16 +4,17 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.StringFormat
 import ru.astrainteractive.astralibs.serialization.StringFormatExt.parse
 import ru.astrainteractive.astralibs.serialization.StringFormatExt.writeIntoFile
+import ru.astrainteractive.klibs.kstorage.api.value.ValueFactory
 import java.io.File
 
 class StringFormatKrate<T>(
     stringFormat: StringFormat,
     kSerializer: KSerializer<T>,
-    default: T,
+    factory: ValueFactory<T>,
     fileName: String,
     folder: File,
 ) : FileKrate<T> by FileKrate.Default(
-    default = default,
+    factory = factory,
     fileName = fileName,
     folder = folder,
     save = save@{ file, value ->

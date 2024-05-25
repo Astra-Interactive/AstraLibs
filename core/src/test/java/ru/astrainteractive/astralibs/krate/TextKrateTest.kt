@@ -5,6 +5,7 @@ import org.junit.Test
 import ru.astrainteractive.astralibs.krate.core.StringFormatKrate
 import ru.astrainteractive.astralibs.krate.util.KrateExt.delete
 import ru.astrainteractive.astralibs.serialization.YamlStringFormat
+import ru.astrainteractive.klibs.kstorage.update
 import java.io.File
 import java.util.UUID
 import kotlin.random.Random
@@ -36,7 +37,7 @@ class TextKrateTest {
         val storage = StringFormatKrate(
             stringFormat = serializer,
             kSerializer = TestStorage.serializer(),
-            default = initial,
+            factory = { initial },
             fileName = UUID.randomUUID().toString(),
             folder = folder
         )
@@ -55,7 +56,7 @@ class TextKrateTest {
         val storage = StringFormatKrate(
             stringFormat = YamlStringFormat(),
             kSerializer = TestStorage.serializer(),
-            default = initial,
+            factory = { initial },
             fileName = "yaml_test_file.yaml",
             folder = folder
         )
