@@ -16,6 +16,6 @@ jobs:
       - name: Give gradle permission
         run: chmod +x gradlew
       - name: Run tests
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v3
         with:
           arguments: test
