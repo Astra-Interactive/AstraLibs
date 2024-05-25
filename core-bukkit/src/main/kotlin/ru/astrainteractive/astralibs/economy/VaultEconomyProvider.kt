@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.klibs.kdi.Factory
 import java.util.UUID
 
+@Suppress("UnusedPrivateProperty")
 class VaultEconomyProvider(plugin: JavaPlugin, vault: Plugin) : EconomyProvider {
     private val economy = Factory {
         val rsp = plugin.server.servicesManager.getRegistration(Economy::class.java)
