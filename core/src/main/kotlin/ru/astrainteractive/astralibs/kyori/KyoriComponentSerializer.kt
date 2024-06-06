@@ -25,6 +25,8 @@ interface KyoriComponentSerializer {
         }
     }
 
+    val StringDesc.component get() = toComponent(this)
+
     data object Json : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Json
         override val serializer by lazy {
