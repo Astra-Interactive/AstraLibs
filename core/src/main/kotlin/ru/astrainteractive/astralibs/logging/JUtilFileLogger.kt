@@ -1,43 +1,115 @@
 package ru.astrainteractive.astralibs.logging
 
 import java.io.File
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
+/**
+ * This logger will write all logs inside [folder]
+ */
 class JUtilFileLogger(
-    override val tag: String,
-    override val folder: File,
-    private val logger: java.util.logging.Logger = java.util.logging.Logger.getGlobal()
+    private val folder: File,
+    private val instance: Logger
 ) : Logger {
+    override val TAG: String = instance.TAG
 
-    override fun warning(tag: String, msg: String, logInFile: Boolean) {
-        logger.warning("[$tag]: $msg")
-        if (logInFile) {
-            logInFile(tag, msg)
-        }
+    /**
+     * Returns current time in HH:mm:ss format
+     */
+    private fun getTime(): String {
+        val now = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("HH:mm:ss")
+        return formatter.format(now)
     }
 
-    override fun error(tag: String, msg: String, logInFile: Boolean) {
-        logger.severe("[$tag]: $msg")
-        if (logInFile) {
-            logInFile(tag, msg)
-        }
+    /**
+     * Returns current date in yyyy-MM-dd format
+     */
+    private fun getDate(): String {
+        val now = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        return formatter.format(now)
     }
 
-    override fun info(tag: String, msg: String, logInFile: Boolean) {
-        logger.info("[$tag]: $msg")
-        if (logInFile) {
-            logInFile(tag, msg)
-        }
+    override fun debug(logMessage: () -> String) {
+        instance.debug(logMessage)
+        logInFile(logMessage)
     }
 
-    private fun logInFile(tag: String, msg: String) {
+    override fun error(logMessage: () -> String) {
+        instance.error(logMessage)
+        logInFile(logMessage)
+    }
+
+    override fun info(logMessage: () -> String) {
+        instance.info(logMessage)
+        logInFile(logMessage)
+    }
+
+    override fun verbose(logMessage: () -> String) {
+        instance.verbose(logMessage)
+        logInFile(logMessage)
+    }
+
+    override fun warn(logMessage: () -> String) {
+        instance.warn(logMessage)
+        logInFile(logMessage)
+    }
+
+    override fun error(error: Throwable?, logMessage: () -> String) {
+        instance.error(logMessage)
+        error?.stackTraceToString()?.let { stackTraceToString ->
+            logInFile { stackTraceToString }
+        }
+        logInFile(logMessage)
+    }
+
+    private fun getLogFile(): File {
         if (!folder.exists()) {
             folder.mkdirs()
         }
-        val data = Logger.getDate()
-        val time = Logger.getTime()
-        val file = File(folder, "$data.log")
-        if (!folder.exists()) folder.mkdirs()
-        if (!file.exists()) file.createNewFile()
-        file.appendText("[$time] [$tag]: $msg\n")
+        val data = getDate()
+        val lastIndex = folder.listFiles().orEmpty()
+            .filter { it.nameWithoutExtension.startsWith(data) }
+            .maxOfOrNull {
+                if (!it.nameWithoutExtension.contains("-")) {
+                    0
+                } else {
+                    it.nameWithoutExtension.split("-").lastOrNull()?.toIntOrNull() ?: 0
+                }
+            }
+        val lastFile = File(folder, "$data-$lastIndex.log")
+        if (!lastFile.exists()) {
+            lastFile.createNewFile()
+            return lastFile
+        }
+        val fileSizeMegaBytes = lastFile.length() / 1024f / 1024f
+        return if (fileSizeMegaBytes > MAX_FILE_SIZE_MB) {
+            val newFile = File(folder, "$data-$lastIndex.log")
+            newFile.createNewFile()
+            newFile
+        } else {
+            lastFile
+        }
+    }
+
+    private fun logInFile(logMessage: () -> String) {
+        val time = getTime()
+        val file = getLogFile()
+        file.appendText("[$time] [$TAG]: ${logMessage.invoke()}\n")
+    }
+
+    companion object {
+        private const val MAX_FILE_SIZE_MB = 8 * 1024 * 1024
+
+        /**
+         * Convert default [Logger] into [JUtilFileLogger]
+         */
+        fun Logger.toFileLogger(folder: File): JUtilFileLogger {
+            check(this !is JUtilFileLogger) {
+                "${this::class.java} already JUtilFileLogger!"
+            }
+            return JUtilFileLogger(folder, this)
+        }
     }
 }
