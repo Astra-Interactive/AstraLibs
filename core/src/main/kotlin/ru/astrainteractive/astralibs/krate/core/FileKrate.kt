@@ -1,8 +1,8 @@
 package ru.astrainteractive.astralibs.krate.core
 
-import ru.astrainteractive.klibs.kstorage.MutableStorageValue
-import ru.astrainteractive.klibs.kstorage.api.MutableStorageValue
-import ru.astrainteractive.klibs.kstorage.api.value.ValueFactory
+import ru.astrainteractive.klibs.kstorage.api.MutableKrate
+import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate
+import ru.astrainteractive.klibs.kstorage.api.provider.DefaultValueFactory
 import java.io.File
 
 /**
@@ -10,18 +10,18 @@ import java.io.File
  *
  * With this you can easily create serialized file holders
  */
-interface FileKrate<T> : MutableStorageValue<T> {
+interface FileKrate<T> : MutableKrate<T> {
     val fileName: String
     val folder: File
 
     class Default<T>(
-        val factory: ValueFactory<T>,
+        val factory: DefaultValueFactory<T>,
         override val fileName: String,
         override val folder: File,
         save: (file: File, value: T) -> Unit,
         load: (file: File) -> T
     ) : FileKrate<T>,
-        MutableStorageValue<T> by MutableStorageValue(
+        MutableKrate<T> by DefaultMutableKrate(
             factory = factory,
             saver = saver@{ value ->
                 val file = File(folder, fileName)

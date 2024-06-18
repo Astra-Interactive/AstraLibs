@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.configuration
 import org.bukkit.configuration.file.YamlConfiguration
 import org.junit.Test
 import ru.astrainteractive.astralibs.configuration.BukkitMutableStorageValue.anyMutableStorageValue
-import ru.astrainteractive.klibs.kstorage.withDefault
+import ru.astrainteractive.klibs.kstorage.util.KrateDefaultExt.withDefault
 import java.io.File
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
@@ -16,15 +16,15 @@ class MutableStorageValueTest {
         val configuration = YamlConfiguration.loadConfiguration(file)
         configuration.anyMutableStorageValue<T?>(name).let { storageValue ->
             // Test initial is null
-            assertNull(storageValue.load())
+            assertNull(storageValue.loadAndGet())
             // Test after save value is as expected
             storageValue.save(expectedValue)
-            assertEquals(expectedValue, storageValue.load())
+            assertEquals(expectedValue, storageValue.loadAndGet())
             // Test after reset value is null
             storageValue.reset()
-            assertNull(storageValue.load())
+            assertNull(storageValue.loadAndGet())
             // Test withDefault value is as expected
-            assertEquals(expectedValue, storageValue.withDefault { expectedValue }.load())
+            assertEquals(expectedValue, storageValue.withDefault { expectedValue }.loadAndGet())
         }
     }
 

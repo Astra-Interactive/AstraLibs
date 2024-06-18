@@ -1,16 +1,16 @@
 package ru.astrainteractive.astralibs.configuration
 
 import org.bukkit.configuration.file.FileConfiguration
-import ru.astrainteractive.klibs.kstorage.MutableStorageValue
-import ru.astrainteractive.klibs.kstorage.StateFlowMutableStorageValue
-import ru.astrainteractive.klibs.kstorage.api.MutableStorageValue
-import ru.astrainteractive.klibs.kstorage.api.StateFlowMutableStorageValue
+import ru.astrainteractive.klibs.kstorage.api.MutableKrate
+import ru.astrainteractive.klibs.kstorage.api.StateFlowMutableKrate
+import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate
+import ru.astrainteractive.klibs.kstorage.api.impl.DefaultStateFlowMutableKrate
 
 object BukkitMutableStorageValue {
     inline fun <reified T> FileConfiguration.anyStateFlowMutableStorageValue(
         path: String
-    ): StateFlowMutableStorageValue<T?> {
-        return StateFlowMutableStorageValue(
+    ): StateFlowMutableKrate<T?> {
+        return DefaultStateFlowMutableKrate(
             factory = { null },
             saver = { set(path, it) },
             loader = { getObject(path, T::class.java).takeIf { contains(path) } }
@@ -19,8 +19,8 @@ object BukkitMutableStorageValue {
 
     inline fun <reified T> FileConfiguration.anyMutableStorageValue(
         path: String
-    ): MutableStorageValue<T?> {
-        return MutableStorageValue(
+    ): MutableKrate<T?> {
+        return DefaultMutableKrate(
             factory = { null },
             saver = { set(path, it) },
             loader = { getObject(path, T::class.java).takeIf { contains(path) } }
