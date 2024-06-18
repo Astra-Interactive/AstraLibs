@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.krate.core
 
 import ru.astrainteractive.klibs.kstorage.api.MutableKrate
 import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate
-import ru.astrainteractive.klibs.kstorage.api.provider.DefaultValueFactory
+import ru.astrainteractive.klibs.kstorage.api.provider.ValueFactory
 import java.io.File
 
 /**
@@ -15,7 +15,7 @@ interface FileKrate<T> : MutableKrate<T> {
     val folder: File
 
     class Default<T>(
-        val factory: DefaultValueFactory<T>,
+        val factory: ValueFactory<T>,
         override val fileName: String,
         override val folder: File,
         save: (file: File, value: T) -> Unit,

@@ -2,13 +2,13 @@ package ru.astrainteractive.astralibs.krate.core
 
 import kotlinx.serialization.BinaryFormat
 import kotlinx.serialization.KSerializer
-import ru.astrainteractive.klibs.kstorage.api.provider.DefaultValueFactory
+import ru.astrainteractive.klibs.kstorage.api.provider.ValueFactory
 import java.io.File
 
 class BinaryFormatKrate<T>(
     binaryFormat: BinaryFormat,
     kSerializer: KSerializer<T>,
-    factory: DefaultValueFactory<T>,
+    factory: ValueFactory<T>,
     key: String,
     folder: File,
 ) : FileKrate<T> by FileKrate.Default(

@@ -30,7 +30,7 @@ kyori = "4.17.0" # https://github.com/KyoriPowered/adventure-platform
 
 # klibs
 klibs-gradleplugin = "1.3.3" # https://github.com/makeevrserg/gradle-plugin
-klibs-kstorage = "2.0.1" # https://github.com/makeevrserg/klibs.kstorage
+klibs-kstorage = "2.1.0" # https://github.com/makeevrserg/klibs.kstorage
 klibs-mikro = "1.8.4" # https://github.com/makeevrserg/klibs.mikro
 klibs-kdi = "1.4.5" # https://github.com/makeevrserg/klibs.kdi
 
