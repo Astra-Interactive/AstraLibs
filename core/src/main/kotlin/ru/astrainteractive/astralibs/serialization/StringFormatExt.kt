@@ -12,11 +12,23 @@ object StringFormatExt {
      * Attempts to parse content of [file] and return [T] as kotlin's result
      */
     fun <T> StringFormat.parse(deserializer: DeserializationStrategy<T>, file: File) = kotlin.runCatching {
+        if (!file.exists()) error("Could not find file ${file.absolutePath}")
         decodeFromString(deserializer, file.readText())
     }
 
     inline fun <reified T> StringFormat.parse(file: File): Result<T> {
         return parse(serializer(), file)
+    }
+
+    /**
+     * Parse value or return null if not parsed
+     */
+    fun <T : Any> StringFormat.parseOrNull(deserializer: DeserializationStrategy<T>, file: File): T? {
+        return parse<T>(deserializer, file).getOrNull()
+    }
+
+    inline fun <reified T : Any> StringFormat.parseOrNull(file: File): T? {
+        return parseOrNull(serializer(), file)
     }
 
     /**
@@ -35,6 +47,8 @@ object StringFormatExt {
      */
     fun <T> StringFormat.writeIntoFile(serializer: SerializationStrategy<T>, value: T, file: File) {
         val string = encodeToString(serializer, value)
+        if (file.parentFile.exists()) file.parentFile.mkdirs()
+        if (!file.exists()) file.createNewFile()
         file.writeText(string)
     }
 
