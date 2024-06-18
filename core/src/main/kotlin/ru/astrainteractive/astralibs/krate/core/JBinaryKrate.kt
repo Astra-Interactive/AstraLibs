@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.krate.core
 
 import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoder
 import ru.astrainteractive.astralibs.encoding.model.EncodedObject
-import ru.astrainteractive.klibs.kstorage.api.value.ValueFactory
+import ru.astrainteractive.klibs.kstorage.api.provider.ValueFactory
 import java.io.File
 import java.io.Serializable
 

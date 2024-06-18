@@ -6,7 +6,7 @@ dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
     // klibs
-    implementation(klibs.klibs.mikro.core)
+    implementation(libs.klibs.mikro.core)
     // Test
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)

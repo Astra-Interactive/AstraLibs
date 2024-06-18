@@ -7,9 +7,9 @@ dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
     // kdi
-    implementation(klibs.klibs.kdi)
-    implementation(klibs.klibs.mikro.core)
-    implementation(klibs.klibs.kstorage)
+    implementation(libs.klibs.kdi)
+    implementation(libs.klibs.mikro.core)
+    implementation(libs.klibs.kstorage)
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
     compileOnly(libs.minecraft.essentialsx)

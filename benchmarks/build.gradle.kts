@@ -12,9 +12,9 @@ dependencies {
     // Kotlin
     implementation(libs.bundles.kotlin)
     // AstraLibs
-    implementation(klibs.klibs.kdi)
-    implementation(klibs.klibs.mikro.core)
-    implementation(klibs.klibs.kstorage)
+    implementation(libs.klibs.kdi)
+    implementation(libs.klibs.mikro.core)
+    implementation(libs.klibs.kstorage)
     // Local
     implementation(projects.core)
 }

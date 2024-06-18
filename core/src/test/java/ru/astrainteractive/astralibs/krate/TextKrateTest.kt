@@ -5,7 +5,7 @@ import org.junit.Test
 import ru.astrainteractive.astralibs.krate.core.StringFormatKrate
 import ru.astrainteractive.astralibs.krate.util.KrateExt.delete
 import ru.astrainteractive.astralibs.serialization.YamlStringFormat
-import ru.astrainteractive.klibs.kstorage.update
+import ru.astrainteractive.klibs.kstorage.util.KrateExt.update
 import java.io.File
 import java.util.UUID
 import kotlin.random.Random
@@ -42,12 +42,12 @@ class TextKrateTest {
             folder = folder
         )
         storage.delete()
-        assertEquals(initial, storage.value)
-        storage.load()
-        assertEquals(initial, storage.value)
-        val newValue = storage.value.copy(age = Random.nextInt())
+        assertEquals(initial, storage.cachedValue)
+        storage.loadAndGet()
+        assertEquals(initial, storage.cachedValue)
+        val newValue = storage.cachedValue.copy(age = Random.nextInt())
         storage.update { newValue }
-        assertEquals(newValue, storage.value)
+        assertEquals(newValue, storage.cachedValue)
     }
 
     @Test
@@ -60,11 +60,11 @@ class TextKrateTest {
             fileName = "yaml_test_file.yaml",
             folder = folder
         )
-        assertEquals(initial, storage.value)
-        storage.load()
-        assertEquals(initial, storage.value)
-        val newValue = storage.value.copy(age = Random.nextInt())
+        assertEquals(initial, storage.cachedValue)
+        storage.loadAndGet()
+        assertEquals(initial, storage.cachedValue)
+        val newValue = storage.cachedValue.copy(age = Random.nextInt())
         storage.update { newValue }
-        assertEquals(newValue, storage.value)
+        assertEquals(newValue, storage.cachedValue)
     }
 }
