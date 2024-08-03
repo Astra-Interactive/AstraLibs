@@ -10,4 +10,5 @@ dependencies {
     compileOnly(libs.bundles.minecraft.bukkit)
     // Local
     implementation(projects.command)
+    implementation(projects.core)
 }

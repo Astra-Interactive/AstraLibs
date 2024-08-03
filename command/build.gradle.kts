@@ -6,4 +6,5 @@ plugins {
 dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
+    implementation(projects.core)
 }
