@@ -6,8 +6,6 @@ plugins {
 dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
-    // kdi
-    compileOnly(libs.klibs.kdi)
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
     // Test-Core

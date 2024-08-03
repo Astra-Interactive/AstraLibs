@@ -12,7 +12,6 @@ dependencies {
     // Kotlin
     implementation(libs.bundles.kotlin)
     // AstraLibs
-    implementation(libs.klibs.kdi)
     implementation(libs.klibs.mikro.core)
     implementation(libs.klibs.kstorage)
     // Local
