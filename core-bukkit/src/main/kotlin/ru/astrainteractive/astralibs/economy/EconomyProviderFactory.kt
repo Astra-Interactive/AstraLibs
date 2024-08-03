@@ -3,9 +3,8 @@ package ru.astrainteractive.astralibs.economy
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.klibs.kdi.Factory
 
-class EconomyProviderFactory(private val rootPlugin: JavaPlugin) : Factory<EconomyProvider> {
+class EconomyProviderFactory(private val rootPlugin: JavaPlugin) {
 
     private fun interface EconomyConstructor {
         fun create(rootPlugin: JavaPlugin, plugin: Plugin): EconomyProvider
@@ -21,7 +20,7 @@ class EconomyProviderFactory(private val rootPlugin: JavaPlugin) : Factory<Econo
             .getOrNull()
     }
 
-    override fun create(): EconomyProvider {
+    fun create(): EconomyProvider {
         val providers = listOfNotNull(
             tryGetEconomyProvider("Vault", ::VaultEconomyProvider),
             tryGetEconomyProvider("Essentials", ::EssentialsEconomyProvider)

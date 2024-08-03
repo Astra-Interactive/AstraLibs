@@ -32,7 +32,6 @@ kyori = "4.17.0" # https://github.com/KyoriPowered/adventure-platform
 klibs-gradleplugin = "1.3.4" # https://github.com/makeevrserg/gradle-plugin
 klibs-kstorage = "3.0.0" # https://github.com/makeevrserg/klibs.kstorage
 klibs-mikro = "1.8.4" # https://github.com/makeevrserg/klibs.mikro
-klibs-kdi = "1.4.5" # https://github.com/makeevrserg/klibs.kdi
 
 [libraries]
 
@@ -77,12 +76,10 @@ kyori-minimessage = { module = "net.kyori:adventure-text-minimessage", version.r
 
 # klibs - mikro
 klibs-mikro-core = { module = "ru.astrainteractive.klibs:mikro-core", version.ref = "klibs-mikro" }
-# klibs - kdi
-klibs-kdi = { module = "ru.astrainteractive.klibs:kdi", version.ref = "klibs-kdi" }
 klibs-kstorage = { module = "ru.astrainteractive.klibs:kstorage", version.ref = "klibs-kstorage" }
 
 [bundles]
-klibs = ["klibs-kdi", "klibs-kstorage", "klibs-mikro-core"]
+klibs = ["klibs-kstorage", "klibs-mikro-core"]
 minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-vaultapi", "minecraft-papi"]
 testing-kotlin = ["tests-junit-jupiter-api", "kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
 kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-gradle"]

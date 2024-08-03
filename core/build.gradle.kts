@@ -7,7 +7,6 @@ dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
     compileOnly(libs.kotlin.serialization.protobuf)
-    // kdi
     implementation(libs.bundles.klibs)
     compileOnly(libs.kyori.api)
     compileOnly(libs.kyori.gson)

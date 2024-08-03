@@ -6,16 +6,15 @@ import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.klibs.kdi.Factory
 import java.util.UUID
 
 @Suppress("UnusedPrivateProperty")
 class VaultEconomyProvider(plugin: JavaPlugin, vault: Plugin) : EconomyProvider {
-    private val economy = Factory {
+    private val economy by lazy {
         val rsp = plugin.server.servicesManager.getRegistration(Economy::class.java)
         checkNotNull(rsp) { "Could not get economy provider" }
         rsp.provider
-    }.create()
+    }
 
     private fun offlinePlayer(uuid: UUID) = Bukkit.getOfflinePlayer(uuid)
 

@@ -6,8 +6,6 @@ plugins {
 dependencies {
     // Kotlin
     compileOnly(libs.bundles.kotlin)
-    // kdi
-    implementation(libs.klibs.kdi)
     implementation(libs.klibs.mikro.core)
     implementation(libs.klibs.kstorage)
     // Spigot dependencies
