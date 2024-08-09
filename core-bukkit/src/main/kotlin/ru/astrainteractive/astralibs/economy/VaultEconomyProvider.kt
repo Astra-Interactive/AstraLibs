@@ -10,7 +10,7 @@ import java.util.UUID
 
 @Suppress("UnusedPrivateProperty")
 class VaultEconomyProvider(plugin: JavaPlugin, vault: Plugin) : EconomyProvider {
-    private val economy by lazy {
+    private val economy = let {
         val rsp = plugin.server.servicesManager.getRegistration(Economy::class.java)
         checkNotNull(rsp) { "Could not get economy provider" }
         rsp.provider
