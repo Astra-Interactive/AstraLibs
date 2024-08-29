@@ -4,7 +4,7 @@ kotlin-version = "2.0.0" # https://github.com/JetBrains/kotlin
 kotlin-coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
 kotlin-json = "1.7.1" # https://github.com/Kotlin/kotlinx.serialization
 kotlin-kaml = "0.61.0" # https://github.com/charleskorn/kaml
-kotlin-benchmark = "0.4.11" # https://github.com/Kotlin/kotlinx-benchmark
+kotlin-benchmark = "0.4.12" # https://github.com/Kotlin/kotlinx-benchmark
 
 # Drivers
 driver-jdbc = "3.46.1.0" # https://github.com/xerial/sqlite-jdbc
