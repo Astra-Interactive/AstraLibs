@@ -8,11 +8,11 @@ import java.util.UUID
  * It will return failure to every economy operation
  */
 class EmptyEconomyProvider : EconomyProvider {
-    override fun getBalance(uuid: UUID): Double? = null
+    override suspend fun getBalance(uuid: UUID): Double? = null
 
-    override fun takeMoney(uuid: UUID, amount: Double): Boolean = false
+    override suspend fun takeMoney(uuid: UUID, amount: Double): Boolean = false
 
-    override fun addMoney(uuid: UUID, amount: Double): Boolean = false
+    override suspend fun addMoney(uuid: UUID, amount: Double): Boolean = false
 
-    override fun hasAtLeast(uuid: UUID, amount: Double): Boolean = false
+    override suspend fun hasAtLeast(uuid: UUID, amount: Double): Boolean = false
 }
