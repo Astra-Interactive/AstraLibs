@@ -4,19 +4,20 @@ import net.milkbowl.vault.economy.Economy
 import net.milkbowl.vault.economy.EconomyResponse
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
-import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.UUID
 
 @Suppress("UnusedPrivateProperty")
-class VaultEconomyProvider(plugin: JavaPlugin, vault: Plugin) : EconomyProvider {
-    private val economy = let {
-        val rsp = plugin.server.servicesManager.getRegistration(Economy::class.java)
-        checkNotNull(rsp) { "Could not get economy provider" }
-        rsp.provider
-    }
-
+class VaultEconomyProvider(
+    private val economy: Economy
+) : EconomyProvider {
     private fun offlinePlayer(uuid: UUID) = Bukkit.getOfflinePlayer(uuid)
+
+    constructor(plugin: JavaPlugin) : this(
+        economy = plugin.server.servicesManager.getRegistration(Economy::class.java)
+            ?.provider
+            ?: error("Could not get economy provider")
+    )
 
     /**
      * @param player player
@@ -50,11 +51,11 @@ class VaultEconomyProvider(plugin: JavaPlugin, vault: Plugin) : EconomyProvider 
         return (response?.type == EconomyResponse.ResponseType.SUCCESS)
     }
 
-    override fun getBalance(uuid: UUID): Double = getBalance(offlinePlayer(uuid))
+    override suspend fun getBalance(uuid: UUID): Double = getBalance(offlinePlayer(uuid))
 
-    override fun takeMoney(uuid: UUID, amount: Double): Boolean = takeMoney(offlinePlayer(uuid), amount)
+    override suspend fun takeMoney(uuid: UUID, amount: Double): Boolean = takeMoney(offlinePlayer(uuid), amount)
 
-    override fun addMoney(uuid: UUID, amount: Double): Boolean = addMoney(offlinePlayer(uuid), amount)
+    override suspend fun addMoney(uuid: UUID, amount: Double): Boolean = addMoney(offlinePlayer(uuid), amount)
 
-    override fun hasAtLeast(uuid: UUID, amount: Double): Boolean = getBalance(uuid) >= amount
+    override suspend fun hasAtLeast(uuid: UUID, amount: Double): Boolean = getBalance(uuid) >= amount
 }
