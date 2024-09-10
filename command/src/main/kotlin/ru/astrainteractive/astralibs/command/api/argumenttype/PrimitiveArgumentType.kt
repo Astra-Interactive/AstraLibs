@@ -1,6 +1,6 @@
 package ru.astrainteractive.astralibs.command.api.argumenttype
 
-import ru.astrainteractive.astralibs.command.api.exception.ArgumentTypeException
+import ru.astrainteractive.astralibs.command.api.exception.DefaultCommandException.ArgumentTypeException
 
 interface PrimitiveArgumentType<T : Any> : ArgumentType<T> {
     data object Int : PrimitiveArgumentType<kotlin.Int> {
