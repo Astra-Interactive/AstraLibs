@@ -23,7 +23,7 @@ sealed interface DatabaseConfiguration {
         val password: String,
         val name: String,
         override val driver: String = "com.mysql.cj.jdbc.Driver",
-        override val arguments: List<String>
+        override val arguments: List<String> = emptyList()
     ) : DatabaseConfiguration
 
     @SerialName("H2")
@@ -31,7 +31,7 @@ sealed interface DatabaseConfiguration {
     data class H2(
         val name: String,
         override val driver: String = "org.h2.Driver",
-        override val arguments: List<String>
+        override val arguments: List<String> = emptyList()
     ) : DatabaseConfiguration
 
     @SerialName("SQLite")
@@ -39,6 +39,6 @@ sealed interface DatabaseConfiguration {
     data class SQLite(
         val name: String,
         override val driver: String = "org.sqlite.JDBC",
-        override val arguments: List<String>
+        override val arguments: List<String> = emptyList()
     ) : DatabaseConfiguration
 }
