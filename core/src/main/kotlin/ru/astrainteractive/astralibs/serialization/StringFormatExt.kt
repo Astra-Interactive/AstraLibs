@@ -35,7 +35,8 @@ object StringFormatExt {
      * Attempt to parse. Returns default [factory] value on failure
      */
     fun <T> StringFormat.parseOrDefault(deserializer: DeserializationStrategy<T>, file: File, factory: () -> T): T {
-        return parse<T>(deserializer, file).getOrElse { factory.invoke() }
+        if (!file.exists() || file.length() == 0L) return factory.invoke()
+        return parse(deserializer, file).getOrElse { factory.invoke() }
     }
 
     inline fun <reified T> StringFormat.parseOrDefault(file: File, noinline factory: () -> T): T {
@@ -47,7 +48,7 @@ object StringFormatExt {
      */
     fun <T> StringFormat.writeIntoFile(serializer: SerializationStrategy<T>, value: T, file: File) {
         val string = encodeToString(serializer, value)
-        if (file.parentFile.exists()) file.parentFile.mkdirs()
+        if (!file.parentFile.exists()) file.parentFile.mkdirs()
         if (!file.exists()) file.createNewFile()
         file.writeText(string)
     }
