@@ -1,8 +1,8 @@
 [versions]
 # Kotlin
 kotlin-version = "2.0.0" # https://github.com/JetBrains/kotlin
-kotlin-coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
-kotlin-json = "1.7.2" # https://github.com/Kotlin/kotlinx.serialization
+kotlin-coroutines = "1.9.0" # https://github.com/Kotlin/kotlinx.coroutines
+kotlin-json = "1.7.3" # https://github.com/Kotlin/kotlinx.serialization
 kotlin-kaml = "0.61.0" # https://github.com/charleskorn/kaml
 kotlin-benchmark = "0.4.12" # https://github.com/Kotlin/kotlinx-benchmark
 
@@ -34,7 +34,7 @@ klibs-kstorage = "3.1.3" # https://github.com/makeevrserg/klibs.kstorage
 klibs-mikro = "1.8.8" # https://github.com/makeevrserg/klibs.mikro
 
 # Exposed
-exposed = "0.53.0" # https://github.com/JetBrains/Exposed
+exposed = "0.54.0" # https://github.com/JetBrains/Exposed
 
 [libraries]
 
