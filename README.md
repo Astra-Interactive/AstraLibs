@@ -33,21 +33,21 @@ Next, add required repositories into `dependencies { ... }`
 ```kotlin
 // core with basic kotlin-only dependencies
 implementation("ru.astrainteractive.astralibs:core:<version>")
-// Lightweight simple ORM with kotlin-only dependencies
-implementation("ru.astrainteractive.astralibs:orm:<version>")
 // core-bukkit dependencies
 implementation("ru.astrainteractive.astralibs:core-bukkit:<version>")
 // Spigot module which focused on GUI
 implementation("ru.astrainteractive.astralibs:menu-bukkit:<version>")
+// Exposed integration
+implementation("ru.astrainteractive.astralibs:exposed:<version>")
 // Multiplatform module with command
 implementation("ru.astrainteractive.astralibs:command:<version>")
 implementation("ru.astrainteractive.astralibs:command-bukkit:<version>")
 
 // Or with version catalogs
 implementation(libs.astralibs.core)
-implementation(libs.astralibs.orm)
-implementation(libs.astralibs.menu.bukkit)
 implementation(libs.astralibs.core.bukkit)
+implementation(libs.astralibs.exposed)
+implementation(libs.astralibs.menu.bukkit)
 implementation(libs.astralibs.command)
 implementation(libs.astralibs.command.bukkit)
 ```
@@ -59,10 +59,10 @@ Version catalogs
 astralibs = "<latest-version>"
 
 [libraries]
-astralibs-orm = { module = "ru.astrainteractive.astralibs:orm", version.ref = "astralibs" }
+astralibs-exposed = { module = "ru.astrainteractive.astralibs:exposed", version.ref = "astralibs" }
 astralibs-core = { module = "ru.astrainteractive.astralibs:core", version.ref = "astralibs" }
-astralibs-menu-bukkit = { module = "ru.astrainteractive.astralibs:menu-bukkit", version.ref = "astralibs" }
 astralibs-core-bukkit = { module = "ru.astrainteractive.astralibs:core-bukkit", version.ref = "astralibs" }
+astralibs-menu-bukkit = { module = "ru.astrainteractive.astralibs:menu-bukkit", version.ref = "astralibs" }
 astralibs-command = { module = "ru.astrainteractive.astralibs:command", version.ref = "astralibs" }
 astralibs-command-bukkit = { module = "ru.astrainteractive.astralibs:command-bukkit", version.ref = "astralibs" }
 ```

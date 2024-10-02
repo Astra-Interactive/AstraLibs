@@ -7,7 +7,7 @@ import java.util.UUID
  *
  * It will return failure to every economy operation
  */
-class EmptyEconomyProvider : EconomyProvider {
+class EmptyEconomyFacade : EconomyFacade {
     override suspend fun getBalance(uuid: UUID): Double? = null
 
     override suspend fun takeMoney(uuid: UUID, amount: Double): Boolean = false

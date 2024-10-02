@@ -6,7 +6,7 @@ import net.kyori.adventure.text.Component
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.InventoryHolder
-import ru.astrainteractive.astralibs.async.AsyncComponent
+import ru.astrainteractive.astralibs.async.CoroutineFeature
 import ru.astrainteractive.astralibs.menu.clicker.ClickListener
 import ru.astrainteractive.astralibs.menu.clicker.MenuClickListener
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
@@ -28,7 +28,7 @@ abstract class Menu : InventoryHolder {
 
     open val childComponents: List<CoroutineScope> = emptyList()
 
-    val menuScope: CoroutineScope = AsyncComponent.Default()
+    val menuScope: CoroutineScope = CoroutineFeature.Unconfined()
 
     /**
      * This method called after inventory created and opened
@@ -48,17 +48,17 @@ abstract class Menu : InventoryHolder {
      * After [onInventoryClosed] executed - [menuScope] will be closed
      */
     open fun onInventoryClosed(it: InventoryCloseEvent) {
-        menuScope.cancel()
-        childComponents.forEach(CoroutineScope::cancel)
         clickListener.clear()
+        childComponents.forEach(CoroutineScope::cancel)
+        menuScope.cancel()
     }
 
     /**
      * Render and reset the content of GUI
      */
     open fun render() {
-        inventory.clear()
         clickListener.clear()
+        inventory.clear()
     }
 
     /**

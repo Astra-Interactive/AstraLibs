@@ -18,7 +18,7 @@ class BukkitMainDispatcher(private val plugin: Plugin) : CoroutineDispatcher() {
         if (!plugin.isEnabled) {
             return
         }
-        val timedRunnable = context[AsyncComponent.Key]
+        val timedRunnable = context[CoroutineTimings.Key]
         if (timedRunnable == null) {
             plugin.server.scheduler.runTask(plugin, block)
         } else {

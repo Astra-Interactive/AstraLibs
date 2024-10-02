@@ -8,9 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin
 import java.util.UUID
 
 @Suppress("UnusedPrivateProperty")
-class VaultEconomyProvider(
+class VaultEconomyFacade(
     private val economy: Economy
-) : EconomyProvider {
+) : EconomyFacade {
     private fun offlinePlayer(uuid: UUID) = Bukkit.getOfflinePlayer(uuid)
 
     constructor(plugin: JavaPlugin) : this(

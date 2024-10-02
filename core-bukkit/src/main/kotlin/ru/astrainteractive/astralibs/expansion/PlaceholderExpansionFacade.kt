@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.expansion
 /**
  * This expansion is used to handle ClassNotFound exception
  */
-interface PlaceholderExpansionApi {
+interface PlaceholderExpansionFacade {
     /**
      * Check if this placeholder identifier has already been registered
      *

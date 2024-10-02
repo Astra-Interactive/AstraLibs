@@ -4,7 +4,7 @@ import com.earth2me.essentials.api.Economy
 import java.math.BigDecimal
 import java.util.UUID
 
-object EssentialsEconomyProvider : EconomyProvider {
+object EssentialsEconomyFacade : EconomyFacade {
 
     override suspend fun addMoney(uuid: UUID, amount: Double): Boolean = runCatching {
         Economy.add(uuid, BigDecimal(amount))

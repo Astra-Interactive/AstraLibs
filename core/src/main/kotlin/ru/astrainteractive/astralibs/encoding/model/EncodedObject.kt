@@ -1,7 +1,9 @@
 package ru.astrainteractive.astralibs.encoding.model
 
+import ru.astrainteractive.astralibs.encoding.encoder.ObjectEncoder
+
 /**
- * Wrapper for IO classes to handle [Encoder] more safely
+ * Wrapper for IO classes to handle [ObjectEncoder] more safely
  */
 sealed interface EncodedObject {
     @JvmInline
