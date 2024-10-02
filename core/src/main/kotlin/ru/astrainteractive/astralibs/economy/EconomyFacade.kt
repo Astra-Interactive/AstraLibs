@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.economy
 
 import java.util.UUID
 
-interface EconomyProvider {
+interface EconomyFacade {
     /**
      * @param uuid UUID of player
      * @return double - current balance of [uuid]

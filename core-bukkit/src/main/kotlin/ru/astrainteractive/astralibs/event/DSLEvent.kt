@@ -7,6 +7,7 @@ import org.bukkit.plugin.Plugin
 /**
  * With this object you will no longer need to create interfaces for your bukkit event listeners
  */
+@Deprecated("Please don't use DSL event. Use annotated EventListener")
 object DSLEvent {
     inline operator fun <reified T : Event> invoke(
         eventListener: EventListener,
