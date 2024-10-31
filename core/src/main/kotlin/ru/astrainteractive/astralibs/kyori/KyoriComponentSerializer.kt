@@ -22,6 +22,7 @@ interface KyoriComponentSerializer {
     fun toComponent(stringDesc: StringDesc): Component {
         return when (stringDesc) {
             is StringDesc.Raw -> toComponent(stringDesc.raw)
+            is StringDesc.Plain -> toComponent(stringDesc.raw)
         }
     }
 

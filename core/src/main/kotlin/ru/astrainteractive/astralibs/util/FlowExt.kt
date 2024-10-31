@@ -16,6 +16,7 @@ object FlowExt {
     inline fun <T, R> Flow<T>.mapCached(
         scope: CoroutineScope,
         started: SharingStarted = SharingStarted.Eagerly,
+        replay: Int = 1,
         crossinline transform: suspend (value: T, previous: R?) -> R
     ): SharedFlow<R> = flow {
         var latest: R? = null
@@ -24,5 +25,5 @@ object FlowExt {
             emit(current)
             latest = current
         }.collect()
-    }.shareIn(scope, started, 1)
+    }.shareIn(scope, started, replay)
 }
