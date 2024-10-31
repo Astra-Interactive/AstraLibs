@@ -40,12 +40,11 @@ dependencyResolutionManagement {
 }
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "AstraLibs"
-include("core")
-include("core-bukkit")
-include("menu-bukkit")
-include("orm")
-include("command")
-include("command-bukkit")
+include(":core")
+include(":core-bukkit")
+include(":menu-bukkit")
+include(":command")
+include(":command-bukkit")
 include(":benchmarks")
 
 include(":exposed")

@@ -7,16 +7,30 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-object StringDescSerializer : KSerializer<StringDesc.Raw> {
+class StringDescSerializer<T : StringDesc>(
+    private val fromString: (String) -> T,
+    private val toString: (T) -> String
+) : KSerializer<T> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("StringDesc", PrimitiveKind.STRING)
 
-    override fun serialize(encoder: Encoder, value: StringDesc.Raw) {
-        val string = value.raw
+    override fun serialize(encoder: Encoder, value: T) {
+        val string = toString.invoke(value)
         encoder.encodeString(string)
     }
 
-    override fun deserialize(decoder: Decoder): StringDesc.Raw {
+    override fun deserialize(decoder: Decoder): T {
         val string = decoder.decodeString()
-        return StringDesc.Raw(string)
+        val stringDesc = fromString.invoke(string)
+        return stringDesc
     }
 }
+
+object RawStringDescSerializer : KSerializer<StringDesc.Raw> by StringDescSerializer(
+    fromString = { string -> StringDesc.Raw(string) },
+    toString = { stringDesc -> stringDesc.raw }
+)
+
+object PlainStringDescSerializer : KSerializer<StringDesc.Plain> by StringDescSerializer(
+    fromString = { string -> StringDesc.Plain(string) },
+    toString = { stringDesc -> stringDesc.raw }
+)

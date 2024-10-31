@@ -6,6 +6,10 @@ sealed interface StringDesc {
     val raw: String
 
     @JvmInline
-    @Serializable(with = StringDescSerializer::class)
+    @Serializable(with = RawStringDescSerializer::class)
     value class Raw(override val raw: String) : StringDesc
+
+    @JvmInline
+    @Serializable(with = PlainStringDescSerializer::class)
+    value class Plain(override val raw: String) : StringDesc
 }

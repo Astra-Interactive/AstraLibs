@@ -1,15 +1,23 @@
 package ru.astrainteractive.astralibs.string
 
 object StringDescExt {
-    fun StringDesc.Raw.map(block: (String) -> String): StringDesc.Raw {
-        return block.invoke(this.raw).let(StringDesc::Raw)
+    fun StringDesc.map(block: (String) -> String): StringDesc {
+        val raw = block.invoke(raw)
+        return when (this) {
+            is StringDesc.Raw -> StringDesc.Raw(raw)
+            is StringDesc.Plain -> StringDesc.Plain(raw)
+        }
     }
 
-    fun StringDesc.Raw.replace(oldValue: String, newValue: String, ignoreCase: Boolean = false): StringDesc.Raw {
-        return this.raw.replace(
+    fun StringDesc.replace(oldValue: String, newValue: String, ignoreCase: Boolean = false): StringDesc {
+        val raw = raw.replace(
             oldValue = oldValue,
             newValue = newValue,
             ignoreCase = ignoreCase
-        ).let(StringDesc::Raw)
+        )
+        return when (this) {
+            is StringDesc.Raw -> StringDesc.Raw(raw)
+            is StringDesc.Plain -> StringDesc.Plain(raw)
+        }
     }
 }

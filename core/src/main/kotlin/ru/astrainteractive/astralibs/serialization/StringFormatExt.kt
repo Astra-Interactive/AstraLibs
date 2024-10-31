@@ -48,7 +48,7 @@ object StringFormatExt {
      */
     fun <T> StringFormat.writeIntoFile(serializer: SerializationStrategy<T>, value: T, file: File) {
         val string = encodeToString(serializer, value)
-        if (file.parentFile?.exists() == false) file.parentFile?.mkdirs()
+        if (file.parentFile?.exists() != true) file.parentFile?.mkdirs()
         if (!file.exists()) file.createNewFile()
         file.writeText(string)
     }
