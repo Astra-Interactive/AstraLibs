@@ -11,15 +11,17 @@ object Persistence {
         )
     }
 
-    fun <T, Z> ItemMeta.getPersistentData(b: BukkitConstant<T, Z>) =
-        this.persistentDataContainer.get(
+    fun <T : Any, Z : Any> ItemMeta.getPersistentDataOrNull(b: BukkitConstant<T, Z>): Z? {
+        return this.persistentDataContainer.get(
             b.value,
             b.dataType
         )
+    }
 
-    fun <T, Z> ItemMeta.hasPersistentData(b: BukkitConstant<T, Z>) =
-        this.persistentDataContainer.has(
+    fun <T : Any, Z : Any> ItemMeta.hasPersistentData(b: BukkitConstant<T, Z>): Boolean {
+        return this.persistentDataContainer.has(
             b.value,
             b.dataType
         )
+    }
 }
