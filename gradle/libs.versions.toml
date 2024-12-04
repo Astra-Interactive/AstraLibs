@@ -12,7 +12,7 @@ driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
 minecraft-velocity = "4.0.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
-minecraft-spigot = "1.21.3-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
+minecraft-spigot = "1.21.4-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
 minecraft-papi = "2.11.6" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
 minecraft-essentialsx = "2.20.1" # https://github.com/EssentialsX/Essentials
