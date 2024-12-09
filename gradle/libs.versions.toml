@@ -12,7 +12,7 @@ driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
 minecraft-velocity = "4.0.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
-minecraft-spigot = "1.21.3-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
+minecraft-spigot = "1.21.4-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
 minecraft-papi = "2.11.6" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
 minecraft-essentialsx = "2.20.1" # https://github.com/EssentialsX/Essentials
@@ -30,11 +30,11 @@ kyori = "4.17.0" # https://github.com/KyoriPowered/adventure-platform
 
 # klibs
 klibs-gradleplugin = "1.5.0-alpha02" # https://github.com/makeevrserg/gradle-plugin
-klibs-kstorage = "3.2.0" # https://github.com/makeevrserg/klibs.kstorage
-klibs-mikro = "1.8.8" # https://github.com/makeevrserg/klibs.mikro
+klibs-kstorage = "3.2.1" # https://github.com/makeevrserg/klibs.kstorage
+klibs-mikro = "1.8.11" # https://github.com/makeevrserg/klibs.mikro
 
 # Exposed
-exposed = "0.56.0" # https://github.com/JetBrains/Exposed
+exposed = "0.57.0" # https://github.com/JetBrains/Exposed
 
 [libraries]
 
