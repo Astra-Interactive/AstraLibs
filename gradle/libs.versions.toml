@@ -29,9 +29,9 @@ tests-junit-bom = "5.11.3"
 kyori = "4.17.0" # https://github.com/KyoriPowered/adventure-platform
 
 # klibs
-klibs-gradleplugin = "1.5.0-alpha02" # https://github.com/makeevrserg/gradle-plugin
-klibs-kstorage = "3.2.1" # https://github.com/makeevrserg/klibs.kstorage
-klibs-mikro = "1.8.11" # https://github.com/makeevrserg/klibs.mikro
+klibs-gradleplugin = "1.5.1" # https://github.com/makeevrserg/gradle-plugin
+klibs-kstorage = "3.2.2" # https://github.com/makeevrserg/klibs.kstorage
+klibs-mikro = "1.8.12" # https://github.com/makeevrserg/klibs.mikro
 
 # Exposed
 exposed = "0.57.0" # https://github.com/JetBrains/Exposed
