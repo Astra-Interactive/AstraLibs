@@ -9,6 +9,7 @@ import ru.astrainteractive.astralibs.menu.slot.InventorySlot
  */
 class MenuClickListener : ClickListener {
     private val clicksMap = HashMap<Int, Click>()
+
     override fun onClick(e: InventoryClickEvent) {
         if (e.clickedInventory?.holder !is InventoryMenu) return
         clicksMap[e.slot]?.invoke(e)

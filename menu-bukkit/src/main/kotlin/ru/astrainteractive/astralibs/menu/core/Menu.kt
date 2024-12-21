@@ -22,13 +22,13 @@ abstract class Menu : InventoryHolder {
 
     private val clickListener: ClickListener = MenuClickListener()
 
+    protected val menuScope: CoroutineScope = CoroutineFeature.Unconfined()
+
     abstract val playerHolder: PlayerHolder
 
     abstract val title: Component
 
     open val childComponents: List<CoroutineScope> = emptyList()
-
-    val menuScope: CoroutineScope = CoroutineFeature.Unconfined()
 
     /**
      * This method called after inventory created and opened

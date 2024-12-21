@@ -71,7 +71,7 @@ object InventorySlotBuilderExt {
      */
     fun InventorySlot.Builder.setDisplayName(string: String): InventorySlot.Builder {
         editMeta {
-            this.setDisplayName(string)
+            displayName(Component.text(string))
         }
         return this
     }

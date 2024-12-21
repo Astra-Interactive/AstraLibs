@@ -1,12 +1,12 @@
 package ru.astrainteractive.astralibs.command.api.argumenttype
 
-import ru.astrainteractive.astralibs.command.api.exception.DefaultCommandException
+import ru.astrainteractive.astralibs.command.api.exception.ArgumentTypeException
 import kotlin.jvm.Throws
 
 interface ArgumentType<T : Any> {
     val key: String
 
-    @Throws(DefaultCommandException.ArgumentTypeException::class)
+    @Throws(ArgumentTypeException::class)
     fun transform(value: String): T
 
     class Lambda<T : Any>(
