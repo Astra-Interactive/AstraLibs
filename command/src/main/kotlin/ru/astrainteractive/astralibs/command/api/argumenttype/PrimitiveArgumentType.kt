@@ -1,33 +1,33 @@
 package ru.astrainteractive.astralibs.command.api.argumenttype
 
-import ru.astrainteractive.astralibs.command.api.exception.DefaultCommandException.ArgumentTypeException
+import ru.astrainteractive.astralibs.command.api.exception.ArgumentTypeException
 
-interface PrimitiveArgumentType<T : Any> : ArgumentType<T> {
-    data object Int : PrimitiveArgumentType<kotlin.Int> {
-        override val key: kotlin.String = "INT"
-        override fun transform(value: kotlin.String): kotlin.Int {
-            return value.toIntOrNull() ?: throw ArgumentTypeException(Double.key, value)
-        }
+interface PrimitiveArgumentType<T : Any> : ArgumentType<T>
+
+data object IntArgumentType : PrimitiveArgumentType<Int> {
+    override val key: String = "INT"
+    override fun transform(value: String): Int {
+        return value.toIntOrNull() ?: throw ArgumentTypeException(key, value)
     }
+}
 
-    data object String : PrimitiveArgumentType<kotlin.String> {
-        override val key: kotlin.String = "STRING"
-        override fun transform(value: kotlin.String): kotlin.String {
-            return value
-        }
+data object StringArgumentType : PrimitiveArgumentType<String> {
+    override val key: String = "STRING"
+    override fun transform(value: String): String {
+        return value
     }
+}
 
-    data object Double : PrimitiveArgumentType<kotlin.Double> {
-        override val key: kotlin.String = "DOUBLE"
-        override fun transform(value: kotlin.String): kotlin.Double {
-            return value.toDoubleOrNull() ?: throw ArgumentTypeException(key, value)
-        }
+data object DoubleArgumentType : PrimitiveArgumentType<Double> {
+    override val key: String = "DOUBLE"
+    override fun transform(value: String): Double {
+        return value.toDoubleOrNull() ?: throw ArgumentTypeException(key, value)
     }
+}
 
-    data object Boolean : PrimitiveArgumentType<kotlin.Boolean> {
-        override val key: kotlin.String = "BOOLEAN"
-        override fun transform(value: kotlin.String): kotlin.Boolean {
-            return value.toBooleanStrictOrNull() ?: throw ArgumentTypeException(Double.key, value)
-        }
+data object BooleanArgumentType : PrimitiveArgumentType<Boolean> {
+    override val key: String = "BOOLEAN"
+    override fun transform(value: String): Boolean {
+        return value.toBooleanStrictOrNull() ?: throw ArgumentTypeException(key, value)
     }
 }

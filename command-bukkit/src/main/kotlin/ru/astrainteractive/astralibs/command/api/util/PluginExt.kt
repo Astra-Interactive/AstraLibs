@@ -31,4 +31,21 @@ object PluginExt {
             true
         }
     }
+
+    fun JavaPlugin.setCommandExecutor(
+        alias: String,
+        commandExecutor: CommandExecutor<BukkitCommandContext>,
+    ) {
+        val javaCommand = getCommand(alias) ?: error("Command with alias $alias not found")
+        javaCommand.setExecutor { sender, bukkitCommand, label, args ->
+            val commandContext = BukkitCommandContext(
+                sender = sender,
+                command = bukkitCommand,
+                label = label,
+                args = args
+            )
+            commandExecutor.execute(commandContext)
+            true
+        }
+    }
 }

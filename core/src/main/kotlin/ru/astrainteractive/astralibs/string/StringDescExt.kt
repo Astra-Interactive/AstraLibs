@@ -29,7 +29,7 @@ object StringDescExt {
     }
 
     operator fun StringDesc.plus(other: StringDesc): StringDesc {
-        return when (other) {
+        return when (this) {
             is StringDesc.Raw -> plus(other.raw)
             is StringDesc.Plain -> plus(other.raw)
         }
