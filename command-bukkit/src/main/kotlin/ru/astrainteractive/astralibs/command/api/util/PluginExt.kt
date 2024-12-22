@@ -49,7 +49,7 @@ object PluginExt {
     }
 
     @Suppress("UnusedPrivateMember")
-    private fun JavaPlugin.setCommandTabCompleter(alias: String, tabCompleter: BukkitTabCompleter) {
+    fun JavaPlugin.setCommandTabCompleter(alias: String, tabCompleter: BukkitTabCompleter) {
         val pluginCommand = getCommand(alias) ?: error("Command $alias not found!")
         pluginCommand.setTabCompleter { commandSender, command, label, args ->
             val ctx = BukkitCommandContext(
