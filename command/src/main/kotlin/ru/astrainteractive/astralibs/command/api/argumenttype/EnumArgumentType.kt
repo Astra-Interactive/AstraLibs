@@ -19,10 +19,10 @@ interface EnumArgument {
  */
 class EnumArgumentType<T>(
     private val entries: EnumEntries<T>
-) : PrimitiveArgumentType<Enum<T>> where T : Enum<T>, T : EnumArgument {
+) : ArgumentType<Enum<T>> where T : Enum<T>, T : EnumArgument {
     override val key: String = "ENUM"
 
-    override fun transform(value: String): Enum<T> {
+    override fun transform(value: String): T {
         return entries.firstOrNull { entry -> entry.value.equals(value, ignoreCase = true) }
             ?.ordinal
             ?.let(entries::getOrNull)
