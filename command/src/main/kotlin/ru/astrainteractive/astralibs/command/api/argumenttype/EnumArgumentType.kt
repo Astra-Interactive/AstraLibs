@@ -19,7 +19,7 @@ interface EnumArgument {
  */
 class EnumArgumentType<T>(
     private val entries: EnumEntries<T>
-) : ArgumentType<Enum<T>> where T : Enum<T>, T : EnumArgument {
+) : ArgumentType<T> where T : Enum<T>, T : EnumArgument {
     override val key: String = "ENUM"
 
     override fun transform(value: String): T {
