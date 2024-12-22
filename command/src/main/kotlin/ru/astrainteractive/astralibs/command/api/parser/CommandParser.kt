@@ -12,5 +12,5 @@ fun interface CommandParser<R : Any, CC : CommandContext> {
      * Parse arguments into Result [R]
      */
     @Throws(CommandException::class)
-    fun parse(commandContext: CC): R
+    fun parse(ctx: CC): R
 }
