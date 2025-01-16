@@ -1,25 +1,28 @@
-name: Publish release
-
+name: "Release version"
 on:
-  push:
-    branches:
-      - master
+  workflow_call:
+    secrets:
+      ORG_GRADLE_PROJECT_MAVENCENTRALUSERNAME:
+        required: true
+      ORG_GRADLE_PROJECT_MAVENCENTRALPASSWORD:
+        required: true
+      ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEY:
+        required: true
+      ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYID:
+        required: true
+      ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYPASSWORD:
+        required: true
 
 jobs:
-  gradle_validation:
-    uses: ./.github/workflows/gradle-wrapper-validation.yml
-
   publish:
-    name: Publish library at mavenCentral
+    name: "Publish on MavenCentral"
     runs-on: ubuntu-latest
-    needs: [ gradle_validation ]
     env:
       ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.ORG_GRADLE_PROJECT_MAVENCENTRALUSERNAME }}
       ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.ORG_GRADLE_PROJECT_MAVENCENTRALPASSWORD }}
       ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEY }}
       ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYID }}
       ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.ORG_GRADLE_PROJECT_SIGNINGINMEMORYKEYPASSWORD }}
-
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 1.21
@@ -29,16 +32,18 @@ jobs:
           java-version: '21'
       - name: Give gradle permission
         run: chmod +x gradlew
-      - name: Prebuild library
-        run: ./gradlew publishToMavenLocal --stacktrace
-      - name: Publish library
-        run: ./gradlew publish --no-parallel --stacktrace
+      - name: Run publish
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: publishAndReleaseToMavenCentral --stacktrace
   release:
     needs: [ publish ]
-    name: Create release
+    name: Create GitHub release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # steps.properties.outputs.project-version-string
+      # steps.properties.outputs.project-name
       - uses: christian-draeger/read-properties@1.1.1
         id: properties
         with:
