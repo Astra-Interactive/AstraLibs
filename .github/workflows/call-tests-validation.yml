@@ -7,7 +7,7 @@ jobs:
     strategy:
       matrix:
         target:
-          - "allTests"
+          - "test"
     name: "Run tests"
     runs-on: ubuntu-latest
     steps:
