@@ -12,7 +12,7 @@ driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
 minecraft-velocity = "4.0.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
-minecraft-spigot = "1.21.4-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
+minecraft-spigot = "1.21.3-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
 minecraft-papi = "2.11.6" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
 minecraft-essentialsx = "2.20.1" # https://github.com/EssentialsX/Essentials
@@ -64,7 +64,6 @@ tests-mockito = { module = "org.mockito:mockito-core", version.ref = "tests-mock
 
 # Minecraft
 minecraft-paper-api = { module = "io.papermc.paper:paper-api", version.ref = "minecraft-spigot" }
-minecraft-spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "minecraft-spigot" }
 minecraft-velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "minecraft-velocity" }
 minecraft-papi = { module = "me.clip:placeholderapi", version.ref = "minecraft-papi" }
 minecraft-vaultapi = { module = "com.github.MilkBowl:VaultAPI", version.ref = "minecraft-vault" }
@@ -90,7 +89,7 @@ klibs-kstorage = { module = "ru.astrainteractive.klibs:kstorage", version.ref = 
 [bundles]
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
 klibs = ["klibs-kstorage", "klibs-mikro-core"]
-minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-vaultapi", "minecraft-papi"]
+minecraft-bukkit = ["minecraft-paper-api", "minecraft-vaultapi", "minecraft-papi"]
 testing-kotlin = ["tests-junit-jupiter-api", "kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
 kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-gradle"]
 
