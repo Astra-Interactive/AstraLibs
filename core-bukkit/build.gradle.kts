@@ -10,7 +10,9 @@ dependencies {
     implementation(libs.klibs.kstorage)
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
-    compileOnly(libs.minecraft.essentialsx)
+    compileOnly(libs.minecraft.essentialsx) {
+        exclude("org.spigotmc","spigot-api")
+    }
     compileOnly(libs.minecraft.luckperms)
     // Test
     testImplementation(libs.bundles.testing.kotlin)
