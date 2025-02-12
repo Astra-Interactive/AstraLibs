@@ -11,7 +11,7 @@ dependencies {
     // Spigot dependencies
     compileOnly(libs.bundles.minecraft.bukkit)
     compileOnly(libs.minecraft.essentialsx) {
-        exclude("org.spigotmc","spigot-api")
+        exclude("org.spigotmc", "spigot-api")
     }
     compileOnly(libs.minecraft.luckperms)
     // Test
