@@ -21,7 +21,7 @@ minecraft-luckperms = "5.4" # https://github.com/LuckPerms/LuckPerms
 # Testing
 tests-org-testing = "7.11.0"
 tests-junit = "4.12"
-tests-mockito = "5.15.2"
+tests-mockito = "5.16.0"
 tests-junit-jupiter-api = "5.12.0"
 tests-junit-bom = "5.12.0"
 
@@ -34,7 +34,7 @@ klibs-kstorage = "3.2.6" # https://github.com/makeevrserg/klibs.kstorage
 klibs-mikro = "1.8.15" # https://github.com/makeevrserg/klibs.mikro
 
 # Exposed
-exposed = "0.59.0" # https://github.com/JetBrains/Exposed
+exposed = "0.60.0" # https://github.com/JetBrains/Exposed
 
 [libraries]
 
