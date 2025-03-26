@@ -29,7 +29,7 @@ tests-junit-bom = "5.12.0"
 kyori = "4.19.0" # https://github.com/KyoriPowered/adventure-platform
 
 # klibs
-klibs-gradleplugin = "1.5.2" # https://github.com/makeevrserg/gradle-plugin
+klibs-gradleplugin = "1.6.0" # https://github.com/makeevrserg/gradle-plugin
 klibs-kstorage = "3.2.6" # https://github.com/makeevrserg/klibs.kstorage
 klibs-mikro = "1.8.15" # https://github.com/makeevrserg/klibs.mikro
 
