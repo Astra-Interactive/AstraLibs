@@ -4,6 +4,7 @@ import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.plugin.Plugin
 
+@Deprecated("Use flow-based events")
 inline fun <reified T : Event> inlineEvent(
     eventListener: EventListener,
     plugin: Plugin,
@@ -13,6 +14,7 @@ inline fun <reified T : Event> inlineEvent(
     (event as? T)?.let(block)
 }
 
+@Deprecated("Use flow-based events")
 fun <T : Event> inlineEvent(
     clazz: Class<T>,
     eventListener: EventListener,
