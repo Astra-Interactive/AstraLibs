@@ -8,7 +8,7 @@ class DatabaseFactory(private val dataFolder: File) {
     fun create(dbConfig: DatabaseConfiguration): Database {
         return when (dbConfig) {
             is DatabaseConfiguration.H2 -> Database.connect(
-                url = "jdbc:sqlite:${dataFolder.resolve("${dbConfig.name}.db").absolutePath}${dbConfig.stringArgument}",
+                url = "jdbc:h2:${dataFolder.resolve("${dbConfig.name}.db").absolutePath}${dbConfig.stringArgument}",
                 driver = dbConfig.driver
             )
 
