@@ -9,7 +9,6 @@ import ru.astrainteractive.astralibs.serialization.StringFormatExt.parse
 import ru.astrainteractive.astralibs.serialization.StringFormatExt.writeIntoFile
 import ru.astrainteractive.klibs.kstorage.api.MutableKrate
 import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate
-import ru.astrainteractive.klibs.kstorage.api.impl.DefaultStateFlowMutableKrate
 import ru.astrainteractive.klibs.kstorage.api.value.ValueFactory
 import java.io.File
 
@@ -26,7 +25,10 @@ fun <T> fileConfigKrate(
         if (!folder.exists()) folder.mkdirs()
         stringFormat.parse(serializer, file)
             .onFailure { throwable ->
-                logger.error { "#fileConfigKrate could not parse file ${file.name} ${throwable.message ?: throwable.localizedMessage}" }
+                logger.error {
+                    "#fileConfigKrate could not parse file ${file.name} " +
+                        (throwable.message ?: throwable.localizedMessage)
+                }
                 val defaultFile = when {
                     !file.exists() || file.length() == 0L -> file
                     else -> folder.resolve("${file.nameWithoutExtension}.default.${file.extension}")

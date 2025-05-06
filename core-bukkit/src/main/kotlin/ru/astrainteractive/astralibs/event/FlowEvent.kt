@@ -4,7 +4,6 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.runBlocking
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.plugin.EventExecutor
@@ -27,7 +26,7 @@ fun <T : Event> flowEvent(
     val eventListener = EventListener.Default()
     val eventExecutor = EventExecutor { _, event ->
         if (event::class.java != clazz) return@EventExecutor
-        runBlocking { trySendBlocking(event) }
+        trySendBlocking(event)
     }
     plugin.server.pluginManager.registerEvent(
         clazz,

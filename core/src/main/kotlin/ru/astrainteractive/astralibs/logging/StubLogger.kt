@@ -1,6 +1,6 @@
 package ru.astrainteractive.astralibs.logging
 
-object StubLogger: Logger {
+object StubLogger : Logger {
     override val TAG: String = "StubLogger"
 
     override fun error(logMessage: () -> String) = Unit
