@@ -3,8 +3,8 @@
 kotlin-version = "2.1.0" # https://github.com/JetBrains/kotlin
 kotlin-coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
 kotlin-json = "1.8.1" # https://github.com/Kotlin/kotlinx.serialization
-kotlin-kaml = "0.77.0" # https://github.com/charleskorn/kaml
-kotlin-benchmark = "0.4.13" # https://github.com/Kotlin/kotlinx-benchmark
+kotlin-kaml = "0.78.0" # https://github.com/charleskorn/kaml
+kotlin-benchmark = "0.4.14" # https://github.com/Kotlin/kotlinx-benchmark
 
 # Drivers
 driver-jdbc = "3.49.1.0" # https://github.com/xerial/sqlite-jdbc
@@ -26,12 +26,12 @@ tests-junit-jupiter-api = "5.12.2"
 tests-junit-bom = "5.12.2"
 
 # Kyori-adventure-text
-kyori = "4.20.0" # https://github.com/KyoriPowered/adventure-platform
+kyori = "4.21.0" # https://github.com/KyoriPowered/adventure-platform
 
 # klibs
 klibs-gradleplugin = "1.6.13" # https://github.com/makeevrserg/gradle-plugin
 klibs-kstorage = "4.0.0" # https://github.com/makeevrserg/klibs.kstorage
-klibs-mikro = "1.8.18" # https://github.com/makeevrserg/klibs.mikro
+klibs-mikro = "1.9.0" # https://github.com/makeevrserg/klibs.mikro
 
 # Exposed
 exposed = "0.61.0" # https://github.com/JetBrains/Exposed
