@@ -3,8 +3,8 @@
 kotlin-version = "2.1.0" # https://github.com/JetBrains/kotlin
 kotlin-coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
 kotlin-json = "1.8.1" # https://github.com/Kotlin/kotlinx.serialization
-kotlin-kaml = "0.77.0" # https://github.com/charleskorn/kaml
-kotlin-benchmark = "0.4.13" # https://github.com/Kotlin/kotlinx-benchmark
+kotlin-kaml = "0.78.0" # https://github.com/charleskorn/kaml
+kotlin-benchmark = "0.4.14" # https://github.com/Kotlin/kotlinx-benchmark
 
 # Drivers
 driver-jdbc = "3.49.1.0" # https://github.com/xerial/sqlite-jdbc
@@ -15,23 +15,23 @@ minecraft-velocity = "4.0.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
 minecraft-spigot = "1.21.5-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
 minecraft-papi = "2.11.6" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
-minecraft-essentialsx = "2.21.0" # https://github.com/EssentialsX/Essentials
-minecraft-luckperms = "5.4" # https://github.com/LuckPerms/LuckPerms
+minecraft-essentialsx = "2.21.1" # https://github.com/EssentialsX/Essentials
+minecraft-luckperms = "5.5" # https://github.com/LuckPerms/LuckPerms
 
 # Testing
 tests-org-testing = "7.11.0"
 tests-junit = "4.12"
-tests-mockito = "5.17.0"
+tests-mockito = "5.18.0"
 tests-junit-jupiter-api = "5.12.2"
 tests-junit-bom = "5.12.2"
 
 # Kyori-adventure-text
-kyori = "4.20.0" # https://github.com/KyoriPowered/adventure-platform
+kyori = "4.21.0" # https://github.com/KyoriPowered/adventure-platform
 
 # klibs
-klibs-gradleplugin = "1.6.13" # https://github.com/makeevrserg/gradle-plugin
+klibs-gradleplugin = "1.7.0" # https://github.com/makeevrserg/gradle-plugin
 klibs-kstorage = "4.0.0" # https://github.com/makeevrserg/klibs.kstorage
-klibs-mikro = "1.8.18" # https://github.com/makeevrserg/klibs.mikro
+klibs-mikro = "1.9.0" # https://github.com/makeevrserg/klibs.mikro
 
 # Exposed
 exposed = "0.61.0" # https://github.com/JetBrains/Exposed
