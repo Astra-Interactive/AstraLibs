@@ -2,6 +2,7 @@ package ru.astrainteractive.astralibs.string
 
 import kotlinx.serialization.Serializable
 
+@Serializable(with = DefaultStringDescSerializer::class)
 sealed interface StringDesc {
     val raw: String
 

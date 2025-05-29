@@ -17,6 +17,10 @@ minecraft-papi = "2.11.6" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
 minecraft-essentialsx = "2.21.1" # https://github.com/EssentialsX/Essentials
 minecraft-luckperms = "5.5" # https://github.com/LuckPerms/LuckPerms
+minecraft-version = "1.20.1"
+# Minecraft-Forge
+minecraft-forgeversion = "47.2.20"
+forgegradle = "[6.0,6.2)"
 
 # Testing
 tests-org-testing = "7.11.0"
@@ -108,3 +112,5 @@ klibs-gradle-dokka-module = { id = "ru.astrainteractive.gradleplugin.dokka.modul
 klibs-gradle-java-core = { id = "ru.astrainteractive.gradleplugin.java.core", version.ref = "klibs-gradleplugin" }
 klibs-gradle-publication = { id = "ru.astrainteractive.gradleplugin.publication", version.ref = "klibs-gradleplugin" }
 klibs-gradle-rootinfo = { id = "ru.astrainteractive.gradleplugin.root.info", version.ref = "klibs-gradleplugin" }
+# Minecraft
+forgegradle = { id = "net.minecraftforge.gradle", version.ref = "forgegradle" }
