@@ -9,8 +9,8 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.storage.ServerLevelData
 import net.minecraftforge.event.entity.living.LivingEvent
 import ru.astrainteractive.astralibs.server.location.Location
-import ru.astrainteractive.astralibs.util.cast
-import ru.astrainteractive.astralibs.util.tryCast
+import ru.astrainteractive.klibs.mikro.core.util.cast
+import ru.astrainteractive.klibs.mikro.core.util.tryCast
 import java.util.UUID
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration

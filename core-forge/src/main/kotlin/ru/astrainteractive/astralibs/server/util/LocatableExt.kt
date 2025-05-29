@@ -5,7 +5,7 @@ import net.minecraft.world.level.storage.ServerLevelData
 import ru.astrainteractive.astralibs.server.Locatable
 import ru.astrainteractive.astralibs.server.location.Location
 import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
-import ru.astrainteractive.astralibs.util.cast
+import ru.astrainteractive.klibs.mikro.core.util.cast
 
 fun OnlineMinecraftPlayer.asLocatable() = Locatable {
     val player = ForgeUtil.getOnlinePlayer(uuid) ?: error("$this is not online")
