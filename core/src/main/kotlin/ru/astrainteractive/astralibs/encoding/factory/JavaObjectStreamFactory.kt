@@ -14,10 +14,8 @@ import java.io.ObjectOutputStream
  */
 object JavaObjectStreamFactory : ObjectStreamFactory {
 
-
     override fun createInputStream(istream: ByteArrayInputStream): ObjectInputStream =
         ObjectInputStream(istream)
-
 
     override fun createOutputStream(ostream: ByteArrayOutputStream): ObjectOutputStream =
         ObjectOutputStream(ostream)

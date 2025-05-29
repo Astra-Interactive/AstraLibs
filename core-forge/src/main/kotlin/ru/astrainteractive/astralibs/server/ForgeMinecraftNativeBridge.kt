@@ -1,6 +1,5 @@
 package ru.astrainteractive.astralibs.server
 
-import java.util.UUID
 import ru.astrainteractive.astralibs.permission.ForgeLuckPermsPlayerPermissible
 import ru.astrainteractive.astralibs.permission.Permissible
 import ru.astrainteractive.astralibs.server.player.MinecraftPlayer
@@ -9,6 +8,7 @@ import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.ForgeUtil
 import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.getOnlinePlayer
+import java.util.UUID
 
 class ForgeMinecraftNativeBridge : MinecraftNativeBridge {
     override fun OnlineMinecraftPlayer.asAudience(): Audience {

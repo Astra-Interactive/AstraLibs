@@ -1,11 +1,11 @@
 package ru.astrainteractive.astralibs.server
 
-import java.util.UUID
 import org.bukkit.Bukkit
 import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.asOfflineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
+import java.util.UUID
 
 class BukkitPlatformServer : PlatformServer {
     override fun getOnlinePlayers(): List<OnlineMinecraftPlayer> {

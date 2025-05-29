@@ -3,10 +3,10 @@ package ru.astrainteractive.astralibs.server
 import org.bukkit.Bukkit
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
 import ru.astrainteractive.astralibs.permission.Permissible
-import java.util.UUID
 import ru.astrainteractive.astralibs.server.player.MinecraftPlayer
 import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
+import java.util.UUID
 
 class BukkitMinecraftNativeBridge : MinecraftNativeBridge {
     override fun OnlineMinecraftPlayer.asAudience(): Audience {

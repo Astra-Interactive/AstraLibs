@@ -52,7 +52,8 @@ object StringFormatExt {
     }
 
     /**
-     * Parses an object of type [T] from the specified file using the default serializer, returning null if parsing fails.
+     * Parses an object of type [T] from the specified file using the default serializer,
+     * returning null if parsing fails.
      *
      * @param file The file containing the serialized data.
      * @return The deserialized object, or null if parsing fails.

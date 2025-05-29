@@ -1,8 +1,8 @@
 package ru.astrainteractive.astralibs.server.player
 
 import kotlinx.serialization.Serializable
-import java.util.UUID
 import ru.astrainteractive.astralibs.serialization.UuidSerializer
+import java.util.UUID
 
 interface MinecraftPlayer {
     val uuid: UUID

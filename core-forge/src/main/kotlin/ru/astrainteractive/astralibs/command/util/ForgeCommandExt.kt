@@ -14,10 +14,10 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.rcon.RconConsoleSource
-import ru.astrainteractive.astralibs.server.util.asPermissible
 import ru.astrainteractive.astralibs.command.api.exception.BadArgumentException
 import ru.astrainteractive.astralibs.command.api.exception.CommandException
 import ru.astrainteractive.astralibs.permission.Permission
+import ru.astrainteractive.astralibs.server.util.asPermissible
 
 fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(
     alias: String,

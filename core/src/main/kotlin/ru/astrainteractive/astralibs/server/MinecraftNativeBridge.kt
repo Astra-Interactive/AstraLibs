@@ -1,8 +1,8 @@
 package ru.astrainteractive.astralibs.server
 
+import ru.astrainteractive.astralibs.permission.Permissible
 import ru.astrainteractive.astralibs.server.player.MinecraftPlayer
 import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
-import ru.astrainteractive.astralibs.permission.Permissible
 import java.util.UUID
 
 interface MinecraftNativeBridge {

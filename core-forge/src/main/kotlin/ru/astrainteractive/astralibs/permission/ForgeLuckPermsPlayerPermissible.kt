@@ -5,8 +5,6 @@ import net.luckperms.api.LuckPermsProvider
 import net.luckperms.api.util.Tristate
 import ru.astrainteractive.astralibs.logging.JUtiltLogger
 import ru.astrainteractive.astralibs.logging.Logger
-import ru.astrainteractive.astralibs.permission.Permissible
-import ru.astrainteractive.astralibs.permission.Permission
 import java.util.UUID
 
 internal class ForgeLuckPermsPlayerPermissible(

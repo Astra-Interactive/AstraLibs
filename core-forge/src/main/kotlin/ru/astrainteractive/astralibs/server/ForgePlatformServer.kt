@@ -1,6 +1,5 @@
 package ru.astrainteractive.astralibs.server
 
-import java.util.UUID
 import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.ForgeUtil
@@ -9,6 +8,7 @@ import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.getOnlinePlayer
 import ru.astrainteractive.astralibs.server.util.getOnlinePlayers
 import ru.astrainteractive.astralibs.server.util.getPlayerGameProfile
+import java.util.UUID
 
 object ForgePlatformServer : PlatformServer {
     override fun getOnlinePlayers(): List<OnlineMinecraftPlayer> {

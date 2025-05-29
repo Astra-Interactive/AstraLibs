@@ -13,7 +13,7 @@ fun CommandSourceStack.asAudience() = Audience { component ->
     this.sendSystemMessage(component.toNative())
 }
 
-fun OnlineMinecraftPlayer.asAudience() =  Audience { component ->
+fun OnlineMinecraftPlayer.asAudience() = Audience { component ->
     val player = ForgeUtil.getOnlinePlayer(uuid) ?: return@Audience
     player.sendSystemMessage(component.toNative())
 }

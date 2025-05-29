@@ -8,12 +8,12 @@ import kotlinx.coroutines.flow.onEach
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.storage.ServerLevelData
 import net.minecraftforge.event.entity.living.LivingEvent
-import java.util.UUID
-import kotlin.time.Duration.Companion.seconds
-import kotlin.time.toJavaDuration
 import ru.astrainteractive.astralibs.server.location.Location
 import ru.astrainteractive.astralibs.util.cast
 import ru.astrainteractive.astralibs.util.tryCast
+import java.util.UUID
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
 class PlayerMoveEvent(
     val instance: LivingEvent.LivingTickEvent,

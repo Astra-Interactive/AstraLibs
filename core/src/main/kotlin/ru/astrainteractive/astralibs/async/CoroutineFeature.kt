@@ -17,7 +17,6 @@ interface CoroutineFeature : CoroutineScope {
      */
     override val coroutineContext: CoroutineContext
 
-
     /**
      * A [CoroutineFeature] implementation using [Dispatchers.Unconfined].
      *
