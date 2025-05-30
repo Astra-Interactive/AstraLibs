@@ -5,7 +5,8 @@ import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.StringFormat
 
 /**
- * This [YamlStringFormat] will help you to parse data from your config.yml file
+ * A YAML-based implementation of [StringFormat] that uses [Yaml] for
+ * serialization and deserialization of YAML data.
  */
 @Suppress("MemberVisibilityCanBePrivate")
 class YamlStringFormat(

@@ -5,7 +5,12 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 /**
- * This logger will write all logs inside [folder]
+ * A file-based logger implementation that writes log entries to a specified folder.
+ * It acts as a wrapper for an underlying [Logger] instance, extending its capabilities
+ * by directing logs to files.
+ *
+ * @param folder The directory where log files will be saved.
+ * @param instance The underlying [Logger] instance responsible for log formatting and management.
  */
 class JUtilFileLogger(
     private val folder: File,

@@ -7,44 +7,98 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.serializer
 import java.io.File
 
+/**
+ * Extension utilities for working with the [StringFormat] interface.
+ * These methods provide convenient ways to parse and serialize objects to and from files
+ * using a given serialization format (like JSON or YAML).
+ */
 object StringFormatExt {
+
     /**
-     * Attempts to parse content of [file] and return [T] as kotlin's result
+     * Parses an object from the specified file using the provided deserializer.
+     * If the file does not exist, an error is thrown.
+     *
+     * @param deserializer The deserialization strategy for the target type.
+     * @param file The file containing the serialized data.
+     * @return A [Result] containing the deserialized object, or an exception if parsing fails.
+     * @param T The type of the object to parse.
      */
     fun <T> StringFormat.parse(deserializer: DeserializationStrategy<T>, file: File) = kotlin.runCatching {
         if (!file.exists()) error("Could not find file ${file.absolutePath}")
         decodeFromString(deserializer, file.readText())
     }
 
+    /**
+     * Parses an object of type [T] from the specified file using the default serializer.
+     *
+     * @param file The file containing the serialized data.
+     * @return A [Result] containing the deserialized object, or an exception if parsing fails.
+     * @param T The type of the object to parse.
+     */
     inline fun <reified T> StringFormat.parse(file: File): Result<T> {
         return parse(serializer(), file)
     }
 
     /**
-     * Parse value or return null if not parsed
+     * Parses an object from the specified file using the provided deserializer, returning null if parsing fails.
+     *
+     * @param deserializer The deserialization strategy for the target type.
+     * @param file The file containing the serialized data.
+     * @return The deserialized object, or null if parsing fails.
+     * @param T The type of the object to parse.
      */
     fun <T : Any> StringFormat.parseOrNull(deserializer: DeserializationStrategy<T>, file: File): T? {
         return parse<T>(deserializer, file).getOrNull()
     }
 
+    /**
+     * Parses an object of type [T] from the specified file using the default serializer,
+     * returning null if parsing fails.
+     *
+     * @param file The file containing the serialized data.
+     * @return The deserialized object, or null if parsing fails.
+     * @param T The type of the object to parse.
+     */
     inline fun <reified T : Any> StringFormat.parseOrNull(file: File): T? {
         return parseOrNull(serializer(), file)
     }
 
     /**
-     * Attempt to parse. Returns default [factory] value on failure
+     * Parses an object from the specified file using the provided deserializer.
+     * If the file does not exist or parsing fails, returns a default value provided by the [factory].
+     *
+     * @param deserializer The deserialization strategy for the target type.
+     * @param file The file containing the serialized data.
+     * @param factory A function that creates a default value if parsing fails.
+     * @return The parsed object, or the default value if the file is missing or parsing fails.
+     * @param T The type of the object to parse.
      */
     fun <T> StringFormat.parseOrDefault(deserializer: DeserializationStrategy<T>, file: File, factory: () -> T): T {
         if (!file.exists() || file.length() == 0L) return factory.invoke()
         return parse(deserializer, file).getOrElse { factory.invoke() }
     }
 
+    /**
+     * Parses an object of type [T] from the specified file using the default serializer.
+     * If the file does not exist or parsing fails, returns a default value provided by the [factory].
+     *
+     * @param file The file containing the serialized data.
+     * @param factory A function that creates a default value if parsing fails.
+     * @return The parsed object, or the default value if the file is missing or parsing fails.
+     * @param T The type of the object to parse.
+     */
     inline fun <reified T> StringFormat.parseOrDefault(file: File, noinline factory: () -> T): T {
         return parseOrDefault(serializer(), file, factory)
     }
 
     /**
-     * Converts [value] into string by [encodeToString] and write text into file [file]
+     * Serializes the specified value and writes it into the specified file.
+     * If necessary, creates missing parent directories and the file itself.
+     *
+     * @param serializer The serialization strategy for the target type.
+     * @param value The object to serialize.
+     * @param file The target file to write the serialized data into.
+     * @param T The type of the object to serialize.
      */
     fun <T> StringFormat.writeIntoFile(serializer: SerializationStrategy<T>, value: T, file: File) {
         val string = encodeToString(serializer, value)
@@ -53,6 +107,14 @@ object StringFormatExt {
         file.writeText(string)
     }
 
+    /**
+     * Serializes the specified value of type [T] and writes it into the specified file using the default serializer.
+     * If necessary, creates missing parent directories and the file itself.
+     *
+     * @param value The object to serialize.
+     * @param file The target file to write the serialized data into.
+     * @param T The type of the object to serialize.
+     */
     inline fun <reified T> StringFormat.writeIntoFile(value: T, file: File) {
         writeIntoFile(serializer(), value, file)
     }

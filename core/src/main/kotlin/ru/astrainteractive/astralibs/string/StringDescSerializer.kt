@@ -34,3 +34,8 @@ object PlainStringDescSerializer : KSerializer<StringDesc.Plain> by StringDescSe
     fromString = { string -> StringDesc.Plain(string) },
     toString = { stringDesc -> stringDesc.raw }
 )
+
+object DefaultStringDescSerializer : KSerializer<StringDesc> by StringDescSerializer(
+    fromString = { string -> StringDesc.Raw(string) },
+    toString = { stringDesc -> stringDesc.raw }
+)

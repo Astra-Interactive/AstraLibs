@@ -3,9 +3,6 @@ package ru.astrainteractive.astralibs.logging
 import java.util.logging.Level
 import java.util.logging.Logger as JLogger
 
-/**
- * This is default implementation with [JLogger]
- */
 class JUtiltLogger(
     override val TAG: String,
     private val logger: JLogger = JLogger.getLogger(TAG)

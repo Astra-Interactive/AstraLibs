@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.runBlocking
-import ru.astrainteractive.astralibs.util.FlowExt.mapCached
 import java.io.Closeable
 import kotlin.test.Test
 import kotlin.test.assertFalse

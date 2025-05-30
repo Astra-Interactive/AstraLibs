@@ -7,8 +7,13 @@ import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 
 /**
- * Default implementation for [ObjectEncoder] to create different encoders
- * with different [ObjectStreamFactory]
+ * Default implementation of the [ObjectEncoder] interface.
+ *
+ * Uses a provided [ObjectStreamFactory] to handle the actual serialization and
+ * deserialization of objects to and from byte arrays and Base64 strings.
+ *
+ * @property streamProvider The factory responsible for creating object input/output streams.
+ * Defaults to [JavaObjectStreamFactory], which uses standard Java serialization.
  */
 class DefaultObjectEncoder(
     private val streamProvider: ObjectStreamFactory = JavaObjectStreamFactory,
