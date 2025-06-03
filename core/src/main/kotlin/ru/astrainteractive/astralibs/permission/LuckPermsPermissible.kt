@@ -3,16 +3,22 @@ package ru.astrainteractive.astralibs.permission
 import net.luckperms.api.LuckPerms
 import net.luckperms.api.LuckPermsProvider
 import net.luckperms.api.util.Tristate
-import ru.astrainteractive.astralibs.logging.JUtiltLogger
 import ru.astrainteractive.astralibs.logging.Logger
+import ru.astrainteractive.astralibs.logging.StubLogger
 import java.util.UUID
+import kotlin.collections.orEmpty
+import kotlin.text.replace
+import kotlin.text.toIntOrNull
 
-internal class ForgeLuckPermsPlayerPermissible(
-    private val uuid: UUID
+class LuckPermsPermissible(
+    private val uuid: UUID,
+    logger: Logger = StubLogger
 ) : Permissible,
-    Logger by JUtiltLogger("AspeKt-ForgeLuckPermsPlayerPermissible") {
+    Logger by logger {
     private val luckPermsOrNull: LuckPerms?
-        get() = runCatching { LuckPermsProvider.get() }.getOrNull()
+        get() = runCatching { LuckPermsProvider.get() }
+            .onFailure { error { "#luckPermsOrNull LuckPerms is not installed!" } }
+            .getOrNull()
 
     override fun hasPermission(permission: Permission): Boolean {
         val tristate = luckPermsOrNull?.userManager
