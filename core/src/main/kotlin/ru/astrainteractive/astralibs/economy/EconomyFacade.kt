@@ -2,31 +2,43 @@ package ru.astrainteractive.astralibs.economy
 
 import java.util.UUID
 
+/**
+ * Interface representing a facade for economy-related operations.
+ * Provides asynchronous methods to interact with player balances.
+ */
 interface EconomyFacade {
     /**
-     * @param uuid UUID of player
-     * @return double - current balance of [uuid]
+     * Retrieves the balance of the player associated with the given [uuid].
+     *
+     * @param uuid The UUID of the player.
+     * @return The player's balance, or `null` if unavailable.
      */
     suspend fun getBalance(uuid: UUID): Double?
 
     /**
-     * @param uuid UUID of player
-     * @param amount amount to take from balance
-     * @return boolean - true if [amount] has been taken false if not
+     * Attempts to withdraw a specific [amount] of money from the player's balance.
+     *
+     * @param uuid The UUID of the player.
+     * @param amount The amount to withdraw.
+     * @return `true` if the operation was successful, `false` otherwise.
      */
     suspend fun takeMoney(uuid: UUID, amount: Double): Boolean
 
     /**
-     * @param uuid player
-     * @param amount amount to add to balance
-     * @return boolean - true if [amount] has been added false if not
+     * Adds a specific [amount] of money to the player's balance.
+     *
+     * @param uuid The UUID of the player.
+     * @param amount The amount to deposit.
+     * @return `true` if the operation was successful, `false` otherwise.
      */
     suspend fun addMoney(uuid: UUID, amount: Double): Boolean
 
     /**
-     * @param uuid - UUID of player
-     * @param amount - amount of requested money
-     * @return boolean - true if player has at least [amount] money, false if not
+     * Checks whether the player has at least a certain [amount] of money.
+     *
+     * @param uuid The UUID of the player.
+     * @param amount The minimum amount to check.
+     * @return `true` if the player has at least the specified amount, `false` otherwise.
      */
     suspend fun hasAtLeast(uuid: UUID, amount: Double): Boolean
 }

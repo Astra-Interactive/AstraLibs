@@ -13,6 +13,7 @@ dependencies {
     compileOnly(libs.kyori.legacy)
     compileOnly(libs.kyori.plain)
     compileOnly(libs.kyori.minimessage)
+    compileOnly(libs.minecraft.luckperms)
     // Test
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)
