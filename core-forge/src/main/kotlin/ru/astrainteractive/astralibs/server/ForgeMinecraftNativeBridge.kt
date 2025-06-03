@@ -1,6 +1,6 @@
 package ru.astrainteractive.astralibs.server
 
-import ru.astrainteractive.astralibs.permission.ForgeLuckPermsPlayerPermissible
+import ru.astrainteractive.astralibs.permission.LuckPermsPermissible
 import ru.astrainteractive.astralibs.permission.Permissible
 import ru.astrainteractive.astralibs.server.player.MinecraftPlayer
 import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayer
@@ -24,7 +24,7 @@ class ForgeMinecraftNativeBridge : MinecraftNativeBridge {
     }
 
     override fun MinecraftPlayer.asPermissible(): Permissible {
-        return ForgeLuckPermsPlayerPermissible(uuid)
+        return LuckPermsPermissible(uuid)
     }
 
     private fun findOnlinePlayer(uuid: UUID): OnlineMinecraftPlayer? {
