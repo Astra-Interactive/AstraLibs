@@ -1,10 +1,13 @@
 package ru.astrainteractive.astralibs.serialization
 
 import kotlinx.serialization.DeserializationStrategy
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.serializer
+import ru.astrainteractive.astralibs.logging.Logger
+import ru.astrainteractive.astralibs.logging.StubLogger
 import java.io.File
 
 /**
@@ -118,4 +121,74 @@ object StringFormatExt {
     inline fun <reified T> StringFormat.writeIntoFile(value: T, file: File) {
         writeIntoFile(serializer(), value, file)
     }
+
+    /**
+     * Attempts to parse a file or writes a default value to a default file if parsing fails.
+     *
+     * This function tries to parse the content of a specified file using the given serializer.
+     * If parsing fails, it logs an error, creates a default file if necessary, writes the default value
+     * to this file, and returns the default value. If parsing is successful, it writes the parsed value
+     * back to the original file and returns the parsed value.
+     *
+     * @param serializer The serializer used to parse the file content.
+     * @param file The file to be parsed.
+     * @param logger The logger used to log error messages. Defaults to a [StubLogger].
+     * @param default A lambda function that provides the default value of type [T] if parsing fails.
+     * @return The parsed value of type [T] if successful, otherwise the default value.
+     *
+     * @property folder The parent directory of the file. Created if it does not exist.
+     * @property defaultFile The file to which the default value is written if parsing fails.
+     * This is the original file if it does not exist or is empty, otherwise a new file with a ".default" suffix.
+     */
+    fun <T> StringFormat.parseOrWriteIntoDefault(
+        serializer: KSerializer<T>,
+        file: File,
+        logger: Logger = StubLogger,
+        default: () -> T
+    ): T {
+        val folder = file.parentFile
+        if (!folder.exists()) folder.mkdirs()
+        return parse(serializer, file)
+            .onFailure { throwable ->
+                logger.error {
+                    "#parseOrWriteIntoDefault could not parse file"
+                        .plus("${file.name}: ")
+                        .plus("${(throwable.message ?: throwable.localizedMessage)}")
+                }
+                val defaultFile = when {
+                    !file.exists() || file.length() == 0L -> file
+                    else -> folder.resolve("${file.nameWithoutExtension}.default.${file.extension}")
+                }
+                if (!defaultFile.exists()) {
+                    defaultFile.createNewFile()
+                }
+                writeIntoFile(serializer, default.invoke(), defaultFile)
+            }
+            .onSuccess { writeIntoFile(serializer, it, file) }
+            .getOrElse { default.invoke() }
+    }
+
+    /**
+     * Attempts to parse a file or writes a default value to a default file if parsing fails.
+     *
+     * This function tries to parse the content of a specified file using the given serializer.
+     * If parsing fails, it logs an error, creates a default file if necessary, writes the default value
+     * to this file, and returns the default value. If parsing is successful, it writes the parsed value
+     * back to the original file and returns the parsed value.
+     *
+     * @param file The file to be parsed.
+     * @param logger The logger used to log error messages. Defaults to a [StubLogger].
+     * @param default A lambda function that provides the default value of type [T] if parsing fails.
+     * @return The parsed value of type [T] if successful, otherwise the default value.
+     */
+    inline fun <reified T> StringFormat.parseOrWriteIntoDefault(
+        file: File,
+        logger: Logger = StubLogger,
+        noinline default: () -> T
+    ): T = parseOrWriteIntoDefault(
+        serializer = serializer(),
+        file = file,
+        logger = logger,
+        default = default
+    )
 }
