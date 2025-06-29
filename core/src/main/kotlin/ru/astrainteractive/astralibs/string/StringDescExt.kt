@@ -33,3 +33,11 @@ operator fun StringDesc.plus(other: StringDesc): StringDesc {
         is StringDesc.Plain -> plus(other.raw)
     }
 }
+
+fun StringDesc?.orEmpty() = this ?: StringDesc.Raw("")
+
+fun StringDesc?.or(block: () -> StringDesc) = this ?: block.invoke()
+
+fun StringDesc.toRaw(): StringDesc.Raw {
+    return StringDesc.Raw(this.raw)
+}
