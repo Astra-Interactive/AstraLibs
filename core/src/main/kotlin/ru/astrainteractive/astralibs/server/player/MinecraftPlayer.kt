@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.server.player
 
 import kotlinx.serialization.Serializable
-import ru.astrainteractive.astralibs.serialization.UuidSerializer
+import ru.astrainteractive.klibs.mikro.extensions.serialization.UUIDSerializer
 import java.util.UUID
 
 interface MinecraftPlayer {
@@ -10,7 +10,7 @@ interface MinecraftPlayer {
 
 @Serializable
 class OnlineMinecraftPlayer(
-    @Serializable(UuidSerializer::class)
+    @Serializable(UUIDSerializer::class)
     override val uuid: UUID,
     val name: String,
     val ipAddress: String
@@ -18,6 +18,6 @@ class OnlineMinecraftPlayer(
 
 @Serializable
 class OfflineMinecraftPlayer(
-    @Serializable(UuidSerializer::class)
+    @Serializable(UUIDSerializer::class)
     override val uuid: UUID
 ) : MinecraftPlayer

@@ -48,5 +48,3 @@ include(":menu-bukkit")
 include(":command")
 include(":command-bukkit")
 include(":benchmarks")
-
-include(":exposed")

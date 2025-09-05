@@ -1,6 +1,9 @@
 package ru.astrainteractive.astralibs.string
 
 import kotlinx.serialization.Serializable
+import ru.astrainteractive.astralibs.serialization.DefaultStringDescSerializer
+import ru.astrainteractive.astralibs.serialization.PlainStringDescSerializer
+import ru.astrainteractive.astralibs.serialization.RawStringDescSerializer
 
 /**
  * Represents a text description that can be either raw (with color codes)

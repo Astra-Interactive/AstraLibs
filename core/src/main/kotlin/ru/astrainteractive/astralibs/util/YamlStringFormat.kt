@@ -1,11 +1,11 @@
-package ru.astrainteractive.astralibs.serialization
+package ru.astrainteractive.astralibs.util
 
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.StringFormat
 
 /**
- * A YAML-based implementation of [StringFormat] that uses [Yaml] for
+ * A YAML-based implementation of [kotlinx.serialization.StringFormat] that uses [com.charleskorn.kaml.Yaml] for
  * serialization and deserialization of YAML data.
  */
 @Suppress("MemberVisibilityCanBePrivate")

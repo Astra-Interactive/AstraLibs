@@ -3,8 +3,8 @@ package ru.astrainteractive.astralibs.permission
 import net.luckperms.api.LuckPerms
 import net.luckperms.api.LuckPermsProvider
 import net.luckperms.api.util.Tristate
-import ru.astrainteractive.astralibs.logging.Logger
-import ru.astrainteractive.astralibs.logging.StubLogger
+import ru.astrainteractive.klibs.mikro.core.logging.Logger
+import ru.astrainteractive.klibs.mikro.core.logging.StubLogger
 import java.util.UUID
 import kotlin.collections.orEmpty
 import kotlin.text.replace

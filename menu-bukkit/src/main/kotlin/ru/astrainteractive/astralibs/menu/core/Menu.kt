@@ -6,12 +6,12 @@ import net.kyori.adventure.text.Component
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.InventoryHolder
-import ru.astrainteractive.astralibs.async.CoroutineFeature
 import ru.astrainteractive.astralibs.menu.clicker.ClickListener
 import ru.astrainteractive.astralibs.menu.clicker.MenuClickListener
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
 import ru.astrainteractive.astralibs.menu.slot.InventorySlot
+import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
 
 /**
  * Default menu abstract class
@@ -22,7 +22,7 @@ abstract class Menu : InventoryHolder {
 
     private val clickListener: ClickListener = MenuClickListener()
 
-    protected val menuScope: CoroutineScope = CoroutineFeature.Unconfined()
+    protected val menuScope: CoroutineScope = CoroutineFeature.Unconfined
 
     abstract val playerHolder: PlayerHolder
 
