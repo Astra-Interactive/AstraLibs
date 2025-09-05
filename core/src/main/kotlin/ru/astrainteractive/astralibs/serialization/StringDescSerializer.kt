@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.string
+package ru.astrainteractive.astralibs.serialization
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -6,6 +6,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
+import ru.astrainteractive.astralibs.string.StringDesc
 
 class StringDescSerializer<T : StringDesc>(
     private val fromString: (String) -> T,

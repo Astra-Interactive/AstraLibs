@@ -28,13 +28,19 @@ operator fun StringDesc.plus(other: String): StringDesc {
 }
 
 operator fun StringDesc.plus(other: StringDesc): StringDesc {
-    return when (this) {
-        is StringDesc.Raw -> plus(other.raw)
-        is StringDesc.Plain -> plus(other.raw)
+    val isAnyRawStringDesc = this is StringDesc.Raw || other is StringDesc.Raw
+    return when {
+        isAnyRawStringDesc -> {
+            StringDesc.Raw(this.raw.plus(other.raw))
+        }
+
+        else -> {
+            StringDesc.Plain(this.raw.plus(other.raw))
+        }
     }
 }
 
-fun StringDesc?.orEmpty() = this ?: StringDesc.Raw("")
+fun StringDesc?.orEmpty() = this ?: StringDesc.Plain("")
 
 fun StringDesc?.or(block: () -> StringDesc) = this ?: block.invoke()
 
