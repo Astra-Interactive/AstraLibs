@@ -7,7 +7,6 @@ import kotlinx.serialization.StringFormat
 import kotlinx.serialization.serializer
 import java.io.File
 
-
 /**
  * Parses an object from the specified file using the provided deserializer.
  * If the file does not exist, an error is thrown.

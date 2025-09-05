@@ -6,11 +6,11 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import ru.astrainteractive.astralibs.util.StringFormatExt.parse
 import ru.astrainteractive.astralibs.util.StringFormatExt.writeIntoFile
+import ru.astrainteractive.astralibs.util.YamlStringFormat
 import java.io.File
 import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import ru.astrainteractive.astralibs.util.YamlStringFormat
 
 @Suppress("TestFunctionName")
 class YamlTextKrateFactoryWrapperSerializerTest {
