@@ -18,7 +18,7 @@ class CoroutineTimings : AbstractCoroutineContextElement(Key()), Runnable {
     /**
      * Key identifier of the context element.
      */
-    private class Key : CoroutineContext.Key<CoroutineTimings>
+    class Key : CoroutineContext.Key<CoroutineTimings>
 
     /**
      *  Multiple tasks can be assigned to a single coroutine. We implement this by a queue.
