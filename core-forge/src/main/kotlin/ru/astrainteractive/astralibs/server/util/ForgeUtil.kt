@@ -15,8 +15,8 @@ import net.minecraft.world.level.Level
 import net.minecraftforge.event.server.ServerStartedEvent
 import net.minecraftforge.fml.loading.FMLLoader
 import ru.astrainteractive.astralibs.event.flowEvent
-import ru.astrainteractive.astralibs.logging.JUtiltLogger
-import ru.astrainteractive.astralibs.logging.Logger
+import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
+import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import java.util.UUID
 
 /**

@@ -35,7 +35,7 @@ kyori = "4.23.0" # https://github.com/KyoriPowered/adventure-platform
 # klibs
 klibs-gradleplugin = "1.8.0" # https://github.com/makeevrserg/gradle-plugin
 klibs-kstorage = "4.2.0" # https://github.com/makeevrserg/klibs.kstorage
-klibs-mikro = "1.11.0" # https://github.com/makeevrserg/klibs.mikro
+klibs-mikro = "1.13.0" # https://github.com/makeevrserg/klibs.mikro
 
 # Exposed
 exposed = "0.61.0" # https://github.com/JetBrains/Exposed
@@ -88,11 +88,12 @@ exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "e
 
 # klibs - mikro
 klibs-mikro-core = { module = "ru.astrainteractive.klibs:mikro-core", version.ref = "klibs-mikro" }
+klibs-mikro-extensions = { module = "ru.astrainteractive.klibs:mikro-extensions", version.ref = "klibs-mikro" }
 klibs-kstorage = { module = "ru.astrainteractive.klibs:kstorage", version.ref = "klibs-kstorage" }
 
 [bundles]
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
-klibs = ["klibs-kstorage", "klibs-mikro-core"]
+klibs = ["klibs-kstorage", "klibs-mikro-core", "klibs-mikro-extensions"]
 minecraft-bukkit = ["minecraft-paper-api", "minecraft-vaultapi", "minecraft-papi"]
 testing-kotlin = ["tests-junit-jupiter-api", "kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
 kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-gradle"]

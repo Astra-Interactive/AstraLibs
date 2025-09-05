@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
-import ru.astrainteractive.astralibs.util.StringFormatExt.parse
-import ru.astrainteractive.astralibs.util.StringFormatExt.writeIntoFile
 import ru.astrainteractive.astralibs.util.YamlStringFormat
+import ru.astrainteractive.astralibs.util.parse
+import ru.astrainteractive.astralibs.util.writeIntoFile
 import java.io.File
 import java.util.UUID
 import kotlin.test.Test
