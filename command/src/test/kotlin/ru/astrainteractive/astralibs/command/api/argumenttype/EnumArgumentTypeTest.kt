@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.command.api.argumenttype
 
+import org.junit.Assert.assertThrows
 import org.junit.Test
-import org.junit.jupiter.api.assertThrows
 import ru.astrainteractive.astralibs.command.api.exception.ArgumentTypeException
 import kotlin.test.assertEquals
 
@@ -17,7 +17,7 @@ class EnumArgumentTypeTest {
                 assertEquals(entry, result)
             }
         }
-        assertThrows<ArgumentTypeException> {
+        assertThrows(ArgumentTypeException::class.java) {
             EnumArgumentType(TestType.entries).transform("no_value")
         }
     }

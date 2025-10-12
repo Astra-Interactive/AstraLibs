@@ -10,7 +10,8 @@ plugins {
 
 dependencies {
     // Kotlin
-    implementation(libs.bundles.kotlin)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.serialization.json)
     // AstraLibs
     implementation(libs.klibs.mikro.core)
     implementation(libs.klibs.kstorage)
