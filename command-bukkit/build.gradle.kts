@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(libs.minecraft.paper.api)
+    compileOnly(libs.minecraft.paper.api)
 
     implementation(projects.command)
     implementation(projects.core)
