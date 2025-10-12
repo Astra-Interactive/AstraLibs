@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
-    // Kotlin
-    compileOnly(libs.bundles.kotlin)
-    implementation(projects.core)
-    // Test-Core
-    testImplementation(libs.bundles.testing.kotlin)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.serialization.json)
+
     testImplementation(libs.tests.kotlin.test)
+
+    implementation(projects.core)
 }

@@ -5,12 +5,11 @@ plugins {
 
 dependencies {
     // Kotlin
-    compileOnly(libs.bundles.kotlin)
-    compileOnly(libs.bundles.klibs)
+    compileOnly(libs.kotlin.coroutines.core)
+    compileOnly(libs.klibs.mikro.core)
     // Spigot dependencies
-    compileOnly(libs.bundles.minecraft.bukkit)
+    compileOnly(libs.minecraft.paper.api)
     // Test-Core
-    testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)
     // Local
     compileOnly(projects.core)

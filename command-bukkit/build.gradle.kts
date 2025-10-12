@@ -4,11 +4,8 @@ plugins {
 }
 
 dependencies {
-    // Kotlin
-    compileOnly(libs.bundles.kotlin)
-    // Spigot dependencies
-    compileOnly(libs.bundles.minecraft.bukkit)
-    // Local
+    implementation(libs.minecraft.paper.api)
+
     implementation(projects.command)
     implementation(projects.core)
 }
