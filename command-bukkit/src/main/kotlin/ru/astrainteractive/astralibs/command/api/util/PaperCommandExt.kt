@@ -121,10 +121,3 @@ fun RequiredArgumentBuilder<CommandSourceStack, *>.hints(block: (CommandContext<
         builder.buildFuture()
     }
 }
-
-fun RequiredArgumentBuilder<CommandSourceStack, *>.hints(list: List<String>) {
-    suggests { context, builder ->
-        list.forEach(builder::suggest)
-        builder.buildFuture()
-    }
-}
