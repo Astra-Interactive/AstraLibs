@@ -98,19 +98,23 @@ fun RequiredArgumentBuilder<CommandSourceStack, *>.stringArgument(
 }
 
 fun RequiredArgumentBuilder<CommandSourceStack, *>.runs(
+    onFailure: (CommandContext<CommandSourceStack>, Throwable) -> Unit = { _, _ -> },
     block: (RequiredArgumentBuilder<CommandSourceStack, *>.(CommandContext<CommandSourceStack>) -> Unit)
 ) {
-    executes {
-        block.invoke(this, it)
+    executes { ctx ->
+        runCatching { block.invoke(this, ctx) }
+            .onFailure { onFailure.invoke(ctx, it) }
         Command.SINGLE_SUCCESS
     }
 }
 
 fun LiteralArgumentBuilder<CommandSourceStack>.runs(
+    onFailure: (CommandContext<CommandSourceStack>, Throwable) -> Unit = { _, _ -> },
     block: LiteralArgumentBuilder<CommandSourceStack>.(CommandContext<CommandSourceStack>) -> Unit
 ) {
-    executes {
-        block.invoke(this, it)
+    executes { ctx ->
+        runCatching { block.invoke(this, ctx) }
+            .onFailure { onFailure.invoke(ctx, it) }
         Command.SINGLE_SUCCESS
     }
 }
