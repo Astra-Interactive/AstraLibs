@@ -10,7 +10,10 @@ import com.mojang.brigadier.builder.RequiredArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
+import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.command.api.exception.BadArgumentException
+import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
+import ru.astrainteractive.astralibs.command.api.exception.NotPlayerExecutorException
 import ru.astrainteractive.astralibs.permission.Permission
 
 fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(
@@ -35,10 +38,6 @@ fun <T : Any> CommandContext<CommandSourceStack>.argumentOrElse(
     default: () -> T
 ): T {
     return findArgument(alias, type) ?: default.invoke()
-}
-
-fun CommandContext<CommandSourceStack>.requirePermission(permission: Permission): Boolean {
-    return this.source.sender.hasPermission(permission.value)
 }
 
 fun command(
@@ -124,4 +123,16 @@ fun RequiredArgumentBuilder<CommandSourceStack, *>.hints(block: (CommandContext<
         block.invoke(context).forEach(builder::suggest)
         builder.buildFuture()
     }
+}
+
+@Throws(NoPermissionException::class)
+fun CommandContext<CommandSourceStack>.requirePermission(permission: Permission) {
+    val hasPermission = this.source.sender.hasPermission(permission.value)
+    if (!hasPermission) throw NoPermissionException(permission)
+}
+
+@Throws(NotPlayerExecutorException::class)
+fun CommandContext<CommandSourceStack>.requirePlayer(): Player {
+    return this.source.sender as? Player
+        ?: throw NotPlayerExecutorException()
 }

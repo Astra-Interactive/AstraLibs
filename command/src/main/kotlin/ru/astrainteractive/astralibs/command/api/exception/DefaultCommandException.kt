@@ -26,6 +26,8 @@ class NoPlayerException(
     name: String
 ) : CommandException("Player $name not found")
 
+class NotPlayerExecutorException : CommandException("Executor should be player")
+
 class NoPotionEffectTypeException(
     name: String
 ) : CommandException("PotionEffectType $name not found")
