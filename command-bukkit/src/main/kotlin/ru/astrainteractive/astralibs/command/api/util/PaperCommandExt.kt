@@ -4,7 +4,6 @@ package ru.astrainteractive.astralibs.command.api.util
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.ArgumentType
-import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
@@ -58,41 +57,63 @@ fun LiteralArgumentBuilder<CommandSourceStack>.literal(
     this.then(literal)
 }
 
+data class BrigadierArgument<T : Any>(
+    val alias: String,
+    val type: ArgumentType<T>,
+    val clazz: Class<T>
+)
+
+inline fun <reified T : Any> LiteralArgumentBuilder<CommandSourceStack>.argument(
+    alias: String,
+    type: ArgumentType<T>,
+    noinline block: RequiredArgumentBuilder<CommandSourceStack, T>.(BrigadierArgument<T>) -> Unit
+) = argument(
+    alias = alias,
+    type = type,
+    clazz = T::class.java,
+    block = block
+)
+
 fun <T : Any> LiteralArgumentBuilder<CommandSourceStack>.argument(
     alias: String,
     type: ArgumentType<T>,
-    block: RequiredArgumentBuilder<CommandSourceStack, T>.() -> Unit
+    clazz: Class<T>,
+    block: RequiredArgumentBuilder<CommandSourceStack, T>.(BrigadierArgument<T>) -> Unit
 ) {
     val argument = Commands.argument(alias, type)
-    argument.block()
+    val brigadierArgument = BrigadierArgument(
+        alias = alias,
+        type = type,
+        clazz = clazz
+    )
+    argument.block(brigadierArgument)
     this.then(argument)
 }
 
-fun LiteralArgumentBuilder<CommandSourceStack>.stringArgument(
+inline fun <reified T : Any> RequiredArgumentBuilder<CommandSourceStack, *>.argument(
     alias: String,
-    block: RequiredArgumentBuilder<CommandSourceStack, String>.() -> Unit
-) {
-    val argument = Commands.argument(alias, StringArgumentType.string())
-    argument.block()
-    this.then(argument)
-}
+    type: ArgumentType<T>,
+    noinline block: RequiredArgumentBuilder<CommandSourceStack, T>.(BrigadierArgument<T>) -> Unit
+) = argument(
+    alias = alias,
+    type = type,
+    clazz = T::class.java,
+    block = block
+)
 
 fun <T : Any> RequiredArgumentBuilder<CommandSourceStack, *>.argument(
     alias: String,
     type: ArgumentType<T>,
-    block: RequiredArgumentBuilder<CommandSourceStack, T>.() -> Unit
+    clazz: Class<T>,
+    block: RequiredArgumentBuilder<CommandSourceStack, T>.(BrigadierArgument<T>) -> Unit
 ) {
     val argument = Commands.argument(alias, type)
-    argument.block()
-    this.then(argument)
-}
-
-fun RequiredArgumentBuilder<CommandSourceStack, *>.stringArgument(
-    alias: String,
-    block: RequiredArgumentBuilder<CommandSourceStack, String>.() -> Unit
-) {
-    val argument = Commands.argument(alias, StringArgumentType.string())
-    argument.block()
+    val brigadierArgument = BrigadierArgument(
+        alias = alias,
+        type = type,
+        clazz = clazz
+    )
+    argument.block(brigadierArgument)
     this.then(argument)
 }
 
@@ -135,4 +156,8 @@ fun CommandContext<CommandSourceStack>.requirePermission(permission: Permission)
 fun CommandContext<CommandSourceStack>.requirePlayer(): Player {
     return this.source.sender as? Player
         ?: throw NotPlayerExecutorException()
+}
+
+fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(bArgument: BrigadierArgument<T>): T {
+    return getArgument(bArgument.alias, bArgument.clazz)
 }
