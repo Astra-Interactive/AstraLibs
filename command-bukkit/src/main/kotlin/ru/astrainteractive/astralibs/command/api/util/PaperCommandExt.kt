@@ -10,34 +10,11 @@ import com.mojang.brigadier.context.CommandContext
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.command.brigadier.Commands
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.command.api.exception.BadArgumentException
+import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
+import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterException
 import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NotPlayerExecutorException
 import ru.astrainteractive.astralibs.permission.Permission
-
-fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(
-    alias: String,
-    type: ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentType<T>
-): T {
-    val raw = getArgument(alias, String::class.java)
-    return raw?.let(type::transform) ?: throw BadArgumentException(raw, type)
-}
-
-fun <T : Any> CommandContext<CommandSourceStack>.findArgument(
-    alias: String,
-    type: ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentType<T>
-): T? {
-    val raw = getArgument(alias, String::class.java)
-    return runCatching { raw?.let(type::transform) }.getOrNull()
-}
-
-fun <T : Any> CommandContext<CommandSourceStack>.argumentOrElse(
-    alias: String,
-    type: ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentType<T>,
-    default: () -> T
-): T {
-    return findArgument(alias, type) ?: default.invoke()
-}
 
 fun command(
     alias: String,
@@ -158,6 +135,16 @@ fun CommandContext<CommandSourceStack>.requirePlayer(): Player {
         ?: throw NotPlayerExecutorException()
 }
 
+@Throws(IllegalArgumentException::class)
 fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(bArgument: BrigadierArgument<T>): T {
     return getArgument(bArgument.alias, bArgument.clazz)
+}
+
+@Throws(ArgumentConverterException::class)
+fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(
+    bArgument: BrigadierArgument<String>,
+    converter: ArgumentConverter<T>
+): T {
+    val string = getArgument(bArgument.alias, bArgument.clazz)
+    return converter.transform(string)
 }

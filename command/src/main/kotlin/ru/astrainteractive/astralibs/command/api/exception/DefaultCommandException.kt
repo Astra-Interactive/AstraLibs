@@ -1,6 +1,6 @@
 package ru.astrainteractive.astralibs.command.api.exception
 
-import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentType
+import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
 import ru.astrainteractive.astralibs.permission.Permission
 import ru.astrainteractive.astralibs.string.StringDesc
 
@@ -10,13 +10,13 @@ class StringDescCommandException(
 
 class BadArgumentException(
     wrongArgument: String?,
-    type: ArgumentType<*>
+    type: ArgumentConverter<*>
 ) : CommandException("Incompatible type $type for argument $wrongArgument")
 
-class ArgumentTypeException(
-    key: String,
+class ArgumentConverterException(
+    clazz: Class<out ArgumentConverter<*>>,
     value: String
-) : CommandException("Argument type $key could not parse $value")
+) : CommandException("Argument type $clazz could not parse $value")
 
 class NoPermissionException(
     permission: Permission

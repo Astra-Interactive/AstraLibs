@@ -21,7 +21,7 @@ import ru.astrainteractive.astralibs.server.util.asPermissible
 
 fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(
     alias: String,
-    type: ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentType<T>
+    type: ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter<T>
 ): T {
     val raw = getArgument(alias, String::class.java)
     return raw?.let(type::transform) ?: throw BadArgumentException(raw, type)
@@ -29,7 +29,7 @@ fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(
 
 fun <T : Any> CommandContext<CommandSourceStack>.findArgument(
     alias: String,
-    type: ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentType<T>
+    type: ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter<T>
 ): T? {
     val raw = getArgument(alias, String::class.java)
     return runCatching { raw?.let(type::transform) }.getOrNull()
@@ -37,7 +37,7 @@ fun <T : Any> CommandContext<CommandSourceStack>.findArgument(
 
 fun <T : Any> CommandContext<CommandSourceStack>.argumentOrElse(
     alias: String,
-    type: ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentType<T>,
+    type: ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter<T>,
     default: () -> T
 ): T {
     return findArgument(alias, type) ?: default.invoke()
