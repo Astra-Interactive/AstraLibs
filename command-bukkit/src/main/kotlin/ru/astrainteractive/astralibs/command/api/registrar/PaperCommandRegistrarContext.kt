@@ -15,12 +15,12 @@ import ru.astrainteractive.astralibs.event.flowLifecycleEvent
 class PaperCommandRegistrarContext(
     private val mainScope: CoroutineScope,
     plugin: JavaPlugin
-) : CommandRegistrarContext<CommandSourceStack> {
+) {
     private val commandsRegistrarFlow = plugin
         .flowLifecycleEvent(LifecycleEvents.COMMANDS)
         .shareIn(mainScope, SharingStarted.Eagerly, 1)
 
-    override fun registerWhenReady(node: LiteralCommandNode<CommandSourceStack>) {
+    fun registerWhenReady(node: LiteralCommandNode<CommandSourceStack>) {
         commandsRegistrarFlow
             .mapNotNull { it?.registrar() }
             .onEach { it.register(node) }
