@@ -4,7 +4,7 @@ import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import ru.astrainteractive.astralibs.command.api.exception.NoPlayerException
 
-object OfflinePlayerArgument : ArgumentConverter<OfflinePlayer> {
+object OfflinePlayerArgumentConverter : ArgumentConverter<OfflinePlayer> {
 
     override fun transform(argument: String): OfflinePlayer {
         val offlinePlayer = Bukkit.getOfflinePlayer(argument)

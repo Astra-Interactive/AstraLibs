@@ -61,4 +61,6 @@ interface Lifecycle {
             onReload.invoke(this)
         }
     }
+
+    object Empty : Lifecycle by Lifecycle.Lambda()
 }

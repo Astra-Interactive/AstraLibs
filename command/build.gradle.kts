@@ -6,6 +6,7 @@ plugins {
 dependencies {
     compileOnly(libs.kotlin.coroutines.core)
     compileOnly(libs.kotlin.serialization.json)
+    compileOnly("com.mojang:brigadier:1.0.18")
 
     testImplementation(libs.tests.kotlin.test)
 
