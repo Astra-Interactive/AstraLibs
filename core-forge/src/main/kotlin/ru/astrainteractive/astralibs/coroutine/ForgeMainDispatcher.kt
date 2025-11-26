@@ -1,31 +1,31 @@
 package ru.astrainteractive.astralibs.coroutine
 
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.MainCoroutineDispatcher
-import kotlinx.coroutines.asCoroutineDispatcher
-import net.minecraftforge.api.distmarker.Dist
-import net.minecraftforge.common.util.LogicalSidedProvider
-import net.minecraftforge.fml.LogicalSide
+import net.minecraftforge.fml.DistExecutor
 import net.minecraftforge.fml.loading.FMLEnvironment
+import ru.astrainteractive.astralibs.async.CoroutineTimings
+import ru.astrainteractive.klibs.mikro.core.util.tryCast
+import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 
-object ForgeMainDispatcher : MainCoroutineDispatcher() {
-    private val dispatcher: CoroutineDispatcher by lazy {
-        when (FMLEnvironment.dist) {
-            Dist.CLIENT -> LogicalSidedProvider.WORKQUEUE.get(LogicalSide.CLIENT)
-            Dist.DEDICATED_SERVER -> LogicalSidedProvider.WORKQUEUE.get(LogicalSide.SERVER)
-        }.asCoroutineDispatcher()
-    }
+class ForgeMainDispatcher : CoroutineDispatcher() {
 
-    override val immediate: MainCoroutineDispatcher get() = this
+    override fun isDispatchNeeded(context: CoroutineContext): Boolean {
+        return true
+    }
 
     override fun dispatch(context: CoroutineContext, block: Runnable) {
-        dispatcher.dispatch(context, block)
-    }
+        DistExecutor.safeRunWhenOn(FMLEnvironment.dist) {
+            val key = context.tryCast<AbstractCoroutineContextElement>()?.key
+            val timingsKey = key?.tryCast<CoroutineTimings.Key>()
+            val timedRunnable = timingsKey?.let(context::get)
 
-//    override fun dispatch(context: CoroutineContext, block: Runnable) {
-//        DistExecutor.safeRunWhenOn(FMLEnvironment.dist) {
-//            DistExecutor.SafeRunnable { block.run() }
-//        }
-//    }
+            if (timedRunnable == null) {
+                DistExecutor.SafeRunnable { block.run() }
+            } else {
+                timedRunnable.queue.add(block)
+                DistExecutor.SafeRunnable { timedRunnable.run() }
+            }
+        }
+    }
 }
