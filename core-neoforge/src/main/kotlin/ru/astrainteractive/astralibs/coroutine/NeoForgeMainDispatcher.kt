@@ -1,30 +1,43 @@
 package ru.astrainteractive.astralibs.coroutine
 
 import kotlinx.coroutines.CoroutineDispatcher
-import net.minecraftforge.fml.DistExecutor
-import net.minecraftforge.fml.loading.FMLEnvironment
+import net.minecraft.client.Minecraft
+import net.minecraft.util.thread.ReentrantBlockableEventLoop
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.fml.loading.FMLEnvironment
+import net.neoforged.neoforge.server.ServerLifecycleHooks
 import ru.astrainteractive.astralibs.async.CoroutineTimings
 import ru.astrainteractive.klibs.mikro.core.util.tryCast
 import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 
-class ForgeMainDispatcher : CoroutineDispatcher() {
+class NeoForgeMainDispatcher : CoroutineDispatcher() {
 
     override fun isDispatchNeeded(context: CoroutineContext): Boolean {
         return true
     }
+    private fun getExecutor(): ReentrantBlockableEventLoop<out Runnable> {
+        return when (FMLEnvironment.dist) {
+            Dist.CLIENT -> Minecraft.getInstance()
+            Dist.DEDICATED_SERVER -> {
+                ServerLifecycleHooks
+                    .getCurrentServer()
+                    ?: error("NeoForgeMainDispatcher created too early. No server yet")
+            }
+        }
+    }
 
     override fun dispatch(context: CoroutineContext, block: Runnable) {
-        DistExecutor.safeRunWhenOn(FMLEnvironment.dist) {
+        getExecutor().execute {
             val key = context.tryCast<AbstractCoroutineContextElement>()?.key
             val timingsKey = key?.tryCast<CoroutineTimings.Key>()
             val timedRunnable = timingsKey?.let(context::get)
 
             if (timedRunnable == null) {
-                DistExecutor.SafeRunnable { block.run() }
+                block.run()
             } else {
                 timedRunnable.queue.add(block)
-                DistExecutor.SafeRunnable { timedRunnable.run() }
+                timedRunnable.run()
             }
         }
     }

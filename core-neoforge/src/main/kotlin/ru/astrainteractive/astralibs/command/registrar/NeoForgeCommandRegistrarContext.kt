@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import net.minecraft.commands.CommandSourceStack
-import net.minecraftforge.event.RegisterCommandsEvent
-import net.minecraftforge.eventbus.api.EventPriority
+import net.neoforged.bus.api.EventPriority
+import net.neoforged.neoforge.event.RegisterCommandsEvent
 import ru.astrainteractive.astralibs.event.flowEvent
 
-class ForgeCommandRegistrarContext(
+class NeoForgeCommandRegistrarContext(
     private val mainScope: CoroutineScope,
 ) {
     private val registerCommandsEvent = flowEvent<RegisterCommandsEvent>(EventPriority.HIGHEST)

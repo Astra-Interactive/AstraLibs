@@ -7,6 +7,7 @@ driver-mariadb = "3.5.6"
 driver-mysql = "8.0.33"
 exposed = "0.61.0"
 forgegradle = "[6.0,6.2)"
+neoforgegradle = "7.1.4"
 gradle-buildconfig = "5.7.0"
 gradle-ftp = "0.1.2"
 gradle-shadow = "9.2.2"
@@ -14,7 +15,7 @@ gson = "2.13.2"
 guava = "33.5.0-jre"
 jda = "6.0.0-preview"
 jda-webhook = "0.8.4"
-klibs-gradleplugin = "1.11.1"
+klibs-gradleplugin = "1.13.2"
 klibs-kdi = "1.4.8"
 klibs-kstorage = "4.2.3"
 klibs-mikro = "1.16.0"
@@ -49,6 +50,7 @@ minecraft-towny = "0.101.2.1"
 minecraft-vault = "1.7.1"
 minecraft-velocity = "4.0.0-SNAPSHOT"
 minecraft-forgeversion = "47.2.20"
+minecraft-neoforgeversion = "21.1.216"
 shadow = "8.1.8"
 telegrambots = "9.1.0"
 tests-junit-bom = "6.0.0"
@@ -126,6 +128,7 @@ minecraft-spigot-core = { module = "org.spigotmc:spigot", version.ref = "minecra
 minecraft-towny = { module = "com.palmergames.bukkit.towny:towny", version.ref = "minecraft-towny" }
 minecraft-vaultapi = { module = "com.github.MilkBowl:VaultAPI", version.ref = "minecraft-vault" }
 minecraft-velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "minecraft-velocity" }
+minecraft-neoforgeversion = { module = "net.neoforged:neoforge", version.ref = "minecraft-neoforgeversion" }
 telegrambots-client = { module = "org.telegram:telegrambots-client", version.ref = "telegrambots" }
 telegrambots-extensions = { module = "org.telegram:telegrambots-extensions", version.ref = "telegrambots" }
 telegrambots-longpolling = { module = "org.telegram:telegrambots-longpolling", version.ref = "telegrambots" }
@@ -141,6 +144,7 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 [plugins]
 fabric-loom = { id = "fabric-loom", version.ref = "minecraft-fabric-loom" }
 forgegradle = { id = "net.minecraftforge.gradle", version.ref = "forgegradle" }
+neoforgegradle = { id = "net.neoforged.gradle.userdev", version.ref = "neoforgegradle" }
 gradle-buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "gradle-buildconfig" }
 gradle-ftp = { id = "ru.astrainteractive.ftpplugin.gradleftp", version.ref = "gradle-ftp" }
 gradle-shadow = { id = "com.gradleup.shadow", version.ref = "gradle-shadow" }
@@ -148,7 +152,7 @@ klibs-gradle-detekt = { id = "ru.astrainteractive.gradleplugin.detekt", version.
 klibs-gradle-detekt-compose = { id = "ru.astrainteractive.gradleplugin.detekt.compose", version.ref = "klibs-gradleplugin" }
 klibs-gradle-dokka-module = { id = "ru.astrainteractive.gradleplugin.dokka.module", version.ref = "klibs-gradleplugin" }
 klibs-gradle-dokka-root = { id = "ru.astrainteractive.gradleplugin.dokka.root", version.ref = "klibs-gradleplugin" }
-klibs-gradle-java-core = { id = "ru.astrainteractive.gradleplugin.java.core", version.ref = "klibs-gradleplugin" }
+klibs-gradle-java-version = { id = "ru.astrainteractive.gradleplugin.java.version", version.ref = "klibs-gradleplugin" }
 klibs-gradle-minecraft-empty = { id = "ru.astrainteractive.gradleplugin.minecraft.empty", version.ref = "klibs-gradleplugin" }
 klibs-gradle-minecraft-multiplatform = { id = "ru.astrainteractive.gradleplugin.minecraft.multiplatform", version.ref = "klibs-gradleplugin" }
 klibs-gradle-publication = { id = "ru.astrainteractive.gradleplugin.publication", version.ref = "klibs-gradleplugin" }

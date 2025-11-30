@@ -10,7 +10,7 @@ import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.getOnlinePlayer
 import java.util.UUID
 
-class ForgeMinecraftNativeBridge : MinecraftNativeBridge {
+class NeoForgeMinecraftNativeBridge : MinecraftNativeBridge {
     override fun OnlineMinecraftPlayer.asAudience(): Audience {
         return OnlinePlayerAudience(this)
     }

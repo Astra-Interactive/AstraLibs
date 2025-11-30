@@ -1,14 +1,18 @@
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
-    alias(libs.plugins.forgegradle)
+    alias(libs.plugins.neoforgegradle)
 }
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 dependencies {
     // Kotlin
     compileOnly(libs.kotlin.coroutines.core)
 
     compileOnly(libs.klibs.mikro.core)
+
+    compileOnly(libs.minecraft.neoforgeversion)
 
     compileOnly(libs.kyori.api)
     compileOnly(libs.kyori.gson)
@@ -23,18 +27,6 @@ dependencies {
 
     implementation(projects.core)
     implementation(projects.command)
-}
-
-dependencies {
-    minecraft(
-        "net.minecraftforge",
-        "forge",
-        "${libs.versions.minecraft.mojang.version.get()}-${libs.versions.minecraft.forgeversion.get()}"
-    )
-}
-
-minecraft {
-    mappings("official", libs.versions.minecraft.mojang.version.get())
 }
 
 configurations.runtimeElements {

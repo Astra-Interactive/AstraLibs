@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.stateIn
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.level.Level
-import net.minecraftforge.event.server.ServerStartedEvent
-import net.minecraftforge.fml.loading.FMLLoader
+import net.neoforged.fml.loading.FMLLoader
+import net.neoforged.neoforge.event.server.ServerStartedEvent
 import ru.astrainteractive.astralibs.event.flowEvent
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger

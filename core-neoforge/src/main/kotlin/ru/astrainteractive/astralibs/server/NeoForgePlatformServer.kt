@@ -10,7 +10,7 @@ import ru.astrainteractive.astralibs.server.util.getOnlinePlayers
 import ru.astrainteractive.astralibs.server.util.getPlayerGameProfile
 import java.util.UUID
 
-object ForgePlatformServer : PlatformServer {
+object NeoForgePlatformServer : PlatformServer {
     override fun getOnlinePlayers(): List<OnlineMinecraftPlayer> {
         return ForgeUtil
             .getOnlinePlayers()

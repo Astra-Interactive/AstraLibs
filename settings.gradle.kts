@@ -12,6 +12,7 @@ pluginManagement {
         maven("https://oss.sonatype.org/content/groups/public/")
         maven("https://repo.essentialsx.net/snapshots/")
         maven("https://repo.maven.apache.org/maven2/")
+        maven("https://maven.neoforged.net/releases")
         maven("https://maven.enginehub.org/repo/")
         maven("https://maven.minecraftforge.net")
         maven("https://repo1.maven.org/maven2/")
@@ -19,6 +20,7 @@ pluginManagement {
         maven("https://jitpack.io")
     }
 }
+
 dependencyResolutionManagement {
     repositories {
         mavenLocal()
@@ -39,11 +41,14 @@ dependencyResolutionManagement {
         maven("https://jitpack.io")
     }
 }
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 rootProject.name = "AstraLibs"
+
 include(":core")
 include(":core-bukkit")
-include(":core-forge")
+include(":core-neoforge")
 include(":menu-bukkit")
 include(":command")
 include(":command-bukkit")
