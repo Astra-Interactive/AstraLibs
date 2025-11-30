@@ -14,6 +14,6 @@ fun CommandSourceStack.asAudience() = Audience { component ->
 }
 
 fun OnlineMinecraftPlayer.asAudience() = Audience { component ->
-    val player = ForgeUtil.getOnlinePlayer(uuid) ?: return@Audience
+    val player = NeoForgeUtil.getOnlinePlayer(uuid) ?: return@Audience
     player.sendSystemMessage(component.toNative())
 }

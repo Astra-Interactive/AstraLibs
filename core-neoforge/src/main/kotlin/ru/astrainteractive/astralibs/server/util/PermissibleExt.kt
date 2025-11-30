@@ -5,7 +5,7 @@ import ru.astrainteractive.astralibs.permission.LuckPermsPermissible
 import ru.astrainteractive.astralibs.permission.Permissible
 
 fun Player.asPermissible(): Permissible {
-    return if (ForgeUtil.isModLoaded("luckperms")) {
+    return if (NeoForgeUtil.isModLoaded("luckperms")) {
         LuckPermsPermissible(this.uuid)
     } else {
         error("No permission provider loaded!")

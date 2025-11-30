@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component.Serializer
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 
 private fun requireHolderLookup(): RegistryAccess.Frozen {
-    return ForgeUtil.serverOrNull
+    return NeoForgeUtil.serverOrNull
         ?.registryAccess()
         ?: error("Server is not running")
 }

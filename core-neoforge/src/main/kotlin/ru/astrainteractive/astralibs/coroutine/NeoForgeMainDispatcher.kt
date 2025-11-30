@@ -1,7 +1,10 @@
 package ru.astrainteractive.astralibs.coroutine
 
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.yield
 import net.minecraft.client.Minecraft
+import net.minecraft.server.MinecraftServer
 import net.minecraft.util.thread.ReentrantBlockableEventLoop
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.fml.loading.FMLEnvironment
@@ -16,13 +19,23 @@ class NeoForgeMainDispatcher : CoroutineDispatcher() {
     override fun isDispatchNeeded(context: CoroutineContext): Boolean {
         return true
     }
+
     private fun getExecutor(): ReentrantBlockableEventLoop<out Runnable> {
         return when (FMLEnvironment.dist) {
             Dist.CLIENT -> Minecraft.getInstance()
             Dist.DEDICATED_SERVER -> {
-                ServerLifecycleHooks
-                    .getCurrentServer()
-                    ?: error("NeoForgeMainDispatcher created too early. No server yet")
+                var server: MinecraftServer
+                runBlocking {
+                    while (true) {
+                        ServerLifecycleHooks.getCurrentServer()
+                            ?.let { currentServer ->
+                                server = currentServer
+                                break
+                            }
+                        yield()
+                    }
+                }
+                server
             }
         }
     }

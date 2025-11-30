@@ -5,7 +5,7 @@ import ru.astrainteractive.astralibs.permission.Permissible
 import ru.astrainteractive.astralibs.server.player.MinecraftPlayer
 import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
-import ru.astrainteractive.astralibs.server.util.ForgeUtil
+import ru.astrainteractive.astralibs.server.util.NeoForgeUtil
 import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.getOnlinePlayer
 import java.util.UUID
@@ -28,12 +28,12 @@ class NeoForgeMinecraftNativeBridge : MinecraftNativeBridge {
     }
 
     private fun findOnlinePlayer(uuid: UUID): OnlineMinecraftPlayer? {
-        val player = ForgeUtil.getOnlinePlayer(uuid) ?: return null
+        val player = NeoForgeUtil.getOnlinePlayer(uuid) ?: return null
         return player.asOnlineMinecraftPlayer()
     }
 
     private fun findOfflinePlayer(uuid: UUID): OfflineMinecraftPlayer? {
-        val player = ForgeUtil.getOnlinePlayer(uuid) ?: return null
+        val player = NeoForgeUtil.getOnlinePlayer(uuid) ?: return null
         return OfflineMinecraftPlayer(
             uuid = player.uuid,
         )

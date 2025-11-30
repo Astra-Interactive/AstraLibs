@@ -8,7 +8,7 @@ import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
 import ru.astrainteractive.klibs.mikro.core.util.cast
 
 fun OnlineMinecraftPlayer.asLocatable() = Locatable {
-    val player = ForgeUtil.getOnlinePlayer(uuid) ?: error("$this is not online")
+    val player = NeoForgeUtil.getOnlinePlayer(uuid) ?: error("$this is not online")
     Location(
         x = player.x,
         y = player.y,

@@ -16,6 +16,7 @@ apply(plugin = "ru.astrainteractive.gradleplugin.detekt")
 apply(plugin = "ru.astrainteractive.gradleplugin.root.info")
 
 subprojects.forEach {
+    it.apply(plugin = "ru.astrainteractive.gradleplugin.root.info")
     if (it.name != "bukkit" && it.name != "benchmarks") {
         it.apply(plugin = "ru.astrainteractive.gradleplugin.publication")
     }
