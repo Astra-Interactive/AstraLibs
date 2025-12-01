@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.level.Level
 import net.neoforged.fml.loading.FMLLoader
 import net.neoforged.neoforge.event.server.ServerStartedEvent
+import net.neoforged.neoforge.server.ServerLifecycleHooks
 import ru.astrainteractive.astralibs.event.flowEvent
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
@@ -39,6 +40,12 @@ object NeoForgeUtil : Logger by JUtiltLogger("AstraLibs-ForgeUtil") {
 
     suspend fun awaitServer(): MinecraftServer {
         return serverFlow.filterNotNull().first()
+    }
+
+    fun requireServer(): MinecraftServer {
+        return ServerLifecycleHooks
+            .getCurrentServer()
+            ?: error("Server is not available")
     }
 
     fun bootstrap() = Unit
