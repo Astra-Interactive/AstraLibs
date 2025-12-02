@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.storage.ServerLevelData
-import net.minecraftforge.event.entity.living.LivingEvent
+import net.neoforged.neoforge.event.tick.PlayerTickEvent
 import ru.astrainteractive.astralibs.server.location.Location
 import ru.astrainteractive.klibs.mikro.core.util.cast
 import ru.astrainteractive.klibs.mikro.core.util.tryCast
@@ -16,7 +16,7 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
 class PlayerMoveEvent(
-    val instance: LivingEvent.LivingTickEvent,
+    val instance: PlayerTickEvent.Post,
     val oldLocation: Location,
     val newLocation: Location,
     val player: Player
@@ -27,7 +27,7 @@ fun playerMoveFlowEvent() = flow {
         .newBuilder()
         .expireAfterAccess(10.seconds.toJavaDuration())
         .build<UUID, Location>()
-    flowEvent<LivingEvent.LivingTickEvent>()
+    flowEvent<PlayerTickEvent.Post>()
         .filter { it.entity is Player }
         .onEach { event ->
             val player = event.entity.tryCast<Player>() ?: return@onEach

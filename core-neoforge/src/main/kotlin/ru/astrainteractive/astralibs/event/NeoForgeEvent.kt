@@ -4,9 +4,9 @@ import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
-import net.minecraftforge.common.MinecraftForge
-import net.minecraftforge.eventbus.api.Event
-import net.minecraftforge.eventbus.api.EventPriority
+import net.neoforged.bus.api.Event
+import net.neoforged.bus.api.EventPriority
+import net.neoforged.neoforge.common.NeoForge
 import java.util.function.Consumer
 
 fun <T : Event> flowEvent(
@@ -17,14 +17,14 @@ fun <T : Event> flowEvent(
     val consumer = Consumer<T> { event ->
         launch { send(event) }
     }
-    MinecraftForge.EVENT_BUS.addListener<T>(
+    NeoForge.EVENT_BUS.addListener<T>(
         priority,
         isCancelled,
         type,
         consumer
     )
     awaitClose {
-        MinecraftForge.EVENT_BUS.unregister(consumer)
+        NeoForge.EVENT_BUS.unregister(consumer)
     }
 }
 

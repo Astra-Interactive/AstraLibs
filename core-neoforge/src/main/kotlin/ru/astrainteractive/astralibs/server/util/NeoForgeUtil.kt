@@ -12,20 +12,21 @@ import kotlinx.coroutines.flow.stateIn
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.level.Level
-import net.minecraftforge.event.server.ServerStartedEvent
-import net.minecraftforge.fml.loading.FMLLoader
+import net.neoforged.fml.loading.FMLLoader
+import net.neoforged.neoforge.event.server.ServerStartedEvent
+import net.neoforged.neoforge.server.ServerLifecycleHooks
 import ru.astrainteractive.astralibs.event.flowEvent
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import java.util.UUID
 
 /**
- * Don't forget to instantiate [ForgeUtil] on init at loader
+ * Don't forget to instantiate [NeoForgeUtil] on init at loader
  */
-object ForgeUtil : Logger by JUtiltLogger("AstraLibs-ForgeUtil") {
+object NeoForgeUtil : Logger by JUtiltLogger("AstraLibs-ForgeUtil") {
     private val serverFlow = flowEvent<ServerStartedEvent>()
         .map { event -> event.server }
-        .flowOn(Dispatchers.IO)
+        .flowOn(Dispatchers.Unconfined)
         .stateIn(GlobalScope, SharingStarted.Eagerly, null)
 
     val serverOrNull: MinecraftServer?
@@ -41,14 +42,20 @@ object ForgeUtil : Logger by JUtiltLogger("AstraLibs-ForgeUtil") {
         return serverFlow.filterNotNull().first()
     }
 
+    fun requireServer(): MinecraftServer {
+        return ServerLifecycleHooks
+            .getCurrentServer()
+            ?: error("Server is not available")
+    }
+
     fun bootstrap() = Unit
 }
 
-fun ForgeUtil.isModLoaded(modId: String): Boolean {
+fun NeoForgeUtil.isModLoaded(modId: String): Boolean {
     return FMLLoader.getLoadingModList().getModFileById(modId) != null
 }
 
-fun ForgeUtil.getDefaultWorldName(): String? {
+fun NeoForgeUtil.getDefaultWorldName(): String? {
     return serverOrNull
         ?.getLevel(Level.OVERWORLD)
         ?.level
@@ -57,15 +64,15 @@ fun ForgeUtil.getDefaultWorldName(): String? {
         ?.path
 }
 
-fun ForgeUtil.getPlayerGameProfile(uuid: UUID): GameProfile? {
+fun NeoForgeUtil.getPlayerGameProfile(uuid: UUID): GameProfile? {
     return serverOrNull?.profileCache?.get(uuid)?.orElse(null)
 }
 
-fun ForgeUtil.getPlayerGameProfile(name: String): GameProfile? {
+fun NeoForgeUtil.getPlayerGameProfile(name: String): GameProfile? {
     return serverOrNull?.profileCache?.get(name)?.orElse(null)
 }
 
-fun ForgeUtil.getOnlinePlayers(): List<ServerPlayer> {
+fun NeoForgeUtil.getOnlinePlayers(): List<ServerPlayer> {
     return serverOrNull
         ?.playerList
         ?.players
@@ -74,14 +81,14 @@ fun ForgeUtil.getOnlinePlayers(): List<ServerPlayer> {
         .filterNotNull()
 }
 
-fun ForgeUtil.getOnlinePlayer(uuid: UUID): ServerPlayer? {
+fun NeoForgeUtil.getOnlinePlayer(uuid: UUID): ServerPlayer? {
     return serverOrNull?.playerList?.getPlayer(uuid)
 }
 
-fun ForgeUtil.getOnlinePlayer(name: String): ServerPlayer? {
+fun NeoForgeUtil.getOnlinePlayer(name: String): ServerPlayer? {
     return serverOrNull?.playerList?.getPlayerByName(name)
 }
 
-fun ForgeUtil.getNextTickTime(): Double {
+fun NeoForgeUtil.getNextTickTime(): Double {
     return serverOrNull?.nextTickTime?.toDouble() ?: 0.0
 }

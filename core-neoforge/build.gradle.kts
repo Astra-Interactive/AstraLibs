@@ -1,15 +1,15 @@
+import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireJinfo
+
 plugins {
     kotlin("jvm")
     kotlin("plugin.serialization")
-    alias(libs.plugins.forgegradle)
+    alias(libs.plugins.neoforgegradle)
 }
 
 dependencies {
     // Kotlin
     compileOnly(libs.kotlin.coroutines.core)
-
     compileOnly(libs.klibs.mikro.core)
-
     compileOnly(libs.kyori.api)
     compileOnly(libs.kyori.gson)
     compileOnly(libs.kyori.legacy)
@@ -25,16 +25,18 @@ dependencies {
     implementation(projects.command)
 }
 
-dependencies {
-    minecraft(
-        "net.minecraftforge",
-        "forge",
-        "${libs.versions.minecraft.mojang.version.get()}-${libs.versions.minecraft.forgeversion.get()}"
+tasks.withType<JavaCompile> {
+    javaCompiler.set(
+        javaToolchains.compilerFor {
+            requireJinfo.jtarget.majorVersion
+                .let(JavaLanguageVersion::of)
+                .let(languageVersion::set)
+        }
     )
 }
 
-minecraft {
-    mappings("official", libs.versions.minecraft.mojang.version.get())
+dependencies {
+    compileOnly(libs.minecraft.neoforgeversion)
 }
 
 configurations.runtimeElements {
