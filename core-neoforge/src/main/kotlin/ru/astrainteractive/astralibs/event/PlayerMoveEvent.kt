@@ -16,7 +16,7 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
 class PlayerMoveEvent(
-    val instance: PlayerTickEvent,
+    val instance: PlayerTickEvent.Post,
     val oldLocation: Location,
     val newLocation: Location,
     val player: Player
@@ -27,7 +27,7 @@ fun playerMoveFlowEvent() = flow {
         .newBuilder()
         .expireAfterAccess(10.seconds.toJavaDuration())
         .build<UUID, Location>()
-    flowEvent<PlayerTickEvent>()
+    flowEvent<PlayerTickEvent.Post>()
         .filter { it.entity is Player }
         .onEach { event ->
             val player = event.entity.tryCast<Player>() ?: return@onEach
