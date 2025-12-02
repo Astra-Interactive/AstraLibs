@@ -8,7 +8,7 @@ import ru.astrainteractive.astralibs.server.util.NeoForgeUtil
 import java.util.concurrent.Executor
 import kotlin.coroutines.CoroutineContext
 
-class NeoForgeMainDispatcher2 : MainCoroutineDispatcher() {
+class NeoForgeMainDispatcher : MainCoroutineDispatcher() {
     override val immediate: MainCoroutineDispatcher
         get() = this
     private val executor = when (FMLEnvironment.dist) {
