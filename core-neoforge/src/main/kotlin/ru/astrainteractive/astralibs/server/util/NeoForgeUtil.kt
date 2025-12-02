@@ -26,7 +26,7 @@ import java.util.UUID
 object NeoForgeUtil : Logger by JUtiltLogger("AstraLibs-ForgeUtil") {
     private val serverFlow = flowEvent<ServerStartedEvent>()
         .map { event -> event.server }
-        .flowOn(Dispatchers.IO)
+        .flowOn(Dispatchers.Unconfined)
         .stateIn(GlobalScope, SharingStarted.Eagerly, null)
 
     val serverOrNull: MinecraftServer?
