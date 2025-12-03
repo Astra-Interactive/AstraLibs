@@ -1,9 +1,8 @@
-package ru.astrainteractive.astralibs.async
+package ru.astrainteractive.astralibs.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitScheduler
-import kotlin.coroutines.AbstractCoroutineContextElement
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -19,13 +18,12 @@ class BukkitAsyncDispatcher(private val plugin: Plugin) : CoroutineDispatcher() 
         if (!plugin.isEnabled) {
             return
         }
-        val key = (context as? AbstractCoroutineContextElement)?.key as? CoroutineTimings.Key
-        val timedRunnable = key?.let(context::get)
-        if (timedRunnable == null) {
+        val coroutineTimings = context[CoroutineTimings.Key]
+        if (coroutineTimings == null) {
             plugin.server.scheduler.runTaskAsynchronously(plugin, block)
         } else {
-            timedRunnable.queue.add(block)
-            plugin.server.scheduler.runTaskAsynchronously(plugin, timedRunnable)
+            coroutineTimings.queue.add(block)
+            plugin.server.scheduler.runTaskAsynchronously(plugin, coroutineTimings)
         }
     }
 }

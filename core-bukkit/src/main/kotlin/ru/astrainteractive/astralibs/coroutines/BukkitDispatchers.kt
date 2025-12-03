@@ -1,6 +1,7 @@
-package ru.astrainteractive.astralibs.async
+package ru.astrainteractive.astralibs.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.MainCoroutineDispatcher
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
 /**
@@ -8,8 +9,8 @@ import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
  */
 @Suppress("VariableNaming")
 interface BukkitDispatchers : KotlinDispatchers {
-    val BukkitMain: CoroutineDispatcher
+    val BukkitMain: MainCoroutineDispatcher
     val BukkitAsync: CoroutineDispatcher
-    override val Main: CoroutineDispatcher
+    override val Main: MainCoroutineDispatcher
         get() = BukkitMain
 }

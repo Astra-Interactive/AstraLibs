@@ -22,4 +22,6 @@ dependencies {
 
     testImplementation(libs.tests.kotlin.test)
     testImplementation(libs.kotlin.serialization.kaml)
+    testImplementation(libs.kotlin.coroutines.core)
+    testImplementation(libs.klibs.mikro.core)
 }

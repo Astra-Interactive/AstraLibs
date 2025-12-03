@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.coroutine
+package ru.astrainteractive.astralibs.coroutines
 
 import kotlinx.coroutines.MainCoroutineDispatcher
 import net.minecraft.client.Minecraft
@@ -14,7 +14,7 @@ class NeoForgeMainDispatcher : MainCoroutineDispatcher() {
     private val executor = when (FMLEnvironment.dist) {
         Dist.CLIENT -> Minecraft.getInstance()
         Dist.DEDICATED_SERVER -> Executor { block ->
-            NeoForgeUtil.requireServer().executeBlocking(block) // .doRunTask(task)
+            NeoForgeUtil.requireServer().executeBlocking(block)
         }
     }
 
@@ -23,6 +23,13 @@ class NeoForgeMainDispatcher : MainCoroutineDispatcher() {
     }
 
     override fun dispatch(context: CoroutineContext, block: Runnable) {
-        executor.execute(block)
+        val coroutineTimings = context[CoroutineTimings.Key]
+
+        if (coroutineTimings == null) {
+            executor.execute(block)
+        } else {
+            coroutineTimings.queue.add(block)
+            executor.execute(coroutineTimings)
+        }
     }
 }

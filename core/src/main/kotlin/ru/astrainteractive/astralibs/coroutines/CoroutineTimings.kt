@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.async
+package ru.astrainteractive.astralibs.coroutines
 
 import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
 import java.util.Queue
@@ -14,11 +14,11 @@ import kotlin.coroutines.CoroutineContext
  * @see <a href="https://github.com/Shynixn/MCCoroutine/blob/c7de1e8b6409351a67a74d1c2c87887e98f9e989/mccoroutine-folia-api/src/main/java/com/github/shynixn/mccoroutine/folia/CoroutineTimings.kt#L23">Original</a>
  */
 @Suppress("MaxLineLength")
-class CoroutineTimings : AbstractCoroutineContextElement(Key()), Runnable {
+class CoroutineTimings : AbstractCoroutineContextElement(Key), Runnable {
     /**
      * Key identifier of the context element.
      */
-    class Key : CoroutineContext.Key<CoroutineTimings>
+    data object Key : CoroutineContext.Key<CoroutineTimings>
 
     /**
      *  Multiple tasks can be assigned to a single coroutine. We implement this by a queue.
@@ -35,7 +35,7 @@ class CoroutineTimings : AbstractCoroutineContextElement(Key()), Runnable {
      * The general contract of the method `run` is that it may
      * take any action whatsoever.
      *
-     * @see java.lang.Thread.run
+     * @see Thread.run
      */
     override fun run() {
         queue.poll()?.run()

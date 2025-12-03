@@ -13,9 +13,7 @@ import net.neoforged.bus.api.EventPriority
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 import ru.astrainteractive.astralibs.event.flowEvent
 
-class NeoForgeCommandRegistrarContext(
-    private val mainScope: CoroutineScope,
-) {
+class NeoForgeCommandRegistrarContext(private val mainScope: CoroutineScope) {
     private val registerCommandsEvent = flowEvent<RegisterCommandsEvent>(EventPriority.HIGHEST)
         .filterNotNull()
         .stateIn(mainScope, SharingStarted.Eagerly, null)
