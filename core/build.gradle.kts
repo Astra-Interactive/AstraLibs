@@ -12,11 +12,11 @@ dependencies {
     compileOnly(libs.kotlin.serialization.protobuf)
     compileOnly(libs.kotlin.serialization.kaml)
 
-    compileOnly(libs.kyori.api)
-    compileOnly(libs.kyori.gson)
-    compileOnly(libs.kyori.legacy)
-    compileOnly(libs.kyori.plain)
-    compileOnly(libs.kyori.minimessage)
+    compileOnly(libs.minecraft.kyori.api)
+    compileOnly(libs.minecraft.kyori.gson)
+    compileOnly(libs.minecraft.kyori.legacy)
+    compileOnly(libs.minecraft.kyori.plain)
+    compileOnly(libs.minecraft.kyori.minimessage)
 
     compileOnly(libs.minecraft.luckperms)
 
