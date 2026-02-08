@@ -13,6 +13,7 @@ import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
 import ru.astrainteractive.klibs.mikro.core.coroutines.TickFlow
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 class TickFlowService(
     coroutineContext: CoroutineContext = Dispatchers.IO,
@@ -20,6 +21,18 @@ class TickFlowService(
     private val initialDelay: Flow<Duration> = flowOf(Duration.ZERO),
     private val executor: ServiceExecutor
 ) : Service {
+    constructor(
+        coroutineContext: CoroutineContext = Dispatchers.IO,
+        delay: Duration,
+        initialDelay: Duration = Duration.ZERO,
+        executor: ServiceExecutor
+    ) : this(
+        coroutineContext = Dispatchers.IO,
+        delay = flowOf(delay),
+        initialDelay = flowOf(initialDelay),
+        executor = executor
+    )
+
     private val scope = CoroutineFeature
         .Default(coroutineContext)
         .withTimings()
