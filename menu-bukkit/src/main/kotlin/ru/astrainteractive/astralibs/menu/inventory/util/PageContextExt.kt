@@ -28,5 +28,5 @@ object PageContextExt {
      * @param i is the slot index of item inside inventory
      * @return the index of item inside your items list considering [PageContext.maxItemsPerPage]
      */
-    fun PageContext.getIndex(i: Int): Int = maxItemsPerPage * page + i
+    fun PageContext.indexOfSlot(i: Int): Int = maxItemsPerPage * page + i
 }

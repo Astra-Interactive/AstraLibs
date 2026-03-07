@@ -30,16 +30,16 @@ minecraft-astralibs = "3.31.1"
 minecraft-bstats = "3.2.1"
 minecraft-bungee = "1.21-R0.5-SNAPSHOT"
 minecraft-essentialsx = "2.21.2"
-minecraft-fabric-api = "0.143.7+"
-minecraft-fabric-kotlin = "1.13.9+"
-minecraft-fabric-loader = "0.18.4"
-minecraft-fabric-loom = "1.15.4"
+minecraft-fabric-api = "0.139.5+"
+minecraft-fabric-kotlin = "1.13.7+"
+minecraft-fabric-loader = "0.18.2"
+minecraft-fabric-loom = "1.14.6"
 minecraft-kyori = "4.26.1"
 minecraft-luckperms = "5.5"
 minecraft-mcprotocollib = "1.21.7-SNAPSHOT"
 minecraft-mockbukkit = "4.33.2"
 minecraft-mojang-version = "1.20.1"
-minecraft-neoforgeversion = "21.10.64"
+minecraft-neoforgeversion = "21.1.129"
 minecraft-packetevents = "2.11.2"
 minecraft-papi = "2.12.2"
 minecraft-protocollib = "5.3.0"
@@ -49,12 +49,14 @@ minecraft-vault = "1.7.1"
 minecraft-velocity = "4.0.0-SNAPSHOT"
 minecraft-neoforgegradle = "7.1.20"
 minecraft-forgeversion = "47.2.20"
+minecraft-brigadier = "1.0.500"
 telegrambots = "9.4.0"
 tests-junit-bom = "6.0.3"
 tests-junit-jupiter-api = "6.0.3"
 tests-mockito = "5.22.0"
 tests-org-testing = "7.12.0"
 tests-turbine = "1.2.1"
+jmh-core = "1.37"
 
 [libraries]
 cache4k = { module = "io.github.reactivecircus.cache4k:cache4k-jvm", version.ref = "cache4k" }
@@ -67,7 +69,6 @@ exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "e
 exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
 exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
 exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
-gradle-shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "gradle-shadow" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 jda = { module = "net.dv8tion:JDA", version.ref = "jda" }
@@ -127,6 +128,7 @@ minecraft-spigot-core = { module = "org.spigotmc:spigot", version.ref = "minecra
 minecraft-towny = { module = "com.palmergames.bukkit.towny:towny", version.ref = "minecraft-towny" }
 minecraft-vaultapi = { module = "com.github.MilkBowl:VaultAPI", version.ref = "minecraft-vault" }
 minecraft-velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "minecraft-velocity" }
+minecraft-brigadier = { module = "com.mojang:brigadier", version.ref = "minecraft-brigadier" }
 telegrambots-client = { module = "org.telegram:telegrambots-client", version.ref = "telegrambots" }
 telegrambots-extensions = { module = "org.telegram:telegrambots-extensions", version.ref = "telegrambots" }
 telegrambots-longpolling = { module = "org.telegram:telegrambots-longpolling", version.ref = "telegrambots" }
@@ -138,7 +140,7 @@ tests-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 tests-mockito = { module = "org.mockito:mockito-core", version.ref = "tests-mockito" }
 tests-org-testing = { module = "org.testng:testng", version.ref = "tests-org-testing" }
 tests-turbine = { module = "app.cash.turbine:turbine", version.ref = "tests-turbine" }
-
+jmh-core = { module = "org.openjdk.jmh:jmh-core", version.ref = "jmh-core" }
 [plugins]
 gradle-buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "gradle-buildconfig" }
 gradle-fabric-loom = { id = "fabric-loom", version.ref = "minecraft-fabric-loom" }
