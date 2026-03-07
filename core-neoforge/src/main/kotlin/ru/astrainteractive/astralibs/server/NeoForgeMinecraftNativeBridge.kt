@@ -2,44 +2,44 @@ package ru.astrainteractive.astralibs.server
 
 import ru.astrainteractive.astralibs.permission.LuckPermsPermissible
 import ru.astrainteractive.astralibs.permission.Permissible
-import ru.astrainteractive.astralibs.server.player.MinecraftPlayer
-import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayer
-import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
+import ru.astrainteractive.astralibs.server.player.MinecraftPlayerSnapshot
+import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayerSnapshot
+import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayerSnapshot
 import ru.astrainteractive.astralibs.server.util.NeoForgeUtil
 import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.getOnlinePlayer
 import java.util.UUID
 
 class NeoForgeMinecraftNativeBridge : MinecraftNativeBridge {
-    override fun OnlineMinecraftPlayer.asAudience(): Audience {
+    override fun OnlineMinecraftPlayerSnapshot.asAudience(): Audience {
         return OnlinePlayerAudience(this)
     }
 
-    override fun OnlineMinecraftPlayer.asLocatable(): Locatable {
+    override fun OnlineMinecraftPlayerSnapshot.asLocatable(): Locatable {
         return OnlinePlayerLocatable(this)
     }
 
-    override fun OnlineMinecraftPlayer.asTeleportable(): Teleportable {
+    override fun OnlineMinecraftPlayerSnapshot.asTeleportable(): Teleportable {
         return OnlinePlayerTeleportable(this)
     }
 
-    override fun MinecraftPlayer.asPermissible(): Permissible {
+    override fun MinecraftPlayerSnapshot.asPermissible(): Permissible {
         return LuckPermsPermissible(uuid)
     }
 
-    private fun findOnlinePlayer(uuid: UUID): OnlineMinecraftPlayer? {
+    private fun findOnlinePlayer(uuid: UUID): OnlineMinecraftPlayerSnapshot? {
         val player = NeoForgeUtil.getOnlinePlayer(uuid) ?: return null
         return player.asOnlineMinecraftPlayer()
     }
 
-    private fun findOfflinePlayer(uuid: UUID): OfflineMinecraftPlayer? {
+    private fun findOfflinePlayer(uuid: UUID): OfflineMinecraftPlayerSnapshot? {
         val player = NeoForgeUtil.getOnlinePlayer(uuid) ?: return null
-        return OfflineMinecraftPlayer(
+        return OfflineMinecraftPlayerSnapshot(
             uuid = player.uuid,
         )
     }
 
-    override fun findPlayer(uuid: UUID): MinecraftPlayer? {
+    override fun findPlayer(uuid: UUID): MinecraftPlayerSnapshot? {
         return findOnlinePlayer(uuid) ?: findOfflinePlayer(uuid)
     }
 }

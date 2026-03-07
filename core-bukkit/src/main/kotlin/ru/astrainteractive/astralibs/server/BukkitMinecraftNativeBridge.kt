@@ -3,46 +3,46 @@ package ru.astrainteractive.astralibs.server
 import org.bukkit.Bukkit
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
 import ru.astrainteractive.astralibs.permission.Permissible
-import ru.astrainteractive.astralibs.server.player.MinecraftPlayer
-import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayer
-import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
+import ru.astrainteractive.astralibs.server.player.MinecraftPlayerSnapshot
+import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayerSnapshot
+import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayerSnapshot
 import java.util.UUID
 
 class BukkitMinecraftNativeBridge : MinecraftNativeBridge {
-    override fun OnlineMinecraftPlayer.asAudience(): Audience {
+    override fun OnlineMinecraftPlayerSnapshot.asAudience(): Audience {
         return OnlinePlayerAudience(this)
     }
 
-    override fun OnlineMinecraftPlayer.asLocatable(): Locatable {
+    override fun OnlineMinecraftPlayerSnapshot.asLocatable(): Locatable {
         return OnlinePlayerLocatable(this)
     }
 
-    override fun OnlineMinecraftPlayer.asTeleportable(): Teleportable {
+    override fun OnlineMinecraftPlayerSnapshot.asTeleportable(): Teleportable {
         return OnlinePlayerTeleportable(this)
     }
 
-    override fun MinecraftPlayer.asPermissible(): Permissible {
+    override fun MinecraftPlayerSnapshot.asPermissible(): Permissible {
         val player = Bukkit.getPlayer(uuid) ?: error("Player ${this.uuid} is not online")
         return player.toPermissible()
     }
 
-    private fun findOnlinePlayer(uuid: UUID): OnlineMinecraftPlayer? {
+    private fun findOnlinePlayer(uuid: UUID): OnlineMinecraftPlayerSnapshot? {
         val player = Bukkit.getPlayer(uuid) ?: return null
-        return OnlineMinecraftPlayer(
+        return OnlineMinecraftPlayerSnapshot(
             uuid = player.uniqueId,
             name = player.name,
             ipAddress = player.address.hostName
         )
     }
 
-    private fun findOfflinePlayer(uuid: UUID): OfflineMinecraftPlayer {
+    private fun findOfflinePlayer(uuid: UUID): OfflineMinecraftPlayerSnapshot {
         val player = Bukkit.getOfflinePlayer(uuid)
-        return OfflineMinecraftPlayer(
+        return OfflineMinecraftPlayerSnapshot(
             uuid = player.uniqueId,
         )
     }
 
-    override fun findPlayer(uuid: UUID): MinecraftPlayer {
+    override fun findPlayer(uuid: UUID): MinecraftPlayerSnapshot {
         return findOnlinePlayer(uuid) ?: findOfflinePlayer(uuid)
     }
 }

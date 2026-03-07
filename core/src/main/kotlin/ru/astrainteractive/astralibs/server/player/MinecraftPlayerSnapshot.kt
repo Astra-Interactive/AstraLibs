@@ -4,20 +4,20 @@ import kotlinx.serialization.Serializable
 import ru.astrainteractive.klibs.mikro.extensions.serialization.UUIDSerializer
 import java.util.UUID
 
-interface MinecraftPlayer {
+interface MinecraftPlayerSnapshot {
     val uuid: UUID
 }
 
 @Serializable
-class OnlineMinecraftPlayer(
+class OnlineMinecraftPlayerSnapshot(
     @Serializable(UUIDSerializer::class)
     override val uuid: UUID,
     val name: String,
     val ipAddress: String
-) : MinecraftPlayer
+) : MinecraftPlayerSnapshot
 
 @Serializable
-class OfflineMinecraftPlayer(
+class OfflineMinecraftPlayerSnapshot(
     @Serializable(UUIDSerializer::class)
     override val uuid: UUID
-) : MinecraftPlayer
+) : MinecraftPlayerSnapshot

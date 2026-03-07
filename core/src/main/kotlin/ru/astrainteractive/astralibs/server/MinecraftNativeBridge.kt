@@ -1,14 +1,14 @@
 package ru.astrainteractive.astralibs.server
 
 import ru.astrainteractive.astralibs.permission.Permissible
-import ru.astrainteractive.astralibs.server.player.MinecraftPlayer
-import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
+import ru.astrainteractive.astralibs.server.player.MinecraftPlayerSnapshot
+import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayerSnapshot
 import java.util.UUID
 
 interface MinecraftNativeBridge {
-    fun OnlineMinecraftPlayer.asAudience(): Audience
-    fun OnlineMinecraftPlayer.asLocatable(): Locatable
-    fun OnlineMinecraftPlayer.asTeleportable(): Teleportable
-    fun MinecraftPlayer.asPermissible(): Permissible
-    fun findPlayer(uuid: UUID): MinecraftPlayer?
+    fun OnlineMinecraftPlayerSnapshot.asAudience(): Audience
+    fun OnlineMinecraftPlayerSnapshot.asLocatable(): Locatable
+    fun OnlineMinecraftPlayerSnapshot.asTeleportable(): Teleportable
+    fun MinecraftPlayerSnapshot.asPermissible(): Permissible
+    fun findPlayer(uuid: UUID): MinecraftPlayerSnapshot?
 }
