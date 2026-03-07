@@ -2,20 +2,22 @@ import kotlinx.benchmark.gradle.JvmBenchmarkTarget
 
 plugins {
     java
-    kotlin("jvm")
-    kotlin("plugin.serialization")
+    id("org.jetbrains.kotlin.jvm")
+    id("org.jetbrains.kotlin.plugin.serialization")
+    id("ru.astrainteractive.gradleplugin.detekt")
+    id("ru.astrainteractive.gradleplugin.java.version")
+    id("ru.astrainteractive.gradleplugin.publication")
+    id("ru.astrainteractive.gradleplugin.root.info")
     alias(libs.plugins.kotlin.benchmark)
     alias(libs.plugins.kotlin.allopen)
 }
 
 dependencies {
-    // Kotlin
+    implementation(libs.klibs.kstorage)
+    implementation(libs.klibs.mikro.core)
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.serialization.json)
-    // AstraLibs
-    implementation(libs.klibs.mikro.core)
-    implementation(libs.klibs.kstorage)
-    // Local
+
     implementation(projects.core)
 }
 
@@ -24,11 +26,11 @@ allOpen {
 }
 
 benchmark {
-    // Setup configurations
     targets {
-        // This one matches sourceSet name above
         register("benchmarks") {
-            this as JvmBenchmarkTarget
+            require(this is JvmBenchmarkTarget) {
+                "Only JvmBenchmarkTarget is allowed here"
+            }
             jmhVersion = "1.21"
         }
     }
@@ -39,9 +41,10 @@ sourceSets {
 }
 
 dependencies {
-    "benchmarksImplementation"("org.openjdk.jmh:jmh-core:1.37")
+    "benchmarksImplementation"(libs.jmh.core)
     "benchmarksImplementation"(libs.kotlin.benchmark.runtime)
-
-    "benchmarksImplementation"(sourceSets.getByName("main").output + sourceSets.getByName("main").runtimeClasspath)
     "benchmarksImplementation"(libs.kotlin.serialization.protobuf)
+    sourceSets.main.invoke {
+        "benchmarksImplementation"(output + runtimeClasspath)
+    }
 }

@@ -5,6 +5,7 @@ import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onEach
@@ -22,8 +23,9 @@ class PaperCommandRegistrarContext(
 
     fun registerWhenReady(node: LiteralCommandNode<CommandSourceStack>) {
         commandsRegistrarFlow
-            .mapNotNull { it?.registrar() }
-            .onEach { it.register(node) }
+            .filterNotNull()
+            .mapNotNull { registrarEvent -> registrarEvent.registrar() }
+            .onEach { commands -> commands.register(node) }
             .launchIn(mainScope)
     }
 }
