@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.permission
+package ru.astrainteractive.astralibs.server.permission
 
 /**
  * Represents a permission identifier in the system.

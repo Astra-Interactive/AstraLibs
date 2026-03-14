@@ -12,7 +12,7 @@ fun KLocation.asBukkitLocation(): org.bukkit.Location {
     )
 }
 
-fun org.bukkit.Location.asAstraLocation(): KLocation {
+fun org.bukkit.Location.asKLocation(): KLocation {
     return KLocation(
         x = x,
         y = y,

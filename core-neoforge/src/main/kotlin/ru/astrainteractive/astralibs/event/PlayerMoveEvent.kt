@@ -31,7 +31,7 @@ fun playerMoveFlowEvent() = flow {
         .filter { it.entity is Player }
         .onEach { event ->
             val player = event.entity.tryCast<Player>() ?: return@onEach
-            val KLocation = KLocation(
+            val kLocation = KLocation(
                 x = event.entity.x,
                 y = event.entity.y,
                 z = event.entity.z,
@@ -42,12 +42,12 @@ fun playerMoveFlowEvent() = flow {
                     .levelName
             )
             val cachedLocation = cache.get(event.entity.uuid) {
-                KLocation
+                kLocation
             }
             val event = PlayerMoveEvent(
                 instance = event,
                 oldKLocation = cachedLocation,
-                newKLocation = KLocation,
+                newKLocation = kLocation,
                 player = player
             )
             emit(event)

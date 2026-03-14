@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.permission
+package ru.astrainteractive.astralibs.server.permission
 
 import net.luckperms.api.LuckPerms
 import net.luckperms.api.LuckPermsProvider
@@ -10,10 +10,10 @@ import kotlin.collections.orEmpty
 import kotlin.text.replace
 import kotlin.text.toIntOrNull
 
-class LuckPermsPermissible(
+class LuckPermsKPermissible(
     private val uuid: UUID,
     logger: Logger = StubLogger
-) : Permissible,
+) : KPermissible,
     Logger by logger {
     private val luckPermsOrNull: LuckPerms?
         get() = runCatching { LuckPermsProvider.get() }

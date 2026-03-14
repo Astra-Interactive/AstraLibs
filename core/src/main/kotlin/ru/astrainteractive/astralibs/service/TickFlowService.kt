@@ -13,7 +13,6 @@ import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
 import ru.astrainteractive.klibs.mikro.core.coroutines.TickFlow
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
 
 class TickFlowService(
     coroutineContext: CoroutineContext = Dispatchers.IO,

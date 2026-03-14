@@ -1,11 +1,11 @@
-package ru.astrainteractive.astralibs.permission
+package ru.astrainteractive.astralibs.server.permission
 
 /**
  * Represents an entity (e.g., a player or user) that has permissions in the system.
  * This interface defines methods to check and retrieve permission-related information,
  * such as checking if a specific permission is granted and retrieving the allowed size range.
  */
-interface Permissible {
+interface KPermissible {
 
     /**
      * Checks whether the entity has the specified permission.

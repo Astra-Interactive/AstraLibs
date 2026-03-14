@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.command.api.exception
 
 import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
-import ru.astrainteractive.astralibs.permission.Permission
+import ru.astrainteractive.astralibs.server.permission.Permission
 import ru.astrainteractive.astralibs.string.StringDesc
 
 class StringDescCommandException(
