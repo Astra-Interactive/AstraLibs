@@ -2,19 +2,15 @@ package ru.astrainteractive.astralibs.server.util
 
 import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayer
-import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
+import ru.astrainteractive.astralibs.server.player.BukkitKPlayer
+import ru.astrainteractive.astralibs.server.player.BukkitOnlineKPlayer
+import ru.astrainteractive.astralibs.server.player.KPlayer
+import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
 
-fun Player.asOnlineMinecraftPlayer(): OnlineMinecraftPlayer {
-    return OnlineMinecraftPlayer(
-        uuid = uniqueId,
-        name = name,
-        ipAddress = address?.hostName.orEmpty()
-    )
+fun Player.asOnlineMinecraftPlayer(): OnlineKPlayer {
+    return BukkitOnlineKPlayer(instance = this)
 }
 
-fun OfflinePlayer.asOfflineMinecraftPlayer(): OfflineMinecraftPlayer {
-    return OfflineMinecraftPlayer(
-        uuid = uniqueId,
-    )
+fun OfflinePlayer.asOfflineMinecraftPlayer(): KPlayer {
+    return BukkitKPlayer(instance = this)
 }

@@ -1,12 +1,13 @@
 package ru.astrainteractive.astralibs.server.util
 
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.level.storage.ServerLevelData
 import ru.astrainteractive.astralibs.server.Teleportable
-import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
 
-fun OnlineMinecraftPlayer.asTeleportable() = Teleportable { location ->
-    val player = NeoForgeUtil.getOnlinePlayer(uuid) ?: return@Teleportable
-    val level = NeoForgeUtil.serverOrNull
+fun ServerPlayer.asTeleportable() = Teleportable { location ->
+    val player = this
+
+    val level = player.server
         ?.allLevels
         ?.firstOrNull { (it.level.levelData as ServerLevelData).levelName == location.worldName }
         ?: return@Teleportable

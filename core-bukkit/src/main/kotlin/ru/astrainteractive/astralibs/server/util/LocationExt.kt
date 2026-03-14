@@ -1,9 +1,9 @@
 package ru.astrainteractive.astralibs.server.util
 
 import org.bukkit.Bukkit
-import ru.astrainteractive.astralibs.server.location.Location
+import ru.astrainteractive.astralibs.server.location.KLocation
 
-fun Location.asBukkitLocation(): org.bukkit.Location {
+fun KLocation.asBukkitLocation(): org.bukkit.Location {
     return org.bukkit.Location(
         Bukkit.getWorld(worldName),
         x,
@@ -12,8 +12,8 @@ fun Location.asBukkitLocation(): org.bukkit.Location {
     )
 }
 
-fun org.bukkit.Location.asAstraLocation(): Location {
-    return Location(
+fun org.bukkit.Location.asKLocation(): KLocation {
+    return KLocation(
         x = x,
         y = y,
         z = z,

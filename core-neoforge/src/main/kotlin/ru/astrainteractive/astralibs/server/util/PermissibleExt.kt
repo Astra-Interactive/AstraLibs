@@ -1,12 +1,12 @@
 package ru.astrainteractive.astralibs.server.util
 
 import net.minecraft.world.entity.player.Player
-import ru.astrainteractive.astralibs.permission.LuckPermsPermissible
-import ru.astrainteractive.astralibs.permission.Permissible
+import ru.astrainteractive.astralibs.server.permission.KPermissible
+import ru.astrainteractive.astralibs.server.permission.LuckPermsKPermissible
 
-fun Player.asPermissible(): Permissible {
+fun Player.asPermissible(): KPermissible {
     return if (NeoForgeUtil.isModLoaded("luckperms")) {
-        LuckPermsPermissible(this.uuid)
+        LuckPermsKPermissible(this.uuid)
     } else {
         error("No permission provider loaded!")
     }

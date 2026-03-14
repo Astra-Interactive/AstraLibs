@@ -1,8 +1,10 @@
-package ru.astrainteractive.astralibs.permission
+package ru.astrainteractive.astralibs.server.permission
 
-class BukkitPermissible(
-    private val bukkitPermissible: org.bukkit.permissions.Permissible
-) : Permissible {
+import org.bukkit.permissions.Permissible
+
+class BukkitKPermissible(
+    private val bukkitPermissible: Permissible
+) : KPermissible {
 
     override fun hasPermission(permission: Permission): Boolean {
         return bukkitPermissible.hasPermission(permission.value)

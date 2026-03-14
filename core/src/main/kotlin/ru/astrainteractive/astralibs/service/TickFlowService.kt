@@ -20,6 +20,18 @@ class TickFlowService(
     private val initialDelay: Flow<Duration> = flowOf(Duration.ZERO),
     private val executor: ServiceExecutor
 ) : Service {
+    constructor(
+        coroutineContext: CoroutineContext = Dispatchers.IO,
+        delay: Duration,
+        initialDelay: Duration = Duration.ZERO,
+        executor: ServiceExecutor
+    ) : this(
+        coroutineContext = Dispatchers.IO,
+        delay = flowOf(delay),
+        initialDelay = flowOf(initialDelay),
+        executor = executor
+    )
+
     private val scope = CoroutineFeature
         .Default(coroutineContext)
         .withTimings()

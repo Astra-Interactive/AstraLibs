@@ -30,13 +30,7 @@ object NeoForgeUtil : Logger by JUtiltLogger("AstraLibs-ForgeUtil") {
         .stateIn(GlobalScope, SharingStarted.Eagerly, null)
 
     val serverOrNull: MinecraftServer?
-        get() {
-            val server = serverFlow.value
-            if (server == null) {
-                error { "#serverOrNull could not get server!" }
-            }
-            return server
-        }
+        get() = ServerLifecycleHooks.getCurrentServer()
 
     suspend fun awaitServer(): MinecraftServer {
         return serverFlow.filterNotNull().first()

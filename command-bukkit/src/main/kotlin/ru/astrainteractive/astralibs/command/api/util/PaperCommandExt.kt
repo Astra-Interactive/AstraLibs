@@ -14,7 +14,7 @@ import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
 import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterException
 import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NotPlayerExecutorException
-import ru.astrainteractive.astralibs.permission.Permission
+import ru.astrainteractive.astralibs.server.permission.Permission
 
 fun command(
     alias: String,

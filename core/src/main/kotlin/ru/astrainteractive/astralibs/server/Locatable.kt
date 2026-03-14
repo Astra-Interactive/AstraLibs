@@ -1,11 +1,7 @@
 package ru.astrainteractive.astralibs.server
 
-import ru.astrainteractive.astralibs.server.location.Location
+import ru.astrainteractive.astralibs.server.location.KLocation
 
 fun interface Locatable {
-    fun getLocation(): Location
-
-    interface Factory<T : Any> {
-        fun from(instance: T): Locatable
-    }
+    fun getLocation(): KLocation
 }

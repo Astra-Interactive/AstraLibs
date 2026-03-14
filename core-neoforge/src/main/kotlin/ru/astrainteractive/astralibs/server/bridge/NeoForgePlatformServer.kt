@@ -1,7 +1,7 @@
-package ru.astrainteractive.astralibs.server
+package ru.astrainteractive.astralibs.server.bridge
 
-import ru.astrainteractive.astralibs.server.player.OfflineMinecraftPlayer
-import ru.astrainteractive.astralibs.server.player.OnlineMinecraftPlayer
+import ru.astrainteractive.astralibs.server.player.KPlayer
+import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
 import ru.astrainteractive.astralibs.server.util.NeoForgeUtil
 import ru.astrainteractive.astralibs.server.util.asOfflineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
@@ -11,25 +11,25 @@ import ru.astrainteractive.astralibs.server.util.getPlayerGameProfile
 import java.util.UUID
 
 object NeoForgePlatformServer : PlatformServer {
-    override fun getOnlinePlayers(): List<OnlineMinecraftPlayer> {
+    override fun getOnlinePlayers(): List<OnlineKPlayer> {
         return NeoForgeUtil
             .getOnlinePlayers()
             .map { serverPlayer -> serverPlayer.asOnlineMinecraftPlayer() }
     }
 
-    override fun findOnlinePlayer(uuid: UUID): OnlineMinecraftPlayer? {
+    override fun findOnlinePlayer(uuid: UUID): OnlineKPlayer? {
         return NeoForgeUtil.getOnlinePlayer(uuid)?.asOnlineMinecraftPlayer()
     }
 
-    override fun findOfflinePlayer(uuid: UUID): OfflineMinecraftPlayer? {
+    override fun findOfflinePlayer(uuid: UUID): KPlayer? {
         return NeoForgeUtil.getPlayerGameProfile(uuid)?.asOfflineMinecraftPlayer()
     }
 
-    override fun findOnlinePlayer(name: String): OnlineMinecraftPlayer? {
+    override fun findOnlinePlayer(name: String): OnlineKPlayer? {
         return NeoForgeUtil.getOnlinePlayer(name)?.asOnlineMinecraftPlayer()
     }
 
-    override fun findOfflinePlayer(name: String): OfflineMinecraftPlayer? {
+    override fun findOfflinePlayer(name: String): KPlayer? {
         return NeoForgeUtil.getPlayerGameProfile(name)?.asOfflineMinecraftPlayer()
     }
 }
