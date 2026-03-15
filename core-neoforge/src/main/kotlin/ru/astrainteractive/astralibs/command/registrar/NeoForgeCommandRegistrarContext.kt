@@ -11,17 +11,21 @@ import kotlinx.coroutines.flow.stateIn
 import net.minecraft.commands.CommandSourceStack
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.neoforge.event.RegisterCommandsEvent
+import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.event.flowEvent
 
-class NeoForgeCommandRegistrarContext(private val mainScope: CoroutineScope) {
+class NeoForgeCommandRegistrarContext(
+    private val mainScope: CoroutineScope
+) : CommandRegistrarContext {
     private val registerCommandsEvent = flowEvent<RegisterCommandsEvent>(EventPriority.HIGHEST)
         .filterNotNull()
         .stateIn(mainScope, SharingStarted.Eagerly, null)
 
-    fun registerWhenReady(node: LiteralArgumentBuilder<CommandSourceStack>) {
+    override fun registerWhenReady(node: LiteralArgumentBuilder<*>) {
+        node as LiteralArgumentBuilder<CommandSourceStack>
         registerCommandsEvent
-            .mapNotNull { it?.dispatcher }
-            .onEach { it.register(node) }
+            .mapNotNull { registerCommandsEvent -> registerCommandsEvent?.dispatcher }
+            .onEach { commandDispatcher -> commandDispatcher.register(node) }
             .launchIn(mainScope)
     }
 }

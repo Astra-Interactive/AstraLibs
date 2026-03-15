@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.server.player
 
 import net.minecraft.server.level.ServerPlayer
-import ru.astrainteractive.astralibs.server.Audience
+import ru.astrainteractive.astralibs.server.KAudience
 import ru.astrainteractive.astralibs.server.Locatable
 import ru.astrainteractive.astralibs.server.Teleportable
 import ru.astrainteractive.astralibs.server.permission.KPermissible
@@ -16,7 +16,7 @@ import java.util.*
 
 class NeoForgeOnlineKPlayer(val instance: ServerPlayer) :
     OnlineKPlayer,
-    Audience by instance.asAudience(),
+    KAudience by instance.asAudience(),
     Locatable by instance.asLocatable(),
     Teleportable by instance.asTeleportable(),
     KPermissible by instance.asPermissible() {

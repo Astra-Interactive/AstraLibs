@@ -1,6 +1,6 @@
 package ru.astrainteractive.astralibs.command.api.registrar
 
-import com.mojang.brigadier.tree.LiteralCommandNode
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import io.papermc.paper.command.brigadier.CommandSourceStack
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents
 import kotlinx.coroutines.CoroutineScope
@@ -16,16 +16,17 @@ import ru.astrainteractive.astralibs.event.flowLifecycleEvent
 class PaperCommandRegistrarContext(
     private val mainScope: CoroutineScope,
     plugin: JavaPlugin
-) {
+) : CommandRegistrarContext {
     private val commandsRegistrarFlow = plugin
         .flowLifecycleEvent(LifecycleEvents.COMMANDS)
         .shareIn(mainScope, SharingStarted.Eagerly, 1)
 
-    fun registerWhenReady(node: LiteralCommandNode<CommandSourceStack>) {
+    override fun registerWhenReady(node: LiteralArgumentBuilder<*>) {
+        node as LiteralArgumentBuilder<CommandSourceStack>
         commandsRegistrarFlow
             .filterNotNull()
             .mapNotNull { registrarEvent -> registrarEvent.registrar() }
-            .onEach { commands -> commands.register(node) }
+            .onEach { commands -> commands.register(node.build()) }
             .launchIn(mainScope)
     }
 }
