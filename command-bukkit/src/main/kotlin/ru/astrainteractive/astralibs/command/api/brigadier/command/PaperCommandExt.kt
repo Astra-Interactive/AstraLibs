@@ -1,25 +1,21 @@
 @file:Suppress("TooManyFunctions")
 
-package ru.astrainteractive.astralibs.command.util
+package ru.astrainteractive.astralibs.command.api.brigadier.command
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
-import net.minecraft.commands.CommandSourceStack
-import net.minecraft.commands.Commands
-import net.minecraft.server.MinecraftServer
-import net.minecraft.server.dedicated.DedicatedServer
-import net.minecraft.server.level.ServerPlayer
-import net.minecraft.server.rcon.RconConsoleSource
+import io.papermc.paper.command.brigadier.Commands
+import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
 import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterException
-import ru.astrainteractive.astralibs.command.api.exception.CommandException
 import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NotPlayerExecutorException
 import ru.astrainteractive.astralibs.server.permission.Permission
-import ru.astrainteractive.astralibs.server.util.asPermissible
+
+typealias CommandSourceStack = io.papermc.paper.command.brigadier.CommandSourceStack
 
 fun command(
     alias: String,
@@ -130,19 +126,14 @@ fun RequiredArgumentBuilder<CommandSourceStack, *>.hints(block: (CommandContext<
 
 @Throws(NoPermissionException::class)
 fun CommandContext<CommandSourceStack>.requirePermission(permission: Permission) {
-    if (source.source is RconConsoleSource) return
-    if (source.source is DedicatedServer) return
-    if (source.source is MinecraftServer) return
-    val serverPlayer = source.entity as? ServerPlayer ?: run {
-        throw CommandException("$source.source; is not a player!")
-    }
-    val hasPermission = serverPlayer.asPermissible().hasPermission(permission)
+    val hasPermission = this.source.sender.hasPermission(permission.value)
     if (!hasPermission) throw NoPermissionException(permission)
 }
 
 @Throws(NotPlayerExecutorException::class)
-fun CommandContext<CommandSourceStack>.requirePlayer(): ServerPlayer {
-    return this.source.player ?: throw NotPlayerExecutorException()
+fun CommandContext<CommandSourceStack>.requirePlayer(): Player {
+    return this.source.sender as? Player
+        ?: throw NotPlayerExecutorException()
 }
 
 @Throws(IllegalArgumentException::class)

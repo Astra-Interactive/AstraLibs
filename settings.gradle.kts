@@ -16,6 +16,7 @@ pluginManagement {
         maven("https://maven.enginehub.org/repo/")
         maven("https://maven.minecraftforge.net")
         maven("https://repo1.maven.org/maven2/")
+        maven("https://maven.fabricmc.net/")
         maven("https://maven.playpro.com")
         maven("https://jitpack.io")
     }
@@ -37,6 +38,7 @@ dependencyResolutionManagement {
         maven("https://repo.maven.apache.org/maven2/")
         maven("https://maven.enginehub.org/repo/")
         maven("https://repo1.maven.org/maven2/")
+        maven("https://maven.fabricmc.net/")
         maven("https://maven.playpro.com")
         maven("https://jitpack.io")
     }
@@ -49,6 +51,7 @@ rootProject.name = "AstraLibs"
 include(":core")
 include(":core-bukkit")
 include(":core-neoforge")
+include(":core-fabric")
 include(":menu-bukkit")
 include(":command")
 include(":command-bukkit")
