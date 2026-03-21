@@ -17,16 +17,17 @@ import ru.astrainteractive.astralibs.command.brigadier.sender.NeoForgeRconKComma
 import ru.astrainteractive.astralibs.command.brigadier.sender.NeoForgeServerKCommandSender
 import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
 
-class NeoForgeMultiplatformCommands : MultiplatformCommands<CommandSourceStack> {
-    override fun literal(literal: String): LiteralArgumentBuilder<CommandSourceStack> {
-        return Commands.literal(literal)
+@Suppress("UNCHECKED_CAST")
+class NeoForgeMultiplatformCommands : MultiplatformCommands {
+    override fun literal(literal: String): LiteralArgumentBuilder<Any> {
+        return Commands.literal(literal) as LiteralArgumentBuilder<Any>
     }
 
     override fun <T : Any> argument(
         name: String,
         argumentType: ArgumentType<T>
-    ): RequiredArgumentBuilder<CommandSourceStack, T> {
-        return Commands.argument(name, argumentType)
+    ): RequiredArgumentBuilder<Any, T> {
+        return Commands.argument(name, argumentType) as RequiredArgumentBuilder<Any, T>
     }
 
     override fun getSender(context: CommandContext<*>): KCommandSender {
