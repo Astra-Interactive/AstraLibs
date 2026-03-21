@@ -14,16 +14,17 @@ import ru.astrainteractive.astralibs.command.api.brigadier.sender.KPlayerKComman
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.PaperConsoleKCommandSender
 import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
 
-class PaperMultiplatformCommands : MultiplatformCommands<CommandSourceStack> {
-    override fun literal(literal: String): LiteralArgumentBuilder<CommandSourceStack> {
-        return Commands.literal(literal)
+@Suppress("UNCHECKED_CAST")
+class PaperMultiplatformCommands : MultiplatformCommands {
+    override fun literal(literal: String): LiteralArgumentBuilder<Any> {
+        return Commands.literal(literal) as LiteralArgumentBuilder<Any>
     }
 
     override fun <T : Any> argument(
         name: String,
         argumentType: ArgumentType<T>
-    ): RequiredArgumentBuilder<CommandSourceStack, T> {
-        return Commands.argument(name, argumentType)
+    ): RequiredArgumentBuilder<Any, T> {
+        return Commands.argument(name, argumentType) as RequiredArgumentBuilder<Any, T>
     }
 
     override fun getSender(context: CommandContext<*>): KCommandSender {

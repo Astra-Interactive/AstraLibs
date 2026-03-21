@@ -16,21 +16,19 @@ import ru.astrainteractive.astralibs.server.permission.Permission
 import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
 
 @Suppress("TooManyFunctions", "MaximumLineLength", "MaxLineLength")
-class MultiplatformCommand<CommandSourceStack>(
-    val commands: MultiplatformCommands<CommandSourceStack>
-) {
+class MultiplatformCommand(private val commands: MultiplatformCommands) {
     fun command(
         alias: String,
-        block: LiteralArgumentBuilder<CommandSourceStack>.() -> Unit
-    ): LiteralArgumentBuilder<CommandSourceStack> {
+        block: LiteralArgumentBuilder<Any>.() -> Unit
+    ): LiteralArgumentBuilder<Any> {
         val literal = commands.literal(alias)
         literal.block()
         return literal
     }
 
-    fun LiteralArgumentBuilder<CommandSourceStack>.literal(
+    fun LiteralArgumentBuilder<Any>.literal(
         alias: String,
-        block: LiteralArgumentBuilder<CommandSourceStack>.() -> Unit
+        block: LiteralArgumentBuilder<Any>.() -> Unit
     ) {
         val literal = commands.literal(alias)
         literal.block()
@@ -43,10 +41,10 @@ class MultiplatformCommand<CommandSourceStack>(
         val clazz: Class<T>
     )
 
-    inline fun <reified T : Any> LiteralArgumentBuilder<CommandSourceStack>.argument(
+    inline fun <reified T : Any> LiteralArgumentBuilder<Any>.argument(
         alias: String,
         type: ArgumentType<T>,
-        noinline block: RequiredArgumentBuilder<CommandSourceStack, T>.(BrigadierArgument<T>) -> Unit
+        noinline block: RequiredArgumentBuilder<Any, T>.(BrigadierArgument<T>) -> Unit
     ) = argument(
         alias = alias,
         type = type,
@@ -54,11 +52,11 @@ class MultiplatformCommand<CommandSourceStack>(
         block = block
     )
 
-    fun <T : Any> LiteralArgumentBuilder<CommandSourceStack>.argument(
+    fun <T : Any> LiteralArgumentBuilder<Any>.argument(
         alias: String,
         type: ArgumentType<T>,
         clazz: Class<T>,
-        block: RequiredArgumentBuilder<CommandSourceStack, T>.(BrigadierArgument<T>) -> Unit
+        block: RequiredArgumentBuilder<Any, T>.(BrigadierArgument<T>) -> Unit
     ) {
         val argument = commands.argument(alias, type)
         val brigadierArgument = BrigadierArgument(
@@ -70,10 +68,10 @@ class MultiplatformCommand<CommandSourceStack>(
         this.then(argument)
     }
 
-    inline fun <reified T : Any> RequiredArgumentBuilder<CommandSourceStack, *>.argument(
+    inline fun <reified T : Any> RequiredArgumentBuilder<Any, *>.argument(
         alias: String,
         type: ArgumentType<T>,
-        noinline block: RequiredArgumentBuilder<CommandSourceStack, T>.(BrigadierArgument<T>) -> Unit
+        noinline block: RequiredArgumentBuilder<Any, T>.(BrigadierArgument<T>) -> Unit
     ) = argument(
         alias = alias,
         type = type,
@@ -81,11 +79,11 @@ class MultiplatformCommand<CommandSourceStack>(
         block = block
     )
 
-    fun <T : Any> RequiredArgumentBuilder<CommandSourceStack, *>.argument(
+    fun <T : Any> RequiredArgumentBuilder<Any, *>.argument(
         alias: String,
         type: ArgumentType<T>,
         clazz: Class<T>,
-        block: RequiredArgumentBuilder<CommandSourceStack, T>.(BrigadierArgument<T>) -> Unit
+        block: RequiredArgumentBuilder<Any, T>.(BrigadierArgument<T>) -> Unit
     ) {
         val argument = commands.argument(alias, type)
         val brigadierArgument = BrigadierArgument(
@@ -97,9 +95,9 @@ class MultiplatformCommand<CommandSourceStack>(
         this.then(argument)
     }
 
-    fun RequiredArgumentBuilder<CommandSourceStack, *>.runs(
-        onFailure: (CommandContext<CommandSourceStack>, Throwable) -> Unit = { _, _ -> },
-        block: (RequiredArgumentBuilder<CommandSourceStack, *>.(CommandContext<CommandSourceStack>) -> Unit)
+    fun RequiredArgumentBuilder<Any, *>.runs(
+        onFailure: (CommandContext<Any>, Throwable) -> Unit = { _, _ -> },
+        block: (RequiredArgumentBuilder<Any, *>.(CommandContext<Any>) -> Unit)
     ) {
         executes { ctx ->
             runCatching { block.invoke(this, ctx) }
@@ -108,9 +106,9 @@ class MultiplatformCommand<CommandSourceStack>(
         }
     }
 
-    fun LiteralArgumentBuilder<CommandSourceStack>.runs(
-        onFailure: (CommandContext<CommandSourceStack>, Throwable) -> Unit = { _, _ -> },
-        block: LiteralArgumentBuilder<CommandSourceStack>.(CommandContext<CommandSourceStack>) -> Unit
+    fun LiteralArgumentBuilder<Any>.runs(
+        onFailure: (CommandContext<Any>, Throwable) -> Unit = { _, _ -> },
+        block: LiteralArgumentBuilder<Any>.(CommandContext<Any>) -> Unit
     ) {
         executes { ctx ->
             runCatching { block.invoke(this, ctx) }
@@ -119,7 +117,7 @@ class MultiplatformCommand<CommandSourceStack>(
         }
     }
 
-    fun RequiredArgumentBuilder<CommandSourceStack, *>.hints(block: (CommandContext<CommandSourceStack>) -> List<String>) {
+    fun RequiredArgumentBuilder<Any, *>.hints(block: (CommandContext<Any>) -> List<String>) {
         suggests { context, builder ->
             block.invoke(context).forEach(builder::suggest)
             builder.buildFuture()
@@ -127,12 +125,12 @@ class MultiplatformCommand<CommandSourceStack>(
     }
 
     @Throws(IllegalArgumentException::class)
-    fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(bArgument: BrigadierArgument<T>): T {
+    fun <T : Any> CommandContext<Any>.requireArgument(bArgument: BrigadierArgument<T>): T {
         return getArgument(bArgument.alias, bArgument.clazz)
     }
 
     @Throws(ArgumentConverterException::class)
-    fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(
+    fun <T : Any> CommandContext<Any>.requireArgument(
         bArgument: BrigadierArgument<String>,
         converter: ArgumentConverter<T>
     ): T {
@@ -141,7 +139,7 @@ class MultiplatformCommand<CommandSourceStack>(
     }
 
     @Throws(NoPermissionException::class)
-    fun CommandContext<CommandSourceStack>.requirePermission(permission: Permission) {
+    fun CommandContext<Any>.requirePermission(permission: Permission) {
         val sender = commands.getSender(this)
         val hasPermission = when (sender) {
             is ConsoleKCommandSender -> sender.hasPermission(permission)
@@ -151,7 +149,7 @@ class MultiplatformCommand<CommandSourceStack>(
     }
 
     @Throws(NotPlayerExecutorException::class)
-    fun CommandContext<CommandSourceStack>.requirePlayer(): OnlineKPlayer {
+    fun CommandContext<Any>.requirePlayer(): OnlineKPlayer {
         val sender = commands.getSender(this)
         return when (sender) {
             is ConsoleKCommandSender -> throw NotPlayerExecutorException()
@@ -159,7 +157,7 @@ class MultiplatformCommand<CommandSourceStack>(
         }
     }
 
-    fun CommandContext<CommandSourceStack>.getSender(): KCommandSender {
+    fun CommandContext<Any>.getSender(): KCommandSender {
         return commands.getSender(this)
     }
 }
