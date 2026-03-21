@@ -159,11 +159,6 @@ class MultiplatformCommand<CommandSourceStack>(
         }
     }
 
-    @Throws(NotPlayerExecutorException::class)
-    fun CommandContext<CommandSourceStack>.platformSender(): KCommandSender {
-        return commands.getSender(this)
-    }
-
     fun CommandContext<CommandSourceStack>.getSender(): KCommandSender {
         return commands.getSender(this)
     }
