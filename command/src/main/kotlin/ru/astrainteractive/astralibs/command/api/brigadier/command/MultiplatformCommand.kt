@@ -153,7 +153,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
         val sender = commands.getSender(this)
         return when (sender) {
             is ConsoleKCommandSender -> throw NotPlayerExecutorException()
-            is KPlayerKCommandSender -> sender
+            is KPlayerKCommandSender -> sender.instance
         }
     }
 

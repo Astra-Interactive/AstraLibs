@@ -5,6 +5,7 @@ import ru.astrainteractive.astralibs.server.KAudience
 import ru.astrainteractive.astralibs.server.KCommandDispatcher
 import ru.astrainteractive.astralibs.server.Locatable
 import ru.astrainteractive.astralibs.server.Teleportable
+import ru.astrainteractive.astralibs.server.annotation.InternalPlatformApi
 import ru.astrainteractive.astralibs.server.permission.KPermissible
 import ru.astrainteractive.astralibs.server.util.asKAudience
 import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
@@ -16,6 +17,7 @@ import ru.astrainteractive.klibs.mikro.core.util.cast
 import java.net.InetSocketAddress
 import java.util.*
 
+@OptIn(InternalPlatformApi::class)
 class NeoForgeOnlineKPlayer(val instance: ServerPlayer) :
     OnlineKPlayer,
     KAudience by instance.asKAudience(),

@@ -5,14 +5,17 @@ import ru.astrainteractive.astralibs.server.KCommandDispatcher
 import ru.astrainteractive.astralibs.server.permission.KPermissible
 import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
 
-sealed interface KCommandSender
+sealed interface KCommandSender : KAudience
+
 interface ConsoleKCommandSender :
     KCommandSender,
     KAudience,
     KPermissible,
     KCommandDispatcher
+
 class KPlayerKCommandSender(
-    instance: OnlineKPlayer
+    val instance: OnlineKPlayer
 ) : KCommandSender,
-    KCommandDispatcher,
-    OnlineKPlayer by instance
+    KAudience by instance,
+    KPermissible by instance,
+    KCommandDispatcher by instance
