@@ -1,11 +1,11 @@
-import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireJinfo
+import ru.astrainteractive.gradleplugin.property.util.requireJinfo
 
 plugins {
     alias(libs.plugins.gradle.fabric.loom)
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("ru.astrainteractive.gradleplugin.java.version")
-    id("ru.astrainteractive.gradleplugin.root.info")
+    id("ru.astrainteractive.gradleplugin.rootinfo")
 }
 dependencies {
     minecraft(libs.minecraft.fabric.mojang.get())

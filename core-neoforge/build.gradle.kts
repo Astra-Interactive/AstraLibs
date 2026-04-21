@@ -1,4 +1,4 @@
-import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireJinfo
+import ru.astrainteractive.gradleplugin.property.util.requireJinfo
 
 plugins {
     id("net.neoforged.gradle.userdev")
@@ -7,7 +7,7 @@ plugins {
     id("ru.astrainteractive.gradleplugin.detekt")
     id("ru.astrainteractive.gradleplugin.java.version")
     id("ru.astrainteractive.gradleplugin.publication")
-    id("ru.astrainteractive.gradleplugin.root.info")
+    id("ru.astrainteractive.gradleplugin.rootinfo")
 }
 
 dependencies {

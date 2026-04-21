@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.server.player
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.astrainteractive.astralibs.serialization.InetSocketAddressSerializer
-import ru.astrainteractive.klibs.mikro.extensions.serialization.UUIDSerializer
+import ru.astrainteractive.klibs.mikro.extensions.serialization.JUuidSerializer
 import java.net.InetSocketAddress
 import java.util.UUID
 
@@ -13,7 +13,7 @@ interface KPlayerSnapshot {
 
 @Serializable
 class OnlineKPlayerSnapshot(
-    @Serializable(UUIDSerializer::class)
+    @Serializable(JUuidSerializer::class)
     @SerialName("uuid")
     override val uuid: UUID,
     @SerialName("name")
@@ -25,7 +25,7 @@ class OnlineKPlayerSnapshot(
 
 @Serializable
 class OfflineKPlayerSnapshot(
-    @Serializable(UUIDSerializer::class)
+    @Serializable(JUuidSerializer::class)
     @SerialName("uuid")
     override val uuid: UUID
 ) : KPlayerSnapshot

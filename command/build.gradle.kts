@@ -4,7 +4,7 @@ plugins {
     id("ru.astrainteractive.gradleplugin.detekt")
     id("ru.astrainteractive.gradleplugin.java.version")
     id("ru.astrainteractive.gradleplugin.publication")
-    id("ru.astrainteractive.gradleplugin.root.info")
+    id("ru.astrainteractive.gradleplugin.rootinfo")
 }
 
 dependencies {

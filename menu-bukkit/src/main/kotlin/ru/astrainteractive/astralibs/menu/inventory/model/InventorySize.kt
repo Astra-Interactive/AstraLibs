@@ -3,6 +3,7 @@ package ru.astrainteractive.astralibs.menu.inventory.model
 /**
  * Menu sizes of inventory
  */
+@Suppress("MagicNumber")
 enum class InventorySize(val size: Int) {
     /**
      * Size is 9

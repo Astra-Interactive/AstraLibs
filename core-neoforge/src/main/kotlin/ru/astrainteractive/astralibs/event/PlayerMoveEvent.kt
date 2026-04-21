@@ -23,8 +23,7 @@ class PlayerMoveEvent(
 )
 
 fun playerMoveFlowEvent() = flow {
-    val cache = CacheBuilder<UUID, KLocation>
-        .newBuilder()
+    val cache = CacheBuilder<UUID, KLocation>.newBuilder()
         .expireAfterAccess(10.seconds.toJavaDuration())
         .build<UUID, KLocation>()
     flowEvent<PlayerTickEvent.Post>()
