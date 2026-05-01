@@ -3,8 +3,8 @@ package ru.astrainteractive.astralibs.configuration
 import org.bukkit.configuration.file.FileConfiguration
 import ru.astrainteractive.klibs.kstorage.api.MutableKrate
 import ru.astrainteractive.klibs.kstorage.api.StateFlowMutableKrate
+import ru.astrainteractive.klibs.kstorage.api.asStateFlowMutableKrate
 import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate
-import ru.astrainteractive.klibs.kstorage.util.asStateFlowMutableKrate
 
 object BukkitMutableStorageValue {
     inline fun <reified T> FileConfiguration.anyStateFlowMutableStorageValue(
