@@ -13,13 +13,17 @@ interface ClickListener {
      */
     fun onClick(e: InventoryClickEvent)
 
-    /**
-     * Place this on [InventorySlot] creation
-     */
-    fun remember(button: InventorySlot)
+    fun remember(index: Int, click: Click)
 
     /**
      * Place this in re-render of menu content
      */
     fun clear()
+}
+
+/**
+ * Place this on [InventorySlot] creation
+ */
+fun ClickListener.remember(slot: InventorySlot) {
+    remember(slot.index, slot.click)
 }
