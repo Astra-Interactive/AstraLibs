@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.menu.clicker
 
 import org.bukkit.event.inventory.InventoryClickEvent
 import ru.astrainteractive.astralibs.menu.core.Menu
-import ru.astrainteractive.astralibs.menu.inventory.InventoryMenu
+import ru.astrainteractive.astralibs.menu.inventory.api.InventoryMenu
 
 /**
  * This click listener listens for top inventory which is [InventoryMenu] to be clicked

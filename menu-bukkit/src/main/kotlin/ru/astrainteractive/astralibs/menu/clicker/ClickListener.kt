@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.menu.clicker
 
 import org.bukkit.event.inventory.InventoryClickEvent
-import ru.astrainteractive.astralibs.menu.inventory.InventoryMenu
+import ru.astrainteractive.astralibs.menu.inventory.api.InventoryMenu
 import ru.astrainteractive.astralibs.menu.slot.InventorySlot
 
 /**

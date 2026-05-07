@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package ru.astrainteractive.astralibs.menu.slot
 
 import net.kyori.adventure.text.Component
