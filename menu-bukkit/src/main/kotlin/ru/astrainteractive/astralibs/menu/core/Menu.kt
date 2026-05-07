@@ -54,7 +54,6 @@ interface Menu : InventoryHolder {
      * menu's. They are canceled together with [menuScope] in [onInventoryClosed].
      */
     val childComponents: List<CoroutineScope>
-        get() = emptyList()
 
     /**
      * Hook invoked right after the inventory is opened to the player. Implementers
