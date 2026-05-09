@@ -13,9 +13,24 @@ interface Paginator {
 
     fun openPage(page: Int)
 
-    fun openNextPage()
-
-    fun openPrevPage()
-
     fun update(block: (PaginatorContext) -> PaginatorContext)
+}
+
+val Paginator.context: PaginatorContext
+    get() = paginatorContextStateFlow.value
+
+fun Paginator.openNextPage() {
+    openPage(paginatorContextStateFlow.value.page + 1)
+}
+
+fun Paginator.openPrevPage() {
+    openPage(paginatorContextStateFlow.value.page - 1)
+}
+
+fun Paginator.setMaxItems(maxItems: Int) {
+    update { context -> context.copy(maxItems = maxItems) }
+}
+
+fun Paginator.setMaxItemsPerPage(maxItemsPerPage: Int) {
+    update { context -> context.copy(maxItemsPerPage = maxItemsPerPage) }
 }
