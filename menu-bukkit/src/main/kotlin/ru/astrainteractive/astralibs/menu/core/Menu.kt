@@ -1,17 +1,20 @@
 package ru.astrainteractive.astralibs.menu.core
 
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import net.kyori.adventure.text.Component
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.inventory.InventoryHolder
+import ru.astrainteractive.astralibs.coroutines.withTimings
 import ru.astrainteractive.astralibs.menu.clicker.ClickListener
 import ru.astrainteractive.astralibs.menu.clicker.remember
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
 import ru.astrainteractive.astralibs.menu.slot.InventorySlot
+import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
 
 /**
  * Contract of an interactive Bukkit menu.
@@ -24,51 +27,41 @@ import ru.astrainteractive.astralibs.menu.slot.InventorySlot
  * To make Bukkit events reach the menu, register a [DefaultInventoryClickEvent] listener
  * once during plugin startup.
  */
-interface Menu : InventoryHolder {
-
+abstract class Menu : InventoryHolder {
     /**
      * Owner of the menu. The [PlayerHolder.player] is the viewer for whom the inventory is opened.
      */
-    val playerHolder: PlayerHolder
+    abstract val playerHolder: PlayerHolder
 
     /**
      * Title rendered at the top of the inventory. Implementers usually pass it to
      * `Bukkit.createInventory` when constructing [getInventory].
      */
-    val title: Component
+    abstract val title: Component
 
     /**
      * Click dispatcher for this menu. Each rendered [InventorySlot] is registered here so that
      * incoming clicks are routed to the right handler.
      */
-    val clickListener: ClickListener
+    abstract val clickListener: ClickListener
 
     /**
-     * Coroutine scope tied to the menu's visible lifetime. It is cancelled in
+     * [Dispatchers.IO] Coroutine scope tied to the menu's visible lifetime. It is cancelled in
      * [onInventoryCloseEvent], so any work launched in it is cleaned up automatically.
      */
-    val menuScope: CoroutineScope
+    open val menuScope: CoroutineScope = CoroutineFeature.IO.withTimings()
 
     /**
      * Auxiliary scopes (e.g. paginators, async loaders) whose lifetime should follow the
      * menu's. They are canceled together with [menuScope] in [onInventoryCloseEvent].
      */
-    val childComponents: List<CoroutineScope>
-
-    /**
-     * Resets the visual state of the menu so it can be re-built from scratch. Clears
-     * both registered click handlers and inventory items.
-     */
-    fun render() {
-        clickListener.clear()
-        inventory.clear()
-    }
+    abstract val childComponents: List<CoroutineScope>
 
     /**
      * Default Bukkit click handler — delegates to [clickListener]. Override only if you
      * need to add behavior *around* the standard slot dispatch.
      */
-    fun onInventoryClickEvent(e: InventoryClickEvent) {
+    open fun onInventoryClickEvent(e: InventoryClickEvent) {
         clickListener.onClick(e)
     }
 
@@ -77,17 +70,24 @@ interface Menu : InventoryHolder {
      * coroutine scope owned by the menu. Override responsibly: always call `super` to
      * preserve cleanup semantics.
      */
-    fun onInventoryCloseEvent(e: InventoryCloseEvent) {
+    open fun onInventoryCloseEvent(e: InventoryCloseEvent) {
         clickListener.clear()
-        childComponents.forEach(CoroutineScope::cancel)
         menuScope.cancel()
+        childComponents.forEach(CoroutineScope::cancel)
+    }
+
+    /**
+     * Render your view, probably after [onInventoryOpenEvent]
+     */
+    open fun render() {
+        clear()
     }
 
     /**
      * Hook invoked right after the inventory is opened to the player. Implementers
-     * typically build the initial UI here (e.g. by calling [render]).
+     * typically build the initial UI here
      */
-    fun onInventoryOpenEvent(e: InventoryOpenEvent)
+    abstract fun onInventoryOpenEvent(e: InventoryOpenEvent)
 }
 
 /**
@@ -102,11 +102,38 @@ fun Menu.setInventorySlot(slot: InventorySlot) {
     inventory.setItem(slot.index, slot.item)
 }
 
+fun Menu.setInventorySlot(slots: Iterable<InventorySlot>) {
+    slots.forEach { slot ->
+        clickListener.remember(slot)
+        inventory.setItem(slot.index, slot.item)
+    }
+}
+
 /**
  * Conditional variant of [setInventorySlot]. When [predicate] returns `false`, the slot
  * is left untouched in [Menu] — neither the click handler nor the item is written.
  */
-fun Menu.setInventorySlotIf(slot: InventorySlot, predicate: () -> Boolean = { true }) {
+fun Menu.setInventorySlotIf(
+    slot: InventorySlot,
+    predicate: () -> Boolean
+) {
     if (!predicate.invoke()) return
     setInventorySlot(slot)
+}
+
+/**
+ * Resets the visual state of the menu so it can be re-built from scratch. Clears
+ * both registered click handlers and inventory items.
+ */
+fun Menu.clear() {
+    clickListener.clear()
+    inventory.clear()
+}
+
+/**
+ * Open inventory method for Menu class
+ * Should be executed on main thread
+ */
+fun Menu.open() {
+    playerHolder.player.openInventory(inventory)
 }
