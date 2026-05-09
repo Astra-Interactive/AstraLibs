@@ -99,6 +99,10 @@ fun InventorySlot.Builder.addLore(loreComponent: Component): InventorySlot.Build
     return this
 }
 
+fun InventorySlot.Builder.addLore(component: () -> Component): InventorySlot.Builder {
+    return addLore(component.invoke())
+}
+
 /** Applies [block] to the builder only when [condition] is true. */
 fun InventorySlot.Builder.predicate(
     condition: Boolean,
