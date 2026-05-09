@@ -9,7 +9,7 @@ import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.menu.core.Menu
 
 /**
- * To be able to use inventory events - you need to register this class somewhere. For example in [JavaPlugin.onEnable]
+ * Bukkit event listener that routes inventory events to the active [Menu]. Register once in [JavaPlugin.onEnable].
  */
 class DefaultInventoryClickEvent : EventListener {
     @EventHandler

@@ -11,15 +11,13 @@ import ru.astrainteractive.astralibs.menu.inventory.model.InventorySize
 import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
 
 /**
- * Default [Menu] implementation backed by a chest-style Bukkit [org.bukkit.inventory.Inventory] sized via
- * [inventorySize].
+ * Default [Menu] implementation backed by a chest-style Bukkit [Inventory] sized via [inventorySize].
  *
  * Provides ready-to-use defaults for the stateful collaborators declared by [Menu]:
  * - [clickListener] — a fresh [DefaultClickListener]
- * - [menuScope] — an unconfined [kotlinx.coroutines.CoroutineScope] cancelled with the menu
+ * - [menuScope] — an unconfined [CoroutineScope] cancelled with the menu
  *
- * Don't forget to register a [DefaultInventoryClickEvent] listener on plugin startup
- * so click/close events are dispatched here.
+ * Register a [DefaultInventoryClickEvent] listener on plugin startup so click/close events are dispatched here.
  */
 abstract class InventoryMenu : Menu {
 

@@ -2,10 +2,9 @@ package ru.astrainteractive.astralibs.menu.clicker
 
 import org.bukkit.event.inventory.InventoryClickEvent
 import ru.astrainteractive.astralibs.menu.core.Menu
-import ru.astrainteractive.astralibs.menu.inventory.api.InventoryMenu
 
 /**
- * This click listener listens for top inventory which is [InventoryMenu] to be clicked
+ * Default [ClickListener] implementation. Ignores clicks on inventories not backed by [Menu].
  */
 class DefaultClickListener : ClickListener {
     private val clicksMap = HashMap<Int, Click>()

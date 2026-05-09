@@ -27,8 +27,7 @@ import ru.astrainteractive.astralibs.menu.slot.InventorySlot
 interface Menu : InventoryHolder {
 
     /**
-     * Owner of the menu. The [PlayerHolder.player] is the viewer whose inventory will be
-     * opened in [open].
+     * Owner of the menu. The [PlayerHolder.player] is the viewer for whom the inventory is opened.
      */
     val playerHolder: PlayerHolder
 
@@ -39,8 +38,8 @@ interface Menu : InventoryHolder {
     val title: Component
 
     /**
-     * Click dispatcher for this menu. Each rendered [ru.astrainteractive.astralibs.menu.slot.InventorySlot]
-     * is registered here so that incoming clicks are routed to the right handler.
+     * Click dispatcher for this menu. Each rendered [InventorySlot] is registered here so that
+     * incoming clicks are routed to the right handler.
      */
     val clickListener: ClickListener
 

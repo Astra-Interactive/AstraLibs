@@ -11,13 +11,16 @@ import kotlin.collections.orEmpty
 import kotlin.collections.toMutableList
 
 /**
- * Basic inventory button from which you can inherit
+ * An inventory slot: a visual [item] placed at [index] that fires [click] when clicked.
+ *
+ * Build instances with [Builder].
  */
 interface InventorySlot {
     val item: ItemStack
     val index: Int
     val click: Click
 
+    /** Mutable builder for [InventorySlot]. */
     class Builder {
         var itemStack = ItemStack(Material.AIR)
         var index = 0
@@ -31,65 +34,41 @@ interface InventorySlot {
     }
 }
 
-/**
- * Set new material for current [InventorySlot.Builder.itemStack]
- */
 fun InventorySlot.Builder.setMaterial(material: Material): InventorySlot.Builder {
     itemStack.type = material
     return this
 }
 
-/**
- * Replace current ItemStack with new
- */
 fun InventorySlot.Builder.setItemStack(itemStack: ItemStack): InventorySlot.Builder {
     this.itemStack = itemStack
     return this
 }
 
-/**
- * Set inventory index of an item
- */
 fun InventorySlot.Builder.setIndex(index: Int): InventorySlot.Builder {
     this.index = index
     return this
 }
 
-/**
- * Set click listener for an item
- */
 fun InventorySlot.Builder.setOnClickListener(click: Click): InventorySlot.Builder {
     this.click = click
     return this
 }
 
-/**
- * Edit ItemStack
- */
 fun InventorySlot.Builder.editItemStack(block: ItemStack.() -> Unit): InventorySlot.Builder {
     itemStack = itemStack.apply(block)
     return this
 }
 
-/**
- * Edit ItemMeta
- */
 fun InventorySlot.Builder.editMeta(block: ItemMeta.() -> Unit): InventorySlot.Builder {
     itemStack.itemMeta = itemStack.itemMeta.apply(block)
     return this
 }
 
-/**
- * Set amount of ItemStack
- */
 fun InventorySlot.Builder.setAmount(amount: Int): InventorySlot.Builder {
     itemStack.amount = amount
     return this
 }
 
-/**
- * Set displayName of ItemStack
- */
 fun InventorySlot.Builder.setDisplayName(string: String): InventorySlot.Builder {
     editMeta {
         displayName(Component.text(string))
@@ -97,9 +76,6 @@ fun InventorySlot.Builder.setDisplayName(string: String): InventorySlot.Builder 
     return this
 }
 
-/**
- * Set displayName of ItemStack
- */
 fun InventorySlot.Builder.setDisplayName(component: Component): InventorySlot.Builder {
     editMeta {
         displayName(component)
@@ -107,9 +83,6 @@ fun InventorySlot.Builder.setDisplayName(component: Component): InventorySlot.Bu
     return this
 }
 
-/**
- * Set lore of ItemStack
- */
 fun InventorySlot.Builder.setLore(loreComponents: List<Component>): InventorySlot.Builder {
     editMeta {
         lore(loreComponents)
@@ -117,9 +90,6 @@ fun InventorySlot.Builder.setLore(loreComponents: List<Component>): InventorySlo
     return this
 }
 
-/**
- * Add lore line into ItemStack
- */
 fun InventorySlot.Builder.addLore(loreComponent: Component): InventorySlot.Builder {
     editMeta {
         val currentLore = lore().orEmpty().toMutableList()
@@ -129,9 +99,7 @@ fun InventorySlot.Builder.addLore(loreComponent: Component): InventorySlot.Build
     return this
 }
 
-/**
- * Add a predicate for computed builder action
- */
+/** Applies [block] to the builder only when [condition] is true. */
 fun InventorySlot.Builder.predicate(
     condition: Boolean,
     block: InventorySlot.Builder.() -> Unit

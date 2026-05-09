@@ -1,11 +1,13 @@
 package ru.astrainteractive.astralibs.menu.paginator.model
 
+import ru.astrainteractive.astralibs.menu.paginator.api.Paginator
+
 /**
- * Context of current page in [ru.astrainteractive.astralibs.menu.paginator.api.Paginator]
+ * Snapshot of the current pagination state used by [Paginator].
  *
- * @param page Page of current menu. Must be 0 by default
- * @param maxItems items in this menu
- * @param maxItemsPerPage items allowed in current page
+ * @param page Zero-based index of the current page.
+ * @param maxItems Total number of items across all pages.
+ * @param maxItemsPerPage Maximum number of items shown per page.
  */
 data class PaginatorContext(
     val page: Int,
@@ -13,28 +15,17 @@ data class PaginatorContext(
     val maxItemsPerPage: Int,
 )
 
-/**
- * Max pages in this menu
- */
+/** Total number of pages (integer division of [PaginatorContext.maxItems] by [PaginatorContext.maxItemsPerPage]). */
 val PaginatorContext.maxPages: Int
     get() = maxItems / maxItemsPerPage
 
-/**
- * Check for first page
- */
 val PaginatorContext.isFirstPage: Boolean
     get() = page == 0
 
-/**
- * Check for last page
- */
 val PaginatorContext.isLastPage: Boolean
     get() = page >= maxPages
 
 /**
- * Index of current item
- *
- * @param i is the slot index of item inside inventory
- * @return the index of item inside your items list considering [PaginatorContext.maxItemsPerPage]
+ * Converts a within-page slot index [i] to the absolute index in the full item list.
  */
 fun PaginatorContext.indexOfSlot(i: Int): Int = maxItemsPerPage * page + i
