@@ -8,7 +8,6 @@ import ru.astrainteractive.astralibs.menu.clicker.DefaultClickListener
 import ru.astrainteractive.astralibs.menu.core.Menu
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
 import ru.astrainteractive.astralibs.menu.inventory.model.InventorySize
-import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
 
 /**
  * Default [Menu] implementation backed by a chest-style Bukkit [Inventory] sized via [inventorySize].
@@ -19,7 +18,7 @@ import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
  *
  * Register a [DefaultInventoryClickEvent] listener on plugin startup so click/close events are dispatched here.
  */
-abstract class InventoryMenu : Menu {
+abstract class InventoryMenu : Menu() {
 
     /**
      * Size of the inventory created for this menu.
@@ -27,8 +26,6 @@ abstract class InventoryMenu : Menu {
     abstract val inventorySize: InventorySize
 
     override val clickListener: ClickListener = DefaultClickListener()
-
-    override val menuScope: CoroutineScope = CoroutineFeature.Unconfined
 
     private val _inventory: Inventory by lazy {
         Bukkit.createInventory(this, inventorySize.size, title)
