@@ -9,12 +9,16 @@ import ru.astrainteractive.astralibs.menu.paginator.model.maxPages
 /**
  * Default [Paginator] backed by a [MutableStateFlow]. Validates page bounds on every [openPage] call.
  */
-class DefaultPaginator : Paginator {
+class DefaultPaginator(
+    page: Int = 0,
+    maxItems: Int = 0,
+    maxItemsPerPage: Int = 0
+) : Paginator {
     private val _paginatorContextStateFlow = MutableStateFlow(
         PaginatorContext(
-            page = 0,
-            maxItems = 0,
-            maxItemsPerPage = 0
+            page = page,
+            maxItems = maxItems,
+            maxItemsPerPage = maxItemsPerPage
         )
     )
     override val paginatorContextStateFlow = _paginatorContextStateFlow.asStateFlow()
@@ -29,14 +33,6 @@ class DefaultPaginator : Paginator {
             }
             paginatorContext.copy(page = page)
         }
-    }
-
-    override fun openNextPage() {
-        openPage(paginatorContextStateFlow.value.page + 1)
-    }
-
-    override fun openPrevPage() {
-        openPage(paginatorContextStateFlow.value.page - 1)
     }
 
     override fun update(block: (PaginatorContext) -> PaginatorContext) {
