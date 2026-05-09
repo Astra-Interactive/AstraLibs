@@ -11,13 +11,14 @@ import java.util.UUID
 class VaultEconomyFacade(
     private val economy: Economy
 ) : EconomyFacade {
-    private fun offlinePlayer(uuid: UUID) = Bukkit.getOfflinePlayer(uuid)
 
     constructor(plugin: JavaPlugin) : this(
         economy = plugin.server.servicesManager.getRegistration(Economy::class.java)
             ?.provider
             ?: error("Could not get economy provider")
     )
+
+    private fun offlinePlayer(uuid: UUID) = Bukkit.getOfflinePlayer(uuid)
 
     /**
      * @param player player
