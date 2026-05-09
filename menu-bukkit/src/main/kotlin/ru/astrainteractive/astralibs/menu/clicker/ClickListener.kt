@@ -9,7 +9,7 @@ import ru.astrainteractive.astralibs.menu.slot.InventorySlot
  */
 interface ClickListener {
     /**
-     * Place this in [InventoryMenu.onInventoryClicked]
+     * Place this in [InventoryMenu.onInventoryClickEvent]
      */
     fun onClick(e: InventoryClickEvent)
 

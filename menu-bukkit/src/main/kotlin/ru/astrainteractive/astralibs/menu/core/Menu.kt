@@ -5,6 +5,7 @@ import kotlinx.coroutines.cancel
 import net.kyori.adventure.text.Component
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.inventory.InventoryHolder
 import ru.astrainteractive.astralibs.menu.clicker.ClickListener
 import ru.astrainteractive.astralibs.menu.clicker.remember
@@ -45,40 +46,15 @@ interface Menu : InventoryHolder {
 
     /**
      * Coroutine scope tied to the menu's visible lifetime. It is cancelled in
-     * [onInventoryClosed], so any work launched in it is cleaned up automatically.
+     * [onInventoryCloseEvent], so any work launched in it is cleaned up automatically.
      */
     val menuScope: CoroutineScope
 
     /**
      * Auxiliary scopes (e.g. paginators, async loaders) whose lifetime should follow the
-     * menu's. They are canceled together with [menuScope] in [onInventoryClosed].
+     * menu's. They are canceled together with [menuScope] in [onInventoryCloseEvent].
      */
     val childComponents: List<CoroutineScope>
-
-    /**
-     * Hook invoked right after the inventory is opened to the player. Implementers
-     * typically build the initial UI here (e.g. by calling [render]).
-     */
-    fun onInventoryCreated()
-
-    /**
-     * Default Bukkit click handler — delegates to [clickListener]. Override only if you
-     * need to add behavior *around* the standard slot dispatch.
-     */
-    fun onInventoryClicked(e: InventoryClickEvent) {
-        clickListener.onClick(e)
-    }
-
-    /**
-     * Default close handler — clears registered click handlers and cancels every
-     * coroutine scope owned by the menu. Override responsibly: always call `super` to
-     * preserve cleanup semantics.
-     */
-    fun onInventoryClosed(e: InventoryCloseEvent) {
-        clickListener.clear()
-        childComponents.forEach(CoroutineScope::cancel)
-        menuScope.cancel()
-    }
 
     /**
      * Resets the visual state of the menu so it can be re-built from scratch. Clears
@@ -90,14 +66,29 @@ interface Menu : InventoryHolder {
     }
 
     /**
-     * Opens the inventory for [playerHolder] and triggers [onInventoryCreated].
-     *
-     * Must be called from the Bukkit main thread.
+     * Default Bukkit click handler — delegates to [clickListener]. Override only if you
+     * need to add behavior *around* the standard slot dispatch.
      */
-    fun open() {
-        playerHolder.player.openInventory(inventory)
-        onInventoryCreated()
+    fun onInventoryClickEvent(e: InventoryClickEvent) {
+        clickListener.onClick(e)
     }
+
+    /**
+     * Default close handler — clears registered click handlers and cancels every
+     * coroutine scope owned by the menu. Override responsibly: always call `super` to
+     * preserve cleanup semantics.
+     */
+    fun onInventoryCloseEvent(e: InventoryCloseEvent) {
+        clickListener.clear()
+        childComponents.forEach(CoroutineScope::cancel)
+        menuScope.cancel()
+    }
+
+    /**
+     * Hook invoked right after the inventory is opened to the player. Implementers
+     * typically build the initial UI here (e.g. by calling [render]).
+     */
+    fun onInventoryOpenEvent(e: InventoryOpenEvent)
 }
 
 /**
