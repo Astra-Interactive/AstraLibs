@@ -8,31 +8,19 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.inventory.InventoryHolder
-import ru.astrainteractive.astralibs.coroutines.withTimings
 import ru.astrainteractive.astralibs.menu.clicker.ClickListener
+import ru.astrainteractive.astralibs.menu.clicker.DefaultClickListener
 import ru.astrainteractive.astralibs.menu.clicker.remember
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
-import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
 import ru.astrainteractive.astralibs.menu.slot.InventorySlot
-import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
 
 /**
  * Contract of an interactive Bukkit menu.
- *
- * Implementers describe *what* the menu owns ([playerHolder], [title], [clickListener],
- * [menuScope], [childComponents], [getInventory]); the interface itself encodes the
- * default *lifecycle* (Template Method pattern) — opening, click dispatching, rendering
- * and closing — through interface default methods.
  *
  * To make Bukkit events reach the menu, register a [DefaultInventoryClickEvent] listener
  * once during plugin startup.
  */
 abstract class Menu : InventoryHolder {
-    /**
-     * Owner of the menu. The [PlayerHolder.player] is the viewer for whom the inventory is opened.
-     */
-    abstract val playerHolder: PlayerHolder
-
     /**
      * Title rendered at the top of the inventory. Implementers usually pass it to
      * `Bukkit.createInventory` when constructing [getInventory].
@@ -40,22 +28,22 @@ abstract class Menu : InventoryHolder {
     abstract val title: Component
 
     /**
-     * Click dispatcher for this menu. Each rendered [InventorySlot] is registered here so that
-     * incoming clicks are routed to the right handler.
-     */
-    abstract val clickListener: ClickListener
-
-    /**
-     * [Dispatchers.IO] Coroutine scope tied to the menu's visible lifetime. It is cancelled in
+     * [Dispatchers.Main] Coroutine scope tied to the menu's visible lifetime. It is cancelled in
      * [onInventoryCloseEvent], so any work launched in it is cleaned up automatically.
      */
-    open val menuScope: CoroutineScope = CoroutineFeature.IO.withTimings()
+    abstract val menuScope: CoroutineScope
 
     /**
      * Auxiliary scopes (e.g. paginators, async loaders) whose lifetime should follow the
      * menu's. They are canceled together with [menuScope] in [onInventoryCloseEvent].
      */
     abstract val childComponents: List<CoroutineScope>
+
+    /**
+     * Click dispatcher for this menu. Each rendered [InventorySlot] is registered here so that
+     * incoming clicks are routed to the right handler.
+     */
+    open val clickListener: ClickListener = DefaultClickListener()
 
     /**
      * Default Bukkit click handler — delegates to [clickListener]. Override only if you
@@ -72,8 +60,9 @@ abstract class Menu : InventoryHolder {
      */
     open fun onInventoryCloseEvent(e: InventoryCloseEvent) {
         clickListener.clear()
-        menuScope.cancel()
-        childComponents.forEach(CoroutineScope::cancel)
+        childComponents
+            .plus(menuScope)
+            .forEach(CoroutineScope::cancel)
     }
 
     /**
@@ -128,12 +117,4 @@ fun Menu.setInventorySlotIf(
 fun Menu.clear() {
     clickListener.clear()
     inventory.clear()
-}
-
-/**
- * Open inventory method for Menu class
- * Should be executed on main thread
- */
-fun Menu.open() {
-    playerHolder.player.openInventory(inventory)
 }
