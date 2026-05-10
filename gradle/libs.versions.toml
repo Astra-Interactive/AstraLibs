@@ -16,7 +16,7 @@ jda = "6.4.1"
 jda-webhook = "0.8.4"
 jmh-core = "1.37"
 joml = "1.10.8"
-klibs-gradleplugin = "2.0.2"
+klibs-gradleplugin = "2.0.3"
 klibs-kdi = "1.4.8"
 klibs-kstorage = "5.0.4"
 klibs-mikro = "1.23.0"
@@ -158,7 +158,6 @@ gradle-shadow = { id = "com.gradleup.shadow", version.ref = "gradle-shadow" }
 klibs-gradle-detekt = { id = "ru.astrainteractive.gradleplugin.detekt", version.ref = "klibs-gradleplugin" }
 klibs-gradle-detekt-compose = { id = "ru.astrainteractive.gradleplugin.detekt.compose", version.ref = "klibs-gradleplugin" }
 klibs-gradle-dokka-module = { id = "ru.astrainteractive.gradleplugin.dokka.module", version.ref = "klibs-gradleplugin" }
-klibs-gradle-dokka-root = { id = "ru.astrainteractive.gradleplugin.dokka.root", version.ref = "klibs-gradleplugin" }
 klibs-gradle-java-core = { id = "ru.astrainteractive.gradleplugin.java.core", version.ref = "klibs-gradleplugin" }
 klibs-gradle-java-version = { id = "ru.astrainteractive.gradleplugin.java.version", version.ref = "klibs-gradleplugin" }
 klibs-gradle-minecraft-empty = { id = "ru.astrainteractive.gradleplugin.minecraft.empty", version.ref = "klibs-gradleplugin" }
