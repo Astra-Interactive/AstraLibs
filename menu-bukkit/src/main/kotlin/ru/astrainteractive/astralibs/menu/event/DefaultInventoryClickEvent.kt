@@ -3,24 +3,30 @@ package ru.astrainteractive.astralibs.menu.event
 import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.menu.core.Menu
 
 /**
- * To be able to use inventory events - you need to register this class somewhere. For example in [JavaPlugin.onEnable]
+ * Bukkit event listener that routes inventory events to the active [Menu]. Register once in [JavaPlugin.onEnable].
  */
 class DefaultInventoryClickEvent : EventListener {
-
     @EventHandler
-    fun onInventoryClicked(e: InventoryClickEvent) {
+    fun onInventoryClickEvent(e: InventoryClickEvent) {
         val holder = e.view.topInventory.holder as? Menu ?: return
-        holder.onInventoryClicked(e)
+        holder.onInventoryClickEvent(e)
     }
 
     @EventHandler
-    fun onInventoryClosed(e: InventoryCloseEvent) {
+    fun onInventoryCloseEvent(e: InventoryCloseEvent) {
         val holder = e.view.topInventory.holder as? Menu ?: return
-        holder.onInventoryClosed(e)
+        holder.onInventoryCloseEvent(e)
+    }
+
+    @EventHandler
+    fun onInventoryOpenEvent(e: InventoryOpenEvent) {
+        val holder = e.view.topInventory.holder as? Menu ?: return
+        holder.onInventoryOpenEvent(e)
     }
 }

@@ -35,3 +35,19 @@ interface InventoryLayout<KEY, SLOT> {
         transform: (index: Int) -> SLOT?
     ): List<SLOT>
 }
+
+/**
+ * Like [InventoryLayout.mapSlotsNotNull] but also exposes the zero-based iteration index
+ * over slots assigned to [key], in addition to the absolute slot index in the inventory.
+ */
+fun <KEY, SLOT> InventoryLayout<KEY, SLOT>.mapSlotsNotNullIndexed(
+    key: KEY,
+    transform: (iterationIndex: Int, slotIndex: Int) -> SLOT?
+): List<SLOT> {
+    var iterationIndex = 0
+    return mapSlotsNotNull(key) { slotIndex ->
+        val current = iterationIndex
+        iterationIndex++
+        transform(current, slotIndex)
+    }
+}

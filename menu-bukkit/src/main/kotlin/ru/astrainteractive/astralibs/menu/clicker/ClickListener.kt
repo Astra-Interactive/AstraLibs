@@ -1,25 +1,23 @@
 package ru.astrainteractive.astralibs.menu.clicker
 
 import org.bukkit.event.inventory.InventoryClickEvent
-import ru.astrainteractive.astralibs.menu.inventory.InventoryMenu
 import ru.astrainteractive.astralibs.menu.slot.InventorySlot
 
 /**
- * Click listener for [InventoryMenu]
+ * Manages per-slot [Click] handlers for an inventory menu.
  */
 interface ClickListener {
-    /**
-     * Place this in [InventoryMenu.onInventoryClicked]
-     */
+    /** Dispatches the event to the handler registered for the clicked slot. */
     fun onClick(e: InventoryClickEvent)
 
-    /**
-     * Place this on [InventorySlot] creation
-     */
-    fun remember(button: InventorySlot)
+    /** Registers [click] for slot [index]. */
+    fun remember(index: Int, click: Click)
 
-    /**
-     * Place this in re-render of menu content
-     */
+    /** Clears all registered handlers. Call before each render. */
     fun clear()
+}
+
+/** Registers [slot]'s click handler by [InventorySlot.index]. */
+fun ClickListener.remember(slot: InventorySlot) {
+    remember(slot.index, slot.click)
 }
