@@ -35,10 +35,15 @@ dependencies {
 
 dependencies {
     minecraft {
-        val minecraftVersion = "1.20.1"
-        val forgeVersion = "47.4.20"
-        implementation(dependency("net.minecraftforge:forge:$minecraftVersion-$forgeVersion"))
-        mappings("official", minecraftVersion)
+        implementation(
+            dependency(
+                "net.minecraftforge:forge:" +
+                    libs.versions.minecraft.minecraftforge.minecraft.get() +
+                    "-" +
+                    libs.versions.minecraft.minecraftforge.forge.get()
+            )
+        )
+        mappings("official", libs.versions.minecraft.minecraftforge.minecraft.get())
     }
 }
 
