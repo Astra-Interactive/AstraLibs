@@ -4,6 +4,7 @@ import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterExce
 import ru.astrainteractive.astralibs.server.bridge.PlatformServer
 import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
 
+/** Converts a player name to a currently online [OnlineKPlayer]. */
 class OnlineKPlayerArgumentConverter(
     private val platformServer: PlatformServer
 ) : ArgumentConverter<OnlineKPlayer> {

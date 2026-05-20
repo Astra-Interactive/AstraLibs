@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.encoding.encoder
 
 import ru.astrainteractive.astralibs.encoding.factory.BukkitObjectStreamFactory
 
-/**
- * Default implementation for Bukkit objects
- */
+/** [ObjectEncoder] that uses Bukkit-aware streams,
+ *  enabling serialization of types like [org.bukkit.inventory.ItemStack].
+ * */
 class BukkitObjectEncoder : ObjectEncoder by DefaultObjectEncoder(BukkitObjectStreamFactory)

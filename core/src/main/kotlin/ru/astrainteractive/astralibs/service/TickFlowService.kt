@@ -15,12 +15,18 @@ import ru.astrainteractive.klibs.mikro.core.coroutines.TickFlow
 import kotlin.coroutines.CoroutineContext
 import kotlin.time.Duration
 
+/**
+ * [Service] that repeatedly runs a [ServiceExecutor] on a reactive tick interval.
+ *
+ * Changing the value emitted by [delay] or [initialDelay] takes effect on the next tick.
+ */
 class TickFlowService(
     coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO,
     private val delay: Flow<Duration>,
     private val initialDelay: Flow<Duration> = flowOf(Duration.ZERO),
     private val executor: ServiceExecutor
 ) : Service {
+    /** Convenience constructor accepting fixed [Duration] values instead of [Flow]s. */
     constructor(
         coroutineContext: CoroutineContext = Dispatchers.IO,
         delay: Duration,

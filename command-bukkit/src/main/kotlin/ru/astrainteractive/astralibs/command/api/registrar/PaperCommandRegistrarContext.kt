@@ -13,6 +13,10 @@ import kotlinx.coroutines.flow.shareIn
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.event.flowLifecycleEvent
 
+/**
+ * [CommandRegistrarContext] that registers Brigadier commands via Paper's [LifecycleEvents.COMMANDS].
+ * Replays the latest event to late subscribers so commands registered after the initial event fire immediately.
+ */
 class PaperCommandRegistrarContext(
     private val mainScope: CoroutineScope,
     plugin: JavaPlugin

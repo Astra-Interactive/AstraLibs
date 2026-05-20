@@ -7,11 +7,13 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.UUID
 
+/** [EconomyFacade] backed by the Vault economy API. */
 @Suppress("UnusedPrivateProperty")
 class VaultEconomyFacade(
     private val economy: Economy
 ) : EconomyFacade {
 
+    /** @throws IllegalStateException if no economy provider is registered. */
     constructor(plugin: JavaPlugin) : this(
         economy = plugin.server.servicesManager.getRegistration(Economy::class.java)
             ?.provider
@@ -20,19 +22,10 @@ class VaultEconomyFacade(
 
     private fun offlinePlayer(uuid: UUID) = Bukkit.getOfflinePlayer(uuid)
 
-    /**
-     * @param player player
-     * @return double - current balance of [player]
-     */
     private fun getBalance(player: OfflinePlayer): Double {
         return economy.getBalance(player)
     }
 
-    /**
-     * @param player player
-     * @param amount amount to take from balance
-     * @return boolean - true if [amount] has been taken false if not
-     */
     private fun takeMoney(player: OfflinePlayer, amount: Double): Boolean {
         val maxBalance = getBalance(player) ?: return false
         if (amount > maxBalance) {
@@ -42,11 +35,6 @@ class VaultEconomyFacade(
         return (response?.type == EconomyResponse.ResponseType.SUCCESS)
     }
 
-    /**
-     * @param player player
-     * @param amount amount to add to balance
-     * @return boolean - true if [amount] has been added false if not
-     */
     private fun addMoney(player: OfflinePlayer, amount: Double): Boolean {
         val response = economy.depositPlayer(player, amount)
         return (response?.type == EconomyResponse.ResponseType.SUCCESS)

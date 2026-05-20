@@ -4,8 +4,11 @@ import org.bukkit.OfflinePlayer
 import ru.astrainteractive.astralibs.server.annotation.InternalPlatformApi
 import java.util.UUID
 
+/** [KPlayer] wrapping a Bukkit [OfflinePlayer]. Exposes [instance] for Bukkit-specific API access. */
 @OptIn(InternalPlatformApi::class)
-class BukkitKPlayer(val instance: OfflinePlayer) : KPlayer {
+class BukkitKPlayer(
+    val instance: OfflinePlayer
+) : KPlayer {
     override val uuid: UUID
         get() = instance.uniqueId
 

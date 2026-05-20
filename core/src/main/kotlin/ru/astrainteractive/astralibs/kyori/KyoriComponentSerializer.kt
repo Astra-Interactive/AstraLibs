@@ -9,38 +9,14 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import ru.astrainteractive.astralibs.string.StringDesc
 
-/**
- * Interface representing a serializer for [Component]s from Kyori Adventure,
- * allowing parsing from strings to component objects using various formats.
- */
+/** Converts strings (and [StringDesc]s) to Kyori Adventure [Component]s. */
 interface KyoriComponentSerializer {
 
-    /**
-     * The type identifier for this serializer.
-     */
     val type: KyoriComponentSerializerType
-
-    /**
-     * The actual Kyori serializer instance used to parse and deserialize strings.
-     */
     val serializer: ComponentSerializer<Component, out Component, String>
 
-    /**
-     * Converts a raw string into a Kyori [Component].
-     *
-     * @param string The input string.
-     * @return A deserialized [Component].
-     */
     fun toComponent(string: String): Component
 
-    /**
-     * Converts a [StringDesc] into a Kyori [Component].
-     *
-     * Supports both raw and plain string descriptors.
-     *
-     * @param stringDesc The string descriptor.
-     * @return A deserialized [Component].
-     */
     fun toComponent(stringDesc: StringDesc): Component {
         return when (stringDesc) {
             is StringDesc.Raw -> toComponent(stringDesc.raw)
@@ -48,14 +24,9 @@ interface KyoriComponentSerializer {
         }
     }
 
-    /**
-     * Extension property to convert a [StringDesc] directly into a [Component].
-     */
     val StringDesc.component get() = toComponent(this)
 
-    /**
-     * JSON-based serializer using Kyori's [JSONComponentSerializer].
-     */
+    /** JSON component format using [JSONComponentSerializer]. */
     data object Json : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Json
         override val serializer by lazy {
@@ -67,9 +38,7 @@ interface KyoriComponentSerializer {
         }
     }
 
-    /**
-     * Gson-based serializer using Kyori's [GsonComponentSerializer].
-     */
+    /** Gson JSON component format using [GsonComponentSerializer]. */
     data object Gson : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Gson
         override val serializer by lazy {
@@ -81,9 +50,7 @@ interface KyoriComponentSerializer {
         }
     }
 
-    /**
-     * Plain text serializer using Kyori's [PlainTextComponentSerializer].
-     */
+    /** Plain text — no colors or formatting tags. */
     data object Plain : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Plain
         override val serializer by lazy {
@@ -95,9 +62,7 @@ interface KyoriComponentSerializer {
         }
     }
 
-    /**
-     * MiniMessage serializer using Kyori's [MiniMessage] DSL.
-     */
+    /** MiniMessage format. */
     data object MiniMessage : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.MiniMessage
         override val serializer by lazy {
@@ -109,10 +74,7 @@ interface KyoriComponentSerializer {
         }
     }
 
-    /**
-     * Legacy serializer using Kyori's [LegacyComponentSerializer] with ampersand color codes.
-     * Also disables italic decoration by default.
-     */
+    /** Legacy `&`-color-code format; italic decoration is disabled by default. */
     data object Legacy : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Legacy
         override val serializer by lazy {
@@ -130,12 +92,6 @@ interface KyoriComponentSerializer {
     }
 
     companion object {
-        /**
-         * Returns the [KyoriComponentSerializer] corresponding to the specified [type].
-         *
-         * @param type The serializer type.
-         * @return The corresponding serializer instance.
-         */
         fun ofType(type: KyoriComponentSerializerType) = when (type) {
             KyoriComponentSerializerType.Json -> Json
             KyoriComponentSerializerType.Gson -> Gson

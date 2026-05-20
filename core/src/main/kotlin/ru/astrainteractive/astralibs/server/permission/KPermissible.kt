@@ -1,42 +1,20 @@
 package ru.astrainteractive.astralibs.server.permission
 
-/**
- * Represents an entity (e.g., a player or user) that has permissions in the system.
- * This interface defines methods to check and retrieve permission-related information,
- * such as checking if a specific permission is granted and retrieving the allowed size range.
- */
+/** An entity (e.g. a player) whose permissions can be queried. */
 interface KPermissible {
 
-    /**
-     * Checks whether the entity has the specified permission.
-     *
-     * @param permission The [Permission] to check.
-     * @return true if the entity has the permission; {@code false} otherwise.
-     */
     fun hasPermission(permission: Permission): Boolean
 
     /**
-     * Retrieves the maximum allowed size for a given permission, if defined.
-     *
-     * @param permission The [Permission] to check.
-     * @return The maximum size allowed for this permission, or null if not applicable.
+     * Returns the max integer suffix for `<permission.value>.<int>` nodes, or `null` if none exist.
      */
     fun maxPermissionSize(permission: Permission): Int?
 
     /**
-     * Retrieves the minimum allowed size for a given permission, if defined.
-     *
-     * @param permission The [Permission] to check.
-     * @return The minimum size allowed for this permission, or null if not applicable.
+     * Returns the min integer suffix for `<permission.value>.<int>` nodes, or `null` if none exist.
      */
     fun minPermissionSize(permission: Permission): Int?
 
-    /**
-     * Returns a list of allowed sizes for the specified permission.
-     * This can represent specific size constraints, such as the number of slots or levels.
-     *
-     * @param permission The [Permission] to check.
-     * @return A list of integers representing the allowed sizes for this permission.
-     */
+    /** Returns all integer suffixes for `<permission.value>.<int>` nodes. */
     fun permissionSizes(permission: Permission): List<Int>
 }

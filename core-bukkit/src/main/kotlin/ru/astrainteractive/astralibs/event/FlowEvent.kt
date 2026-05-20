@@ -9,6 +9,10 @@ import org.bukkit.event.EventPriority
 import org.bukkit.plugin.EventExecutor
 import org.bukkit.plugin.Plugin
 
+/**
+ * Returns a cold [Flow] that emits every Bukkit [Event] of type [T].
+ * The listener is registered on collection and unregistered on cancellation.
+ */
 inline fun <reified T : Event> flowEvent(
     plugin: Plugin,
     eventPriority: EventPriority = EventPriority.NORMAL
@@ -18,6 +22,10 @@ inline fun <reified T : Event> flowEvent(
     eventPriority = eventPriority
 )
 
+/**
+ * Returns a cold [Flow] that emits every Bukkit [Event] of the given [clazz].
+ * Subclasses are not matched; prefer the reified overload when the type is known at compile time.
+ */
 fun <T : Event> flowEvent(
     plugin: Plugin,
     clazz: Class<T>,

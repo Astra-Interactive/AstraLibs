@@ -4,6 +4,7 @@ import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.server.Locatable
 import ru.astrainteractive.astralibs.server.location.KLocation
 
+/** Adapts this [Player] as a [Locatable] that snapshots the player's position on each call. */
 fun Player.asLocatable() = Locatable {
     val player = this
     KLocation(

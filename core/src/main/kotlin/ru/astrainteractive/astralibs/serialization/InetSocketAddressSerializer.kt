@@ -8,7 +8,9 @@ import kotlinx.serialization.encoding.Encoder
 import java.net.InetAddress
 import java.net.InetSocketAddress
 
+/** [KSerializer] for [InetSocketAddress], encoded as `{inet_address, port}` via [InetAddressSerializer]. */
 object InetSocketAddressSerializer : KSerializer<InetSocketAddress> {
+    /** Surrogate data class used as an intermediate serialization form. */
     @Serializable
     private data class Surrogate(
         @Serializable(InetAddressSerializer::class)

@@ -5,6 +5,13 @@ import ru.astrainteractive.astralibs.server.util.MinecraftUtil
 import java.util.concurrent.Executor
 import kotlin.coroutines.CoroutineContext
 
+/**
+ * [MainCoroutineDispatcher] that schedules continuations on the Minecraft server main thread.
+ *
+ * If [CoroutineTimings] is present in the context, the runnable is routed through it so
+ * server profilers display a meaningful task name. Every dispatch goes through the server
+ * task queue — even when already on the main thread — to preserve ordering.
+ */
 class MinecraftMainDispatcher : MainCoroutineDispatcher() {
     override val immediate: MainCoroutineDispatcher
         get() = this

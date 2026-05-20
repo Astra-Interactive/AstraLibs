@@ -4,6 +4,7 @@ import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterExce
 import ru.astrainteractive.astralibs.server.bridge.PlatformServer
 import ru.astrainteractive.astralibs.server.player.KPlayer
 
+/** Converts a player name to a [KPlayer] (online or offline). */
 class KPlayerArgumentConverter(
     private val platformServer: PlatformServer
 ) : ArgumentConverter<KPlayer> {

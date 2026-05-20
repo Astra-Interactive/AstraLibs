@@ -8,6 +8,15 @@ import ru.astrainteractive.astralibs.server.permission.asKPermissible
 import ru.astrainteractive.astralibs.server.util.asKAudience
 import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
 
+/**
+ * Paper implementation of [ConsoleKCommandSender] backed by a Bukkit [CommandSender].
+ *
+ * Delegates [KPermissible], [KAudience], and [KCommandDispatcher] capabilities to the
+ * corresponding Bukkit extension adapters, exposing a unified console-sender abstraction
+ * for both in-process console and RCON command sources.
+ *
+ * @param sender The Bukkit [CommandSender] representing the console or RCON source.
+ */
 class PaperConsoleKCommandSender(
     sender: CommandSender
 ) : ConsoleKCommandSender,

@@ -14,6 +14,16 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent
 import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.event.flowEvent
 
+/**
+ * NeoForge implementation of [CommandRegistrarContext] that registers Brigadier commands via
+ * the NeoForge [RegisterCommandsEvent].
+ *
+ * Command nodes are queued and applied to the server's command dispatcher each time the event
+ * fires, which covers both initial server start-up and `/reload` scenarios.
+ *
+ * @param mainScope Coroutine scope used to collect the event flow and register commands. Cancelling
+ * this scope stops all pending registrations.
+ */
 class NeoForgeCommandRegistrarContext(
     private val mainScope: CoroutineScope
 ) : CommandRegistrarContext {

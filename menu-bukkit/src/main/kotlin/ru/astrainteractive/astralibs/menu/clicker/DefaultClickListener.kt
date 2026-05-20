@@ -3,9 +3,7 @@ package ru.astrainteractive.astralibs.menu.clicker
 import org.bukkit.event.inventory.InventoryClickEvent
 import ru.astrainteractive.astralibs.menu.core.Menu
 
-/**
- * Default [ClickListener] implementation. Ignores clicks on inventories not backed by [Menu].
- */
+/** Default [ClickListener] implementation. Ignores clicks on inventories not backed by [Menu]. */
 class DefaultClickListener : ClickListener {
     private val clicksMap = HashMap<Int, Click>()
 

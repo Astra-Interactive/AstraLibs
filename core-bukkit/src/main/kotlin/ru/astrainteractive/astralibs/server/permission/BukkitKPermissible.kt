@@ -2,6 +2,9 @@ package ru.astrainteractive.astralibs.server.permission
 
 import org.bukkit.permissions.Permissible
 
+/**
+ * [KPermissible] backed by a Bukkit [Permissible].
+ */
 class BukkitKPermissible(
     private val bukkitPermissible: Permissible
 ) : KPermissible {

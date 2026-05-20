@@ -2,22 +2,16 @@ package ru.astrainteractive.astralibs.menu.layout
 
 import ru.astrainteractive.astralibs.menu.slot.InventorySlot
 
-/**
- * DSL builder for [InventoryLayout].
- *
- * Layouts are described row-by-row; every row must have the same width or [build] will fail.
- * Prefer the [inventoryLayout] / [slotInventoryLayout] entrypoints over instantiating directly.
- */
+/** DSL builder for [InventoryLayout]. All rows must have the same width. */
 class InventoryLayoutBuilder<KEY, SLOT> {
 
     private val rows = mutableListOf<List<KEY>>()
 
-    /** Appends a row whose slots are described positionally by [keys]. */
     fun row(vararg keys: KEY) {
         rows += keys.toList()
     }
 
-    /** Appends a row of [size] slots all bound to the same [key] (e.g. a row of borders). */
+    /** Appends a row of [size] slots all bound to [key]. */
     fun row(size: Int, key: KEY) {
         rows += List(size) { key }
     }
@@ -25,16 +19,13 @@ class InventoryLayoutBuilder<KEY, SLOT> {
     fun build(): InventoryLayout<KEY, SLOT> = DefaultInventoryLayout(rows)
 }
 
-/** Generic entrypoint for the [InventoryLayoutBuilder] DSL. */
 fun <KEY, SLOT> inventoryLayout(
     block: InventoryLayoutBuilder<KEY, SLOT>.() -> Unit
 ): InventoryLayout<KEY, SLOT> = InventoryLayoutBuilder<KEY, SLOT>()
     .apply(block)
     .build()
 
-/**
- * Shortcut for [inventoryLayout] producing [InventorySlot]s — the common case for Bukkit menus.
- */
+/** Shorthand for [inventoryLayout] with [InventorySlot] as the slot type. */
 fun <KEY> slotInventoryLayout(
     block: InventoryLayoutBuilder<KEY, InventorySlot>.() -> Unit
 ) = inventoryLayout(block)

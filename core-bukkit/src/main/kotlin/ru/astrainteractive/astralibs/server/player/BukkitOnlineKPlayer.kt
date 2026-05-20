@@ -15,6 +15,7 @@ import ru.astrainteractive.astralibs.server.util.asTeleportable
 import java.net.InetSocketAddress
 import java.util.UUID
 
+/** [OnlineKPlayer] wrapping a currently online Bukkit [Player]. Exposes [instance] for Bukkit-specific API access. */
 @OptIn(InternalPlatformApi::class)
 class BukkitOnlineKPlayer(val instance: Player) :
     OnlineKPlayer,

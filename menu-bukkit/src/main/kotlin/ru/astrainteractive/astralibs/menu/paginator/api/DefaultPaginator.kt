@@ -6,9 +6,7 @@ import kotlinx.coroutines.flow.update
 import ru.astrainteractive.astralibs.menu.paginator.model.PaginatorContext
 import ru.astrainteractive.astralibs.menu.paginator.model.maxPages
 
-/**
- * Default [Paginator] backed by a [MutableStateFlow]. Validates page bounds on every [openPage] call.
- */
+/** Default [Paginator] backed by a [MutableStateFlow]. Validates bounds on every [openPage] call. */
 class DefaultPaginator(
     page: Int = 0,
     maxItems: Int = 0,

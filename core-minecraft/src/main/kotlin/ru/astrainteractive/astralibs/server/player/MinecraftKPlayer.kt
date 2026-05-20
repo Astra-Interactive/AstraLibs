@@ -6,6 +6,11 @@ import ru.astrainteractive.astralibs.server.annotation.InternalPlatformApi
 import ru.astrainteractive.astralibs.server.util.MinecraftUtil
 import java.util.UUID
 
+/**
+ * [KPlayer] for offline players backed by a [GameProfile].
+ *
+ * [hasPlayedBefore] checks for a `.dat` file in the world's `playerdata` directory.
+ */
 @OptIn(InternalPlatformApi::class)
 class MinecraftKPlayer(val instance: GameProfile) : KPlayer {
     override val uuid: UUID

@@ -6,6 +6,9 @@ import ru.astrainteractive.astralibs.server.Teleportable
 import ru.astrainteractive.astralibs.util.publicServer
 import ru.astrainteractive.klibs.mikro.core.util.tryCast
 
+/**
+ * Wraps this [ServerPlayer] as a [Teleportable] that teleports the player to a [KLocation].
+ */
 fun ServerPlayer.asTeleportable() = Teleportable { location ->
     val player = this
 

@@ -6,9 +6,7 @@ import org.bukkit.plugin.Plugin
 import ru.astrainteractive.klibs.mikro.core.dispatchers.DefaultKotlinDispatchers
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
-/**
- * Bukkit dispatchers default implementation
- */
+/** Default [BukkitDispatchers] implementation bound to [plugin]'s scheduler. */
 class DefaultBukkitDispatchers(plugin: Plugin) : BukkitDispatchers, KotlinDispatchers by DefaultKotlinDispatchers {
     override val BukkitMain: MainCoroutineDispatcher = BukkitMainDispatcher(plugin)
     override val BukkitAsync: CoroutineDispatcher = BukkitAsyncDispatcher(plugin)

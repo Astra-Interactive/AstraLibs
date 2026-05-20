@@ -2,11 +2,7 @@ package ru.astrainteractive.astralibs.menu.holder
 
 import org.bukkit.entity.Player
 
-/**
- * Holds the [Player] viewing a menu.
- *
- * Extend to attach per-player state that should persist across renders (e.g. current page, active filters).
- */
+/** Holds the [Player] viewing a menu. Extend to carry per-player state across renders. */
 interface PlayerHolder {
     val player: Player
 }

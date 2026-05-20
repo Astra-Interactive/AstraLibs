@@ -9,6 +9,7 @@ import ru.astrainteractive.astralibs.server.permission.KPermissible
 import ru.astrainteractive.astralibs.server.util.asKAudience
 import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
 
+/** [ConsoleKCommandSender] backed by a Minecraft RCON connection. Always grants all permissions. */
 class MinecraftRconKCommandSender(
     sender: RconConsoleSource
 ) : ConsoleKCommandSender,

@@ -6,6 +6,7 @@ import net.minecraft.server.rcon.RconConsoleSource
 import ru.astrainteractive.astralibs.server.KCommandDispatcher
 import ru.astrainteractive.astralibs.util.publicServer
 
+/** Adapts this [MinecraftServer] as a [KCommandDispatcher]. */
 fun MinecraftServer.asKCommandDispatcher() = KCommandDispatcher { command ->
     this.commands.performPrefixedCommand(
         this.createCommandSourceStack(),
@@ -13,6 +14,7 @@ fun MinecraftServer.asKCommandDispatcher() = KCommandDispatcher { command ->
     )
 }
 
+/** Adapts this [RconConsoleSource] as a [KCommandDispatcher]. Does nothing if the server is unavailable. */
 fun RconConsoleSource.asKCommandDispatcher() = KCommandDispatcher { command ->
     MinecraftUtil.serverOrNull
         ?.commands
@@ -22,6 +24,7 @@ fun RconConsoleSource.asKCommandDispatcher() = KCommandDispatcher { command ->
         )
 }
 
+/** Adapts this [ServerPlayer] as a [KCommandDispatcher]. Does nothing if the player's server reference is null. */
 fun ServerPlayer.asKCommandDispatcher() = KCommandDispatcher { command ->
     publicServer?.commands?.performPrefixedCommand(
         this.createCommandSourceStack(),

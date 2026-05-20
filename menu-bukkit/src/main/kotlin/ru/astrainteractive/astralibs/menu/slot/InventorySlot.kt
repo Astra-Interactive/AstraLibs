@@ -69,6 +69,7 @@ fun InventorySlot.Builder.setAmount(amount: Int): InventorySlot.Builder {
     return this
 }
 
+/** Sets the display name from a plain string, wrapping it in [Component.text]. */
 fun InventorySlot.Builder.setDisplayName(string: String): InventorySlot.Builder {
     editMeta {
         displayName(Component.text(string))

@@ -22,6 +22,7 @@ import ru.astrainteractive.astralibs.server.permission.Permission
 import ru.astrainteractive.astralibs.server.util.asPermissible
 import ru.astrainteractive.astralibs.util.publicSource
 
+/** Creates a root [LiteralArgumentBuilder] for [CommandSourceStack] with the given [alias]. */
 fun command(
     alias: String,
     block: LiteralArgumentBuilder<CommandSourceStack>.() -> Unit
@@ -31,6 +32,7 @@ fun command(
     return literal
 }
 
+/** Appends a child sub-command literal with [alias] to this builder. */
 fun LiteralArgumentBuilder<CommandSourceStack>.literal(
     alias: String,
     block: LiteralArgumentBuilder<CommandSourceStack>.() -> Unit
@@ -40,12 +42,14 @@ fun LiteralArgumentBuilder<CommandSourceStack>.literal(
     this.then(literal)
 }
 
+/** Metadata needed to register and extract a typed Brigadier argument. */
 data class BrigadierArgument<T : Any>(
     val alias: String,
     val type: ArgumentType<T>,
     val clazz: Class<T>
 )
 
+/** Appends a typed required argument to this [LiteralArgumentBuilder], inferring [T] from the reified type. */
 inline fun <reified T : Any> LiteralArgumentBuilder<CommandSourceStack>.argument(
     alias: String,
     type: ArgumentType<T>,
@@ -57,6 +61,10 @@ inline fun <reified T : Any> LiteralArgumentBuilder<CommandSourceStack>.argument
     block = block
 )
 
+/**
+ * Appends a typed required argument to this [LiteralArgumentBuilder] using an explicit [clazz] token.
+ * Prefer the reified overload when the type can be inferred.
+ */
 fun <T : Any> LiteralArgumentBuilder<CommandSourceStack>.argument(
     alias: String,
     type: ArgumentType<T>,
@@ -73,6 +81,7 @@ fun <T : Any> LiteralArgumentBuilder<CommandSourceStack>.argument(
     this.then(argument)
 }
 
+/** Appends a typed nested required argument to this [RequiredArgumentBuilder], inferring [T] from the reified type. */
 inline fun <reified T : Any> RequiredArgumentBuilder<CommandSourceStack, *>.argument(
     alias: String,
     type: ArgumentType<T>,
@@ -84,6 +93,10 @@ inline fun <reified T : Any> RequiredArgumentBuilder<CommandSourceStack, *>.argu
     block = block
 )
 
+/**
+ * Appends a typed nested required argument to this [RequiredArgumentBuilder] using an explicit [clazz] token.
+ * Prefer the reified overload when the type can be inferred.
+ */
 fun <T : Any> RequiredArgumentBuilder<CommandSourceStack, *>.argument(
     alias: String,
     type: ArgumentType<T>,
@@ -100,6 +113,12 @@ fun <T : Any> RequiredArgumentBuilder<CommandSourceStack, *>.argument(
     this.then(argument)
 }
 
+/**
+ * Registers an execution handler on this [RequiredArgumentBuilder].
+ * Exceptions from [block] are forwarded to [onFailure] rather than propagated.
+ *
+ * @param onFailure Called when [block] throws; defaults to a no-op.
+ */
 fun RequiredArgumentBuilder<CommandSourceStack, *>.runs(
     onFailure: (CommandContext<CommandSourceStack>, Throwable) -> Unit = { _, _ -> },
     block: (RequiredArgumentBuilder<CommandSourceStack, *>.(CommandContext<CommandSourceStack>) -> Unit)
@@ -111,6 +130,12 @@ fun RequiredArgumentBuilder<CommandSourceStack, *>.runs(
     }
 }
 
+/**
+ * Registers an execution handler on this [LiteralArgumentBuilder].
+ * Exceptions from [block] are forwarded to [onFailure] rather than propagated.
+ *
+ * @param onFailure Called when [block] throws; defaults to a no-op.
+ */
 fun LiteralArgumentBuilder<CommandSourceStack>.runs(
     onFailure: (CommandContext<CommandSourceStack>, Throwable) -> Unit = { _, _ -> },
     block: LiteralArgumentBuilder<CommandSourceStack>.(CommandContext<CommandSourceStack>) -> Unit
@@ -122,6 +147,7 @@ fun LiteralArgumentBuilder<CommandSourceStack>.runs(
     }
 }
 
+/** Registers tab-completion suggestions on this [RequiredArgumentBuilder]. */
 fun RequiredArgumentBuilder<CommandSourceStack, *>.hints(block: (CommandContext<CommandSourceStack>) -> List<String>) {
     suggests { context, builder ->
         block.invoke(context).forEach(builder::suggest)
@@ -129,6 +155,13 @@ fun RequiredArgumentBuilder<CommandSourceStack, *>.hints(block: (CommandContext<
     }
 }
 
+/**
+ * Asserts the command source holds [permission].
+ * Server and RCON sources bypass the check; unknown source types throw [CommandException].
+ *
+ * @throws NoPermissionException If the player lacks [permission].
+ * @throws CommandException If the source is not a recognisable sender type.
+ */
 @Throws(NoPermissionException::class)
 fun CommandContext<CommandSourceStack>.requirePermission(permission: Permission) {
     val source = source.publicSource
@@ -142,16 +175,25 @@ fun CommandContext<CommandSourceStack>.requirePermission(permission: Permission)
     if (!hasPermission) throw NoPermissionException(permission)
 }
 
+/**
+ * Returns the executing [ServerPlayer].
+ * @throws NotPlayerExecutorException If the source is not a player.
+ */
 @Throws(NotPlayerExecutorException::class)
 fun CommandContext<CommandSourceStack>.requirePlayer(): ServerPlayer {
     return this.source.player ?: throw NotPlayerExecutorException()
 }
 
+/** Extracts a required argument value from the context using [bArgument] as the descriptor. */
 @Throws(IllegalArgumentException::class)
 fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(bArgument: BrigadierArgument<T>): T {
     return getArgument(bArgument.alias, bArgument.clazz)
 }
 
+/**
+ * Extracts a raw `String` argument and converts it to [T] via [converter].
+ * @throws ArgumentConverterException If the conversion fails.
+ */
 @Throws(ArgumentConverterException::class)
 fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(
     bArgument: BrigadierArgument<String>,

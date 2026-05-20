@@ -18,6 +18,7 @@ import ru.astrainteractive.klibs.mikro.core.util.cast
 import java.net.InetSocketAddress
 import java.util.*
 
+/** [OnlineKPlayer] backed by a vanilla [ServerPlayer]. */
 @OptIn(InternalPlatformApi::class)
 class MinecraftOnlineKPlayer(val instance: ServerPlayer) :
     OnlineKPlayer,

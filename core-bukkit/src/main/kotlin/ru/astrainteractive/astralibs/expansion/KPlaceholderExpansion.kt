@@ -2,6 +2,7 @@ package ru.astrainteractive.astralibs.expansion
 
 import me.clip.placeholderapi.expansion.PlaceholderExpansion
 
+/** Kotlin-friendly base class for PlaceholderAPI expansions that accepts metadata via constructor parameters. */
 abstract class KPlaceholderExpansion(
     private val identifier: String,
     private val author: String,

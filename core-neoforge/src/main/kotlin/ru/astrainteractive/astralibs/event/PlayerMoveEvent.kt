@@ -15,6 +15,12 @@ import java.util.UUID
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
+/**
+ * Player movement event synthesised from [PlayerTickEvent.Post] snapshots, emitted by [playerMoveFlowEvent].
+ *
+ * @param oldKLocation Position at the previous tick.
+ * @param newKLocation Position at the current tick.
+ */
 class PlayerMoveEvent(
     val instance: PlayerTickEvent.Post,
     val oldKLocation: KLocation,
@@ -22,6 +28,7 @@ class PlayerMoveEvent(
     val player: Player
 )
 
+/** Cold [Flow] that emits a [PlayerMoveEvent] on each tick per player. */
 fun playerMoveFlowEvent() = flow {
     val cache = CacheBuilder<UUID, KLocation>.newBuilder()
         .expireAfterAccess(10.seconds.toJavaDuration())

@@ -22,5 +22,6 @@ interface EventListener : Listener {
         HandlerList.unregisterAll(this)
     }
 
+    /** Concrete no-op implementation of [EventListener] used as a registration anchor. */
     class Default : EventListener
 }

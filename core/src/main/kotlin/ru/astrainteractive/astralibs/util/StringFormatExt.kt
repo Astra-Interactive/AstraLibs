@@ -9,92 +9,39 @@ import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import ru.astrainteractive.klibs.mikro.core.logging.StubLogger
 import java.io.File
 
-/**
- * Parses an object from the specified file using the provided deserializer.
- * If the file does not exist, an error is thrown.
- *
- * @param deserializer The deserialization strategy for the target type.
- * @param file The file containing the serialized data.
- * @return A [Result] containing the deserialized object, or an exception if parsing fails.
- * @param T The type of the object to parse.
- */
+/** Deserializes [file] using [deserializer]; returns a failure if the file is missing or unparseable. */
 fun <T> StringFormat.parse(deserializer: DeserializationStrategy<T>, file: File) = runCatching {
     if (!file.exists()) error("Could not find file ${file.absolutePath}")
     decodeFromString(deserializer, file.readText())
 }
 
-/**
- * Parses an object of type [T] from the specified file using the default serializer.
- *
- * @param file The file containing the serialized data.
- * @return A [Result] containing the deserialized object, or an exception if parsing fails.
- * @param T The type of the object to parse.
- */
+/** Deserializes [file] using the default serializer for [T]. */
 inline fun <reified T> StringFormat.parse(file: File): Result<T> {
     return parse(serializer(), file)
 }
 
-/**
- * Parses an object from the specified file using the provided deserializer, returning null if parsing fails.
- *
- * @param deserializer The deserialization strategy for the target type.
- * @param file The file containing the serialized data.
- * @return The deserialized object, or null if parsing fails.
- * @param T The type of the object to parse.
- */
+/** Deserializes [file]; returns `null` on any failure. */
 fun <T : Any> StringFormat.parseOrNull(deserializer: DeserializationStrategy<T>, file: File): T? {
     return parse<T>(deserializer, file).getOrNull()
 }
 
-/**
- * Parses an object of type [T] from the specified file using the default serializer,
- * returning null if parsing fails.
- *
- * @param file The file containing the serialized data.
- * @return The deserialized object, or null if parsing fails.
- * @param T The type of the object to parse.
- */
+/** Deserializes [file] using the default serializer; returns `null` on any failure. */
 inline fun <reified T : Any> StringFormat.parseOrNull(file: File): T? {
     return parseOrNull(serializer(), file)
 }
 
-/**
- * Parses an object from the specified file using the provided deserializer.
- * If the file does not exist or parsing fails, returns a default value provided by the [factory].
- *
- * @param deserializer The deserialization strategy for the target type.
- * @param file The file containing the serialized data.
- * @param factory A function that creates a default value if parsing fails.
- * @return The parsed object, or the default value if the file is missing or parsing fails.
- * @param T The type of the object to parse.
- */
+/** Deserializes [file]; returns [factory]'s value when the file is missing or unparseable. */
 fun <T> StringFormat.parseOrDefault(deserializer: DeserializationStrategy<T>, file: File, factory: () -> T): T {
     if (!file.exists() || file.length() == 0L) return factory.invoke()
     return parse(deserializer, file).getOrElse { factory.invoke() }
 }
 
-/**
- * Parses an object of type [T] from the specified file using the default serializer.
- * If the file does not exist or parsing fails, returns a default value provided by the [factory].
- *
- * @param file The file containing the serialized data.
- * @param factory A function that creates a default value if parsing fails.
- * @return The parsed object, or the default value if the file is missing or parsing fails.
- * @param T The type of the object to parse.
- */
+/** Deserializes [file] using the default serializer; returns [factory]'s value on failure. */
 inline fun <reified T> StringFormat.parseOrDefault(file: File, noinline factory: () -> T): T {
     return parseOrDefault(serializer(), file, factory)
 }
 
-/**
- * Serializes the specified value and writes it into the specified file.
- * If necessary, creates missing parent directories and the file itself.
- *
- * @param serializer The serialization strategy for the target type.
- * @param value The object to serialize.
- * @param file The target file to write the serialized data into.
- * @param T The type of the object to serialize.
- */
+/** Serializes [value] and writes it to [file], creating parent directories and the file if absent. */
 fun <T> StringFormat.writeIntoFile(serializer: SerializationStrategy<T>, value: T, file: File) {
     val string = encodeToString(serializer, value)
     if (file.parentFile?.exists() != true) file.parentFile?.mkdirs()
@@ -102,35 +49,16 @@ fun <T> StringFormat.writeIntoFile(serializer: SerializationStrategy<T>, value: 
     file.writeText(string)
 }
 
-/**
- * Serializes the specified value of type [T] and writes it into the specified file using the default serializer.
- * If necessary, creates missing parent directories and the file itself.
- *
- * @param value The object to serialize.
- * @param file The target file to write the serialized data into.
- * @param T The type of the object to serialize.
- */
+/** Serializes [value] using the default serializer and writes it to [file]. */
 inline fun <reified T> StringFormat.writeIntoFile(value: T, file: File) {
     writeIntoFile(serializer(), value, file)
 }
 
 /**
- * Attempts to parse a file or writes a default value to a default file if parsing fails.
+ * Tries to parse [file]; on failure logs the error, writes [default] to a fallback file, and returns [default].
+ * On success, writes the parsed value back to [file] and returns it.
  *
- * This function tries to parse the content of a specified file using the given serializer.
- * If parsing fails, it logs an error, creates a default file if necessary, writes the default value
- * to this file, and returns the default value. If parsing is successful, it writes the parsed value
- * back to the original file and returns the parsed value.
- *
- * @param serializer The serializer used to parse the file content.
- * @param file The file to be parsed.
- * @param logger The logger used to log error messages. Defaults to a [StubLogger].
- * @param default A lambda function that provides the default value of type [T] if parsing fails.
- * @return The parsed value of type [T] if successful, otherwise the default value.
- *
- * @property folder The parent directory of the file. Created if it does not exist.
- * @property defaultFile The file to which the default value is written if parsing fails.
- * This is the original file if it does not exist or is empty, otherwise a new file with a ".default" suffix.
+ * The fallback file is [file] itself when missing/empty, or `<name>.default.<ext>` otherwise.
  */
 fun <T> StringFormat.parseOrWriteIntoDefault(
     serializer: KSerializer<T>,
@@ -160,19 +88,7 @@ fun <T> StringFormat.parseOrWriteIntoDefault(
         .getOrElse { default.invoke() }
 }
 
-/**
- * Attempts to parse a file or writes a default value to a default file if parsing fails.
- *
- * This function tries to parse the content of a specified file using the given serializer.
- * If parsing fails, it logs an error, creates a default file if necessary, writes the default value
- * to this file, and returns the default value. If parsing is successful, it writes the parsed value
- * back to the original file and returns the parsed value.
- *
- * @param file The file to be parsed.
- * @param logger The logger used to log error messages. Defaults to a [StubLogger].
- * @param default A lambda function that provides the default value of type [T] if parsing fails.
- * @return The parsed value of type [T] if successful, otherwise the default value.
- */
+/** Reified overload of [parseOrWriteIntoDefault]. */
 inline fun <reified T> StringFormat.parseOrWriteIntoDefault(
     file: File,
     logger: Logger = StubLogger,

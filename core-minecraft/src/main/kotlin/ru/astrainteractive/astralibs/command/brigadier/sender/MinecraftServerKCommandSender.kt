@@ -9,6 +9,13 @@ import ru.astrainteractive.astralibs.server.permission.KPermissible
 import ru.astrainteractive.astralibs.server.util.asKAudience
 import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
 
+/**
+ * [ConsoleKCommandSender] backed by a [MinecraftServer] (dedicated or integrated).
+ *
+ * Always grants all permissions, matching vanilla server-console behaviour.
+ *
+ * @param sender The running [MinecraftServer].
+ */
 class MinecraftServerKCommandSender(
     sender: MinecraftServer
 ) : ConsoleKCommandSender,

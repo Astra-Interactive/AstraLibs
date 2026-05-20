@@ -10,6 +10,10 @@ import ru.astrainteractive.astralibs.server.util.getOnlinePlayers
 import ru.astrainteractive.astralibs.server.util.getPlayerGameProfile
 import java.util.UUID
 
+/**
+ * Vanilla-Minecraft [PlatformServer] implementation backed by [MinecraftUtil].
+ * Offline-player resolution only works for profiles cached locally on this server.
+ */
 object MinecraftPlatformServer : PlatformServer {
     override fun getOnlinePlayers(): List<OnlineKPlayer> {
         return MinecraftUtil

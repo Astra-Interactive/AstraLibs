@@ -9,6 +9,12 @@ import net.neoforged.bus.api.EventPriority
 import net.neoforged.neoforge.common.NeoForge
 import java.util.function.Consumer
 
+/**
+ * Cold [Flow] of NeoForge [Event]s of [type] from [NeoForge.EVENT_BUS].
+ * The listener is registered on collection and unregistered on cancellation.
+ *
+ * @param priority Defaults to [EventPriority.NORMAL].
+ */
 fun <T : Event> flowEvent(
     type: Class<T>,
     priority: EventPriority = EventPriority.NORMAL
@@ -28,6 +34,7 @@ fun <T : Event> flowEvent(
     }
 }
 
+/** Reified overload of [flowEvent] that infers the event class at compile time. */
 inline fun <reified T : Event> flowEvent(
     priority: EventPriority = EventPriority.NORMAL
 ): Flow<T> = flowEvent(

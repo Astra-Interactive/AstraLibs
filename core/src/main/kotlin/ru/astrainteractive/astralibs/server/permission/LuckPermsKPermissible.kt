@@ -10,11 +10,16 @@ import kotlin.collections.orEmpty
 import kotlin.text.replace
 import kotlin.text.toIntOrNull
 
+/**
+ * [KPermissible] backed by the LuckPerms API for player [uuid].
+ * Returns conservative defaults (`false` / `null` / empty) and logs an error when LuckPerms is unavailable.
+ */
 class LuckPermsKPermissible(
     private val uuid: UUID,
     logger: Logger = StubLogger
 ) : KPermissible,
     Logger by logger {
+    /** Retrieves the LuckPerms API instance, logging an error and returning null if unavailable. */
     private val luckPermsOrNull: LuckPerms?
         get() = runCatching { LuckPermsProvider.get() }
             .onFailure { error { "#luckPermsOrNull LuckPerms is not installed!" } }

@@ -14,6 +14,11 @@ import ru.astrainteractive.astralibs.event.flowEvent
 import ru.astrainteractive.astralibs.server.util.MinecraftUtil
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 
+/**
+ * Bridges the Forge server lifecycle to [Lifecycle] callbacks.
+ * Calls [onEnable] on [ServerStartedEvent] and [onDisable] on [ServerStoppingEvent].
+ * The internal coroutine scope is cancelled on stop; errors are logged rather than propagated.
+ */
 abstract class ForgeLifecycleServer : Lifecycle, Logger {
     private val unconfinedScope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
 

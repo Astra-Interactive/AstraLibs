@@ -4,6 +4,7 @@ import com.earth2me.essentials.api.Economy
 import java.math.BigDecimal
 import java.util.UUID
 
+/** [EconomyFacade] backed by the EssentialsX economy API. Exceptions are caught and printed. */
 object EssentialsEconomyFacade : EconomyFacade {
 
     override suspend fun addMoney(uuid: UUID, amount: Double): Boolean = runCatching {

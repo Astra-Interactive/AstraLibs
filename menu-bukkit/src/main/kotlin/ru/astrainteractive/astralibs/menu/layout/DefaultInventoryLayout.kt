@@ -1,11 +1,6 @@
 package ru.astrainteractive.astralibs.menu.layout
 
-/**
- * Default [InventoryLayout] backed by a flat list of [KEY]s, one per slot.
- *
- * Construct via the [DefaultInventoryLayout] factory taking rows, or through the
- * [inventoryLayout] / [slotInventoryLayout] DSL.
- */
+/** Default [InventoryLayout] backed by a flat list of [KEY]s. */
 class DefaultInventoryLayout<KEY, SLOT>(
     private val slots: List<KEY>
 ) : InventoryLayout<KEY, SLOT> {
@@ -31,12 +26,9 @@ class DefaultInventoryLayout<KEY, SLOT>(
 }
 
 /**
- * Builds a [DefaultInventoryLayout] from a list of equally-sized rows
+ * Builds a [DefaultInventoryLayout] from a list of equally-sized rows.
  *
- * All rows must share the same width
- * An empty [rows] list yields an empty layout
- *
- * @throws IllegalArgumentException if rows are not equally sized
+ * @throws IllegalArgumentException if rows differ in width.
  */
 @Suppress("FunctionNaming")
 fun <KEY, SLOT> DefaultInventoryLayout(rows: List<List<KEY>>): InventoryLayout<KEY, SLOT> {

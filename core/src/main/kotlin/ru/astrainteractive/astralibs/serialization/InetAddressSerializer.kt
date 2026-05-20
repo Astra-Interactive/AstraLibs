@@ -7,6 +7,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.net.InetAddress
 
+/** A [KSerializer] for [InetAddress] that encodes as a host-address string (e.g. `"192.168.1.1"`). */
 object InetAddressSerializer : KSerializer<InetAddress> {
     override val descriptor = PrimitiveSerialDescriptor(
         serialName = "InetAddress",

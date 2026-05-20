@@ -14,6 +14,16 @@ import ru.astrainteractive.astralibs.command.api.brigadier.sender.KPlayerKComman
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.PaperConsoleKCommandSender
 import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
 
+/**
+ * Paper-specific implementation of [MultiplatformCommands].
+ *
+ * Bridges the platform-agnostic [MultiplatformCommands] interface to the Paper Brigadier API,
+ * wrapping the Paper [Commands] factory for literals and arguments and mapping Paper
+ * [CommandSourceStack] senders to the platform-neutral [KCommandSender] hierarchy.
+ *
+ * Console and RCON senders are wrapped as [PaperConsoleKCommandSender];
+ * online players are wrapped as [KPlayerKCommandSender].
+ */
 @Suppress("UNCHECKED_CAST")
 class PaperMultiplatformCommands : MultiplatformCommands {
     override fun literal(literal: String): LiteralArgumentBuilder<Any> {

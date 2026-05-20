@@ -2,11 +2,7 @@ package ru.astrainteractive.astralibs.menu.clicker
 
 import org.bukkit.event.inventory.InventoryClickEvent
 
-/**
- * Inventory slot click handler.
- *
- * [Empty] is a no-op singleton suitable as a default when no action is needed.
- */
+/** Inventory slot click handler. [Empty] is a no-op default. */
 fun interface Click {
     operator fun invoke(e: InventoryClickEvent)
 

@@ -18,6 +18,10 @@ import ru.astrainteractive.astralibs.command.brigadier.sender.MinecraftServerKCo
 import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
 import ru.astrainteractive.astralibs.util.publicSource
 
+/**
+ * Vanilla Minecraft implementation of [MultiplatformCommands].
+ * Maps [CommandSourceStack] to the appropriate [KCommandSender] subtype for players, RCON, and server.
+ */
 @Suppress("UNCHECKED_CAST")
 class MinecraftMultiplatformCommands : MultiplatformCommands {
     override fun literal(literal: String): LiteralArgumentBuilder<Any> {
