@@ -1,32 +1,19 @@
 package ru.astrainteractive.astralibs.server.util
 
-import com.google.gson.JsonParser
-import com.mojang.serialization.JsonOps
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.ComponentSerialization
-import net.minecraft.resources.RegistryOps
+import net.minecraft.network.chat.Component.Serializer
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 
 fun net.kyori.adventure.text.Component.toNative(): Component {
-    val jsonString = KyoriComponentSerializer.Json.serializer.serialize(this)
-    val jsonElement = JsonParser.parseString(jsonString)
-    val ops = RegistryOps.create(JsonOps.INSTANCE, MinecraftUtil.requireServer().registryAccess())
-    return ComponentSerialization.CODEC
-        .parse(ops, jsonElement)
-        .resultOrPartial { }
-        .orElse(Component.empty())
-        ?: Component.empty()
+    val json = KyoriComponentSerializer.Json
+    val jsonComponent = json.serializer.serialize(this)
+
+    return Serializer.fromJson(jsonComponent) ?: Component.empty()
 }
 
 fun Component.toKyori(): net.kyori.adventure.text.Component {
-    val ops = RegistryOps.create(JsonOps.INSTANCE, MinecraftUtil.requireServer().registryAccess())
-    val jsonString = ComponentSerialization.CODEC
-        .encodeStart(ops, this)
-        .resultOrPartial { }
-        .map { it.toString() }
-        .orElse(null)
-        ?: return net.kyori.adventure.text.Component.empty()
-    return KyoriComponentSerializer.Json.serializer.deserialize(jsonString)
+    val json = Serializer.toJson(this)
+    return KyoriComponentSerializer.Json.serializer.deserialize(json)
 }
 
 fun net.kyori.adventure.text.Component.toPlain(): String {
@@ -36,5 +23,3 @@ fun net.kyori.adventure.text.Component.toPlain(): String {
 fun Component.toPlain(): String {
     return toKyori().toPlain()
 }
-
-

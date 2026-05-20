@@ -11,13 +11,14 @@ import net.neoforged.bus.api.EventPriority
 import net.neoforged.neoforge.event.server.ServerStartedEvent
 import net.neoforged.neoforge.event.server.ServerStoppingEvent
 import ru.astrainteractive.astralibs.event.flowEvent
-import ru.astrainteractive.astralibs.server.util.NeoForgeUtil
+import ru.astrainteractive.astralibs.server.util.MinecraftUtil
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 
 abstract class ForgeLifecycleServer : Lifecycle, Logger {
     private val unconfinedScope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
 
     val serverStartedEvent = flowEvent<ServerStartedEvent>(EventPriority.HIGHEST)
+        .onEach { event -> MinecraftUtil.setServer(event.server) }
         .onEach { onEnable() }
         .catch { throwable ->
             error(throwable) { "#serverStartedEvent ${throwable.localizedMessage}" }
@@ -31,8 +32,4 @@ abstract class ForgeLifecycleServer : Lifecycle, Logger {
             error(throwable) { "#serverStartedEvent ${throwable.localizedMessage}" }
         }
         .launchIn(unconfinedScope)
-
-    init {
-        NeoForgeUtil.bootstrap()
-    }
 }

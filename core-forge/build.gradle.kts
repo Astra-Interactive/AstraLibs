@@ -29,6 +29,8 @@ dependencies {
     implementation(projects.command)
     implementation(projects.core)
 
+    api(projects.coreMinecraft)
+
     testImplementation(libs.kotlin.serialization.kaml)
     testImplementation(libs.tests.kotlin.test)
 }
