@@ -37,7 +37,6 @@ class MinecraftMultiplatformCommands : MultiplatformCommands {
 
     override fun getSender(context: CommandContext<*>): KCommandSender {
         val commandSourceStack = context.source as CommandSourceStack
-
         return when (val source = commandSourceStack.publicSource) {
             is ServerPlayer -> {
                 KPlayerKCommandSender(source.asOnlineMinecraftPlayer())
