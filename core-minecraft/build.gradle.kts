@@ -12,6 +12,7 @@ dependencies {
     minecraft(libs.minecraft.fabric.mojang)
     mappings(loom.officialMojangMappings())
 }
+
 dependencies {
     compileOnly(libs.klibs.mikro.core)
     compileOnly(libs.kotlin.coroutines.core)

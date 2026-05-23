@@ -4,7 +4,6 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.rcon.RconConsoleSource
 import ru.astrainteractive.astralibs.server.KCommandDispatcher
-import ru.astrainteractive.astralibs.util.publicServer
 
 /** Adapts this [MinecraftServer] as a [KCommandDispatcher]. */
 fun MinecraftServer.asKCommandDispatcher() = KCommandDispatcher { command ->
@@ -26,7 +25,7 @@ fun RconConsoleSource.asKCommandDispatcher() = KCommandDispatcher { command ->
 
 /** Adapts this [ServerPlayer] as a [KCommandDispatcher]. Does nothing if the player's server reference is null. */
 fun ServerPlayer.asKCommandDispatcher() = KCommandDispatcher { command ->
-    publicServer?.commands?.performPrefixedCommand(
+    MinecraftUtil.serverOrNull?.commands?.performPrefixedCommand(
         this.createCommandSourceStack(),
         command
     )

@@ -7,13 +7,13 @@ import ru.astrainteractive.astralibs.server.Locatable
 import ru.astrainteractive.astralibs.server.Teleportable
 import ru.astrainteractive.astralibs.server.annotation.InternalPlatformApi
 import ru.astrainteractive.astralibs.server.permission.KPermissible
+import ru.astrainteractive.astralibs.server.util.MinecraftUtil
 import ru.astrainteractive.astralibs.server.util.asKAudience
 import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
 import ru.astrainteractive.astralibs.server.util.asLocatable
 import ru.astrainteractive.astralibs.server.util.asPermissible
 import ru.astrainteractive.astralibs.server.util.asTeleportable
 import ru.astrainteractive.astralibs.server.util.toPlain
-import ru.astrainteractive.astralibs.util.publicServer
 import ru.astrainteractive.klibs.mikro.core.util.cast
 import java.net.InetSocketAddress
 import java.util.*
@@ -33,7 +33,7 @@ class MinecraftOnlineKPlayer(val instance: ServerPlayer) :
         get() = instance.name.toPlain()
 
     override fun hasPlayedBefore(): Boolean {
-        return instance.publicServer
+        return MinecraftUtil.serverOrNull
             ?.playerList
             ?.load(instance)
             ?.isEmpty == true
