@@ -1,4 +1,5 @@
 plugins {
+    alias(libs.plugins.gradle.forgegradle) apply false
     alias(libs.plugins.gradle.neoforgegradle) apply false
     alias(libs.plugins.klibs.gradle.detekt) apply false
     alias(libs.plugins.klibs.gradle.dokka.root)
@@ -7,5 +8,4 @@ plugins {
     alias(libs.plugins.klibs.gradle.rootinfo) apply false
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.gradle.forgegradle) apply false
 }

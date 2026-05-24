@@ -29,7 +29,3 @@ dependencies {
     testImplementation(libs.kotlin.serialization.kaml)
     testImplementation(libs.tests.kotlin.test)
 }
-
-configurations.runtimeElements {
-    setExtendsFrom(emptySet())
-}

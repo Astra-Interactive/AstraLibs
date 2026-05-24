@@ -1,5 +1,3 @@
-import ru.astrainteractive.gradleplugin.property.util.requireJinfo
-
 plugins {
     id("net.neoforged.gradle.userdev")
     id("org.jetbrains.kotlin.jvm")
@@ -29,12 +27,6 @@ dependencies {
     testImplementation(libs.tests.kotlin.test)
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(requireJinfo.jtarget.majorVersion)
-
 dependencies {
     compileOnly(libs.minecraft.neoforgeversion)
-}
-
-configurations.runtimeElements {
-    setExtendsFrom(emptySet())
 }
