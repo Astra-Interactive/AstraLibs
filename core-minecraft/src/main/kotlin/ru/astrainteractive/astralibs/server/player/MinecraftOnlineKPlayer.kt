@@ -14,9 +14,9 @@ import ru.astrainteractive.astralibs.server.util.asLocatable
 import ru.astrainteractive.astralibs.server.util.asPermissible
 import ru.astrainteractive.astralibs.server.util.asTeleportable
 import ru.astrainteractive.astralibs.server.util.toPlain
-import ru.astrainteractive.klibs.mikro.core.util.cast
+import ru.astrainteractive.klibs.mikro.core.util.tryCast
 import java.net.InetSocketAddress
-import java.util.*
+import java.util.UUID
 
 /** [OnlineKPlayer] backed by a vanilla [ServerPlayer]. */
 @OptIn(InternalPlatformApi::class)
@@ -42,5 +42,6 @@ class MinecraftOnlineKPlayer(val instance: ServerPlayer) :
     override val address: InetSocketAddress
         get() = instance.connection
             .remoteAddress
-            .cast<InetSocketAddress>()
+            .tryCast<InetSocketAddress>()
+            ?: error("Failed to get address from player ${instance.name}")
 }
