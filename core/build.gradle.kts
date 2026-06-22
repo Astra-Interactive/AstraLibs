@@ -8,6 +8,7 @@ plugins {
 }
 
 dependencies {
+    compileOnly(libs.checkerfraemwork.qual)
     compileOnly(libs.klibs.kstorage)
     compileOnly(libs.klibs.mikro.core)
     compileOnly(libs.klibs.mikro.extensions)
