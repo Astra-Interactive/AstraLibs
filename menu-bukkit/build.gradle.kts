@@ -15,5 +15,6 @@ dependencies {
     compileOnly(projects.core)
     compileOnly(projects.coreBukkit)
 
+    testImplementation(libs.kotlin.coroutines.core)
     testImplementation(libs.tests.kotlin.test)
 }

@@ -22,6 +22,7 @@ dependencies {
     compileOnly(libs.minecraft.kyori.plain)
     compileOnly(libs.minecraft.luckperms)
 
+    testImplementation(libs.klibs.kstorage)
     testImplementation(libs.klibs.mikro.core)
     testImplementation(libs.kotlin.coroutines.core)
     testImplementation(libs.kotlin.serialization.kaml)
