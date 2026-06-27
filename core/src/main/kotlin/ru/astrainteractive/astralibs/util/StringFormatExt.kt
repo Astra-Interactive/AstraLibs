@@ -5,6 +5,8 @@ import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.StringFormat
 import kotlinx.serialization.serializer
+import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate
+import ru.astrainteractive.klibs.kstorage.api.value.ValueFactory
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import ru.astrainteractive.klibs.mikro.core.logging.StubLogger
 import java.io.File
@@ -98,4 +100,33 @@ inline fun <reified T> StringFormat.parseOrWriteIntoDefault(
     file = file,
     logger = logger,
     default = default
+)
+
+/**
+ * Creates a [DefaultMutableKrate] backed by [file].
+ *
+ * Loading parses [file] via [parseOrWriteIntoDefault], falling back to [factory]'s value when the file is
+ * missing or unparseable. Saving writes the value back to [file], or deletes [file] when the value is `null`.
+ */
+inline fun <reified T> StringFormat.krateOf(
+    file: File,
+    factory: ValueFactory<T>
+): DefaultMutableKrate<T> = DefaultMutableKrate(
+    factory = factory,
+    loader = {
+        parseOrWriteIntoDefault<T?>(
+            file = file,
+            default = factory::create
+        )
+    },
+    saver = { value ->
+        if (value == null) {
+            file.delete()
+        } else {
+            writeIntoFile<T>(
+                value = value,
+                file = file
+            )
+        }
+    }
 )

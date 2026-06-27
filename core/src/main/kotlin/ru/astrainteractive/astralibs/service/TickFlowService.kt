@@ -28,7 +28,7 @@ class TickFlowService(
 ) : Service {
     /** Convenience constructor accepting fixed [Duration] values instead of [Flow]s. */
     constructor(
-        coroutineContext: CoroutineContext = Dispatchers.IO,
+        coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.IO,
         delay: Duration,
         initialDelay: Duration = Duration.ZERO,
         executor: ServiceExecutor
