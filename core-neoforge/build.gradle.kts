@@ -1,4 +1,5 @@
 plugins {
+    id("ru.astrainteractive.gradleplugin.dokka")
     id("net.neoforged.gradle.userdev")
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")

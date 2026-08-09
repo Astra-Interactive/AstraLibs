@@ -1,4 +1,5 @@
 plugins {
+    id("ru.astrainteractive.gradleplugin.dokka")
     alias(libs.plugins.gradle.fabric.loom)
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")

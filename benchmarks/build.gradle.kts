@@ -1,6 +1,7 @@
 import kotlinx.benchmark.gradle.JvmBenchmarkTarget
 
 plugins {
+    id("ru.astrainteractive.gradleplugin.dokka")
     java
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
