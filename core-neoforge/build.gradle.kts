@@ -25,6 +25,7 @@ dependencies {
     api(projects.coreMinecraft)
 
     testImplementation(libs.kotlin.serialization.kaml)
+    testImplementation(libs.minecraft.neoforged.bus)
     testImplementation(libs.tests.kotlin.test)
 }
 
