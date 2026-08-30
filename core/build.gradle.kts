@@ -26,6 +26,7 @@ dependencies {
     testImplementation(libs.klibs.kstorage)
     testImplementation(libs.klibs.mikro.core)
     testImplementation(libs.kotlin.coroutines.core)
+    testImplementation(libs.kotlin.coroutines.test)
     testImplementation(libs.kotlin.serialization.kaml)
     testImplementation(libs.tests.kotlin.test)
 }
