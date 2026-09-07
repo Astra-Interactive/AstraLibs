@@ -43,6 +43,22 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
     }
 
     /**
+     * Appends a child literal node to this argument builder, so a keyword can follow a typed
+     * argument (`/cmd <arg> keyword`).
+     *
+     * Without this overload the same call inside an `argument` block resolves against the
+     * enclosing literal receiver and silently attaches the node as a sibling of the argument.
+     */
+    fun RequiredArgumentBuilder<Any, *>.literal(
+        alias: String,
+        block: LiteralArgumentBuilder<Any>.() -> Unit
+    ) {
+        val literal = commands.literal(alias)
+        literal.block()
+        this.then(literal)
+    }
+
+    /**
      * Metadata needed to retrieve a typed Brigadier argument from a [CommandContext].
      *
      * Passed into [argument] builder lambdas so callers can use [requireArgument] without

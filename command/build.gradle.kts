@@ -16,4 +16,5 @@ dependencies {
     implementation(projects.core)
 
     testImplementation(libs.tests.kotlin.test)
+    testImplementation(libs.minecraft.brigadier)
 }
