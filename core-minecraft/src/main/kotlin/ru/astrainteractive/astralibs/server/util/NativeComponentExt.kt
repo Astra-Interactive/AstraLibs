@@ -1,8 +1,21 @@
 package ru.astrainteractive.astralibs.server.util
 
+import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.Component.Serializer
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
+
+/**
+ * Registries a component may resolve entries against.
+ *
+ * Falls back to [RegistryAccess.EMPTY] before a server exists: text and formatting survive, only the
+ * parts that look up registry entries degrade.
+ */
+private fun registryProvider(): HolderLookup.Provider {
+    return MinecraftUtil.serverOrNull
+        ?.registryAccess()
+        ?: RegistryAccess.EMPTY
+}
 
 /**
  * Converts this Adventure [net.kyori.adventure.text.Component] to a vanilla [Component] via JSON.
@@ -14,7 +27,7 @@ fun net.kyori.adventure.text.Component.toNative(): Component {
     val json = KyoriComponentSerializer.Json
     val jsonComponent = json.serializer.serialize(this)
 
-    return Serializer.fromJson(jsonComponent) ?: Component.empty()
+    return Component.Serializer.fromJson(jsonComponent, registryProvider()) ?: Component.empty()
 }
 
 /**
@@ -23,16 +36,14 @@ fun net.kyori.adventure.text.Component.toNative(): Component {
  * @see [toNative]
  */
 fun Component.toKyori(): net.kyori.adventure.text.Component {
-    val json = Serializer.toJson(this)
+    val json = Component.Serializer.toJson(this, registryProvider())
     return KyoriComponentSerializer.Json.serializer.deserialize(json)
 }
 
-/** Serializes this Adventure component to plain text, stripping all formatting. */
 fun net.kyori.adventure.text.Component.toPlain(): String {
     return KyoriComponentSerializer.Plain.serializer.serialize(this)
 }
 
-/** Serializes this vanilla [Component] to plain text via [toKyori]. */
 fun Component.toPlain(): String {
     return toKyori().toPlain()
 }
