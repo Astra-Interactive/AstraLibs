@@ -5,37 +5,59 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
 import net.minecraft.commands.CommandSourceStack
 import net.minecraftforge.event.RegisterCommandsEvent
 import net.minecraftforge.eventbus.api.EventPriority
+import net.minecraftforge.server.ServerLifecycleHooks
 import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.event.flowEvent
 
 /**
- * NeoForge implementation of [CommandRegistrarContext] that registers Brigadier commands via
- * the NeoForge [RegisterCommandsEvent].
+ * Forge implementation of [CommandRegistrarContext] that registers Brigadier commands via
+ * the Forge [RegisterCommandsEvent].
  *
- * Command nodes are queued and applied to the server's command dispatcher each time the event
- * fires, which covers both initial server start-up and `/reload` scenarios.
+ * The latest event is kept so a node handed over later - a feature enabled while the server runs -
+ * reaches the dispatcher right away, and is re-applied every time the event fires again, which
+ * covers both initial server start-up and `/reload` scenarios.
  *
- * @param mainScope Coroutine scope used to collect the event flow and register commands. Cancelling
- * this scope stops all pending registrations.
+ * @param mainScope Scope the event is shared in. Cancelling it stops feeding new events to nodes.
  */
 class ForgeCommandRegistrarContext(
-    private val mainScope: CoroutineScope
+    mainScope: CoroutineScope
 ) : CommandRegistrarContext {
     private val registerCommandsEvent = flowEvent<RegisterCommandsEvent>(EventPriority.HIGHEST)
         .filterNotNull()
         .stateIn(mainScope, SharingStarted.Eagerly, null)
 
-    override fun registerWhenReady(node: LiteralArgumentBuilder<*>) {
-        node as LiteralArgumentBuilder<CommandSourceStack>
+    /** A tree changed outside the event is missing from the trees players already hold. */
+    private fun resendCommandTree() {
+        val server = ServerLifecycleHooks.getCurrentServer() ?: return
+        server.playerList.players.forEach(server.commands::sendCommands)
+    }
+
+    private fun unregister(node: LiteralArgumentBuilder<CommandSourceStack>) {
+        registerCommandsEvent.value
+            ?.dispatcher
+            ?.takeIf { commandDispatcher -> commandDispatcher.removeCommand(node.literal) }
+            ?.run { resendCommandTree() }
+    }
+
+    override fun registerWhenReady(
+        node: LiteralArgumentBuilder<*>,
+        scope: CoroutineScope
+    ) {
+        val platformNode = node as LiteralArgumentBuilder<CommandSourceStack>
         registerCommandsEvent
             .mapNotNull { registerCommandsEvent -> registerCommandsEvent?.dispatcher }
-            .onEach { commandDispatcher -> commandDispatcher.register(node) }
-            .launchIn(mainScope)
+            .map { commandDispatcher ->
+                commandDispatcher.register(platformNode)
+                resendCommandTree()
+            }
+            .onCompletion { unregister(platformNode) }
+            .launchIn(scope)
     }
 }

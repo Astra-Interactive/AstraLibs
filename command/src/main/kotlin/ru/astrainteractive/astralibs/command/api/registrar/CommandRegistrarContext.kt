@@ -1,22 +1,40 @@
 package ru.astrainteractive.astralibs.command.api.registrar
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
+import kotlinx.coroutines.CoroutineScope
+import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommands
 
 /**
- * Provides the ability to register a Brigadier command tree with the server.
- *
  * Implementations defer the actual registration until the platform signals
  * it is ready to accept new commands (e.g. after the server has initialised).
  */
 interface CommandRegistrarContext {
     /**
-     * Schedules [node] for registration with the server's command dispatcher.
+     * Keeps [node] in the server's command dispatcher until [scope] is cancelled.
      *
-     * The node will be registered once the platform is in the appropriate lifecycle
-     * state to accept commands. Calling this method before the server is ready must
-     * not throw; the implementation is expected to queue the node internally.
+     * Calling this before the server is ready never throws: the node is applied as soon as the
+     * platform accepts commands, re-applied whenever the platform rebuilds its command tree, and
+     * removed again once [scope] dies. Passing the scope of whatever owns the command is therefore
+     * all a feature toggled at runtime needs - when that scope dies, the command leaves with it.
      *
-     * @param node The root [LiteralArgumentBuilder] representing the command tree to register.
+     * [node] must be built by the same platform's [MultiplatformCommands] factory: its source type
+     * is not reified, so a foreign node is only rejected once the command executes and sender
+     * resolution meets the wrong source class.
      */
-    fun registerWhenReady(node: LiteralArgumentBuilder<*>)
+    fun registerWhenReady(
+        node: LiteralArgumentBuilder<*>,
+        scope: CoroutineScope
+    )
+}
+
+/**
+ * Keeps every tree in [nodes] registered until [scope] is cancelled.
+ *
+ * @see CommandRegistrarContext.registerWhenReady
+ */
+fun CommandRegistrarContext.registerWhenReady(
+    nodes: List<LiteralArgumentBuilder<*>>,
+    scope: CoroutineScope
+) {
+    nodes.forEach { node -> registerWhenReady(node = node, scope = scope) }
 }
