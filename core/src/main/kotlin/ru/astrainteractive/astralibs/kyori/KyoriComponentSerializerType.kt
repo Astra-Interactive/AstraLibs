@@ -18,5 +18,8 @@ enum class KyoriComponentSerializerType {
     MiniMessage,
 
     /** Legacy color-code format (e.g. `'&'`). */
-    Legacy
+    Legacy,
+
+    /** MiniMessage tags and legacy `&` codes in one string, see [AutoComponentSerializer]. */
+    Auto
 }

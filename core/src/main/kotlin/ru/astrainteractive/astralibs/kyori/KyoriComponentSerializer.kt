@@ -9,6 +9,11 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import ru.astrainteractive.astralibs.string.StringDesc
 
+/** Item names and lore render italic unless told otherwise, while config text is meant to be upright. */
+internal fun Component.withItalicOffByDefault(): Component {
+    return decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+}
+
 /** Converts strings (and [StringDesc]s) to Kyori Adventure [Component]s. */
 interface KyoriComponentSerializer {
 
@@ -17,10 +22,11 @@ interface KyoriComponentSerializer {
 
     fun toComponent(string: String): Component
 
+    /** [StringDesc.Plain] is never parsed: its markup characters stay literal text. */
     fun toComponent(stringDesc: StringDesc): Component {
         return when (stringDesc) {
             is StringDesc.Raw -> toComponent(stringDesc.raw)
-            is StringDesc.Plain -> toComponent(stringDesc.raw)
+            is StringDesc.Plain -> Component.text(stringDesc.raw)
         }
     }
 
@@ -87,7 +93,11 @@ interface KyoriComponentSerializer {
         override fun toComponent(string: String): Component {
             return serializer
                 .deserialize(string)
-                .decoration(TextDecoration.ITALIC, false)
+                .withItalicOffByDefault()
+        }
+
+        override fun toComponent(stringDesc: StringDesc): Component {
+            return super.toComponent(stringDesc).withItalicOffByDefault()
         }
     }
 
@@ -98,6 +108,7 @@ interface KyoriComponentSerializer {
             KyoriComponentSerializerType.Plain -> Plain
             KyoriComponentSerializerType.MiniMessage -> MiniMessage
             KyoriComponentSerializerType.Legacy -> Legacy
+            KyoriComponentSerializerType.Auto -> AutoComponentSerializer
         }
     }
 }
