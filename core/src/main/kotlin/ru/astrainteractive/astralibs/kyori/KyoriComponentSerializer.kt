@@ -9,6 +9,11 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import ru.astrainteractive.astralibs.string.StringDesc
 
+/** Item names and lore render italic unless told otherwise, while config text is meant to be upright. */
+internal fun Component.withItalicOffByDefault(): Component {
+    return decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+}
+
 /** Converts strings (and [StringDesc]s) to Kyori Adventure [Component]s. */
 interface KyoriComponentSerializer {
 
@@ -87,7 +92,7 @@ interface KyoriComponentSerializer {
         override fun toComponent(string: String): Component {
             return serializer
                 .deserialize(string)
-                .decoration(TextDecoration.ITALIC, false)
+                .withItalicOffByDefault()
         }
     }
 
