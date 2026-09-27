@@ -108,6 +108,7 @@ interface KyoriComponentSerializer {
             KyoriComponentSerializerType.Plain -> Plain
             KyoriComponentSerializerType.MiniMessage -> MiniMessage
             KyoriComponentSerializerType.Legacy -> Legacy
+            KyoriComponentSerializerType.Auto -> AutoComponentSerializer
         }
     }
 }
