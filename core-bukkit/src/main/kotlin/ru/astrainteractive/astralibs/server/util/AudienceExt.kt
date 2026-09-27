@@ -1,17 +1,7 @@
 package ru.astrainteractive.astralibs.server.util
 
 import net.kyori.adventure.audience.Audience
-import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.server.KAudience
+import ru.astrainteractive.astralibs.server.AdventureKAudience
 
-/** Adapts this [Player] as a [KAudience]. */
-fun Player.asKAudience() = KAudience { component ->
-    val player = this
-    player.sendMessage(component)
-}
-
-/** Adapts this [Audience] as a [KAudience]. */
-fun Audience.asKAudience() = KAudience { component ->
-    val audience = this
-    audience.sendMessage(component)
-}
+/** Adapts this [Audience], e.g. a player or a command sender, as a receiver that knows its language. */
+fun Audience.asKAudience(): AdventureKAudience = AdventureKAudience(this)

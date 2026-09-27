@@ -45,6 +45,7 @@ All command exceptions extend `CommandException`. Throw them freely inside conve
 | Exception                                   | When to throw                      |
 |---------------------------------------------|------------------------------------|
 | `CommandException(message)`                 | Generic command error              |
+| `LocalizableComponentCommandException(localizableComponent)` | Error shown in the sender's language |
 | `BadArgumentException(wrongArg, converter)` | Argument failed to parse           |
 | `ArgumentConverterException(class, value)`  | Converter could not convert value  |
 | `NoPermissionException(permission)`         | Sender lacks a permission          |

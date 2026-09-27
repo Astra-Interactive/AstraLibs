@@ -31,9 +31,9 @@ interface KPlayer {
 /**
  * Platform-agnostic representation of a player who is currently connected to the server.
  *
- * Combines message-sending ([KAudience]), location ([Locatable]), teleportation ([Teleportable]),
- * permission checking ([KPermissible]), and command dispatching ([KCommandDispatcher]) into a
- * single interface.
+ * Combines message-sending in the client language ([KAudience]), location ([Locatable]), teleportation
+ * ([Teleportable]), permission checking ([KPermissible]), and command dispatching ([KCommandDispatcher])
+ * into a single interface.
  *
  * Subclassing outside the library requires opting in to [InternalPlatformApi].
  *

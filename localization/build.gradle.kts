@@ -17,6 +17,7 @@ dependencies {
     compileOnly(libs.minecraft.kyori.minimessage)
     compileOnly(libs.minecraft.kyori.plain)
 
+    testImplementation(libs.kotlin.serialization.json)
     testImplementation(libs.kotlin.serialization.kaml)
     testImplementation(libs.minecraft.kyori.api)
     testImplementation(libs.minecraft.kyori.gson)

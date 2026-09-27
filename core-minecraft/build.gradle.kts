@@ -17,6 +17,7 @@ dependencies {
 dependencies {
     compileOnly(libs.klibs.mikro.core)
     compileOnly(libs.kotlin.coroutines.core)
+    compileOnly(libs.kotlin.serialization.kaml)
     compileOnly(libs.minecraft.kyori.api)
     compileOnly(libs.minecraft.kyori.gson)
     compileOnly(libs.minecraft.kyori.legacy)

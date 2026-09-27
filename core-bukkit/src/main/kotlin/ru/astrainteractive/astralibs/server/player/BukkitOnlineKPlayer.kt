@@ -13,6 +13,7 @@ import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
 import ru.astrainteractive.astralibs.server.util.asLocatable
 import ru.astrainteractive.astralibs.server.util.asTeleportable
 import java.net.InetSocketAddress
+import java.util.Locale
 import java.util.UUID
 
 /** [OnlineKPlayer] wrapping a currently online Bukkit [Player]. Exposes [instance] for Bukkit-specific API access. */
@@ -30,6 +31,8 @@ class BukkitOnlineKPlayer(val instance: Player) :
         get() = instance.address
     override val name: String
         get() = instance.name
+    override val locale: Locale
+        get() = instance.locale()
 
     override fun hasPlayedBefore(): Boolean {
         return instance.hasPlayedBefore()
