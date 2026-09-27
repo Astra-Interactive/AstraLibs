@@ -2,12 +2,6 @@ package ru.astrainteractive.astralibs.command.api.exception
 
 import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
 import ru.astrainteractive.astralibs.server.permission.Permission
-import ru.astrainteractive.astralibs.string.StringDesc
-
-/** Thrown when a command execution fails with a localised [stringDesc] message. */
-class StringDescCommandException(
-    val stringDesc: StringDesc
-) : CommandException("Specific StringDesc exception: $stringDesc")
 
 /** Thrown when a command argument value is incompatible with the expected [ArgumentConverter] type. */
 class BadArgumentException(
