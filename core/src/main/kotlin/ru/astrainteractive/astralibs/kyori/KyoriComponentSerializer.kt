@@ -22,10 +22,11 @@ interface KyoriComponentSerializer {
 
     fun toComponent(string: String): Component
 
+    /** [StringDesc.Plain] is never parsed: its markup characters stay literal text. */
     fun toComponent(stringDesc: StringDesc): Component {
         return when (stringDesc) {
             is StringDesc.Raw -> toComponent(stringDesc.raw)
-            is StringDesc.Plain -> toComponent(stringDesc.raw)
+            is StringDesc.Plain -> Component.text(stringDesc.raw)
         }
     }
 
@@ -93,6 +94,10 @@ interface KyoriComponentSerializer {
             return serializer
                 .deserialize(string)
                 .withItalicOffByDefault()
+        }
+
+        override fun toComponent(stringDesc: StringDesc): Component {
+            return super.toComponent(stringDesc).withItalicOffByDefault()
         }
     }
 
