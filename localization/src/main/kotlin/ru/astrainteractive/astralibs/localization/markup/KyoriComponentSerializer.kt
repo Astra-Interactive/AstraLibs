@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.kyori
+package ru.astrainteractive.astralibs.localization.markup
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration

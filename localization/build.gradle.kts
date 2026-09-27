@@ -9,24 +9,17 @@ plugins {
 }
 
 dependencies {
-    compileOnly(libs.checkerfraemwork.qual)
     compileOnly(libs.klibs.kstorage)
-    compileOnly(libs.klibs.mikro.core)
-    compileOnly(libs.klibs.mikro.extensions)
-    compileOnly(libs.kotlin.coroutines.core)
     compileOnly(libs.kotlin.serialization.kaml)
-    compileOnly(libs.kotlin.serialization.protobuf)
     compileOnly(libs.minecraft.kyori.api)
-    compileOnly(libs.minecraft.luckperms)
+    compileOnly(libs.minecraft.kyori.gson)
+    compileOnly(libs.minecraft.kyori.legacy)
+    compileOnly(libs.minecraft.kyori.minimessage)
+    compileOnly(libs.minecraft.kyori.plain)
 
-    api(projects.localization)
-
-    testImplementation(libs.klibs.kstorage)
-    testImplementation(libs.klibs.mikro.core)
-    testImplementation(libs.kotlin.coroutines.core)
-    testImplementation(libs.kotlin.coroutines.test)
     testImplementation(libs.kotlin.serialization.kaml)
     testImplementation(libs.minecraft.kyori.api)
+    testImplementation(libs.minecraft.kyori.gson)
     testImplementation(libs.minecraft.kyori.legacy)
     testImplementation(libs.minecraft.kyori.minimessage)
     testImplementation(libs.minecraft.kyori.plain)

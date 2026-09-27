@@ -41,6 +41,7 @@ For documentation you can open specific module
 | Module           | Platform | Description                                                             |
 |------------------|----------|-------------------------------------------------------------------------|
 | `core`           | Any      | Lifecycle, EconomyFacade, players, serialization utilities              |
+| `localization`   | Any      | Text markup parsing                                                     |
 | `core-bukkit`    | Paper    | BukkitDispatchers, FlowEvent, VaultEconomy, PlaceholderAPI              |
 | `core-neoforge`  | NeoForge | ForgeDispatchers, NeoForge event bindings, KPlayer adapter              |
 | `core-fabric`    | Fabric   | FabricDispatchers, Fabric command registration                          |

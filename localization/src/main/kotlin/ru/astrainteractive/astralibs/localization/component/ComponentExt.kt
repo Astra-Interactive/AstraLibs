@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.util
+package ru.astrainteractive.astralibs.localization.component
 
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.text.Component
