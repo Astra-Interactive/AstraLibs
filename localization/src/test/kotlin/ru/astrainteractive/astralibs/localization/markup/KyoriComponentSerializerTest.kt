@@ -1,12 +1,11 @@
 @file:Suppress("FunctionNaming")
 
-package ru.astrainteractive.astralibs.kyori
+package ru.astrainteractive.astralibs.localization.markup
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
-import ru.astrainteractive.astralibs.string.StringDesc
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -32,27 +31,5 @@ class KyoriComponentSerializerTest {
         val component = KyoriComponentSerializer.Legacy.toComponent("&aHi")
 
         assertEquals(TextDecoration.State.FALSE, component.decoration(TextDecoration.ITALIC))
-    }
-
-    @Test
-    fun GIVEN_plain_desc_with_codes_WHEN_legacy_to_component_THEN_codes_are_not_parsed_and_italic_is_disabled() {
-        val component = KyoriComponentSerializer.Legacy.toComponent(StringDesc.Plain("&aHi"))
-
-        assertEquals("&aHi", plainText(component))
-        assertEquals(TextDecoration.State.FALSE, component.decoration(TextDecoration.ITALIC))
-    }
-
-    @Test
-    fun GIVEN_plain_desc_with_tags_WHEN_minimessage_to_component_THEN_tags_are_not_parsed() {
-        val component = KyoriComponentSerializer.MiniMessage.toComponent(StringDesc.Plain("<red>Hi"))
-
-        assertEquals(Component.text("<red>Hi"), component)
-    }
-
-    @Test
-    fun GIVEN_plain_desc_with_invalid_json_WHEN_json_to_component_THEN_text_is_returned() {
-        val component = KyoriComponentSerializer.Json.toComponent(StringDesc.Plain("{oops"))
-
-        assertEquals(Component.text("{oops"), component)
     }
 }

@@ -1,36 +1,20 @@
-package ru.astrainteractive.astralibs.kyori
+package ru.astrainteractive.astralibs.localization.markup
 
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.serializer.ComponentSerializer
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
-import ru.astrainteractive.astralibs.string.StringDesc
+import ru.astrainteractive.astralibs.localization.component.withItalicOffByDefault
 
-/** Item names and lore render italic unless told otherwise, while config text is meant to be upright. */
-internal fun Component.withItalicOffByDefault(): Component {
-    return decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
-}
-
-/** Converts strings (and [StringDesc]s) to Kyori Adventure [Component]s. */
+/** Converts strings to Kyori Adventure [Component]s. */
 interface KyoriComponentSerializer {
 
     val type: KyoriComponentSerializerType
     val serializer: ComponentSerializer<Component, out Component, String>
 
     fun toComponent(string: String): Component
-
-    /** [StringDesc.Plain] is never parsed: its markup characters stay literal text. */
-    fun toComponent(stringDesc: StringDesc): Component {
-        return when (stringDesc) {
-            is StringDesc.Raw -> toComponent(stringDesc.raw)
-            is StringDesc.Plain -> Component.text(stringDesc.raw)
-        }
-    }
-
-    val StringDesc.component get() = toComponent(this)
 
     /** JSON component format using [JSONComponentSerializer]. */
     data object Json : KyoriComponentSerializer {
@@ -94,10 +78,6 @@ interface KyoriComponentSerializer {
             return serializer
                 .deserialize(string)
                 .withItalicOffByDefault()
-        }
-
-        override fun toComponent(stringDesc: StringDesc): Component {
-            return super.toComponent(stringDesc).withItalicOffByDefault()
         }
     }
 

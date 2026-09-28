@@ -109,6 +109,7 @@ minecraft-astralibs-core-forge = { module = "ru.astrainteractive.astralibs:core-
 minecraft-astralibs-core-minecraft = { module = "ru.astrainteractive.astralibs:core-minecraft", version.ref = "minecraft-astralibs" }
 minecraft-astralibs-core-neoforge = { module = "ru.astrainteractive.astralibs:core-neoforge", version.ref = "minecraft-astralibs" }
 minecraft-astralibs-exposed = { module = "ru.astrainteractive.astralibs:exposed", version.ref = "minecraft-astralibs" }
+minecraft-astralibs-localization = { module = "ru.astrainteractive.astralibs:localization", version.ref = "minecraft-astralibs" }
 minecraft-astralibs-menu-bukkit = { module = "ru.astrainteractive.astralibs:menu-bukkit", version.ref = "minecraft-astralibs" }
 minecraft-astralibs-orm = { module = "ru.astrainteractive.astralibs:orm", version.ref = "minecraft-astralibs" }
 minecraft-authlib = { module = "com.mojang:authlib", version.ref = "minecraft-authlib" }

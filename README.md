@@ -18,6 +18,9 @@ Declare full Brigadier command trees in a clean Kotlin DSL. Arguments are parsed
 **Inventory GUIs that don't leak.**
 Build chest-style menus with a fluent slot builder, semantic layout mapping, and reactive pagination driven by `StateFlow`. The menu's coroutine scope is tied to its lifecycle and cancelled the moment the player closes it - zero manual cleanup. - [menu-bukkit docs](./menu-bukkit/README.md)
 
+**Every player reads their own language.**
+Write a text once per language in Kotlin or YAML and send it with a plain `sendMessage(text)`: each receiver gets the translation for their client language, the console gets the default one. MiniMessage tags and legacy `&` codes mix in one string, and placeholders insert player input as plain text. - [localization docs](./localization/README.md)
+
 **One codebase, multiple platforms.**
 Core abstractions - lifecycle, economy, players, events - work identically on Paper, NeoForge, and Fabric. Swap the platform module, keep your logic untouched.
 
@@ -30,6 +33,7 @@ Coroutine dispatchers, `Flow`-based event streams, extension-function DSLs. No J
 
 For documentation you can open specific module
 
+- [localization](./localization/README.md)
 - [menu-bukkit](./menu-bukkit/README.md)
 - [command](./command/README.md)
 - [command-bukit](./command-bukkit/README.md)
@@ -40,7 +44,8 @@ For documentation you can open specific module
 
 | Module           | Platform | Description                                                             |
 |------------------|----------|-------------------------------------------------------------------------|
-| `core`           | Any      | Lifecycle, StringDesc, EconomyFacade, serialization utilities           |
+| `core`           | Any      | Lifecycle, EconomyFacade, players, serialization utilities              |
+| `localization`   | Any      | Per-player translations, text markup parsing                            |
 | `core-bukkit`    | Paper    | BukkitDispatchers, FlowEvent, VaultEconomy, PlaceholderAPI              |
 | `core-neoforge`  | NeoForge | ForgeDispatchers, NeoForge event bindings, KPlayer adapter              |
 | `core-fabric`    | Fabric   | FabricDispatchers, Fabric command registration                          |
@@ -74,6 +79,7 @@ astralibs = "<latest-version>"
 
 [libraries]
 astralibs-core = { module = "ru.astrainteractive.astralibs:core", version.ref = "astralibs" }
+astralibs-localization = { module = "ru.astrainteractive.astralibs:localization", version.ref = "astralibs" }
 astralibs-core-bukkit = { module = "ru.astrainteractive.astralibs:core-bukkit", version.ref = "astralibs" }
 astralibs-core-neoforge = { module = "ru.astrainteractive.astralibs:core-neoforge", version.ref = "astralibs" }
 astralibs-core-fabric = { module = "ru.astrainteractive.astralibs:core-fabric", version.ref = "astralibs" }

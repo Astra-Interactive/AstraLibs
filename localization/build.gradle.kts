@@ -1,33 +1,27 @@
 plugins {
     id("ru.astrainteractive.gradleplugin.dokka")
-    alias(libs.plugins.gradle.fabric.loom)
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("ru.astrainteractive.gradleplugin.java.version")
     id("ru.astrainteractive.gradleplugin.detekt")
+    id("ru.astrainteractive.gradleplugin.java.version")
     id("ru.astrainteractive.gradleplugin.publication")
     id("ru.astrainteractive.gradleplugin.rootinfo")
 }
 
 dependencies {
-    minecraft(libs.minecraft.fabric.mojang)
-    mappings(loom.officialMojangMappings())
-}
-
-dependencies {
-    compileOnly(libs.klibs.mikro.core)
-    compileOnly(libs.kotlin.coroutines.core)
     compileOnly(libs.kotlin.serialization.kaml)
     compileOnly(libs.minecraft.kyori.api)
     compileOnly(libs.minecraft.kyori.gson)
     compileOnly(libs.minecraft.kyori.legacy)
     compileOnly(libs.minecraft.kyori.minimessage)
     compileOnly(libs.minecraft.kyori.plain)
-    compileOnly(libs.minecraft.luckperms)
 
-    implementation(projects.command)
-    implementation(projects.core)
-
+    testImplementation(libs.kotlin.serialization.json)
     testImplementation(libs.kotlin.serialization.kaml)
+    testImplementation(libs.minecraft.kyori.api)
+    testImplementation(libs.minecraft.kyori.gson)
+    testImplementation(libs.minecraft.kyori.legacy)
+    testImplementation(libs.minecraft.kyori.minimessage)
+    testImplementation(libs.minecraft.kyori.plain)
     testImplementation(libs.tests.kotlin.test)
 }

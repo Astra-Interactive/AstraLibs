@@ -1,6 +1,6 @@
 @file:Suppress("FunctionNaming")
 
-package ru.astrainteractive.astralibs.kyori
+package ru.astrainteractive.astralibs.localization.markup
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
@@ -11,7 +11,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
-import ru.astrainteractive.astralibs.string.StringDesc
+import ru.astrainteractive.astralibs.localization.component.withItalicOffByDefault
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -184,14 +184,6 @@ class AutoComponentSerializerTest {
     @Test
     fun GIVEN_no_italic_markup_WHEN_to_component_THEN_italic_is_disabled() {
         assertEquals(TextDecoration.State.FALSE, auto("<red>Hi").decoration(TextDecoration.ITALIC))
-    }
-
-    @Test
-    fun GIVEN_plain_desc_with_markup_WHEN_to_component_THEN_text_is_not_parsed_and_italic_is_disabled() {
-        val component = AutoComponentSerializer.toComponent(StringDesc.Plain("&a<red>Hi"))
-
-        assertEquals("&a<red>Hi", plainText(component))
-        assertEquals(TextDecoration.State.FALSE, component.decoration(TextDecoration.ITALIC))
     }
 
     @Test
