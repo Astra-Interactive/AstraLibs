@@ -11,7 +11,7 @@ data class PlaceholderReplacement(
         fun plain(placeholder: String, text: String): PlaceholderReplacement {
             return PlaceholderReplacement(
                 placeholder = placeholder,
-                value = ConstantLocalizableComponent(Component.text(text))
+                value = Component.text(text).asLocalizableComponent()
             )
         }
     }

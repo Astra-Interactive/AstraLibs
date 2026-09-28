@@ -35,11 +35,11 @@ class LocalizableComponentTest {
     }
 
     @Test
-    fun GIVEN_constant_component_WHEN_rendered_in_any_language_THEN_it_is_unchanged() {
+    fun GIVEN_component_as_localizable_WHEN_rendered_in_any_language_THEN_it_is_unchanged() {
         val component = Component.text("same", NamedTextColor.GOLD)
-        val constant = ConstantLocalizableComponent(component)
+        val localizable = component.asLocalizableComponent()
 
-        assertEquals(component, constant.toComponent(MinecraftLocales.EN_US))
-        assertEquals(component, constant.toComponent(Locale.ROOT))
+        assertEquals(component, localizable.toComponent(MinecraftLocales.EN_US))
+        assertEquals(component, localizable.toComponent(Locale.ROOT))
     }
 }

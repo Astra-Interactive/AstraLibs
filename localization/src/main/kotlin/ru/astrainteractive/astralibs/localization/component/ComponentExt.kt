@@ -21,3 +21,20 @@ fun Component.clickable(onClick: (Audience) -> Unit): Component {
         }
     )
 }
+
+/** A ready component that looks the same in every language. */
+fun Component.asLocalizableComponent(): LocalizableComponent {
+    return LocalizableComponent { _ -> this }
+}
+
+/**
+ * Places [other] after this one as a sibling, so the style of this component does not leak into [other].
+ * This is the only `plus` for localizable components; joining the markup of two texts as strings is
+ * [ru.astrainteractive.astralibs.localization.text.LocalizedText.concat].
+ */
+operator fun LocalizableComponent.plus(other: LocalizableComponent): LocalizableComponent {
+    val first = this
+    return LocalizableComponent { locale ->
+        Component.textOfChildren(first.toComponent(locale), other.toComponent(locale))
+    }
+}

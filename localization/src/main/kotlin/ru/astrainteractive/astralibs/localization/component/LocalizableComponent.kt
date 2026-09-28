@@ -10,18 +10,6 @@ fun interface LocalizableComponent {
 }
 
 /**
- * Places [other] after this one as a sibling, so the style of this component does not leak into [other].
- * This is the only `plus` for localizable components; joining the markup of two texts as strings is
- * [ru.astrainteractive.astralibs.localization.text.LocalizedText.concat].
- */
-operator fun LocalizableComponent.plus(other: LocalizableComponent): LocalizableComponent {
-    return JoinedLocalizableComponent(
-        first = this,
-        second = other
-    )
-}
-
-/**
  * Replaces [replacements] in one pass after the markup is parsed, rendering each value in the same language.
  * Use it whenever more than one value comes from players: no value is searched for the other placeholders.
  *
