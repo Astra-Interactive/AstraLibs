@@ -9,7 +9,6 @@ import java.net.InetSocketAddress
 import java.util.Locale
 import java.util.UUID
 
-/** An online player that only has an identity: converters return it and must not use anything else. */
 @OptIn(InternalPlatformApi::class)
 internal class FakeOnlineKPlayer(
     override val name: String,

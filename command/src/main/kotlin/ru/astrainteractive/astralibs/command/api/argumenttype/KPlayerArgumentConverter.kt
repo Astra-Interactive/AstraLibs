@@ -4,11 +4,7 @@ import ru.astrainteractive.astralibs.command.api.exception.NoPlayerException
 import ru.astrainteractive.astralibs.server.bridge.PlatformServer
 import ru.astrainteractive.astralibs.server.player.KPlayer
 
-/**
- * Converts a player name to a [KPlayer] (online or offline).
- *
- * @throws NoPlayerException when the server knows no player with this name.
- */
+/** Converts a player name to a [KPlayer] (online or offline). */
 class KPlayerArgumentConverter(
     private val platformServer: PlatformServer
 ) : ArgumentConverter<KPlayer> {

@@ -4,7 +4,6 @@ import ru.astrainteractive.astralibs.server.annotation.InternalPlatformApi
 import ru.astrainteractive.astralibs.server.player.KPlayer
 import java.util.UUID
 
-/** A player who has joined the server before and is offline now. */
 @OptIn(InternalPlatformApi::class)
 internal class FakeKPlayer(
     override val name: String,

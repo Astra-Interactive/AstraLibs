@@ -174,11 +174,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
         return getArgument(bArgument.alias, bArgument.clazz)
     }
 
-    /**
-     * Retrieves a raw string argument from this context and converts it via [converter].
-     *
-     * @throws CommandException whatever [converter] throws for a value it cannot convert.
-     */
+    /** Retrieves a raw string argument from this context and converts it via [converter]. */
     @Throws(CommandException::class)
     fun <T : Any> CommandContext<Any>.requireArgument(
         bArgument: BrigadierArgument<String>,

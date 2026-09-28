@@ -191,7 +191,7 @@ fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(bArgument: Brig
 
 /**
  * Extracts a raw `String` argument and converts it to [T] via [converter].
- * @throws CommandException whatever [converter] throws for a value it cannot convert.
+ * @throws CommandException If the conversion fails.
  */
 @Throws(CommandException::class)
 fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(
