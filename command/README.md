@@ -27,6 +27,13 @@ fun interface ArgumentConverter<T : Any> {
 | `FloatArgumentConverter`   | `Float`     |
 | `BooleanArgumentConverter` | `Boolean`   |
 
+Player converters take the `PlatformServer` and throw `NoPlayerException` for a name nobody on the server has:
+
+| Class                                            | Target type     |
+|--------------------------------------------------|-----------------|
+| `KPlayerArgumentConverter(platformServer)`       | `KPlayer`       |
+| `OnlineKPlayerArgumentConverter(platformServer)` | `OnlineKPlayer` |
+
 **Custom converter example:**
 
 ```kotlin

@@ -155,7 +155,7 @@ Inside `runs { ctx -> }`, these extension functions are available on `CommandCon
 | `ctx.requirePlayer()` | `Player` | `NotPlayerExecutorException` |
 | `ctx.requirePermission(permission)` | `Unit` | `NoPermissionException` |
 | `ctx.requireArgument(arg)` | `T` | `IllegalArgumentException` |
-| `ctx.requireArgument(arg, converter)` | `T` | `ArgumentConverterException` |
+| `ctx.requireArgument(arg, converter)` | `T` | the converter's `CommandException`, e.g. `ArgumentConverterException` or `NoPlayerException` |
 
 ## Full example: effect command
 

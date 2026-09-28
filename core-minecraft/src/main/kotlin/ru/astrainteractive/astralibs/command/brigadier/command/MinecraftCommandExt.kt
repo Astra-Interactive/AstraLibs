@@ -14,7 +14,6 @@ import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.rcon.RconConsoleSource
 import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
-import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterException
 import ru.astrainteractive.astralibs.command.api.exception.CommandException
 import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NotPlayerExecutorException
@@ -192,9 +191,9 @@ fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(bArgument: Brig
 
 /**
  * Extracts a raw `String` argument and converts it to [T] via [converter].
- * @throws ArgumentConverterException If the conversion fails.
+ * @throws CommandException whatever [converter] throws for a value it cannot convert.
  */
-@Throws(ArgumentConverterException::class)
+@Throws(CommandException::class)
 fun <T : Any> CommandContext<CommandSourceStack>.requireArgument(
     bArgument: BrigadierArgument<String>,
     converter: ArgumentConverter<T>

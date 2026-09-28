@@ -9,7 +9,7 @@ import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.ConsoleKCommandSender
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.KCommandSender
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.KPlayerKCommandSender
-import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterException
+import ru.astrainteractive.astralibs.command.api.exception.CommandException
 import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NotPlayerExecutorException
 import ru.astrainteractive.astralibs.server.permission.Permission
@@ -174,8 +174,12 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
         return getArgument(bArgument.alias, bArgument.clazz)
     }
 
-    /** Retrieves a raw string argument from this context and converts it via [converter]. */
-    @Throws(ArgumentConverterException::class)
+    /**
+     * Retrieves a raw string argument from this context and converts it via [converter].
+     *
+     * @throws CommandException whatever [converter] throws for a value it cannot convert.
+     */
+    @Throws(CommandException::class)
     fun <T : Any> CommandContext<Any>.requireArgument(
         bArgument: BrigadierArgument<String>,
         converter: ArgumentConverter<T>

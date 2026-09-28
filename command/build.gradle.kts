@@ -17,4 +17,5 @@ dependencies {
 
     testImplementation(libs.tests.kotlin.test)
     testImplementation(libs.minecraft.brigadier)
+    testImplementation(libs.minecraft.kyori.api)
 }
