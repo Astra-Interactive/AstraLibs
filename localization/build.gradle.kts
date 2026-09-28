@@ -9,7 +9,6 @@ plugins {
 }
 
 dependencies {
-    compileOnly(libs.klibs.kstorage)
     compileOnly(libs.kotlin.serialization.kaml)
     compileOnly(libs.minecraft.kyori.api)
     compileOnly(libs.minecraft.kyori.gson)
