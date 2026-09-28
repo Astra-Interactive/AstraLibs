@@ -3,6 +3,7 @@ package ru.astrainteractive.astralibs.localization.component
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
+import net.kyori.adventure.text.format.TextDecoration
 
 /** Returns this component if non-null, or [Component.empty]. */
 fun Component?.orEmpty() = this ?: Component.empty()
@@ -20,6 +21,11 @@ fun Component.clickable(onClick: (Audience) -> Unit): Component {
             onClick.invoke(audience)
         }
     )
+}
+
+/** Item names and lore render italic unless told otherwise, while config text is meant to be upright. */
+internal fun Component.withItalicOffByDefault(): Component {
+    return decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
 }
 
 /** A ready component that looks the same in every language. */
