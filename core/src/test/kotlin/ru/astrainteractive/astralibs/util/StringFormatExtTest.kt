@@ -152,44 +152,6 @@ class StringFormatExtTest {
     }
 
     @Test
-    fun GIVEN_missing_file_WHEN_krate_get_value_THEN_returns_default_and_creates_file() {
-        val file = File(newTempDir(), "config.yml")
-        val default = PersistedConfig(name = "default", count = 0)
-        val krate = format.krateOf(file, ValueFactory { default })
-
-        val value = krate.getValue()
-
-        assertEquals(default, value)
-        assertTrue(file.exists())
-    }
-
-    @Test
-    fun GIVEN_saved_value_WHEN_krate_get_value_THEN_returns_saved_value() {
-        val file = File(newTempDir(), "config.yml")
-        val default = PersistedConfig(name = "default", count = 0)
-        val krate = format.krateOf(file, ValueFactory { default })
-        val saved = PersistedConfig(name = "saved", count = 99)
-
-        krate.save(saved)
-
-        assertEquals(saved, krate.getValue())
-    }
-
-    @Test
-    fun GIVEN_nullable_krate_WHEN_save_null_THEN_deletes_file_and_returns_default() {
-        val file = File(newTempDir(), "config.yml")
-        val default = PersistedConfig(name = "default", count = 0)
-        val krate = format.krateOf<PersistedConfig?>(file, ValueFactory { default })
-        krate.save(PersistedConfig(name = "saved", count = 1))
-        assertTrue(file.exists())
-
-        krate.save(null)
-
-        assertFalse(file.exists())
-        assertEquals(default, krate.getValue())
-    }
-
-    @Test
     fun GIVEN_empty_file_WHEN_parse_THEN_failure() {
         val file = File(newTempDir(), "empty.yml")
         file.createNewFile()
@@ -252,110 +214,83 @@ class StringFormatExtTest {
     }
 
     @Test
-    fun GIVEN_krate_WHEN_file_changes_externally_THEN_get_value_reflects_change() {
+    fun GIVEN_missing_file_WHEN_krate_get_value_THEN_returns_default_and_writes_it() {
         val file = File(newTempDir(), "config.yml")
-        val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "default", count = 0) })
-        krate.save(PersistedConfig(name = "first", count = 1))
-        assertEquals(PersistedConfig(name = "first", count = 1), krate.getValue())
-
-        format.writeIntoFile(PersistedConfig(name = "external", count = 2), file)
-
-        assertEquals(PersistedConfig(name = "external", count = 2), krate.getValue())
-    }
-
-    @Test
-    fun GIVEN_krate_WHEN_saved_twice_THEN_latest_value_returned() {
-        val file = File(newTempDir(), "config.yml")
-        val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "default", count = 0) })
-
-        krate.save(PersistedConfig(name = "first", count = 1))
-        krate.save(PersistedConfig(name = "second", count = 2))
-
-        assertEquals(PersistedConfig(name = "second", count = 2), krate.getValue())
-    }
-
-    @Test
-    fun GIVEN_krate_that_read_a_value_WHEN_file_becomes_unparseable_THEN_get_value_keeps_that_value() {
-        val file = File(newTempDir(), "config.yml")
-        val read = PersistedConfig(name = "read", count = 3)
-        format.writeIntoFile(read, file)
-        val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "default", count = 0) })
-        krate.getValue()
-
-        file.writeText(unparseableYaml)
-
-        assertEquals(read, krate.getValue())
-        assertEquals(unparseableYaml, file.readText())
-    }
-
-    @Test
-    fun GIVEN_krate_that_saved_a_value_WHEN_file_becomes_unparseable_THEN_get_value_keeps_the_saved_value() {
-        val file = File(newTempDir(), "config.yml")
-        val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "default", count = 0) })
-        krate.getValue()
-        val saved = PersistedConfig(name = "saved", count = 5)
-        krate.save(saved)
-
-        file.writeText(unparseableYaml)
-
-        assertEquals(saved, krate.getValue())
-    }
-
-    @Test
-    fun GIVEN_unparseable_file_WHEN_krate_reads_it_first_THEN_returns_default_and_leaves_file_untouched() {
-        val folder = newTempDir()
-        val file = File(folder, "config.yml")
-        file.writeText(unparseableYaml)
         val default = PersistedConfig(name = "default", count = 0)
         val krate = format.krateOf(file, ValueFactory { default })
 
-        assertEquals(default, krate.getValue())
-        assertEquals(unparseableYaml, file.readText())
-        assertEquals(default, format.parse<PersistedConfig>(File(folder, "config.default.yml")).getOrThrow())
+        assertEquals(default, krate.getValue().getOrThrow())
+        assertEquals(default, format.parse<PersistedConfig>(file).getOrThrow())
     }
 
     @Test
-    fun GIVEN_unparseable_file_WHEN_it_is_fixed_THEN_get_value_returns_the_fixed_value() {
+    fun GIVEN_saved_value_WHEN_krate_get_value_THEN_returns_saved_value() {
         val file = File(newTempDir(), "config.yml")
         val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "default", count = 0) })
-        krate.save(PersistedConfig(name = "saved", count = 1))
-        file.writeText(unparseableYaml)
-        krate.getValue()
-        val fixed = PersistedConfig(name = "fixed", count = 2)
+        val saved = PersistedConfig(name = "saved", count = 99)
 
-        format.writeIntoFile(fixed, file)
+        krate.save(Result.success(saved))
 
-        assertEquals(fixed, krate.getValue())
+        assertEquals(saved, krate.getValue().getOrThrow())
     }
 
     @Test
-    fun GIVEN_nullable_krate_that_saved_null_WHEN_file_becomes_unparseable_THEN_get_value_keeps_null() {
+    fun GIVEN_nullable_krate_WHEN_save_null_THEN_deletes_file_and_returns_default() {
         val file = File(newTempDir(), "config.yml")
         val default = PersistedConfig(name = "default", count = 0)
         val krate = format.krateOf<PersistedConfig?>(file, ValueFactory { default })
-        krate.save(PersistedConfig(name = "saved", count = 1))
-        krate.save(null)
+        krate.save(Result.success(PersistedConfig(name = "saved", count = 1)))
+        assertTrue(file.exists())
 
-        file.writeText(unparseableYaml)
+        krate.save(Result.success(null))
 
-        assertNull(krate.getValue())
+        assertFalse(file.exists())
+        assertEquals(default, krate.getValue().getOrThrow())
     }
 
     @Test
-    fun GIVEN_krate_WHEN_values_are_read_saved_and_file_breaks_THEN_cached_state_flow_follows_the_last_good_value() {
+    fun GIVEN_krate_WHEN_file_changes_externally_THEN_get_value_reflects_change() {
         val file = File(newTempDir(), "config.yml")
-        val read = PersistedConfig(name = "read", count = 1)
-        format.writeIntoFile(read, file)
         val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "default", count = 0) })
-        assertEquals(read, krate.cachedStateFlow.value)
-        val saved = PersistedConfig(name = "saved", count = 2)
+        krate.save(Result.success(PersistedConfig(name = "first", count = 1)))
 
-        krate.save(saved)
+        format.writeIntoFile(PersistedConfig(name = "external", count = 2), file)
+
+        assertEquals(PersistedConfig(name = "external", count = 2), krate.getValue().getOrThrow())
+    }
+
+    @Test
+    fun GIVEN_unparseable_file_WHEN_krate_get_value_THEN_returns_failure_and_leaves_file_untouched() {
+        val file = File(newTempDir(), "config.yml")
         file.writeText(unparseableYaml)
-        krate.getValue()
+        val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "default", count = 0) })
 
-        assertEquals(saved, krate.cachedStateFlow.value)
-        assertEquals(saved, krate.cachedValue)
+        assertTrue(krate.getValue().isFailure)
+        assertEquals(unparseableYaml, file.readText())
+    }
+
+    @Test
+    fun GIVEN_unparseable_file_WHEN_krate_saves_a_change_of_the_read_value_THEN_file_is_left_untouched() {
+        val file = File(newTempDir(), "config.yml")
+        file.writeText(unparseableYaml)
+        val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "default", count = 0) })
+
+        val saved = krate.saveAndGet { result -> result.map { config -> config.copy(count = config.count + 1) } }
+
+        assertTrue(saved.isFailure)
+        assertEquals(unparseableYaml, file.readText())
+    }
+
+    @Test
+    fun GIVEN_unparseable_file_WHEN_krate_saves_a_value_THEN_file_gets_that_value() {
+        val file = File(newTempDir(), "config.yml")
+        file.writeText(unparseableYaml)
+        val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "default", count = 0) })
+        val saved = PersistedConfig(name = "saved", count = 3)
+
+        krate.save(Result.success(saved))
+
+        assertEquals(saved, format.parse<PersistedConfig>(file).getOrThrow())
     }
 
     @Test
@@ -365,16 +300,14 @@ class StringFormatExtTest {
         val threads = List(THREADS) { _ ->
             thread {
                 repeat(INCREMENTS_PER_THREAD) { _ ->
-                    krate.save { config -> config.copy(count = config.count + 1) }
+                    krate.save { result -> result.map { config -> config.copy(count = config.count + 1) } }
                 }
             }
         }
 
         threads.forEach(Thread::join)
 
-        val expected = THREADS * INCREMENTS_PER_THREAD
-        assertEquals(expected, krate.cachedValue.count)
-        assertEquals(expected, format.parse<PersistedConfig>(file).getOrThrow().count)
+        assertEquals(THREADS * INCREMENTS_PER_THREAD, format.parse<PersistedConfig>(file).getOrThrow().count)
     }
 
     private companion object {
