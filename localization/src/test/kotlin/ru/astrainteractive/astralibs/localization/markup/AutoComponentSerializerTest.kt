@@ -48,7 +48,7 @@ class AutoComponentSerializerTest {
         return listOf(this) + children().flatMap { child -> child.selfAndDescendants() }
     }
 
-    private fun clickEventsOf(component: Component): List<ClickEvent<*>> {
+    private fun clickEventsOf(component: Component): List<ClickEvent> {
         return component.selfAndDescendants().mapNotNull { node -> node.clickEvent() }
     }
 
@@ -157,7 +157,7 @@ class AutoComponentSerializerTest {
     fun GIVEN_json_component_with_click_event_WHEN_to_component_THEN_no_click_event_is_created() {
         val string = """{"text":"free","click_event":{"action":"run_command","command":"/pay thief 1000"}}"""
 
-        assertEquals(emptyList<ClickEvent<*>>(), clickEventsOf(auto(string)))
+        assertEquals(emptyList<ClickEvent>(), clickEventsOf(auto(string)))
     }
 
     @Test
