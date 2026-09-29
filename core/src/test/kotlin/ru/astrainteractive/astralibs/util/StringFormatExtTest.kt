@@ -4,6 +4,7 @@ import kotlinx.serialization.StringFormat
 import ru.astrainteractive.klibs.kstorage.api.value.ValueFactory
 import java.io.File
 import java.nio.file.Files
+import kotlin.concurrent.thread
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -328,7 +329,7 @@ class StringFormatExtTest {
     }
 
     @Test
-    fun GIVEN_nullable_krate_that_saved_null_WHEN_file_becomes_unparseable_THEN_get_value_returns_default() {
+    fun GIVEN_nullable_krate_that_saved_null_WHEN_file_becomes_unparseable_THEN_get_value_keeps_null() {
         val file = File(newTempDir(), "config.yml")
         val default = PersistedConfig(name = "default", count = 0)
         val krate = format.krateOf<PersistedConfig?>(file, ValueFactory { default })
@@ -337,6 +338,47 @@ class StringFormatExtTest {
 
         file.writeText(unparseableYaml)
 
-        assertEquals(default, krate.getValue())
+        assertNull(krate.getValue())
+    }
+
+    @Test
+    fun GIVEN_krate_WHEN_values_are_read_saved_and_file_breaks_THEN_cached_state_flow_follows_the_last_good_value() {
+        val file = File(newTempDir(), "config.yml")
+        val read = PersistedConfig(name = "read", count = 1)
+        format.writeIntoFile(read, file)
+        val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "default", count = 0) })
+        assertEquals(read, krate.cachedStateFlow.value)
+        val saved = PersistedConfig(name = "saved", count = 2)
+
+        krate.save(saved)
+        file.writeText(unparseableYaml)
+        krate.getValue()
+
+        assertEquals(saved, krate.cachedStateFlow.value)
+        assertEquals(saved, krate.cachedValue)
+    }
+
+    @Test
+    fun GIVEN_many_threads_WHEN_each_saves_an_increment_THEN_no_increment_is_lost() {
+        val file = File(newTempDir(), "config.yml")
+        val krate = format.krateOf(file, ValueFactory { PersistedConfig(name = "counter", count = 0) })
+        val threads = List(THREADS) { _ ->
+            thread {
+                repeat(INCREMENTS_PER_THREAD) { _ ->
+                    krate.save { config -> config.copy(count = config.count + 1) }
+                }
+            }
+        }
+
+        threads.forEach(Thread::join)
+
+        val expected = THREADS * INCREMENTS_PER_THREAD
+        assertEquals(expected, krate.cachedValue.count)
+        assertEquals(expected, format.parse<PersistedConfig>(file).getOrThrow().count)
+    }
+
+    private companion object {
+        const val THREADS = 8
+        const val INCREMENTS_PER_THREAD = 25
     }
 }
