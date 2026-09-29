@@ -103,30 +103,36 @@ inline fun <reified T> StringFormat.parseOrWriteIntoDefault(
 )
 
 /**
- * Creates a [DefaultMutableKrate] backed by [file].
+ * Creates a [DefaultMutableKrate] backed by [file] whose value is the result of reading it.
  *
- * Loading parses [file] via [parseOrWriteIntoDefault], falling back to [factory]'s value when the file is
- * missing or unparseable. Saving writes the value back to [file], or deletes [file] when the value is `null`.
+ * Loading parses [file] and writes it back; a missing or empty file gets [factory]'s value written into it. A file
+ * that cannot be parsed is left untouched and loads as a failure, so the caller decides what to keep instead of
+ * getting the default. Saving a success writes its value into [file], or deletes [file] when the value is `null`;
+ * saving a failure changes nothing.
  */
 inline fun <reified T> StringFormat.krateOf(
     file: File,
     factory: ValueFactory<T>
-): DefaultMutableKrate<T> = DefaultMutableKrate(
-    factory = factory,
+): DefaultMutableKrate<Result<T>> = DefaultMutableKrate(
+    factory = { Result.success(factory.create()) },
     loader = {
-        parseOrWriteIntoDefault<T?>(
-            file = file,
-            default = factory::create
-        )
-    },
-    saver = { value ->
-        if (value == null) {
-            file.delete()
+        val result = if (!file.exists() || file.length() == 0L) {
+            Result.success(factory.create())
         } else {
-            writeIntoFile<T>(
-                value = value,
-                file = file
-            )
+            parse<T>(file)
+        }
+        result.onSuccess { value -> writeIntoFile<T>(value, file) }
+    },
+    saver = { result ->
+        result.onSuccess { value ->
+            if (value == null) {
+                file.delete()
+            } else {
+                writeIntoFile<T>(
+                    value = value,
+                    file = file
+                )
+            }
         }
     }
 )
