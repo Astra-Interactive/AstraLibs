@@ -6,7 +6,7 @@ Paper-specific implementation of the [command](../command/README.md) module. Pro
 
 ## Registering commands
 
-Use `PaperCommandRegistrarContext` as the single place that holds registration logic. It listens for Paper's `COMMANDS` lifecycle event via coroutines, so commands are always registered at the right moment — no need to manage timing yourself.
+Use `PaperCommandRegistrarContext` as the single place that holds registration logic. It listens for Paper's `COMMANDS` lifecycle event via coroutines, so commands are always registered at the right moment — no need to manage timing yourself. A plugin enabled on a running server (e.g. by PlugmanX) never receives that event, so it registers into the server's current dispatcher right away.
 
 ```kotlin
 class MyPlugin : JavaPlugin() {
