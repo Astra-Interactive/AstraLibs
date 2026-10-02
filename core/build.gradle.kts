@@ -30,5 +30,6 @@ dependencies {
     testImplementation(libs.minecraft.kyori.legacy)
     testImplementation(libs.minecraft.kyori.minimessage)
     testImplementation(libs.minecraft.kyori.plain)
+    testImplementation(libs.minecraft.luckperms)
     testImplementation(libs.tests.kotlin.test)
 }
