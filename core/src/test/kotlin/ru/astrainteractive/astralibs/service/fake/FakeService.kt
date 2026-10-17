@@ -1,8 +1,9 @@
-package ru.astrainteractive.astralibs.service
+package ru.astrainteractive.astralibs.service.fake
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import ru.astrainteractive.astralibs.service.Service
 
 /** Minimal [Service] whose only behaviour is flipping [state], used to exercise the interface itself. */
 class FakeService : Service {

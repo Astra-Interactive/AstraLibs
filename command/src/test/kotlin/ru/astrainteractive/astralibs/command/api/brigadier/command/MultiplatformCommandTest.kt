@@ -2,6 +2,7 @@ package ru.astrainteractive.astralibs.command.api.brigadier.command
 
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.tree.CommandNode
+import ru.astrainteractive.astralibs.command.api.brigadier.command.fake.FakeMultiplatformCommands
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

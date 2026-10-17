@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.server
+package ru.astrainteractive.astralibs.server.fake
 
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.pointer.Pointers

@@ -1,9 +1,10 @@
-package ru.astrainteractive.astralibs.command.api.brigadier.command
+package ru.astrainteractive.astralibs.command.api.brigadier.command.fake
 
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import com.mojang.brigadier.builder.RequiredArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
+import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommands
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.KCommandSender
 
 /** Builds plain Brigadier nodes, so the DSL can be exercised without a running server. */

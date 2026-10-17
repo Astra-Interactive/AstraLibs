@@ -17,6 +17,8 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
+import ru.astrainteractive.astralibs.service.fake.FakeLogger
+import ru.astrainteractive.astralibs.service.fake.FakeServiceTask
 import java.util.Collections
 import kotlin.concurrent.thread
 import kotlin.test.Test
@@ -30,9 +32,6 @@ import kotlin.time.Duration.Companion.seconds
 
 @Suppress("TestFunctionName", "LargeClass")
 class IntervalServiceTest {
-
-    // region validation
-
     @Test
     fun GIVEN_invalid_initial_delay_WHEN_service_is_enabled_THEN_it_starts_without_a_delay_and_warns() = runTest {
         listOf((-1).seconds, Duration.INFINITE).forEach { invalidDelay ->
@@ -132,10 +131,6 @@ class IntervalServiceTest {
         assertTrue(logger.warnings.isEmpty())
     }
 
-    // endregion
-
-    // region scheduling
-
     @Test
     fun GIVEN_created_service_WHEN_it_is_never_enabled_THEN_task_never_runs() = runTest {
         val task = FakeServiceTask()
@@ -219,10 +214,6 @@ class IntervalServiceTest {
         assertContentEquals(listOf(0L, 100L, 200L), startTimes)
     }
 
-    // endregion
-
-    // region reactive interval
-
     @Test
     fun GIVEN_running_service_WHEN_interval_changes_THEN_new_interval_applies_immediately() = runTest {
         val interval = MutableStateFlow(100.milliseconds)
@@ -299,10 +290,6 @@ class IntervalServiceTest {
 
         assertContentEquals(listOf(500L, 600L), startTimes)
     }
-
-    // endregion
-
-    // region overflow policies
 
     @Test
     fun GIVEN_await_policy_WHEN_task_is_slow_THEN_runs_are_spaced_by_interval_plus_duration() = runTest {
@@ -418,10 +405,6 @@ class IntervalServiceTest {
             assertEquals(1, task.maxConcurrent, "policy $policy overlapped runs")
         }
     }
-
-    // endregion
-
-    // region failures and timeouts
 
     @Test
     fun GIVEN_failing_task_WHEN_it_throws_THEN_service_keeps_running_and_error_is_reported() = runTest {
@@ -582,10 +565,6 @@ class IntervalServiceTest {
         assertEquals(Service.State.Idle, service.state.value)
     }
 
-    // endregion
-
-    // region lifecycle
-
     @Test
     fun GIVEN_enabled_service_WHEN_enabled_again_THEN_schedule_is_not_duplicated() = runTest {
         val startTimes = mutableListOf<Long>()
@@ -734,10 +713,6 @@ class IntervalServiceTest {
         assertEquals(150L, currentTime)
     }
 
-    // endregion
-
-    // region scope ownership
-
     @Test
     fun GIVEN_cancelled_scope_WHEN_service_is_enabled_THEN_it_does_not_start_and_reports_a_warning() = runTest {
         val logger = FakeLogger()
@@ -806,10 +781,6 @@ class IntervalServiceTest {
 
         assertEquals(Service.State.Idle, service.state.value)
     }
-
-    // endregion
-
-    // region restart races
 
     @Test
     fun GIVEN_reloaded_service_WHEN_previous_run_completes_late_THEN_state_is_not_reset_to_idle() = runTest {
@@ -902,6 +873,4 @@ class IntervalServiceTest {
         }
         scope.cancel()
     }
-
-    // endregion
 }

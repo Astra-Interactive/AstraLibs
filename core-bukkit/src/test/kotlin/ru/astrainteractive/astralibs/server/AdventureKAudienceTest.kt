@@ -5,6 +5,7 @@ package ru.astrainteractive.astralibs.server
 import net.kyori.adventure.identity.Identity
 import net.kyori.adventure.pointer.Pointers
 import net.kyori.adventure.text.Component
+import ru.astrainteractive.astralibs.server.fake.FakeAudience
 import ru.astrainteractive.astralibs.server.util.asKAudience
 import java.util.Locale
 import kotlin.test.Test

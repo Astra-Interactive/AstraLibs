@@ -7,6 +7,11 @@ import kotlin.test.assertEquals
 @Suppress("TestFunctionName")
 class ObjectEncoderTest {
     private val javaObjectEncoder = JavaObjectEncoder()
+    private val customClass = CustomClass(
+        string = "Hello word",
+        list = listOf("Hello"),
+        innerClass = InnerClass("hello")
+    )
 
     private inline fun <reified T> testToFromByteArray(initial: T) {
         val encoded = javaObjectEncoder.toByteArray(initial)
@@ -22,9 +27,9 @@ class ObjectEncoderTest {
 
     @Suppress("SerialVersionUIDInSerializableClass")
     data class CustomClass(
-        val string: String = "Hello word",
-        val list: List<String> = listOf("Hello"),
-        val innerClass: InnerClass = InnerClass("hello")
+        val string: String,
+        val list: List<String>,
+        val innerClass: InnerClass
     ) : Serializable
 
     @Suppress("SerialVersionUIDInSerializableClass")
@@ -40,7 +45,7 @@ class ObjectEncoderTest {
         testToFromByteArray('A')
         testToFromByteArray(null as String?)
         testToFromByteArray(listOf(1, 2, 3))
-        testToFromByteArray(CustomClass())
+        testToFromByteArray(customClass)
     }
 
     @Test
@@ -53,6 +58,6 @@ class ObjectEncoderTest {
         testToFromBase64('A')
         testToFromBase64(null as String?)
         testToFromBase64(listOf(1, 2, 3))
-        testToFromBase64(CustomClass())
+        testToFromBase64(customClass)
     }
 }

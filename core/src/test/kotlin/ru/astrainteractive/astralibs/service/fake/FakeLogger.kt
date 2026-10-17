@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.service
+package ru.astrainteractive.astralibs.service.fake
 
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 

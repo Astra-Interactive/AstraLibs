@@ -3,6 +3,7 @@ package ru.astrainteractive.astralibs.service
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
+import ru.astrainteractive.astralibs.service.fake.FakeService
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse

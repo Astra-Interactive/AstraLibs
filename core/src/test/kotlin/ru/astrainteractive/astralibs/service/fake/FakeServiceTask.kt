@@ -1,6 +1,7 @@
-package ru.astrainteractive.astralibs.service
+package ru.astrainteractive.astralibs.service.fake
 
 import kotlinx.coroutines.delay
+import ru.astrainteractive.astralibs.service.ServiceTask
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.time.Duration
 

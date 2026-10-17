@@ -4,6 +4,7 @@ package ru.astrainteractive.astralibs.server
 
 import ru.astrainteractive.astralibs.localization.locale.MinecraftLocales
 import ru.astrainteractive.astralibs.localization.text.LocalizedText
+import ru.astrainteractive.astralibs.server.fake.FakeReceiver
 import java.util.Locale
 import kotlin.test.Test
 import kotlin.test.assertEquals

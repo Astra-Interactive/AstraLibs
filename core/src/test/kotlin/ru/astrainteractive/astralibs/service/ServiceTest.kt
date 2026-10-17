@@ -1,5 +1,6 @@
 package ru.astrainteractive.astralibs.service
 
+import ru.astrainteractive.astralibs.service.fake.FakeService
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
