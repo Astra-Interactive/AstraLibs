@@ -13,13 +13,13 @@ Used in production across [EmpireProjekt.ru](https://www.EmpireProjekt.ru) plugi
 ## Why AstraLibs?
 
 **Commands without the noise.**
-Declare full Brigadier command trees in a clean Kotlin DSL. Arguments are parsed by typed converters; errors bubble up to a single handler. No null checks, no `if`/`else` forests, no boilerplate. Just your logic. - [command docs](./command/README.md) · [command-bukkit docs](./command-bukkit/README.md)
+Declare full Brigadier command trees in a clean Kotlin DSL. Arguments are parsed by typed converters; errors bubble up to a single handler. No null checks, no `if`/`else` forests, no boilerplate. Just your logic. - [command docs](./docs/command.md) · [command-bukkit docs](./docs/command-bukkit.md)
 
 **Inventory GUIs that don't leak.**
-Build chest-style menus with a fluent slot builder, semantic layout mapping, and reactive pagination driven by `StateFlow`. The menu's coroutine scope is tied to its lifecycle and cancelled the moment the player closes it - zero manual cleanup. - [menu-bukkit docs](./menu-bukkit/README.md)
+Build chest-style menus with a fluent slot builder, semantic layout mapping, and reactive pagination driven by `StateFlow`. The menu's coroutine scope is tied to its lifecycle and cancelled the moment the player closes it - zero manual cleanup. - [menu-bukkit docs](./docs/menu-bukkit.md)
 
 **Every player reads their own language.**
-Write a text once per language in Kotlin or YAML and send it with a plain `sendMessage(text)`: each receiver gets the translation for their client language, the console gets the default one. MiniMessage tags and legacy `&` codes mix in one string, and placeholders insert player input as plain text. - [localization docs](./localization/README.md)
+Write a text once per language in Kotlin or YAML and send it with a plain `sendMessage(text)`: each receiver gets the translation for their client language, the console gets the default one. MiniMessage tags and legacy `&` codes mix in one string, and placeholders insert player input as plain text. - [localization docs](./docs/localization.md)
 
 **One codebase, multiple platforms.**
 Core abstractions - lifecycle, economy, players, events - work identically on Paper, NeoForge, and Fabric. Swap the platform module, keep your logic untouched.
@@ -33,10 +33,10 @@ Coroutine dispatchers, `Flow`-based event streams, extension-function DSLs. No J
 
 For documentation you can open specific module
 
-- [localization](./localization/README.md)
-- [menu-bukkit](./menu-bukkit/README.md)
-- [command](./command/README.md)
-- [command-bukit](./command-bukkit/README.md)
+- [localization](./docs/localization.md)
+- [menu-bukkit](./docs/menu-bukkit.md)
+- [command](./docs/command.md)
+- [command-bukit](./docs/command-bukkit.md)
 
 ---
 

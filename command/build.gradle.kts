@@ -22,3 +22,9 @@ dependencies {
     testImplementation(libs.tests.kotlin.test)
     testImplementation(libs.minecraft.brigadier)
 }
+
+dokka {
+    dokkaSourceSets.configureEach {
+        includes.from(layout.settingsDirectory.file("docs/command.md"))
+    }
+}

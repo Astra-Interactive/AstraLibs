@@ -23,3 +23,9 @@ dependencies {
     testImplementation(libs.kotlin.coroutines.core)
     testImplementation(libs.tests.kotlin.test)
 }
+
+dokka {
+    dokkaSourceSets.configureEach {
+        includes.from(layout.settingsDirectory.file("docs/menu-bukkit.md"))
+    }
+}

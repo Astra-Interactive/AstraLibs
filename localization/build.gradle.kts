@@ -29,3 +29,9 @@ dependencies {
     testImplementation(libs.minecraft.kyori.plain)
     testImplementation(libs.tests.kotlin.test)
 }
+
+dokka {
+    dokkaSourceSets.configureEach {
+        includes.from(layout.settingsDirectory.file("docs/localization.md"))
+    }
+}

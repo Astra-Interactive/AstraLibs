@@ -20,3 +20,9 @@ dependencies {
     implementation(projects.core)
     implementation(projects.coreBukkit)
 }
+
+dokka {
+    dokkaSourceSets.configureEach {
+        includes.from(layout.settingsDirectory.file("docs/command-bukkit.md"))
+    }
+}
