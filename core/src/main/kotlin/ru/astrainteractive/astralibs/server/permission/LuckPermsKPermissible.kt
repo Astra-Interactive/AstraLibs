@@ -34,23 +34,23 @@ class LuckPermsKPermissible(
         return tristate == Tristate.TRUE
     }
 
+    override fun permissionSizes(permission: Permission): List<Int> {
+        return luckPermsOrNull?.userManager
+            ?.getUser(uuid)
+            ?.nodes
+            ?.filter { node -> node.key.startsWith(permission.value) }
+            ?.filter { node -> !node.hasExpired() }
+            ?.map { node -> node.key }
+            ?.map { key -> key.replace("${permission.value}.", "") }
+            ?.mapNotNull { size -> size.toIntOrNull() }
+            .orEmpty()
+    }
+
     override fun maxPermissionSize(permission: Permission): Int? {
         return permissionSizes(permission).maxOrNull()
     }
 
     override fun minPermissionSize(permission: Permission): Int? {
         return permissionSizes(permission).minOrNull()
-    }
-
-    override fun permissionSizes(permission: Permission): List<Int> {
-        return luckPermsOrNull?.userManager
-            ?.getUser(uuid)
-            ?.nodes
-            ?.filter { it.key.startsWith(permission.value) }
-            ?.filter { !it.hasExpired() }
-            ?.map { it.key }
-            ?.map { it.replace("${permission.value}.", "") }
-            ?.mapNotNull { it.toIntOrNull() }
-            .orEmpty()
     }
 }

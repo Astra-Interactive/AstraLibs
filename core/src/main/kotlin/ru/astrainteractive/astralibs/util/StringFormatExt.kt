@@ -86,7 +86,7 @@ fun <T> StringFormat.parseOrWriteIntoDefault(
             }
             writeIntoFile(serializer, default.invoke(), defaultFile)
         }
-        .onSuccess { writeIntoFile(serializer, it, file) }
+        .onSuccess { value -> writeIntoFile(serializer, value, file) }
         .getOrElse { default.invoke() }
 }
 

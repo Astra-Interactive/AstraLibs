@@ -18,16 +18,6 @@ import ru.astrainteractive.astralibs.server.permission.Permission
 /** Convenience alias for the Paper Brigadier [io.papermc.paper.command.brigadier.CommandSourceStack]. */
 typealias CommandSourceStack = io.papermc.paper.command.brigadier.CommandSourceStack
 
-/** Creates a root [LiteralArgumentBuilder] for a Paper Brigadier command. */
-fun command(
-    alias: String,
-    block: LiteralArgumentBuilder<CommandSourceStack>.() -> Unit
-): LiteralArgumentBuilder<CommandSourceStack> {
-    val literal = Commands.literal(alias)
-    literal.block()
-    return literal
-}
-
 /** Appends a child literal sub-command to this [LiteralArgumentBuilder]. */
 fun LiteralArgumentBuilder<CommandSourceStack>.literal(
     alias: String,
@@ -36,6 +26,16 @@ fun LiteralArgumentBuilder<CommandSourceStack>.literal(
     val literal = Commands.literal(alias)
     literal.block()
     this.then(literal)
+}
+
+/** Creates a root [LiteralArgumentBuilder] for a Paper Brigadier command. */
+fun command(
+    alias: String,
+    block: LiteralArgumentBuilder<CommandSourceStack>.() -> Unit
+): LiteralArgumentBuilder<CommandSourceStack> {
+    val literal = Commands.literal(alias)
+    literal.block()
+    return literal
 }
 
 /** Metadata needed to register and extract a typed Brigadier argument. */
@@ -119,7 +119,7 @@ fun RequiredArgumentBuilder<CommandSourceStack, *>.runs(
 ) {
     executes { ctx ->
         runCatching { block.invoke(this, ctx) }
-            .onFailure { onFailure.invoke(ctx, it) }
+            .onFailure { throwable -> onFailure.invoke(ctx, throwable) }
         Command.SINGLE_SUCCESS
     }
 }
@@ -134,7 +134,7 @@ fun LiteralArgumentBuilder<CommandSourceStack>.runs(
 ) {
     executes { ctx ->
         runCatching { block.invoke(this, ctx) }
-            .onFailure { onFailure.invoke(ctx, it) }
+            .onFailure { throwable -> onFailure.invoke(ctx, throwable) }
         Command.SINGLE_SUCCESS
     }
 }

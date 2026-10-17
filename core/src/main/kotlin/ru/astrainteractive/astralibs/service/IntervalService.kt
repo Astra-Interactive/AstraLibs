@@ -56,10 +56,6 @@ class IntervalService(
     private val mutableState = MutableStateFlow(Service.State.Idle)
     override val state: StateFlow<Service.State> = mutableState.asStateFlow()
 
-    init {
-        require(timeout > Duration.ZERO) { "timeout must be positive, but was $timeout" }
-    }
-
     constructor(
         interval: Duration,
         scope: CoroutineScope,
@@ -167,5 +163,9 @@ class IntervalService(
         synchronized(lock) {
             job?.cancel()
         }
+    }
+
+    init {
+        require(timeout > Duration.ZERO) { "timeout must be positive, but was $timeout" }
     }
 }

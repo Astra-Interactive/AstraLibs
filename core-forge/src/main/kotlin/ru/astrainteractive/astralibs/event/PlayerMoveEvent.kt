@@ -33,7 +33,7 @@ fun playerMoveFlowEvent() = flow {
         .expireAfterAccess(10.seconds.toJavaDuration())
         .build<UUID, KLocation>()
     flowEvent<TickEvent.PlayerTickEvent>()
-        .filter { it.phase == TickEvent.Phase.END }
+        .filter { event -> event.phase == TickEvent.Phase.END }
         .onEach { event ->
             val player = event.player.tryCast<Player>() ?: return@onEach
             val kLocation = KLocation(

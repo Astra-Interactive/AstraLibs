@@ -22,16 +22,6 @@ import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
  */
 @Suppress("TooManyFunctions", "MaximumLineLength", "MaxLineLength")
 class MultiplatformCommand(private val commands: MultiplatformCommands) {
-    /** Creates a root literal command node and applies [block] to it. */
-    fun command(
-        alias: String,
-        block: LiteralArgumentBuilder<Any>.() -> Unit
-    ): LiteralArgumentBuilder<Any> {
-        val literal = commands.literal(alias)
-        literal.block()
-        return literal
-    }
-
     /** Appends a child literal sub-command node to this builder. */
     fun LiteralArgumentBuilder<Any>.literal(
         alias: String,
@@ -56,6 +46,16 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
         val literal = commands.literal(alias)
         literal.block()
         this.then(literal)
+    }
+
+    /** Creates a root literal command node and applies [block] to it. */
+    fun command(
+        alias: String,
+        block: LiteralArgumentBuilder<Any>.() -> Unit
+    ): LiteralArgumentBuilder<Any> {
+        val literal = commands.literal(alias)
+        literal.block()
+        return literal
     }
 
     /**
@@ -139,7 +139,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
     ) {
         executes { ctx ->
             runCatching { block.invoke(this, ctx) }
-                .onFailure { onFailure.invoke(ctx, it) }
+                .onFailure { throwable -> onFailure.invoke(ctx, throwable) }
             Command.SINGLE_SUCCESS
         }
     }
@@ -155,7 +155,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
     ) {
         executes { ctx ->
             runCatching { block.invoke(this, ctx) }
-                .onFailure { onFailure.invoke(ctx, it) }
+                .onFailure { throwable -> onFailure.invoke(ctx, throwable) }
             Command.SINGLE_SUCCESS
         }
     }
@@ -184,6 +184,11 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
         return converter.transform(string)
     }
 
+    /** Returns the [KCommandSender] (player or console) who issued this command. */
+    fun CommandContext<Any>.getSender(): KCommandSender {
+        return commands.getSender(this)
+    }
+
     /** Throws [NoPermissionException] if the sender does not hold [permission]. */
     @Throws(NoPermissionException::class)
     fun CommandContext<Any>.requirePermission(permission: Permission) {
@@ -203,10 +208,5 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
             is ConsoleKCommandSender -> throw NotPlayerExecutorException()
             is KPlayerKCommandSender -> sender.instance
         }
-    }
-
-    /** Returns the [KCommandSender] (player or console) who issued this command. */
-    fun CommandContext<Any>.getSender(): KCommandSender {
-        return commands.getSender(this)
     }
 }

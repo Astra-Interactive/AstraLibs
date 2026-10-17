@@ -17,7 +17,7 @@ object BukkitMutableStorageValue {
     ): StateFlowMutableKrate<T?> {
         return DefaultMutableKrate(
             factory = { null },
-            saver = { set(path, it) },
+            saver = { value -> set(path, value) },
             loader = { getObject(path, T::class.java).takeIf { contains(path) } }
         ).asStateFlowMutableKrate()
     }
@@ -31,7 +31,7 @@ object BukkitMutableStorageValue {
     ): MutableKrate<T?> {
         return DefaultMutableKrate(
             factory = { null },
-            saver = { set(path, it) },
+            saver = { value -> set(path, value) },
             loader = { getObject(path, T::class.java).takeIf { contains(path) } }
         )
     }

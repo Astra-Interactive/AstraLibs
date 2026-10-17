@@ -13,19 +13,19 @@ class BukkitKPermissible(
         return bukkitPermissible.hasPermission(permission.value)
     }
 
+    override fun permissionSizes(permission: Permission): List<Int> {
+        return bukkitPermissible.effectivePermissions
+            .filter { info -> info.permission.startsWith(permission.value) }
+            .map { info -> info.permission }
+            .map { node -> node.replace("${permission.value}.", "") }
+            .mapNotNull { size -> size.toIntOrNull() }
+    }
+
     override fun maxPermissionSize(permission: Permission): Int? {
         return permissionSizes(permission).maxOrNull()
     }
 
     override fun minPermissionSize(permission: Permission): Int? {
         return permissionSizes(permission).minOrNull()
-    }
-
-    override fun permissionSizes(permission: Permission): List<Int> {
-        return bukkitPermissible.effectivePermissions
-            .filter { it.permission.startsWith(permission.value) }
-            .map { it.permission }
-            .map { it.replace("${permission.value}.", "") }
-            .mapNotNull { it.toIntOrNull() }
     }
 }

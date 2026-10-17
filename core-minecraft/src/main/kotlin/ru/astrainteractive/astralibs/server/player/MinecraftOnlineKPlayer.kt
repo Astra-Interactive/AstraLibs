@@ -32,16 +32,16 @@ class MinecraftOnlineKPlayer(val instance: ServerPlayer) :
     override val name: String
         get() = instance.name.toPlain()
 
+    override val address: InetSocketAddress
+        get() = instance.connection
+            .remoteAddress
+            .tryCast<InetSocketAddress>()
+            ?: error("Failed to get address from player ${instance.name}")
+
     override fun hasPlayedBefore(): Boolean {
         return MinecraftUtil.serverOrNull
             ?.playerList
             ?.load(instance)
             ?.isEmpty == true
     }
-
-    override val address: InetSocketAddress
-        get() = instance.connection
-            .remoteAddress
-            .tryCast<InetSocketAddress>()
-            ?: error("Failed to get address from player ${instance.name}")
 }

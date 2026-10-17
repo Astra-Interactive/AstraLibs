@@ -22,16 +22,6 @@ import ru.astrainteractive.astralibs.server.permission.Permission
 import ru.astrainteractive.astralibs.server.util.asPermissible
 import ru.astrainteractive.astralibs.util.publicSource
 
-/** Creates a root [LiteralArgumentBuilder] for [CommandSourceStack] with the given [alias]. */
-fun command(
-    alias: String,
-    block: LiteralArgumentBuilder<CommandSourceStack>.() -> Unit
-): LiteralArgumentBuilder<CommandSourceStack> {
-    val literal = Commands.literal(alias)
-    literal.block()
-    return literal
-}
-
 /** Appends a child sub-command literal with [alias] to this builder. */
 fun LiteralArgumentBuilder<CommandSourceStack>.literal(
     alias: String,
@@ -40,6 +30,16 @@ fun LiteralArgumentBuilder<CommandSourceStack>.literal(
     val literal = Commands.literal(alias)
     literal.block()
     this.then(literal)
+}
+
+/** Creates a root [LiteralArgumentBuilder] for [CommandSourceStack] with the given [alias]. */
+fun command(
+    alias: String,
+    block: LiteralArgumentBuilder<CommandSourceStack>.() -> Unit
+): LiteralArgumentBuilder<CommandSourceStack> {
+    val literal = Commands.literal(alias)
+    literal.block()
+    return literal
 }
 
 /** Metadata needed to register and extract a typed Brigadier argument. */
@@ -125,7 +125,7 @@ fun RequiredArgumentBuilder<CommandSourceStack, *>.runs(
 ) {
     executes { ctx ->
         runCatching { block.invoke(this, ctx) }
-            .onFailure { onFailure.invoke(ctx, it) }
+            .onFailure { throwable -> onFailure.invoke(ctx, throwable) }
         Command.SINGLE_SUCCESS
     }
 }
@@ -142,7 +142,7 @@ fun LiteralArgumentBuilder<CommandSourceStack>.runs(
 ) {
     executes { ctx ->
         runCatching { block.invoke(this, ctx) }
-            .onFailure { onFailure.invoke(ctx, it) }
+            .onFailure { throwable -> onFailure.invoke(ctx, throwable) }
         Command.SINGLE_SUCCESS
     }
 }
