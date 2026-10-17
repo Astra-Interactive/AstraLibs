@@ -42,7 +42,7 @@ import kotlin.time.Duration
  * [getInitialDelay], are skipped or coerced with a warning, and a [getInitialDelay] that throws is
  * reported, so a bad config can never kill the service.
  */
-class IntervalService(
+public class IntervalService(
     private val interval: Flow<Duration>,
     private val scope: CoroutineScope,
     private val logger: Logger,
@@ -56,7 +56,7 @@ class IntervalService(
     private val mutableState = MutableStateFlow(Service.State.Idle)
     override val state: StateFlow<Service.State> = mutableState.asStateFlow()
 
-    constructor(
+    public constructor(
         interval: Duration,
         scope: CoroutineScope,
         logger: Logger,

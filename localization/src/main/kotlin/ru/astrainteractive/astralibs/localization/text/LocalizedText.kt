@@ -15,12 +15,12 @@ import java.util.Locale
  * [sharedText], the first one is the default language of the text.
  */
 @Serializable(with = LocalizedTextSerializer::class)
-data class LocalizedText(
+public data class LocalizedText(
     val sharedText: String?,
     val translationByLocale: Map<Locale, String>
 ) : LocalizableComponent {
     /** Looks up [locale] exactly, then any locale of the same language, so `en_gb` takes `en_us`. */
-    fun translationOrNull(locale: Locale): String? {
+    public fun translationOrNull(locale: Locale): String? {
         return translationByLocale[locale]
             ?: translationByLocale.entries
                 .firstOrNull { entry -> entry.key.language == locale.language }
@@ -35,7 +35,7 @@ data class LocalizedText(
      *
      * @return null only when the text has no language at all
      */
-    fun resolve(locale: Locale): String? {
+    public fun resolve(locale: Locale): String? {
         return translationOrNull(locale) ?: sharedText ?: translationByLocale.values.firstOrNull()
     }
 
@@ -53,7 +53,7 @@ data class LocalizedText(
      * language is left out and reads the default language of the joined text, instead of mixing two languages
      * in one line.
      */
-    fun concat(other: LocalizedText): LocalizedText {
+    public fun concat(other: LocalizedText): LocalizedText {
         val joinedSharedText = if (sharedText != null && other.sharedText != null) {
             sharedText + other.sharedText
         } else {
@@ -73,7 +73,7 @@ data class LocalizedText(
         )
     }
 
-    companion object {
+    public companion object {
         /**
          * Builds a text with a translation per language:
          *
@@ -84,14 +84,14 @@ data class LocalizedText(
          * }
          * ```
          */
-        fun build(block: LocalizedTextBuilder.() -> Unit): LocalizedText {
+        public fun build(block: LocalizedTextBuilder.() -> Unit): LocalizedText {
             return LocalizedTextBuilder()
                 .apply(block)
                 .build()
         }
 
         /** Builds a text that is the same in every language, such as a prefix. */
-        fun shared(text: String): LocalizedText {
+        public fun shared(text: String): LocalizedText {
             return LocalizedText(
                 sharedText = text,
                 translationByLocale = emptyMap()

@@ -36,7 +36,7 @@ internal fun <T : Event> concreteEventClasses(type: Class<T>): List<Class<out T>
  * @param priority Defaults to [EventPriority.NORMAL].
  */
 @Suppress("UNCHECKED_CAST")
-fun <T : Event> flowEvent(
+public fun <T : Event> flowEvent(
     type: Class<T>,
     priority: EventPriority = EventPriority.NORMAL
 ): Flow<T> = callbackFlow {
@@ -63,7 +63,7 @@ fun <T : Event> flowEvent(
 }
 
 /** Reified overload of [flowEvent] that infers the event class at compile time. */
-inline fun <reified T : Event> flowEvent(
+public inline fun <reified T : Event> flowEvent(
     priority: EventPriority = EventPriority.NORMAL
 ): Flow<T> = flowEvent(
     type = T::class.java,

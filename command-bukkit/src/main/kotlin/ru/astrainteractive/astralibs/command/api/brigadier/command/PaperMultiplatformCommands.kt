@@ -25,7 +25,7 @@ import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
  * online players are wrapped as [KPlayerKCommandSender].
  */
 @Suppress("UNCHECKED_CAST")
-class PaperMultiplatformCommands : MultiplatformCommands {
+public class PaperMultiplatformCommands : MultiplatformCommands {
     override fun literal(literal: String): LiteralArgumentBuilder<Any> {
         return Commands.literal(literal) as LiteralArgumentBuilder<Any>
     }

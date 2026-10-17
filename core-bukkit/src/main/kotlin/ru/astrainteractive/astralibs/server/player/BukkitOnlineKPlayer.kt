@@ -18,7 +18,7 @@ import java.util.UUID
 
 /** [OnlineKPlayer] wrapping a currently online Bukkit [Player]. Exposes [instance] for Bukkit-specific API access. */
 @OptIn(InternalPlatformApi::class)
-class BukkitOnlineKPlayer(val instance: Player) :
+public class BukkitOnlineKPlayer(public val instance: Player) :
     OnlineKPlayer,
     KAudience by instance.asKAudience(),
     Locatable by instance.asLocatable(),

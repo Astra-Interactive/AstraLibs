@@ -1,13 +1,14 @@
 package ru.astrainteractive.astralibs.menu.paginator.api
 
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import ru.astrainteractive.astralibs.menu.paginator.model.PaginatorContext
 import ru.astrainteractive.astralibs.menu.paginator.model.maxPages
 
 /** Default [Paginator] backed by a [MutableStateFlow]. Validates bounds on every [openPage] call. */
-class DefaultPaginator(
+public class DefaultPaginator(
     page: Int = 0,
     maxItems: Int = 0,
     maxItemsPerPage: Int = 0
@@ -19,7 +20,7 @@ class DefaultPaginator(
             maxItemsPerPage = maxItemsPerPage
         )
     )
-    override val paginatorContextStateFlow = _paginatorContextStateFlow.asStateFlow()
+    override val paginatorContextStateFlow: StateFlow<PaginatorContext> = _paginatorContextStateFlow.asStateFlow()
 
     override fun openPage(page: Int) {
         _paginatorContextStateFlow.update { paginatorContext ->

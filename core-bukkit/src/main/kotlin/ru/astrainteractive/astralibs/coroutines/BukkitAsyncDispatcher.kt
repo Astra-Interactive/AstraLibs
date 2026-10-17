@@ -8,7 +8,7 @@ import kotlin.coroutines.CoroutineContext
 /**
  * Bukkit async dispatcher implementation which will dispatch on [BukkitScheduler.runTaskAsynchronously]
  */
-class BukkitAsyncDispatcher(private val plugin: Plugin) : CoroutineDispatcher() {
+public class BukkitAsyncDispatcher(private val plugin: Plugin) : CoroutineDispatcher() {
 
     override fun isDispatchNeeded(context: CoroutineContext): Boolean {
         return plugin.server.isPrimaryThread && plugin.isEnabled

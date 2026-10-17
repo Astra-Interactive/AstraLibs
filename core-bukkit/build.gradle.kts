@@ -8,6 +8,10 @@ plugins {
     id("ru.astrainteractive.gradleplugin.rootinfo")
 }
 
+kotlin {
+    explicitApi()
+}
+
 dependencies {
     compileOnly(libs.klibs.kstorage)
     compileOnly(libs.klibs.mikro.core)

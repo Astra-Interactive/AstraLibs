@@ -3,13 +3,14 @@ package ru.astrainteractive.astralibs.serialization
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.net.InetAddress
 
 /** A [KSerializer] for [InetAddress] that encodes as a host-address string (e.g. `"192.168.1.1"`). */
-object InetAddressSerializer : KSerializer<InetAddress> {
-    override val descriptor = PrimitiveSerialDescriptor(
+public object InetAddressSerializer : KSerializer<InetAddress> {
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(
         serialName = "InetAddress",
         kind = PrimitiveKind.STRING
     )

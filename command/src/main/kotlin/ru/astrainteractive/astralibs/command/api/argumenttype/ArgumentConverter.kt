@@ -8,7 +8,7 @@ import kotlin.jvm.Throws
  *
  * @throws ArgumentConverterException when the input cannot be converted.
  */
-fun interface ArgumentConverter<T : Any> {
+public fun interface ArgumentConverter<T : Any> {
     @Throws(ArgumentConverterException::class)
-    fun transform(argument: String): T
+    public fun transform(argument: String): T
 }

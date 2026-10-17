@@ -23,7 +23,7 @@ import ru.astrainteractive.astralibs.util.publicSource
  * Maps [CommandSourceStack] to the appropriate [KCommandSender] subtype for players, RCON, and server.
  */
 @Suppress("UNCHECKED_CAST")
-class MinecraftMultiplatformCommands : MultiplatformCommands {
+public class MinecraftMultiplatformCommands : MultiplatformCommands {
     override fun literal(literal: String): LiteralArgumentBuilder<Any> {
         return Commands.literal(literal) as LiteralArgumentBuilder<Any>
     }

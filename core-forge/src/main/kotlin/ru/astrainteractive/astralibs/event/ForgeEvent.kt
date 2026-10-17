@@ -15,7 +15,7 @@ import java.util.function.Consumer
  *
  * @param priority Defaults to [EventPriority.NORMAL].
  */
-fun <T : Event> flowEvent(
+public fun <T : Event> flowEvent(
     type: Class<T>,
     priority: EventPriority = EventPriority.NORMAL
 ): Flow<T> = callbackFlow {
@@ -35,7 +35,7 @@ fun <T : Event> flowEvent(
 }
 
 /** Reified overload of [flowEvent] that infers the event type at compile time. */
-inline fun <reified T : Event> flowEvent(
+public inline fun <reified T : Event> flowEvent(
     priority: EventPriority = EventPriority.NORMAL
 ): Flow<T> = flowEvent(
     type = T::class.java,

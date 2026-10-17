@@ -9,12 +9,12 @@ import java.util.UUID
 
 /** [EconomyFacade] backed by the Vault economy API. */
 @Suppress("UnusedPrivateProperty")
-class VaultEconomyFacade(
+public class VaultEconomyFacade(
     private val economy: Economy
 ) : EconomyFacade {
 
     /** @throws IllegalStateException if no economy provider is registered. */
-    constructor(plugin: JavaPlugin) : this(
+    public constructor(plugin: JavaPlugin) : this(
         economy = plugin.server.servicesManager.getRegistration(Economy::class.java)
             ?.provider
             ?: error("Could not get economy provider")

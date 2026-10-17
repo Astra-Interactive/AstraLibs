@@ -35,7 +35,7 @@ import ru.astrainteractive.astralibs.localization.locale.MinecraftLocaleSerializ
  * can hold the map form; any other format reads the string form. kaml has to be on the runtime classpath either
  * way, because the decoder is checked against its type.
  */
-object LocalizedTextSerializer : KSerializer<LocalizedText> {
+public object LocalizedTextSerializer : KSerializer<LocalizedText> {
     private const val SHARED_KEY = "*"
 
     private val textByKeySerializer = MapSerializer(String.serializer(), String.serializer())

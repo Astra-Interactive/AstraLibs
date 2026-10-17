@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 /** Supported [KyoriComponentSerializer] formats. */
 @Serializable
-enum class KyoriComponentSerializerType {
+public enum class KyoriComponentSerializerType {
     /** JSON component format. */
     Json,
 

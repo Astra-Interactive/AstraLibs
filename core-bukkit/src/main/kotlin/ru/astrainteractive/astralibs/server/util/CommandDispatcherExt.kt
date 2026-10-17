@@ -8,7 +8,7 @@ import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.server.KCommandDispatcher
 
 /** Adapts this [Player] as a [KCommandDispatcher]. */
-fun Player.asKCommandDispatcher() = KCommandDispatcher { command ->
+public fun Player.asKCommandDispatcher(): KCommandDispatcher = KCommandDispatcher { command ->
     this.performCommand(command)
 }
 
@@ -18,7 +18,7 @@ fun Player.asKCommandDispatcher() = KCommandDispatcher { command ->
  *
  * @throws IllegalStateException if this sender is neither a console nor a remote console.
  */
-fun CommandSender.asKCommandDispatcher() = KCommandDispatcher { command ->
+public fun CommandSender.asKCommandDispatcher(): KCommandDispatcher = KCommandDispatcher { command ->
     when (this) {
         is RemoteConsoleCommandSender,
         is ConsoleCommandSender -> {

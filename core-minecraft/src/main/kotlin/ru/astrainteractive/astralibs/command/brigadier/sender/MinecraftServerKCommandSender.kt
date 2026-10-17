@@ -16,7 +16,7 @@ import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
  *
  * @param sender The running [MinecraftServer].
  */
-class MinecraftServerKCommandSender(
+public class MinecraftServerKCommandSender(
     sender: MinecraftServer
 ) : ConsoleKCommandSender,
     KPermissible by ConsoleKPermissible,

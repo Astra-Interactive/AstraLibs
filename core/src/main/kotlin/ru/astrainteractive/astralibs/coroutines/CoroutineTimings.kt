@@ -11,11 +11,11 @@ import kotlin.coroutines.CoroutineContext
  * name for a coroutine dispatched onto the Minecraft main thread.
  */
 @Suppress("MaxLineLength")
-class CoroutineTimings : AbstractCoroutineContextElement(Key), Runnable {
-    data object Key : CoroutineContext.Key<CoroutineTimings>
+public class CoroutineTimings : AbstractCoroutineContextElement(Key), Runnable {
+    public data object Key : CoroutineContext.Key<CoroutineTimings>
 
     /** Queue of runnables assigned to this coroutine; polled one-at-a-time on each [run] call. */
-    var queue: Queue<Runnable> = ConcurrentLinkedQueue()
+    public var queue: Queue<Runnable> = ConcurrentLinkedQueue()
 
     override fun run() {
         queue.poll()?.run()
@@ -23,6 +23,6 @@ class CoroutineTimings : AbstractCoroutineContextElement(Key), Runnable {
 }
 
 /** Adds a [CoroutineTimings] element to this scope so Spigot/Paper timings show the coroutine name. */
-fun CoroutineFeature.withTimings(): CoroutineFeature.Default {
+public fun CoroutineFeature.withTimings(): CoroutineFeature.Default {
     return CoroutineFeature.Default(this.coroutineContext + CoroutineTimings())
 }

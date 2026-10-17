@@ -15,8 +15,8 @@ import java.util.UUID
  *
  * @property uuid The player's unique identifier.
  */
-interface KPlayerSnapshot {
-    val uuid: UUID
+public interface KPlayerSnapshot {
+    public val uuid: UUID
 }
 
 /**
@@ -27,15 +27,15 @@ interface KPlayerSnapshot {
  * @property address The player's network address at the time the snapshot was taken.
  */
 @Serializable
-class OnlineKPlayerSnapshot(
+public class OnlineKPlayerSnapshot(
     @Serializable(JUuidSerializer::class)
     @SerialName("uuid")
     override val uuid: UUID,
     @SerialName("name")
-    val name: String,
+    public val name: String,
     @Serializable(InetSocketAddressSerializer::class)
     @SerialName("address")
-    val address: InetSocketAddress
+    public val address: InetSocketAddress
 ) : KPlayerSnapshot
 
 /**
@@ -44,7 +44,7 @@ class OnlineKPlayerSnapshot(
  * @property uuid The player's unique identifier.
  */
 @Serializable
-class OfflineKPlayerSnapshot(
+public class OfflineKPlayerSnapshot(
     @Serializable(JUuidSerializer::class)
     @SerialName("uuid")
     override val uuid: UUID

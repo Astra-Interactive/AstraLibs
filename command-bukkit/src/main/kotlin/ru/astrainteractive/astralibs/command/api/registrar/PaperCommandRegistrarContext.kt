@@ -27,7 +27,7 @@ import ru.astrainteractive.astralibs.event.flowLifecycleEvent
  * Paper fires the event only while the server starts or reloads, so a plugin enabled on a running
  * server (e.g. by PlugmanX) starts from the dispatcher the server already has.
  */
-class PaperCommandRegistrarContext(
+public class PaperCommandRegistrarContext(
     mainScope: CoroutineScope,
     private val plugin: JavaPlugin
 ) : CommandRegistrarContext {

@@ -9,6 +9,10 @@ plugins {
     id("ru.astrainteractive.gradleplugin.rootinfo")
 }
 
+kotlin {
+    explicitApi()
+}
+
 repositories {
     minecraft.mavenizer(this)
     mavenCentral()

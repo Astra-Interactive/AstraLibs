@@ -10,19 +10,19 @@ import java.util.UUID
  * Implementations wrap the platform-specific server object (e.g. Bukkit's `Server`,
  * NeoForge's `MinecraftServer`) and expose a unified API.
  */
-interface PlatformServer {
+public interface PlatformServer {
     /** Returns all currently connected players. */
-    fun getOnlinePlayers(): List<OnlineKPlayer>
+    public fun getOnlinePlayers(): List<OnlineKPlayer>
 
     /** Finds the online player with the given [uuid], or `null` if not online. */
-    fun findOnlinePlayer(uuid: UUID): OnlineKPlayer?
+    public fun findOnlinePlayer(uuid: UUID): OnlineKPlayer?
 
     /** Finds the player with the given [uuid], or `null` if never joined. */
-    fun findOfflinePlayer(uuid: UUID): KPlayer?
+    public fun findOfflinePlayer(uuid: UUID): KPlayer?
 
     /** Finds the online player with the given [name], or `null` if not online. */
-    fun findOnlinePlayer(name: String): OnlineKPlayer?
+    public fun findOnlinePlayer(name: String): OnlineKPlayer?
 
     /** Finds the player with the given [name], or `null` if not known to the server. */
-    fun findOfflinePlayer(name: String): KPlayer?
+    public fun findOfflinePlayer(name: String): KPlayer?
 }

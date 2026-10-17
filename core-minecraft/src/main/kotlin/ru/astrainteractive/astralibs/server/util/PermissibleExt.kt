@@ -15,7 +15,7 @@ private val isLuckPermsLoaded: Boolean by lazy {
  *
  * @throws IllegalStateException if LuckPerms is not loaded on the classpath.
  */
-fun Player.asPermissible(): KPermissible {
+public fun Player.asPermissible(): KPermissible {
     return if (isLuckPermsLoaded) {
         LuckPermsKPermissible(this.uuid)
     } else {

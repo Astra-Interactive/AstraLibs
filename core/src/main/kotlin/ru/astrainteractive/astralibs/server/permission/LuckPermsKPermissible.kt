@@ -14,7 +14,7 @@ import kotlin.text.toIntOrNull
  * [KPermissible] backed by the LuckPerms API for player [uuid].
  * Returns conservative defaults (`false` / `null` / empty) and logs an error when LuckPerms is unavailable.
  */
-class LuckPermsKPermissible(
+public class LuckPermsKPermissible(
     private val uuid: UUID,
     logger: Logger = StubLogger
 ) : KPermissible,

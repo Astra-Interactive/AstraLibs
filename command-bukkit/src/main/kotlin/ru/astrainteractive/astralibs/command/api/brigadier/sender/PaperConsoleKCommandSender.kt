@@ -17,7 +17,7 @@ import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
  *
  * @param sender The Bukkit [CommandSender] representing the console or RCON source.
  */
-class PaperConsoleKCommandSender(
+public class PaperConsoleKCommandSender(
     sender: CommandSender
 ) : ConsoleKCommandSender,
     KPermissible by sender.asKPermissible(),

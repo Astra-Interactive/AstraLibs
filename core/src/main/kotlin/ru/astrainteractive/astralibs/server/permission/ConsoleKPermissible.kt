@@ -6,7 +6,7 @@ package ru.astrainteractive.astralibs.server.permission
  * The console is treated as having every permission and no size constraints, mirroring
  * the behaviour of Bukkit's `ConsoleCommandSender`.
  */
-object ConsoleKPermissible : KPermissible {
+public object ConsoleKPermissible : KPermissible {
     override fun hasPermission(permission: Permission): Boolean {
         return true
     }

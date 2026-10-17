@@ -8,6 +8,10 @@ plugins {
     id("ru.astrainteractive.gradleplugin.rootinfo")
 }
 
+kotlin {
+    explicitApi()
+}
+
 dependencies {
     compileOnly(libs.kotlin.coroutines.core)
     compileOnly(libs.minecraft.paper.api)

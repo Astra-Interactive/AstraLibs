@@ -10,7 +10,7 @@ import ru.astrainteractive.astralibs.server.location.KLocation
  *
  * @see asKLocation
  */
-fun KLocation.asBukkitLocation(): org.bukkit.Location {
+public fun KLocation.asBukkitLocation(): org.bukkit.Location {
     return org.bukkit.Location(
         Bukkit.getWorld(worldName),
         x,
@@ -24,7 +24,7 @@ fun KLocation.asBukkitLocation(): org.bukkit.Location {
  *
  * @see asBukkitLocation
  */
-fun org.bukkit.Location.asKLocation(): KLocation {
+public fun org.bukkit.Location.asKLocation(): KLocation {
     return KLocation(
         x = x,
         y = y,

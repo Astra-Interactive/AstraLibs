@@ -5,7 +5,7 @@ import ru.astrainteractive.astralibs.server.Locatable
 import ru.astrainteractive.astralibs.server.location.KLocation
 
 /** Adapts this [Player] as a [Locatable] that snapshots the player's position on each call. */
-fun Player.asLocatable() = Locatable {
+public fun Player.asLocatable(): Locatable = Locatable {
     val player = this
     KLocation(
         x = player.location.x,

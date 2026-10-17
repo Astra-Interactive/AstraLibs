@@ -15,18 +15,18 @@ import kotlin.collections.toMutableList
  *
  * Build instances with [Builder].
  */
-interface InventorySlot {
-    val item: ItemStack
-    val index: Int
-    val click: Click
+public interface InventorySlot {
+    public val item: ItemStack
+    public val index: Int
+    public val click: Click
 
     /** Mutable builder for [InventorySlot]. */
-    class Builder {
-        var itemStack = ItemStack(Material.AIR)
-        var index = 0
-        var click: Click = Click.Empty
+    public class Builder {
+        public var itemStack: ItemStack = ItemStack(Material.AIR)
+        public var index: Int = 0
+        public var click: Click = Click.Empty
 
-        fun build(): InventorySlot = object : InventorySlot {
+        public fun build(): InventorySlot = object : InventorySlot {
             override val item: ItemStack = this@Builder.itemStack
             override val index: Int = this@Builder.index
             override val click: Click = this@Builder.click
@@ -34,64 +34,64 @@ interface InventorySlot {
     }
 }
 
-fun InventorySlot.Builder.setMaterial(material: Material): InventorySlot.Builder {
+public fun InventorySlot.Builder.setMaterial(material: Material): InventorySlot.Builder {
     itemStack.type = material
     return this
 }
 
-fun InventorySlot.Builder.setItemStack(itemStack: ItemStack): InventorySlot.Builder {
+public fun InventorySlot.Builder.setItemStack(itemStack: ItemStack): InventorySlot.Builder {
     this.itemStack = itemStack
     return this
 }
 
-fun InventorySlot.Builder.setIndex(index: Int): InventorySlot.Builder {
+public fun InventorySlot.Builder.setIndex(index: Int): InventorySlot.Builder {
     this.index = index
     return this
 }
 
-fun InventorySlot.Builder.setOnClickListener(click: Click): InventorySlot.Builder {
+public fun InventorySlot.Builder.setOnClickListener(click: Click): InventorySlot.Builder {
     this.click = click
     return this
 }
 
-fun InventorySlot.Builder.editItemStack(block: ItemStack.() -> Unit): InventorySlot.Builder {
+public fun InventorySlot.Builder.editItemStack(block: ItemStack.() -> Unit): InventorySlot.Builder {
     itemStack = itemStack.apply(block)
     return this
 }
 
-fun InventorySlot.Builder.editMeta(block: ItemMeta.() -> Unit): InventorySlot.Builder {
+public fun InventorySlot.Builder.editMeta(block: ItemMeta.() -> Unit): InventorySlot.Builder {
     itemStack.itemMeta = itemStack.itemMeta.apply(block)
     return this
 }
 
-fun InventorySlot.Builder.setAmount(amount: Int): InventorySlot.Builder {
+public fun InventorySlot.Builder.setAmount(amount: Int): InventorySlot.Builder {
     itemStack.amount = amount
     return this
 }
 
 /** Sets the display name from a plain string, wrapping it in [Component.text]. */
-fun InventorySlot.Builder.setDisplayName(string: String): InventorySlot.Builder {
+public fun InventorySlot.Builder.setDisplayName(string: String): InventorySlot.Builder {
     editMeta {
         displayName(Component.text(string))
     }
     return this
 }
 
-fun InventorySlot.Builder.setDisplayName(component: Component): InventorySlot.Builder {
+public fun InventorySlot.Builder.setDisplayName(component: Component): InventorySlot.Builder {
     editMeta {
         displayName(component)
     }
     return this
 }
 
-fun InventorySlot.Builder.setLore(loreComponents: List<Component>): InventorySlot.Builder {
+public fun InventorySlot.Builder.setLore(loreComponents: List<Component>): InventorySlot.Builder {
     editMeta {
         lore(loreComponents)
     }
     return this
 }
 
-fun InventorySlot.Builder.addLore(loreComponent: Component): InventorySlot.Builder {
+public fun InventorySlot.Builder.addLore(loreComponent: Component): InventorySlot.Builder {
     editMeta {
         val currentLore = lore().orEmpty().toMutableList()
         currentLore.add(loreComponent)
@@ -100,12 +100,12 @@ fun InventorySlot.Builder.addLore(loreComponent: Component): InventorySlot.Build
     return this
 }
 
-fun InventorySlot.Builder.addLore(component: () -> Component): InventorySlot.Builder {
+public fun InventorySlot.Builder.addLore(component: () -> Component): InventorySlot.Builder {
     return addLore(component.invoke())
 }
 
 /** Applies [block] to the builder only when [condition] is true. */
-fun InventorySlot.Builder.predicate(
+public fun InventorySlot.Builder.predicate(
     condition: Boolean,
     block: InventorySlot.Builder.() -> Unit
 ): InventorySlot.Builder {

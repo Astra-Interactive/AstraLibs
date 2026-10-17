@@ -6,16 +6,16 @@ import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.TextDecoration
 
 /** Returns this component if non-null, or [Component.empty]. */
-fun Component?.orEmpty() = this ?: Component.empty()
+public fun Component?.orEmpty(): Component = this ?: Component.empty()
 
 /** Returns `true` if this component equals [Component.empty]. */
-fun Component.isEmpty() = this == Component.empty()
+public fun Component.isEmpty(): Boolean = this == Component.empty()
 
 /** Returns `true` if this component does not equal [Component.empty]. */
-fun Component.isNotEmpty() = this != Component.empty()
+public fun Component.isNotEmpty(): Boolean = this != Component.empty()
 
 /** Attaches a callback click event that invokes [onClick] when the component is clicked in chat. */
-fun Component.clickable(onClick: (Audience) -> Unit): Component {
+public fun Component.clickable(onClick: (Audience) -> Unit): Component {
     return clickEvent(
         ClickEvent.callback { audience ->
             onClick.invoke(audience)
@@ -29,7 +29,7 @@ internal fun Component.withItalicOffByDefault(): Component {
 }
 
 /** A ready component that looks the same in every language. */
-fun Component.asLocalizableComponent(): LocalizableComponent {
+public fun Component.asLocalizableComponent(): LocalizableComponent {
     return LocalizableComponent { _ -> this }
 }
 
@@ -38,7 +38,7 @@ fun Component.asLocalizableComponent(): LocalizableComponent {
  * This is the only `plus` for localizable components; joining the markup of two texts as strings is
  * [ru.astrainteractive.astralibs.localization.text.LocalizedText.concat].
  */
-operator fun LocalizableComponent.plus(other: LocalizableComponent): LocalizableComponent {
+public operator fun LocalizableComponent.plus(other: LocalizableComponent): LocalizableComponent {
     val first = this
     return LocalizableComponent { locale ->
         Component.textOfChildren(first.toComponent(locale), other.toComponent(locale))

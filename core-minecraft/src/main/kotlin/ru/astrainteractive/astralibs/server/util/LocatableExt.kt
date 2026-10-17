@@ -6,7 +6,7 @@ import ru.astrainteractive.astralibs.server.Locatable
 import ru.astrainteractive.astralibs.server.location.KLocation
 
 /** Adapts this [Entity] as a [Locatable] using its current position and world name. */
-fun Entity.asLocatable() = Locatable {
+public fun Entity.asLocatable(): Locatable = Locatable {
     KLocation(
         x = this.x,
         y = this.y,

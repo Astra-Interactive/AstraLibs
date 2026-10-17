@@ -9,6 +9,10 @@ plugins {
     id("ru.astrainteractive.gradleplugin.rootinfo")
 }
 
+kotlin {
+    explicitApi()
+}
+
 dependencies {
     minecraft(libs.minecraft.fabric.mojang)
     mappings(loom.officialMojangMappings())

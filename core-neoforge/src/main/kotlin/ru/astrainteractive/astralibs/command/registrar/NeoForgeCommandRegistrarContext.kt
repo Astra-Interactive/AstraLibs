@@ -26,7 +26,7 @@ import ru.astrainteractive.astralibs.event.flowEvent
  *
  * @param mainScope Scope the event is shared in. Cancelling it stops feeding new events to nodes.
  */
-class NeoForgeCommandRegistrarContext(
+public class NeoForgeCommandRegistrarContext(
     mainScope: CoroutineScope
 ) : CommandRegistrarContext {
     private val registerCommandsEvent = flowEvent<RegisterCommandsEvent>(EventPriority.HIGHEST)

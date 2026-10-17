@@ -18,7 +18,7 @@ import ru.astrainteractive.astralibs.localization.component.withItalicOffByDefau
  *   in `<lang>` arguments and in entity hover names; `&r` does not end an enclosing tag.
  * - Escape player text with `MiniMessage.escapeTags` before splicing it into a string.
  */
-data object AutoComponentSerializer :
+public data object AutoComponentSerializer :
     KyoriComponentSerializer,
     ComponentSerializer<Component, Component, String> {
     private val legacyWithoutLinks by lazy {

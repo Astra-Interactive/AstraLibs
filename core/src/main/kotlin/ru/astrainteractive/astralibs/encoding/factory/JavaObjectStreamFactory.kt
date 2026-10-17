@@ -6,7 +6,7 @@ import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
 
 /** [ObjectStreamFactory] using standard Java serialization. */
-object JavaObjectStreamFactory : ObjectStreamFactory {
+public object JavaObjectStreamFactory : ObjectStreamFactory {
 
     override fun createInputStream(istream: ByteArrayInputStream): ObjectInputStream =
         ObjectInputStream(istream)

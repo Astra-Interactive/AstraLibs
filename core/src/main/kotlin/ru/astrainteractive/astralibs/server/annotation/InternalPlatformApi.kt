@@ -10,4 +10,4 @@ package ru.astrainteractive.astralibs.server.annotation
     level = RequiresOptIn.Level.ERROR,
     message = "This API is not intended to be subclassed outside the library"
 )
-annotation class InternalPlatformApi
+public annotation class InternalPlatformApi

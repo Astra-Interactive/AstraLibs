@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.economy
 import java.util.UUID
 
 /** No-op [EconomyFacade] that always returns `null`/`false`. Useful as a stub or test double. */
-class EmptyEconomyFacade : EconomyFacade {
+public class EmptyEconomyFacade : EconomyFacade {
 
     override suspend fun getBalance(uuid: UUID): Double? = null
 

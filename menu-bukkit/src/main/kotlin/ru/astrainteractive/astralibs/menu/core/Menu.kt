@@ -18,44 +18,44 @@ import ru.astrainteractive.astralibs.menu.slot.InventorySlot
  *
  * Requires a [DefaultInventoryClickEvent] listener registered once on plugin startup.
  */
-abstract class Menu : InventoryHolder {
-    abstract val title: Component
+public abstract class Menu : InventoryHolder {
+    public abstract val title: Component
 
     /** Coroutine scope cancelled automatically when the inventory closes. */
-    abstract val menuScope: CoroutineScope
+    public abstract val menuScope: CoroutineScope
 
     /** Additional scopes cancelled together with [menuScope] on close. */
-    abstract val childComponents: List<CoroutineScope>
+    public abstract val childComponents: List<CoroutineScope>
 
-    open val clickListener: ClickListener = DefaultClickListener()
+    public open val clickListener: ClickListener = DefaultClickListener()
 
-    open fun onInventoryClickEvent(e: InventoryClickEvent) {
+    public open fun onInventoryClickEvent(e: InventoryClickEvent) {
         clickListener.onClick(e)
     }
 
     /** Clears click handlers and cancels all coroutine scopes. Always call `super` when overriding. */
-    open fun onInventoryCloseEvent(e: InventoryCloseEvent) {
+    public open fun onInventoryCloseEvent(e: InventoryCloseEvent) {
         clickListener.clear()
         childComponents
             .plus(menuScope)
             .forEach(CoroutineScope::cancel)
     }
 
-    open fun render() {
+    public open fun render() {
         clear()
     }
 
-    abstract fun onInventoryOpenEvent(e: InventoryOpenEvent)
+    public abstract fun onInventoryOpenEvent(e: InventoryOpenEvent)
 }
 
 /** Registers [slot]'s click handler and writes its item into the inventory. */
-fun Menu.setInventorySlot(slot: InventorySlot) {
+public fun Menu.setInventorySlot(slot: InventorySlot) {
     clickListener.remember(slot)
     inventory.setItem(slot.index, slot.item)
 }
 
 /** Registers click handlers and writes items for all [slots] into the inventory. */
-fun Menu.setInventorySlot(slots: Iterable<InventorySlot>) {
+public fun Menu.setInventorySlot(slots: Iterable<InventorySlot>) {
     slots.forEach { slot ->
         clickListener.remember(slot)
         inventory.setItem(slot.index, slot.item)
@@ -63,7 +63,7 @@ fun Menu.setInventorySlot(slots: Iterable<InventorySlot>) {
 }
 
 /** Calls [setInventorySlot] only when [predicate] returns `true`. */
-fun Menu.setInventorySlotIf(
+public fun Menu.setInventorySlotIf(
     slot: InventorySlot,
     predicate: () -> Boolean
 ) {
@@ -72,7 +72,7 @@ fun Menu.setInventorySlotIf(
 }
 
 /** Clears all registered click handlers and inventory items. */
-fun Menu.clear() {
+public fun Menu.clear() {
     clickListener.clear()
     inventory.clear()
 }

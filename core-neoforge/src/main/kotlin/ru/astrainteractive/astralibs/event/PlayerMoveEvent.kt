@@ -1,6 +1,7 @@
 package ru.astrainteractive.astralibs.event
 
 import com.google.common.cache.CacheBuilder
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow
@@ -20,15 +21,15 @@ import kotlin.time.toJavaDuration
  * @param oldKLocation Position at the previous tick.
  * @param newKLocation Position at the current tick.
  */
-class PlayerMoveEvent(
-    val instance: PlayerTickEvent.Post,
-    val oldKLocation: KLocation,
-    val newKLocation: KLocation,
-    val player: Player
+public class PlayerMoveEvent(
+    public val instance: PlayerTickEvent.Post,
+    public val oldKLocation: KLocation,
+    public val newKLocation: KLocation,
+    public val player: Player
 )
 
 /** Cold [Flow] that emits a [PlayerMoveEvent] on each tick per player. */
-fun playerMoveFlowEvent() = flow {
+public fun playerMoveFlowEvent(): Flow<PlayerMoveEvent> = flow {
     val cache = CacheBuilder<UUID, KLocation>.newBuilder()
         .expireAfterAccess(10.seconds.toJavaDuration())
         .build<UUID, KLocation>()

@@ -15,8 +15,8 @@ import ru.astrainteractive.astralibs.lifecycle.Lifecycle
  * - [state] turns [State.Idle] only once the work has finished unwinding, and stays
  *   [State.Active] during that window, so a stop can be awaited with [awaitIdle].
  */
-interface Service : Lifecycle {
-    val state: StateFlow<State>
+public interface Service : Lifecycle {
+    public val state: StateFlow<State>
 
     override fun onEnable()
 
@@ -27,7 +27,7 @@ interface Service : Lifecycle {
         onEnable()
     }
 
-    enum class State {
+    public enum class State {
         /** Not running: either never started, or stopped and fully unwound. */
         Idle,
         Active
@@ -40,6 +40,6 @@ interface Service : Lifecycle {
  * [Service.onDisable] only requests a stop, so a graceful shutdown is the two combined:
  * `service.onDisable(); service.awaitIdle()`.
  */
-suspend fun Service.awaitIdle() {
+public suspend fun Service.awaitIdle() {
     state.first { serviceState -> serviceState == Service.State.Idle }
 }

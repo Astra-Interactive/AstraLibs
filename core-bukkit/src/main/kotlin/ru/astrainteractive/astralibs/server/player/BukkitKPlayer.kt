@@ -6,8 +6,8 @@ import java.util.UUID
 
 /** [KPlayer] wrapping a Bukkit [OfflinePlayer]. Exposes [instance] for Bukkit-specific API access. */
 @OptIn(InternalPlatformApi::class)
-class BukkitKPlayer(
-    val instance: OfflinePlayer
+public class BukkitKPlayer(
+    public val instance: OfflinePlayer
 ) : KPlayer {
     override val uuid: UUID
         get() = instance.uniqueId

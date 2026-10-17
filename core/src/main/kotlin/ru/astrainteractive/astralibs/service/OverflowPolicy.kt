@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.service
 /**
  * Decides what happens when the next tick arrives while a [ServiceTask] is still running.
  */
-enum class OverflowPolicy {
+public enum class OverflowPolicy {
     /**
      * Wait for the running task, then run the pending tick.
      *

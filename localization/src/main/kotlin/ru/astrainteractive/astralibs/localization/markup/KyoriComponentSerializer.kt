@@ -9,17 +9,17 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import ru.astrainteractive.astralibs.localization.component.withItalicOffByDefault
 
 /** Converts strings to Kyori Adventure [Component]s. */
-interface KyoriComponentSerializer {
+public interface KyoriComponentSerializer {
 
-    val type: KyoriComponentSerializerType
-    val serializer: ComponentSerializer<Component, out Component, String>
+    public val type: KyoriComponentSerializerType
+    public val serializer: ComponentSerializer<Component, out Component, String>
 
-    fun toComponent(string: String): Component
+    public fun toComponent(string: String): Component
 
     /** JSON component format using [JSONComponentSerializer]. */
-    data object Json : KyoriComponentSerializer {
+    public data object Json : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Json
-        override val serializer by lazy {
+        override val serializer: JSONComponentSerializer by lazy {
             JSONComponentSerializer.json()
         }
 
@@ -29,9 +29,9 @@ interface KyoriComponentSerializer {
     }
 
     /** Gson JSON component format using [GsonComponentSerializer]. */
-    data object Gson : KyoriComponentSerializer {
+    public data object Gson : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Gson
-        override val serializer by lazy {
+        override val serializer: GsonComponentSerializer by lazy {
             GsonComponentSerializer.gson()
         }
 
@@ -41,9 +41,9 @@ interface KyoriComponentSerializer {
     }
 
     /** Plain text — no colors or formatting tags. */
-    data object Plain : KyoriComponentSerializer {
+    public data object Plain : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Plain
-        override val serializer by lazy {
+        override val serializer: PlainTextComponentSerializer by lazy {
             PlainTextComponentSerializer.plainText()
         }
 
@@ -53,9 +53,9 @@ interface KyoriComponentSerializer {
     }
 
     /** MiniMessage format. */
-    data object MiniMessage : KyoriComponentSerializer {
+    public data object MiniMessage : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.MiniMessage
-        override val serializer by lazy {
+        override val serializer: net.kyori.adventure.text.minimessage.MiniMessage by lazy {
             net.kyori.adventure.text.minimessage.MiniMessage.miniMessage()
         }
 
@@ -65,9 +65,9 @@ interface KyoriComponentSerializer {
     }
 
     /** Legacy `&`-color-code format; italic decoration is disabled by default. */
-    data object Legacy : KyoriComponentSerializer {
+    public data object Legacy : KyoriComponentSerializer {
         override val type: KyoriComponentSerializerType = KyoriComponentSerializerType.Legacy
-        override val serializer by lazy {
+        override val serializer: LegacyComponentSerializer by lazy {
             LegacyComponentSerializer.builder()
                 .extractUrls()
                 .character(LegacyComponentSerializer.AMPERSAND_CHAR)
@@ -81,8 +81,8 @@ interface KyoriComponentSerializer {
         }
     }
 
-    companion object {
-        fun ofType(type: KyoriComponentSerializerType) = when (type) {
+    public companion object {
+        public fun ofType(type: KyoriComponentSerializerType): KyoriComponentSerializer = when (type) {
             KyoriComponentSerializerType.Json -> Json
             KyoriComponentSerializerType.Gson -> Gson
             KyoriComponentSerializerType.Plain -> Plain

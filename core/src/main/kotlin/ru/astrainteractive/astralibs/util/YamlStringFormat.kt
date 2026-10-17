@@ -6,12 +6,12 @@ import kotlinx.serialization.StringFormat
 
 /** [StringFormat] wrapping [Yaml] with `encodeDefaults = true` and `strictMode = false`. */
 @Suppress("MemberVisibilityCanBePrivate")
-class YamlStringFormat(
-    val configuration: YamlConfiguration = Yaml.default.configuration.copy(
+public class YamlStringFormat(
+    public val configuration: YamlConfiguration = Yaml.default.configuration.copy(
         encodeDefaults = true,
         strictMode = false
     ),
-    val yaml: Yaml = Yaml(
+    public val yaml: Yaml = Yaml(
         serializersModule = Yaml.default.serializersModule,
         configuration = configuration
     )

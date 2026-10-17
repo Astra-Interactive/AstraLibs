@@ -11,7 +11,7 @@ import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
  * [Main] schedules on the server main thread via [MinecraftMainDispatcher];
  * [IO], [Default], and [Unconfined] delegate to [kotlinx.coroutines.Dispatchers].
  */
-class MinecraftDispatchers : KotlinDispatchers {
+public class MinecraftDispatchers : KotlinDispatchers {
     override val Main: MainCoroutineDispatcher by lazy {
         MinecraftMainDispatcher()
     }

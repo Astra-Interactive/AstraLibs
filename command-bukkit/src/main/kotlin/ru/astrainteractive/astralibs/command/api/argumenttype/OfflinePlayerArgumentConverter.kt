@@ -9,7 +9,7 @@ import ru.astrainteractive.astralibs.command.api.exception.NoPlayerException
  *
  * @throws NoPlayerException if no cached offline player is found for [argument].
  */
-object OfflinePlayerArgumentConverter : ArgumentConverter<OfflinePlayer> {
+public object OfflinePlayerArgumentConverter : ArgumentConverter<OfflinePlayer> {
     override fun transform(argument: String): OfflinePlayer {
         val offlinePlayer = Bukkit.getOfflinePlayer(argument)
         if (offlinePlayer.name == null) throw NoPlayerException(argument)

@@ -27,7 +27,7 @@ private fun CommandNode<*>.removeFromChildMap(fieldName: String, name: String): 
  *
  * @return `true` when a node was removed.
  */
-fun CommandDispatcher<*>.removeCommand(name: String): Boolean {
+public fun CommandDispatcher<*>.removeCommand(name: String): Boolean {
     val rootNode: CommandNode<*> = root
     return CHILD_MAP_FIELDS
         .map { fieldName -> rootNode.removeFromChildMap(fieldName = fieldName, name = name) }

@@ -8,11 +8,11 @@ import ru.astrainteractive.astralibs.server.player.KPlayer
 import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
 
 /** Adapts this [Player] as an [OnlineKPlayer]. */
-fun Player.asOnlineMinecraftPlayer(): OnlineKPlayer {
+public fun Player.asOnlineMinecraftPlayer(): OnlineKPlayer {
     return BukkitOnlineKPlayer(instance = this)
 }
 
 /** Adapts this [OfflinePlayer] as a [KPlayer]. */
-fun OfflinePlayer.asOfflineMinecraftPlayer(): KPlayer {
+public fun OfflinePlayer.asOfflineMinecraftPlayer(): KPlayer {
     return BukkitKPlayer(instance = this)
 }

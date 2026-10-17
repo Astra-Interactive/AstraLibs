@@ -5,7 +5,7 @@ import org.bukkit.permissions.Permissible
 /**
  * [KPermissible] backed by a Bukkit [Permissible].
  */
-class BukkitKPermissible(
+public class BukkitKPermissible(
     private val bukkitPermissible: Permissible
 ) : KPermissible {
 

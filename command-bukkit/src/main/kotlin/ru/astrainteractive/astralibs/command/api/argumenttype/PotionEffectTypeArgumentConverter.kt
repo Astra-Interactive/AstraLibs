@@ -11,7 +11,7 @@ import ru.astrainteractive.astralibs.command.api.exception.NoPotionEffectTypeExc
  *
  * @throws NoPotionEffectTypeException if no [PotionEffectType] is registered under the given name.
  */
-data object PotionEffectTypeArgumentConverter : ArgumentConverter<PotionEffectType> {
+public data object PotionEffectTypeArgumentConverter : ArgumentConverter<PotionEffectType> {
     override fun transform(argument: String): PotionEffectType {
         return argument.let(PotionEffectType::getByName)
             ?: throw NoPotionEffectTypeException(argument)

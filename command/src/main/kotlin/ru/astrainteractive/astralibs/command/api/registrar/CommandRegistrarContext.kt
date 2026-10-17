@@ -8,7 +8,7 @@ import ru.astrainteractive.astralibs.command.api.brigadier.command.Multiplatform
  * Implementations defer the actual registration until the platform signals
  * it is ready to accept new commands (e.g. after the server has initialised).
  */
-interface CommandRegistrarContext {
+public interface CommandRegistrarContext {
     /**
      * Keeps [node] in the server's command dispatcher until [scope] is cancelled.
      *
@@ -21,7 +21,7 @@ interface CommandRegistrarContext {
      * is not reified, so a foreign node is only rejected once the command executes and sender
      * resolution meets the wrong source class.
      */
-    fun registerWhenReady(
+    public fun registerWhenReady(
         node: LiteralArgumentBuilder<*>,
         scope: CoroutineScope
     )
@@ -32,7 +32,7 @@ interface CommandRegistrarContext {
  *
  * @see CommandRegistrarContext.registerWhenReady
  */
-fun CommandRegistrarContext.registerWhenReady(
+public fun CommandRegistrarContext.registerWhenReady(
     nodes: List<LiteralArgumentBuilder<*>>,
     scope: CoroutineScope
 ) {

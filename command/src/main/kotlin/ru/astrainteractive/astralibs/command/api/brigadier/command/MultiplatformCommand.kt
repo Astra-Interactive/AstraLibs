@@ -21,9 +21,9 @@ import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
  * @param commands Platform-specific factory for brigadier builders and sender resolution.
  */
 @Suppress("TooManyFunctions", "MaximumLineLength", "MaxLineLength")
-class MultiplatformCommand(private val commands: MultiplatformCommands) {
+public class MultiplatformCommand(private val commands: MultiplatformCommands) {
     /** Appends a child literal sub-command node to this builder. */
-    fun LiteralArgumentBuilder<Any>.literal(
+    public fun LiteralArgumentBuilder<Any>.literal(
         alias: String,
         block: LiteralArgumentBuilder<Any>.() -> Unit
     ) {
@@ -39,7 +39,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
      * Without this overload the same call inside an `argument` block resolves against the
      * enclosing literal receiver and silently attaches the node as a sibling of the argument.
      */
-    fun RequiredArgumentBuilder<Any, *>.literal(
+    public fun RequiredArgumentBuilder<Any, *>.literal(
         alias: String,
         block: LiteralArgumentBuilder<Any>.() -> Unit
     ) {
@@ -49,7 +49,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
     }
 
     /** Creates a root literal command node and applies [block] to it. */
-    fun command(
+    public fun command(
         alias: String,
         block: LiteralArgumentBuilder<Any>.() -> Unit
     ): LiteralArgumentBuilder<Any> {
@@ -64,18 +64,18 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
      * Passed into [argument] builder lambdas so callers can use [requireArgument] without
      * repeating the alias or class token.
      */
-    data class BrigadierArgument<T : Any>(
+    public data class BrigadierArgument<T : Any>(
         val alias: String,
         val type: ArgumentType<T>,
         val clazz: Class<T>
     )
 
     /** Appends a typed argument child node to this literal builder (type inferred via reification). */
-    inline fun <reified T : Any> LiteralArgumentBuilder<Any>.argument(
+    public inline fun <reified T : Any> LiteralArgumentBuilder<Any>.argument(
         alias: String,
         type: ArgumentType<T>,
         noinline block: RequiredArgumentBuilder<Any, T>.(BrigadierArgument<T>) -> Unit
-    ) = argument(
+    ): Unit = argument(
         alias = alias,
         type = type,
         clazz = T::class.java,
@@ -83,7 +83,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
     )
 
     /** Appends a typed argument child node to this literal builder with an explicit [clazz] token. */
-    fun <T : Any> LiteralArgumentBuilder<Any>.argument(
+    public fun <T : Any> LiteralArgumentBuilder<Any>.argument(
         alias: String,
         type: ArgumentType<T>,
         clazz: Class<T>,
@@ -100,11 +100,11 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
     }
 
     /** Appends a typed argument child node to this required-argument builder (type inferred via reification). */
-    inline fun <reified T : Any> RequiredArgumentBuilder<Any, *>.argument(
+    public inline fun <reified T : Any> RequiredArgumentBuilder<Any, *>.argument(
         alias: String,
         type: ArgumentType<T>,
         noinline block: RequiredArgumentBuilder<Any, T>.(BrigadierArgument<T>) -> Unit
-    ) = argument(
+    ): Unit = argument(
         alias = alias,
         type = type,
         clazz = T::class.java,
@@ -112,7 +112,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
     )
 
     /** Appends a typed argument child node to this required-argument builder with an explicit [clazz] token. */
-    fun <T : Any> RequiredArgumentBuilder<Any, *>.argument(
+    public fun <T : Any> RequiredArgumentBuilder<Any, *>.argument(
         alias: String,
         type: ArgumentType<T>,
         clazz: Class<T>,
@@ -133,7 +133,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
      *
      * Exceptions are forwarded to [onFailure] rather than propagating to the Brigadier dispatcher.
      */
-    fun RequiredArgumentBuilder<Any, *>.runs(
+    public fun RequiredArgumentBuilder<Any, *>.runs(
         onFailure: (CommandContext<Any>, Throwable) -> Unit = { _, _ -> },
         block: (RequiredArgumentBuilder<Any, *>.(CommandContext<Any>) -> Unit)
     ) {
@@ -149,7 +149,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
      *
      * Exceptions are forwarded to [onFailure] rather than propagating to the Brigadier dispatcher.
      */
-    fun LiteralArgumentBuilder<Any>.runs(
+    public fun LiteralArgumentBuilder<Any>.runs(
         onFailure: (CommandContext<Any>, Throwable) -> Unit = { _, _ -> },
         block: LiteralArgumentBuilder<Any>.(CommandContext<Any>) -> Unit
     ) {
@@ -161,7 +161,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
     }
 
     /** Registers tab-completion suggestions for this argument node. */
-    fun RequiredArgumentBuilder<Any, *>.hints(block: (CommandContext<Any>) -> List<String>) {
+    public fun RequiredArgumentBuilder<Any, *>.hints(block: (CommandContext<Any>) -> List<String>) {
         suggests { context, builder ->
             block.invoke(context).forEach(builder::suggest)
             builder.buildFuture()
@@ -170,13 +170,13 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
 
     /** Retrieves the parsed value of [bArgument] from this command context. */
     @Throws(IllegalArgumentException::class)
-    fun <T : Any> CommandContext<Any>.requireArgument(bArgument: BrigadierArgument<T>): T {
+    public fun <T : Any> CommandContext<Any>.requireArgument(bArgument: BrigadierArgument<T>): T {
         return getArgument(bArgument.alias, bArgument.clazz)
     }
 
     /** Retrieves a raw string argument from this context and converts it via [converter]. */
     @Throws(ArgumentConverterException::class)
-    fun <T : Any> CommandContext<Any>.requireArgument(
+    public fun <T : Any> CommandContext<Any>.requireArgument(
         bArgument: BrigadierArgument<String>,
         converter: ArgumentConverter<T>
     ): T {
@@ -185,13 +185,13 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
     }
 
     /** Returns the [KCommandSender] (player or console) who issued this command. */
-    fun CommandContext<Any>.getSender(): KCommandSender {
+    public fun CommandContext<Any>.getSender(): KCommandSender {
         return commands.getSender(this)
     }
 
     /** Throws [NoPermissionException] if the sender does not hold [permission]. */
     @Throws(NoPermissionException::class)
-    fun CommandContext<Any>.requirePermission(permission: Permission) {
+    public fun CommandContext<Any>.requirePermission(permission: Permission) {
         val sender = commands.getSender(this)
         val hasPermission = when (sender) {
             is ConsoleKCommandSender -> sender.hasPermission(permission)
@@ -202,7 +202,7 @@ class MultiplatformCommand(private val commands: MultiplatformCommands) {
 
     /** Returns the executing [OnlineKPlayer], or throws [NotPlayerExecutorException] if the sender is console. */
     @Throws(NotPlayerExecutorException::class)
-    fun CommandContext<Any>.requirePlayer(): OnlineKPlayer {
+    public fun CommandContext<Any>.requirePlayer(): OnlineKPlayer {
         val sender = commands.getSender(this)
         return when (sender) {
             is ConsoleKCommandSender -> throw NotPlayerExecutorException()

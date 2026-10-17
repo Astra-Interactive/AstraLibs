@@ -11,21 +11,21 @@ import ru.astrainteractive.astralibs.menu.core.Menu
 /**
  * Bukkit event listener that routes inventory events to the active [Menu]. Register once in [JavaPlugin.onEnable].
  */
-class DefaultInventoryClickEvent : EventListener {
+public class DefaultInventoryClickEvent : EventListener {
     @EventHandler
-    fun onInventoryClickEvent(e: InventoryClickEvent) {
+    public fun onInventoryClickEvent(e: InventoryClickEvent) {
         val holder = e.view.topInventory.holder as? Menu ?: return
         holder.onInventoryClickEvent(e)
     }
 
     @EventHandler
-    fun onInventoryCloseEvent(e: InventoryCloseEvent) {
+    public fun onInventoryCloseEvent(e: InventoryCloseEvent) {
         val holder = e.view.topInventory.holder as? Menu ?: return
         holder.onInventoryCloseEvent(e)
     }
 
     @EventHandler
-    fun onInventoryOpenEvent(e: InventoryOpenEvent) {
+    public fun onInventoryOpenEvent(e: InventoryOpenEvent) {
         val holder = e.view.topInventory.holder as? Menu ?: return
         holder.onInventoryOpenEvent(e)
     }

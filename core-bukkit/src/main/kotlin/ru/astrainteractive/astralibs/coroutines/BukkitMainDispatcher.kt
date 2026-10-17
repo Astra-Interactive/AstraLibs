@@ -8,7 +8,7 @@ import kotlin.coroutines.CoroutineContext
 /**
  * Bukkit main dispatcher implementation which will dispatch on [BukkitScheduler.runTask]
  */
-class BukkitMainDispatcher(private val plugin: Plugin) : MainCoroutineDispatcher() {
+public class BukkitMainDispatcher(private val plugin: Plugin) : MainCoroutineDispatcher() {
 
     override val immediate: MainCoroutineDispatcher
         get() = this

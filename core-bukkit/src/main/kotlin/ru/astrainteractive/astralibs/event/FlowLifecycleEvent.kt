@@ -18,7 +18,7 @@ import org.bukkit.plugin.Plugin
  * Returns a cold [Flow] that emits each Paper [ReloadableRegistrarEvent] for [eventType].
  * Paper has no unregister API, so events may arrive briefly after cancellation.
  */
-fun <T : Registrar> Plugin.flowLifecycleEvent(
+public fun <T : Registrar> Plugin.flowLifecycleEvent(
     eventType: LifecycleEventType.Prioritizable<LifecycleEventOwner, ReloadableRegistrarEvent<T>>
 ): Flow<ReloadableRegistrarEvent<T>> = callbackFlow {
     val coroutineContext = currentCoroutineContext()

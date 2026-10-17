@@ -11,7 +11,7 @@ import java.io.ByteArrayOutputStream
  *
  * @param streamProvider Defaults to [JavaObjectStreamFactory] (standard Java serialization).
  */
-class DefaultObjectEncoder(
+public class DefaultObjectEncoder(
     private val streamProvider: ObjectStreamFactory = JavaObjectStreamFactory,
 ) : ObjectEncoder {
 

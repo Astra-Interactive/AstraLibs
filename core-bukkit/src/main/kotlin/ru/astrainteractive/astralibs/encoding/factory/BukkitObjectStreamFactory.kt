@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream
 /**
  * This custom [ObjectStreamFactory] is required to use with Bukkit objects
  */
-object BukkitObjectStreamFactory : ObjectStreamFactory {
+public object BukkitObjectStreamFactory : ObjectStreamFactory {
     override fun createInputStream(istream: ByteArrayInputStream): ObjectInputStream {
         return BukkitObjectInputStream(istream)
     }

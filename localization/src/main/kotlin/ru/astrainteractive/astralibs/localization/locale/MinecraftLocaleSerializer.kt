@@ -15,7 +15,7 @@ import java.util.Locale
  * A blank code fails the whole file instead of silently becoming an unknown language, so a typo shows up in the
  * load log.
  */
-object MinecraftLocaleSerializer : KSerializer<Locale> {
+public object MinecraftLocaleSerializer : KSerializer<Locale> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(
         serialName = "ru.astrainteractive.astralibs.localization.locale.MinecraftLocale",
         kind = PrimitiveKind.STRING
@@ -27,7 +27,7 @@ object MinecraftLocaleSerializer : KSerializer<Locale> {
      *
      * @return null when [code] is blank
      */
-    fun parse(code: String): Locale? {
+    public fun parse(code: String): Locale? {
         val trimmedCode = code.trim()
         if (trimmedCode.isEmpty()) return null
         val language = trimmedCode.substringBefore('_')

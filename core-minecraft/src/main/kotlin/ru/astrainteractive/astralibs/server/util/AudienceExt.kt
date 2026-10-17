@@ -18,7 +18,7 @@ private val ServerPlayer.clientLocale: Locale
  *
  * Messages are shown in the chat area, not the action bar.
  */
-fun ServerPlayer.asKAudience(): KAudience = object : KAudience {
+public fun ServerPlayer.asKAudience(): KAudience = object : KAudience {
     override val locale: Locale
         get() = clientLocale
 
@@ -28,7 +28,7 @@ fun ServerPlayer.asKAudience(): KAudience = object : KAudience {
 }
 
 /** Adapts this [CommandSourceStack] as a [KAudience]: a player's source has the player's language, others none. */
-fun CommandSourceStack.asKAudience(): KAudience = object : KAudience {
+public fun CommandSourceStack.asKAudience(): KAudience = object : KAudience {
     override val locale: Locale
         get() = player?.clientLocale ?: Locale.ROOT
 
@@ -38,7 +38,7 @@ fun CommandSourceStack.asKAudience(): KAudience = object : KAudience {
 }
 
 /** Adapts this [MinecraftServer] console as a [KAudience]; the console has no client language. */
-fun MinecraftServer.asKAudience(): KAudience = object : KAudience {
+public fun MinecraftServer.asKAudience(): KAudience = object : KAudience {
     override val locale: Locale = Locale.ROOT
 
     override fun sendMessage(component: Component) {
@@ -47,7 +47,7 @@ fun MinecraftServer.asKAudience(): KAudience = object : KAudience {
 }
 
 /** Adapts this [RconConsoleSource] as a [KAudience]; a remote console has no client language. */
-fun RconConsoleSource.asKAudience(): KAudience = object : KAudience {
+public fun RconConsoleSource.asKAudience(): KAudience = object : KAudience {
     override val locale: Locale = Locale.ROOT
 
     override fun sendMessage(component: Component) {

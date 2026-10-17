@@ -4,7 +4,7 @@ package ru.astrainteractive.astralibs.menu.inventory.model
  * Standard chest-style inventory sizes in slots (multiples of 9, up to 6 rows).
  */
 @Suppress("MagicNumber")
-enum class InventorySize(val size: Int) {
+public enum class InventorySize(public val size: Int) {
     /** 9 slots — 1 row. */
     XXS(9),
 

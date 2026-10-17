@@ -12,7 +12,7 @@ import kotlin.coroutines.CoroutineContext
  * server profilers display a meaningful task name. Every dispatch goes through the server
  * task queue — even when already on the main thread — to preserve ordering.
  */
-class MinecraftMainDispatcher : MainCoroutineDispatcher() {
+public class MinecraftMainDispatcher : MainCoroutineDispatcher() {
     override val immediate: MainCoroutineDispatcher
         get() = this
 

@@ -11,11 +11,11 @@ import org.bukkit.plugin.Plugin
  * @param T The primitive storage type.
  * @param Z The complex type exposed to the caller.
  */
-interface BukkitConstant<T, Z> {
-    val value: NamespacedKey
-    val dataType: PersistentDataType<T, Z>
+public interface BukkitConstant<T, Z> {
+    public val value: NamespacedKey
+    public val dataType: PersistentDataType<T, Z>
 
-    data class Default<T, Z>(
+    public data class Default<T, Z>(
         override val value: NamespacedKey,
         override val dataType: PersistentDataType<T, Z>
     ) : BukkitConstant<T, Z>
@@ -23,7 +23,11 @@ interface BukkitConstant<T, Z> {
 
 /** Creates a [BukkitConstant] namespaced under [plugin]'s name. */
 @Suppress("FunctionNaming")
-fun <T, Z> BukkitConstant(plugin: Plugin, key: String, dataType: PersistentDataType<T, Z>): BukkitConstant<T, Z> {
+public fun <T, Z> BukkitConstant(
+    plugin: Plugin,
+    key: String,
+    dataType: PersistentDataType<T, Z>
+): BukkitConstant<T, Z> {
     return BukkitConstant.Default<T, Z>(
         value = NamespacedKey(plugin, key),
         dataType = dataType
@@ -32,7 +36,11 @@ fun <T, Z> BukkitConstant(plugin: Plugin, key: String, dataType: PersistentDataT
 
 /** Creates a [BukkitConstant] with an explicit [namespace]; prefer the [Plugin] overload when possible. */
 @Suppress("FunctionNaming")
-fun <T, Z> BukkitConstant(namespace: String, key: String, dataType: PersistentDataType<T, Z>): BukkitConstant<T, Z> {
+public fun <T, Z> BukkitConstant(
+    namespace: String,
+    key: String,
+    dataType: PersistentDataType<T, Z>
+): BukkitConstant<T, Z> {
     return BukkitConstant.Default<T, Z>(
         value = NamespacedKey(namespace, key),
         dataType = dataType

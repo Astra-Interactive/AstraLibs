@@ -2,6 +2,7 @@ package ru.astrainteractive.astralibs.lifecycle
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.catch
@@ -19,10 +20,10 @@ import ru.astrainteractive.klibs.mikro.core.logging.Logger
  * Calls [onEnable] on [ServerStartedEvent] and [onDisable] on [ServerStoppingEvent].
  * The internal coroutine scope is cancelled on stop; errors are logged rather than propagated.
  */
-abstract class ForgeLifecycleServer : Lifecycle, Logger {
+public abstract class ForgeLifecycleServer : Lifecycle, Logger {
     private val unconfinedScope = CoroutineScope(SupervisorJob() + Dispatchers.Unconfined)
 
-    val serverStartedEvent = flowEvent<ServerStartedEvent>(EventPriority.HIGHEST)
+    public val serverStartedEvent: Job = flowEvent<ServerStartedEvent>(EventPriority.HIGHEST)
         .onEach { event -> MinecraftUtil.setServer(event.server) }
         .onEach { onEnable() }
         .catch { throwable ->
@@ -30,7 +31,7 @@ abstract class ForgeLifecycleServer : Lifecycle, Logger {
         }
         .launchIn(unconfinedScope)
 
-    val serverStoppingEvent = flowEvent<ServerStoppingEvent>(EventPriority.HIGHEST)
+    public val serverStoppingEvent: Job = flowEvent<ServerStoppingEvent>(EventPriority.HIGHEST)
         .onEach { onDisable() }
         .onEach { unconfinedScope.cancel() }
         .catch { throwable ->

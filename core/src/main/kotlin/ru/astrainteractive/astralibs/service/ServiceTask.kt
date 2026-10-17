@@ -6,6 +6,6 @@ package ru.astrainteractive.astralibs.service
  * Implementations must be cancellation-cooperative: the service cancels the running task when it is
  * stopped, restarted, or when the configured timeout elapses.
  */
-fun interface ServiceTask {
-    suspend fun execute()
+public fun interface ServiceTask {
+    public suspend fun execute()
 }

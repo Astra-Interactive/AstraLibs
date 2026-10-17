@@ -14,7 +14,7 @@ import java.util.UUID
  * Vanilla-Minecraft [PlatformServer] implementation backed by [MinecraftUtil].
  * Offline-player resolution only works for profiles cached locally on this server.
  */
-object MinecraftPlatformServer : PlatformServer {
+public object MinecraftPlatformServer : PlatformServer {
     override fun getOnlinePlayers(): List<OnlineKPlayer> {
         return MinecraftUtil
             .getOnlinePlayers()

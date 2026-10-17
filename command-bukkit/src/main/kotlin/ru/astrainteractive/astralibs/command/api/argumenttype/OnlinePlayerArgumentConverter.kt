@@ -10,7 +10,7 @@ import ru.astrainteractive.astralibs.command.api.exception.NoPlayerException
  * @throws NoPlayerException if no online player with that name exists.
  * @see OfflinePlayerArgumentConverter
  */
-data object OnlinePlayerArgumentConverter : ArgumentConverter<Player> {
+public data object OnlinePlayerArgumentConverter : ArgumentConverter<Player> {
     override fun transform(argument: String): Player {
         return Bukkit.getPlayer(argument) ?: throw NoPlayerException(argument)
     }

@@ -11,14 +11,14 @@ import ru.astrainteractive.astralibs.command.api.brigadier.sender.KCommandSender
  *
  * Implement once per target platform to adapt the Brigadier API to [MultiplatformCommand].
  */
-interface MultiplatformCommands {
-    fun literal(literal: String): LiteralArgumentBuilder<Any>
+public interface MultiplatformCommands {
+    public fun literal(literal: String): LiteralArgumentBuilder<Any>
 
-    fun <T : Any> argument(
+    public fun <T : Any> argument(
         name: String,
         argumentType: ArgumentType<T>
     ): RequiredArgumentBuilder<Any, T>
 
     /** Resolves the [KCommandSender] from a Brigadier [CommandContext]. */
-    fun getSender(context: CommandContext<*>): KCommandSender
+    public fun getSender(context: CommandContext<*>): KCommandSender
 }

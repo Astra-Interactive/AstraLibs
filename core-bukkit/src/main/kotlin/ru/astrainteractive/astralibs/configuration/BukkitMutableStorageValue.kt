@@ -7,12 +7,12 @@ import ru.astrainteractive.klibs.kstorage.api.asStateFlowMutableKrate
 import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate
 
 /** Factory helpers for [MutableKrate] and [StateFlowMutableKrate] backed by a Bukkit [FileConfiguration]. */
-object BukkitMutableStorageValue {
+public object BukkitMutableStorageValue {
     /**
      * Creates a [StateFlowMutableKrate] for a nullable [T] at [path] in this [FileConfiguration].
      * Emits `null` when the key is absent.
      */
-    inline fun <reified T> FileConfiguration.anyStateFlowMutableStorageValue(
+    public inline fun <reified T> FileConfiguration.anyStateFlowMutableStorageValue(
         path: String
     ): StateFlowMutableKrate<T?> {
         return DefaultMutableKrate(
@@ -26,7 +26,7 @@ object BukkitMutableStorageValue {
      * Creates a [MutableKrate] for a nullable [T] at [path] in this [FileConfiguration].
      * Returns `null` when the key is absent.
      */
-    inline fun <reified T> FileConfiguration.anyMutableStorageValue(
+    public inline fun <reified T> FileConfiguration.anyMutableStorageValue(
         path: String
     ): MutableKrate<T?> {
         return DefaultMutableKrate(

@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.menu.layout
 
 /** Default [InventoryLayout] backed by a flat list of [KEY]s. */
-class DefaultInventoryLayout<KEY, SLOT>(
+public class DefaultInventoryLayout<KEY, SLOT>(
     private val slots: List<KEY>
 ) : InventoryLayout<KEY, SLOT> {
 
@@ -31,7 +31,7 @@ class DefaultInventoryLayout<KEY, SLOT>(
  * @throws IllegalArgumentException if rows differ in width.
  */
 @Suppress("FunctionNaming")
-fun <KEY, SLOT> DefaultInventoryLayout(rows: List<List<KEY>>): InventoryLayout<KEY, SLOT> {
+public fun <KEY, SLOT> DefaultInventoryLayout(rows: List<List<KEY>>): InventoryLayout<KEY, SLOT> {
     if (rows.isEmpty()) return DefaultInventoryLayout(slots = emptyList())
 
     val width = rows.first().size

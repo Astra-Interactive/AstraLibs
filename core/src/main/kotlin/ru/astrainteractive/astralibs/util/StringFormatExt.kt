@@ -12,39 +12,39 @@ import ru.astrainteractive.klibs.mikro.core.logging.StubLogger
 import java.io.File
 
 /** Deserializes [file] using [deserializer]; returns a failure if the file is missing or unparseable. */
-fun <T> StringFormat.parse(deserializer: DeserializationStrategy<T>, file: File) = runCatching {
+public fun <T> StringFormat.parse(deserializer: DeserializationStrategy<T>, file: File): Result<T> = runCatching {
     if (!file.exists()) error("Could not find file ${file.absolutePath}")
     decodeFromString(deserializer, file.readText())
 }
 
 /** Deserializes [file] using the default serializer for [T]. */
-inline fun <reified T> StringFormat.parse(file: File): Result<T> {
+public inline fun <reified T> StringFormat.parse(file: File): Result<T> {
     return parse(serializer(), file)
 }
 
 /** Deserializes [file]; returns `null` on any failure. */
-fun <T : Any> StringFormat.parseOrNull(deserializer: DeserializationStrategy<T>, file: File): T? {
+public fun <T : Any> StringFormat.parseOrNull(deserializer: DeserializationStrategy<T>, file: File): T? {
     return parse<T>(deserializer, file).getOrNull()
 }
 
 /** Deserializes [file] using the default serializer; returns `null` on any failure. */
-inline fun <reified T : Any> StringFormat.parseOrNull(file: File): T? {
+public inline fun <reified T : Any> StringFormat.parseOrNull(file: File): T? {
     return parseOrNull(serializer(), file)
 }
 
 /** Deserializes [file]; returns [factory]'s value when the file is missing or unparseable. */
-fun <T> StringFormat.parseOrDefault(deserializer: DeserializationStrategy<T>, file: File, factory: () -> T): T {
+public fun <T> StringFormat.parseOrDefault(deserializer: DeserializationStrategy<T>, file: File, factory: () -> T): T {
     if (!file.exists() || file.length() == 0L) return factory.invoke()
     return parse(deserializer, file).getOrElse { factory.invoke() }
 }
 
 /** Deserializes [file] using the default serializer; returns [factory]'s value on failure. */
-inline fun <reified T> StringFormat.parseOrDefault(file: File, noinline factory: () -> T): T {
+public inline fun <reified T> StringFormat.parseOrDefault(file: File, noinline factory: () -> T): T {
     return parseOrDefault(serializer(), file, factory)
 }
 
 /** Serializes [value] and writes it to [file], creating parent directories and the file if absent. */
-fun <T> StringFormat.writeIntoFile(serializer: SerializationStrategy<T>, value: T, file: File) {
+public fun <T> StringFormat.writeIntoFile(serializer: SerializationStrategy<T>, value: T, file: File) {
     val string = encodeToString(serializer, value)
     if (file.parentFile?.exists() != true) file.parentFile?.mkdirs()
     if (!file.exists()) file.createNewFile()
@@ -52,7 +52,7 @@ fun <T> StringFormat.writeIntoFile(serializer: SerializationStrategy<T>, value: 
 }
 
 /** Serializes [value] using the default serializer and writes it to [file]. */
-inline fun <reified T> StringFormat.writeIntoFile(value: T, file: File) {
+public inline fun <reified T> StringFormat.writeIntoFile(value: T, file: File) {
     writeIntoFile(serializer(), value, file)
 }
 
@@ -62,7 +62,7 @@ inline fun <reified T> StringFormat.writeIntoFile(value: T, file: File) {
  *
  * The fallback file is [file] itself when missing/empty, or `<name>.default.<ext>` otherwise.
  */
-fun <T> StringFormat.parseOrWriteIntoDefault(
+public fun <T> StringFormat.parseOrWriteIntoDefault(
     serializer: KSerializer<T>,
     file: File,
     logger: Logger = StubLogger,
@@ -91,7 +91,7 @@ fun <T> StringFormat.parseOrWriteIntoDefault(
 }
 
 /** Reified overload of [parseOrWriteIntoDefault]. */
-inline fun <reified T> StringFormat.parseOrWriteIntoDefault(
+public inline fun <reified T> StringFormat.parseOrWriteIntoDefault(
     file: File,
     logger: Logger = StubLogger,
     noinline default: () -> T
@@ -110,7 +110,7 @@ inline fun <reified T> StringFormat.parseOrWriteIntoDefault(
  * getting the default. Saving a success writes its value into [file], or deletes [file] when the value is `null`;
  * saving a failure changes nothing.
  */
-inline fun <reified T> StringFormat.krateOf(
+public inline fun <reified T> StringFormat.krateOf(
     file: File,
     factory: ValueFactory<T>
 ): DefaultMutableKrate<Result<T>> = DefaultMutableKrate(

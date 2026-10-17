@@ -11,7 +11,7 @@ import ru.astrainteractive.klibs.mikro.core.util.tryCast
 /**
  * Wraps this [ServerPlayer] as a [Teleportable] that teleports the player to a [KLocation].
  */
-fun ServerPlayer.asTeleportable() = Teleportable { location ->
+public fun ServerPlayer.asTeleportable(): Teleportable = Teleportable { location ->
     val player = this
     val server = MinecraftUtil.serverOrNull ?: return@Teleportable
     val level = server

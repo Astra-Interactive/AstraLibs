@@ -1,14 +1,14 @@
 package ru.astrainteractive.astralibs.lifecycle
 
 /** Enable/disable/reload lifecycle contract with no-op defaults. */
-interface Lifecycle {
+public interface Lifecycle {
 
-    fun onEnable() = Unit
-    fun onDisable() = Unit
-    fun onReload() = Unit
+    public fun onEnable(): Unit = Unit
+    public fun onDisable(): Unit = Unit
+    public fun onReload(): Unit = Unit
 
     /** [Lifecycle] backed by lambdas. */
-    class Lambda(
+    public class Lambda(
         private val onEnable: Lifecycle.() -> Unit = {},
         private val onDisable: Lifecycle.() -> Unit = {},
         private val onReload: Lifecycle.() -> Unit = {},
@@ -27,5 +27,5 @@ interface Lifecycle {
     }
 
     /** No-op [Lifecycle] that ignores all events. */
-    object Empty : Lifecycle by Lifecycle.Lambda()
+    public object Empty : Lifecycle by Lifecycle.Lambda()
 }

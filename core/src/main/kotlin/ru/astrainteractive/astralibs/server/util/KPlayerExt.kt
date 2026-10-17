@@ -6,12 +6,12 @@ import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
 import ru.astrainteractive.astralibs.server.player.OnlineKPlayerSnapshot
 
 /** Snapshots this player's [uuid] as an [OfflineKPlayerSnapshot]. */
-fun KPlayer.asOfflineSnapshot(): OfflineKPlayerSnapshot {
+public fun KPlayer.asOfflineSnapshot(): OfflineKPlayerSnapshot {
     return OfflineKPlayerSnapshot(uuid)
 }
 
 /** Snapshots this player's current [uuid], [name], and [address] as an [OnlineKPlayerSnapshot]. */
-fun OnlineKPlayer.asOnlineSnapshot(): OnlineKPlayerSnapshot {
+public fun OnlineKPlayer.asOnlineSnapshot(): OnlineKPlayerSnapshot {
     return OnlineKPlayerSnapshot(
         uuid = uuid,
         name = name,

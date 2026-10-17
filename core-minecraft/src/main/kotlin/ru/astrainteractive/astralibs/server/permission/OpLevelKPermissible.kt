@@ -4,7 +4,7 @@ import net.minecraft.world.entity.player.Player
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 
-class OpLevelKPermissible(
+public class OpLevelKPermissible(
     private val player: Player
 ) : KPermissible, Logger by JUtiltLogger("OpLevelKPermissible") {
 

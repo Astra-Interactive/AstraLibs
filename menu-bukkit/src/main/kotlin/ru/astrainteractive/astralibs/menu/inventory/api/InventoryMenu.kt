@@ -13,9 +13,9 @@ import ru.astrainteractive.astralibs.menu.inventory.model.InventorySize
  *
  * Requires a [DefaultInventoryClickEvent] listener registered once on plugin startup.
  */
-abstract class InventoryMenu : Menu() {
+public abstract class InventoryMenu : Menu() {
 
-    abstract val inventorySize: InventorySize
+    public abstract val inventorySize: InventorySize
 
     override val clickListener: ClickListener = DefaultClickListener()
 

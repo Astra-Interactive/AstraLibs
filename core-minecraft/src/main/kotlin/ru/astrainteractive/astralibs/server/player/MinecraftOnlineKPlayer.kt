@@ -20,7 +20,7 @@ import java.util.UUID
 
 /** [OnlineKPlayer] backed by a vanilla [ServerPlayer]. */
 @OptIn(InternalPlatformApi::class)
-class MinecraftOnlineKPlayer(val instance: ServerPlayer) :
+public class MinecraftOnlineKPlayer(public val instance: ServerPlayer) :
     OnlineKPlayer,
     KAudience by instance.asKAudience(),
     Locatable by instance.asLocatable(),

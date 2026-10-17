@@ -23,7 +23,7 @@ private fun registryProvider(): HolderLookup.Provider {
  *
  * @see [toKyori]
  */
-fun net.kyori.adventure.text.Component.toNative(): Component {
+public fun net.kyori.adventure.text.Component.toNative(): Component {
     val json = KyoriComponentSerializer.Json
     val jsonComponent = json.serializer.serialize(this)
 
@@ -35,15 +35,15 @@ fun net.kyori.adventure.text.Component.toNative(): Component {
  *
  * @see [toNative]
  */
-fun Component.toKyori(): net.kyori.adventure.text.Component {
+public fun Component.toKyori(): net.kyori.adventure.text.Component {
     val json = Component.Serializer.toJson(this, registryProvider())
     return KyoriComponentSerializer.Json.serializer.deserialize(json)
 }
 
-fun net.kyori.adventure.text.Component.toPlain(): String {
+public fun net.kyori.adventure.text.Component.toPlain(): String {
     return KyoriComponentSerializer.Plain.serializer.serialize(this)
 }
 
-fun Component.toPlain(): String {
+public fun Component.toPlain(): String {
     return toKyori().toPlain()
 }

@@ -18,14 +18,14 @@ import java.util.UUID
  * @property name The player's last known name, or `null` if unavailable for an offline player.
  */
 @SubclassOptInRequired(InternalPlatformApi::class)
-interface KPlayer {
-    val uuid: UUID
-    val name: String?
+public interface KPlayer {
+    public val uuid: UUID
+    public val name: String?
 
     /**
      * Returns `true` if this player has connected to the server at least once.
      */
-    fun hasPlayedBefore(): Boolean
+    public fun hasPlayedBefore(): Boolean
 }
 
 /**
@@ -41,13 +41,13 @@ interface KPlayer {
  * @property name The player's current display name (always non-null for an online player).
  */
 @SubclassOptInRequired(InternalPlatformApi::class)
-interface OnlineKPlayer :
+public interface OnlineKPlayer :
     KPlayer,
     KAudience,
     Locatable,
     Teleportable,
     KPermissible,
     KCommandDispatcher {
-    val address: InetSocketAddress
+    public val address: InetSocketAddress
     override val name: String
 }

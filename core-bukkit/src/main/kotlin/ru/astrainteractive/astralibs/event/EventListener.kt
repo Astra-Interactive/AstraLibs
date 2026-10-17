@@ -7,21 +7,21 @@ import org.bukkit.plugin.Plugin
 /**
  * Event listener for all child bukkit events
  */
-interface EventListener : Listener {
+public interface EventListener : Listener {
     /**
      * Register event listener so events could be delivered
      */
-    fun onEnable(plugin: Plugin) {
+    public fun onEnable(plugin: Plugin) {
         plugin.server.pluginManager.registerEvents(this, plugin)
     }
 
     /**
      * Remove event listener
      */
-    fun onDisable() {
+    public fun onDisable() {
         HandlerList.unregisterAll(this)
     }
 
     /** Concrete no-op implementation of [EventListener] used as a registration anchor. */
-    class Default : EventListener
+    public class Default : EventListener
 }

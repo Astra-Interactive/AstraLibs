@@ -12,7 +12,7 @@ import java.util.UUID
  * [hasPlayedBefore] checks for a `.dat` file in the world's `playerdata` directory.
  */
 @OptIn(InternalPlatformApi::class)
-class MinecraftKPlayer(val instance: GameProfile) : KPlayer {
+public class MinecraftKPlayer(public val instance: GameProfile) : KPlayer {
     override val uuid: UUID
         get() = instance.id
 
