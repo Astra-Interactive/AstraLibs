@@ -1,0 +1,8 @@
+KindShape	src/main/kotlin/ru/astrainteractive/astralibs/localization/locale/MinecraftLocaleSerializer.kt	MinecraftLocaleSerializer
+KindShape	src/main/kotlin/ru/astrainteractive/astralibs/localization/locale/MinecraftLocales.kt	MinecraftLocales
+KindShape	src/main/kotlin/ru/astrainteractive/astralibs/localization/markup/AutoComponentSerializer.kt	AutoComponentSerializer
+KindShape	src/main/kotlin/ru/astrainteractive/astralibs/localization/markup/KyoriComponentSerializer.kt	KyoriComponentSerializer
+KindShape	src/main/kotlin/ru/astrainteractive/astralibs/localization/markup/KyoriComponentSerializerType.kt	KyoriComponentSerializerType
+KindShape	src/main/kotlin/ru/astrainteractive/astralibs/localization/text/LocalizedText.kt	LocalizedText
+KindShape	src/main/kotlin/ru/astrainteractive/astralibs/localization/text/LocalizedTextBuilder.kt	LocalizedTextBuilder
+KindShape	src/main/kotlin/ru/astrainteractive/astralibs/localization/text/LocalizedTextSerializer.kt	LocalizedTextSerializer
