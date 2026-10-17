@@ -7,6 +7,7 @@ import ru.astrainteractive.klibs.kstorage.api.asStateFlowMutableKrate
 import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate
 
 /** Factory helpers for [MutableKrate] and [StateFlowMutableKrate] backed by a Bukkit [FileConfiguration]. */
+@Suppress("NamespaceObject")
 public object BukkitMutableStorageValue {
     /**
      * Creates a [StateFlowMutableKrate] for a nullable [T] at [path] in this [FileConfiguration].

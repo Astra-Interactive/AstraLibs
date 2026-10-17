@@ -14,6 +14,7 @@ import kotlin.concurrent.withLock
  *
  * Call [setServer] with the live instance on startup and `null` on shutdown.
  */
+@Suppress("KindNameInPackage")
 public object MinecraftUtil {
     private val lock = ReentrantLock()
     private var _server: WeakReference<MinecraftServer>? = null

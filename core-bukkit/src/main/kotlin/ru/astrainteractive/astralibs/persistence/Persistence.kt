@@ -5,6 +5,7 @@ import org.bukkit.inventory.meta.ItemMeta
 /** Extension helpers for reading and
  * writing [BukkitConstant]-typed values
  * on [ItemMeta]'s persistent data container. */
+@Suppress("NamespaceObject")
 public object Persistence {
     /** Writes [value] under the key defined by [b]; silently ignored when [value] is `null`. */
     public fun <T, Z> ItemMeta.setPersistentDataType(b: BukkitConstant<T, Z>, value: Z) {
