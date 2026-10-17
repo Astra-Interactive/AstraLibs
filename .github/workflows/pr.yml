@@ -28,6 +28,10 @@ jobs:
     name: Detekt static analysis
     needs: gradle_validation
     uses: ./.github/workflows/call-detekt-validation.yml
+  architecture_validation:
+    name: Architecture validation
+    needs: gradle_validation
+    uses: ./.github/workflows/call-architecture-validation.yml
   tests_validation:
     name: Tests
     needs: gradle_validation
