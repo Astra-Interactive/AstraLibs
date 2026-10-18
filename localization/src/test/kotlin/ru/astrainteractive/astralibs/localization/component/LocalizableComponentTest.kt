@@ -5,8 +5,7 @@ package ru.astrainteractive.astralibs.localization.component
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
-import ru.astrainteractive.astralibs.localization.locale.MinecraftLocales
-import ru.astrainteractive.astralibs.localization.text.LocalizedText
+import ru.astrainteractive.astralibs.localization.locale.model.MinecraftLocales
 import java.util.Locale
 import kotlin.test.Test
 import kotlin.test.assertEquals

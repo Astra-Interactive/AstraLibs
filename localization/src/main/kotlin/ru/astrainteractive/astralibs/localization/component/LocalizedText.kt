@@ -1,9 +1,8 @@
-package ru.astrainteractive.astralibs.localization.text
+package ru.astrainteractive.astralibs.localization.component
 
 import kotlinx.serialization.Serializable
 import net.kyori.adventure.text.Component
-import ru.astrainteractive.astralibs.localization.component.LocalizableComponent
-import ru.astrainteractive.astralibs.localization.markup.AutoComponentSerializer
+import ru.astrainteractive.astralibs.localization.markup.api.AutoComponentSerializer
 import java.util.Locale
 
 /**

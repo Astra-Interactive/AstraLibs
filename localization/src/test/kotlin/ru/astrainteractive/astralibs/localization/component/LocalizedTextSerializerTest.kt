@@ -1,12 +1,12 @@
 @file:Suppress("FunctionNaming")
 
-package ru.astrainteractive.astralibs.localization.text
+package ru.astrainteractive.astralibs.localization.component
 
 import com.charleskorn.kaml.Yaml
 import com.charleskorn.kaml.YamlConfiguration
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
-import ru.astrainteractive.astralibs.localization.locale.MinecraftLocales
+import ru.astrainteractive.astralibs.localization.locale.model.MinecraftLocales
 import java.util.Locale
 import kotlin.test.Test
 import kotlin.test.assertEquals

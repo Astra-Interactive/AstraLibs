@@ -1,12 +1,18 @@
-package ru.astrainteractive.astralibs.localization.markup
+package ru.astrainteractive.astralibs.localization.markup.api
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.text.serializer.ComponentSerializer
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
-import ru.astrainteractive.astralibs.localization.component.withItalicOffByDefault
+import ru.astrainteractive.astralibs.localization.markup.model.KyoriComponentSerializerType
+
+/** Item names and lore render italic unless told otherwise, while config text is meant to be upright. */
+internal fun withItalicOffByDefault(component: Component): Component {
+    return component.decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
+}
 
 /** Converts strings to Kyori Adventure [Component]s. */
 public interface KyoriComponentSerializer {
@@ -75,9 +81,7 @@ public interface KyoriComponentSerializer {
         }
 
         override fun toComponent(string: String): Component {
-            return serializer
-                .deserialize(string)
-                .withItalicOffByDefault()
+            return withItalicOffByDefault(serializer.deserialize(string))
         }
     }
 

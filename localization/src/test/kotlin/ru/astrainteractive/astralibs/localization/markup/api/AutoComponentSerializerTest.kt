@@ -1,6 +1,6 @@
 @file:Suppress("FunctionNaming")
 
-package ru.astrainteractive.astralibs.localization.markup
+package ru.astrainteractive.astralibs.localization.markup.api
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
@@ -11,7 +11,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
-import ru.astrainteractive.astralibs.localization.component.withItalicOffByDefault
+import ru.astrainteractive.astralibs.localization.markup.model.KyoriComponentSerializerType
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -234,7 +234,7 @@ class AutoComponentSerializerTest {
             Component.text("наведи").hoverEvent(HoverEvent.showText(Component.text("подсказка", NamedTextColor.GREEN))),
             Component.text("Tom & Jerry, a < b, {text:hi}")
         ).forEach { component ->
-            val expected = component.withItalicOffByDefault()
+            val expected = withItalicOffByDefault(component)
 
             assertSameComponent(expected, serializeAndParseBack(component), component.toString())
         }

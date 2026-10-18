@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.server.util
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
-import ru.astrainteractive.astralibs.localization.markup.KyoriComponentSerializer
+import ru.astrainteractive.astralibs.localization.markup.api.KyoriComponentSerializer
 
 /**
  * Registries a component may resolve entries against.

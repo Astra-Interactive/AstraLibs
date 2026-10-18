@@ -2,8 +2,8 @@
 
 package ru.astrainteractive.astralibs.server.api
 
-import ru.astrainteractive.astralibs.localization.locale.MinecraftLocales
-import ru.astrainteractive.astralibs.localization.text.LocalizedText
+import ru.astrainteractive.astralibs.localization.component.LocalizedText
+import ru.astrainteractive.astralibs.localization.locale.model.MinecraftLocales
 import ru.astrainteractive.astralibs.server.fake.FakeReceiver
 import java.util.Locale
 import kotlin.test.Test

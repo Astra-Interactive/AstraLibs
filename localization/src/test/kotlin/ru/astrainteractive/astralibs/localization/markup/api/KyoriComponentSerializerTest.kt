@@ -1,6 +1,6 @@
 @file:Suppress("FunctionNaming")
 
-package ru.astrainteractive.astralibs.localization.markup
+package ru.astrainteractive.astralibs.localization.markup.api
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration

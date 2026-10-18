@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.localization.markup
+package ru.astrainteractive.astralibs.localization.markup.api
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
@@ -6,7 +6,7 @@ import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.minimessage.ParsingException
 import net.kyori.adventure.text.serializer.ComponentSerializer
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
-import ru.astrainteractive.astralibs.localization.component.withItalicOffByDefault
+import ru.astrainteractive.astralibs.localization.markup.model.KyoriComponentSerializerType
 
 /**
  * Parses MiniMessage tags first, then legacy `&` codes inside each text part; a `&` code applies until the next tag.
@@ -65,10 +65,10 @@ public data object AutoComponentSerializer :
     override fun toComponent(string: String): Component {
         val miniMessageComponent = deserializeMiniMessage(string)
             ?: return KyoriComponentSerializer.Legacy.toComponent(string)
-        return miniMessageComponent
+        val component = miniMessageComponent
             .withLegacyCodes(isInsideClick = false)
             .compact()
-            .withItalicOffByDefault()
+        return withItalicOffByDefault(component)
     }
 
     override fun deserialize(input: String): Component = toComponent(input)

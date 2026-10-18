@@ -1,6 +1,6 @@
 @file:Suppress("FunctionNaming")
 
-package ru.astrainteractive.astralibs.localization.locale
+package ru.astrainteractive.astralibs.localization.locale.model
 
 import com.charleskorn.kaml.Yaml
 import kotlinx.serialization.SerializationException

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.localization.locale
+package ru.astrainteractive.astralibs.localization.locale.model
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerializationException

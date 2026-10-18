@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.localization.text
+package ru.astrainteractive.astralibs.localization.component
 
 import java.util.Locale
 

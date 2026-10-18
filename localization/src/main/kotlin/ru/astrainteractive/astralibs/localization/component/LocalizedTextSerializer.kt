@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.localization.text
+package ru.astrainteractive.astralibs.localization.component
 
 import com.charleskorn.kaml.YamlInput
 import com.charleskorn.kaml.YamlMap
@@ -16,7 +16,7 @@ import kotlinx.serialization.descriptors.SerialKind
 import kotlinx.serialization.descriptors.buildSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import ru.astrainteractive.astralibs.localization.locale.MinecraftLocaleSerializer
+import ru.astrainteractive.astralibs.localization.locale.model.MinecraftLocaleSerializer
 
 /**
  * Reads a [LocalizedText] written either as one string shared by every language or as a map of Minecraft
@@ -43,7 +43,7 @@ public object LocalizedTextSerializer : KSerializer<LocalizedText> {
     /** Contextual kind makes kaml hand over the raw node instead of rejecting a map where a string is declared. */
     @OptIn(InternalSerializationApi::class, ExperimentalSerializationApi::class)
     override val descriptor: SerialDescriptor = buildSerialDescriptor(
-        serialName = "ru.astrainteractive.astralibs.localization.text.LocalizedText",
+        serialName = "ru.astrainteractive.astralibs.localization.component.LocalizedText",
         kind = SerialKind.CONTEXTUAL
     )
 

@@ -1,8 +1,8 @@
-package ru.astrainteractive.astralibs.localization.markup
+package ru.astrainteractive.astralibs.localization.markup.model
 
 import kotlinx.serialization.Serializable
 
-/** Supported [KyoriComponentSerializer] formats. */
+/** Supported [ru.astrainteractive.astralibs.localization.markup.api.KyoriComponentSerializer] formats. */
 @Serializable
 public enum class KyoriComponentSerializerType {
     /** JSON component format. */
@@ -20,6 +20,9 @@ public enum class KyoriComponentSerializerType {
     /** Legacy color-code format (e.g. `'&'`). */
     Legacy,
 
-    /** MiniMessage tags and legacy `&` codes in one string, see [AutoComponentSerializer]. */
+    /**
+     * MiniMessage tags and legacy `&` codes in one string, see
+     * [ru.astrainteractive.astralibs.localization.markup.api.AutoComponentSerializer].
+     */
     Auto
 }
