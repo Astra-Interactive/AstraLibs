@@ -23,7 +23,7 @@ dependencies {
     compileOnly(libs.minecraft.kyori.api)
     compileOnly(libs.minecraft.luckperms)
 
-    api(projects.localization)
+    api(projects.core.localization)
 
     testImplementation(libs.klibs.kstorage)
     testImplementation(libs.klibs.mikro.core)
