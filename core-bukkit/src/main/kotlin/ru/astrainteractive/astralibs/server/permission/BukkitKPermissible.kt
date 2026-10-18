@@ -1,6 +1,8 @@
 package ru.astrainteractive.astralibs.server.permission
 
 import org.bukkit.permissions.Permissible
+import ru.astrainteractive.astralibs.server.permission.api.KPermissible
+import ru.astrainteractive.astralibs.server.permission.api.Permission
 
 /**
  * [KPermissible] backed by a Bukkit [Permissible].

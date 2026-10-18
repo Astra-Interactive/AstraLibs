@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.command.RemoteConsoleCommandSender
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.server.KCommandDispatcher
+import ru.astrainteractive.astralibs.server.api.KCommandDispatcher
 
 /** Adapts this [Player] as a [KCommandDispatcher]. */
 public fun Player.asKCommandDispatcher(): KCommandDispatcher = KCommandDispatcher { command ->

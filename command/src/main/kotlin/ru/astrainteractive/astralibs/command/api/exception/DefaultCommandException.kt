@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.command.api.exception
 
 import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
 import ru.astrainteractive.astralibs.localization.component.LocalizableComponent
-import ru.astrainteractive.astralibs.server.permission.Permission
+import ru.astrainteractive.astralibs.server.permission.api.Permission
 
 /**
  * Thrown when a command execution fails with a message that is shown in the sender's language. The exception's

@@ -2,6 +2,7 @@ package ru.astrainteractive.astralibs.encoding.factory
 
 import org.bukkit.util.io.BukkitObjectInputStream
 import org.bukkit.util.io.BukkitObjectOutputStream
+import ru.astrainteractive.astralibs.encoding.api.ObjectStreamFactory
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.ObjectInputStream

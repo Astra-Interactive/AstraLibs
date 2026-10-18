@@ -3,6 +3,8 @@ package ru.astrainteractive.astralibs.server
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.identity.Identity
 import net.kyori.adventure.text.Component
+import ru.astrainteractive.astralibs.server.api.KAudience
+import ru.astrainteractive.astralibs.server.api.sendMessage
 import java.util.Locale
 
 /** An Adventure [Audience] with the language it reports through [Identity.LOCALE]; the console reports none. */

@@ -1,8 +1,9 @@
 package ru.astrainteractive.astralibs.server.bridge
 
 import org.bukkit.Bukkit
-import ru.astrainteractive.astralibs.server.player.KPlayer
-import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
+import ru.astrainteractive.astralibs.server.bridge.api.PlatformServer
+import ru.astrainteractive.astralibs.server.player.api.KPlayer
+import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
 import ru.astrainteractive.astralibs.server.util.asOfflineMinecraftPlayer
 import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
 import java.util.UUID

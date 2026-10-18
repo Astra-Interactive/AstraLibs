@@ -2,7 +2,8 @@ package ru.astrainteractive.astralibs.server.player
 
 import com.mojang.authlib.GameProfile
 import net.minecraft.world.level.storage.LevelResource
-import ru.astrainteractive.astralibs.server.annotation.InternalPlatformApi
+import ru.astrainteractive.astralibs.server.api.InternalPlatformApi
+import ru.astrainteractive.astralibs.server.player.api.KPlayer
 import ru.astrainteractive.astralibs.server.util.MinecraftUtil
 import java.util.UUID
 

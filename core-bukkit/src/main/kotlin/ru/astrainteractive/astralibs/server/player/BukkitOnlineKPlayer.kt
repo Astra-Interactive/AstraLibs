@@ -1,13 +1,14 @@
 package ru.astrainteractive.astralibs.server.player
 
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.server.KAudience
-import ru.astrainteractive.astralibs.server.KCommandDispatcher
-import ru.astrainteractive.astralibs.server.Locatable
-import ru.astrainteractive.astralibs.server.Teleportable
-import ru.astrainteractive.astralibs.server.annotation.InternalPlatformApi
-import ru.astrainteractive.astralibs.server.permission.KPermissible
+import ru.astrainteractive.astralibs.server.api.InternalPlatformApi
+import ru.astrainteractive.astralibs.server.api.KAudience
+import ru.astrainteractive.astralibs.server.api.KCommandDispatcher
+import ru.astrainteractive.astralibs.server.api.Locatable
+import ru.astrainteractive.astralibs.server.api.Teleportable
+import ru.astrainteractive.astralibs.server.permission.api.KPermissible
 import ru.astrainteractive.astralibs.server.permission.asKPermissible
+import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
 import ru.astrainteractive.astralibs.server.util.asKAudience
 import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
 import ru.astrainteractive.astralibs.server.util.asLocatable

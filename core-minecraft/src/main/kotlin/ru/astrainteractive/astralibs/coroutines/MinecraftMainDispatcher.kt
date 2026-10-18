@@ -1,6 +1,7 @@
 package ru.astrainteractive.astralibs.coroutines
 
 import kotlinx.coroutines.MainCoroutineDispatcher
+import ru.astrainteractive.astralibs.coroutines.model.CoroutineTimings
 import ru.astrainteractive.astralibs.server.util.MinecraftUtil
 import java.util.concurrent.Executor
 import kotlin.coroutines.CoroutineContext

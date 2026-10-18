@@ -1,8 +1,8 @@
 package ru.astrainteractive.astralibs.server.util
 
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.server.Locatable
-import ru.astrainteractive.astralibs.server.location.KLocation
+import ru.astrainteractive.astralibs.server.api.Locatable
+import ru.astrainteractive.astralibs.server.location.model.KLocation
 
 /** Adapts this [Player] as a [Locatable] that snapshots the player's position on each call. */
 public fun Player.asLocatable(): Locatable = Locatable {

@@ -13,7 +13,7 @@ import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
 import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterException
 import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NotPlayerExecutorException
-import ru.astrainteractive.astralibs.server.permission.Permission
+import ru.astrainteractive.astralibs.server.permission.api.Permission
 
 /** Convenience alias for the Paper Brigadier [io.papermc.paper.command.brigadier.CommandSourceStack]. */
 public typealias CommandSourceStack = io.papermc.paper.command.brigadier.CommandSourceStack

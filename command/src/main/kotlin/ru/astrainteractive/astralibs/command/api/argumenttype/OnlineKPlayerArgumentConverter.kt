@@ -1,8 +1,8 @@
 package ru.astrainteractive.astralibs.command.api.argumenttype
 
 import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterException
-import ru.astrainteractive.astralibs.server.bridge.PlatformServer
-import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
+import ru.astrainteractive.astralibs.server.bridge.api.PlatformServer
+import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
 
 /** Converts a player name to a currently online [OnlineKPlayer]. */
 public class OnlineKPlayerArgumentConverter(

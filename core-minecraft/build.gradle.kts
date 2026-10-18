@@ -19,6 +19,7 @@ dependencies {
 }
 
 dependencies {
+    compileOnly(libs.checkerfraemwork.qual)
     compileOnly(libs.klibs.mikro.core)
     compileOnly(libs.kotlin.coroutines.core)
     compileOnly(libs.kotlin.serialization.kaml)

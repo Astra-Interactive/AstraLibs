@@ -18,7 +18,7 @@ import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterExce
 import ru.astrainteractive.astralibs.command.api.exception.CommandException
 import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NotPlayerExecutorException
-import ru.astrainteractive.astralibs.server.permission.Permission
+import ru.astrainteractive.astralibs.server.permission.api.Permission
 import ru.astrainteractive.astralibs.server.util.asPermissible
 import ru.astrainteractive.astralibs.util.publicSource
 

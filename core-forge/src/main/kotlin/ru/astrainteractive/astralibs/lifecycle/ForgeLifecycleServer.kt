@@ -12,6 +12,7 @@ import net.minecraftforge.event.server.ServerStartedEvent
 import net.minecraftforge.event.server.ServerStoppingEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import ru.astrainteractive.astralibs.event.flowEvent
+import ru.astrainteractive.astralibs.lifecycle.api.Lifecycle
 import ru.astrainteractive.astralibs.server.util.MinecraftUtil
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 

@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.level.TicketType
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.storage.ServerLevelData
-import ru.astrainteractive.astralibs.server.Teleportable
+import ru.astrainteractive.astralibs.server.api.Teleportable
 import ru.astrainteractive.klibs.mikro.core.util.tryCast
 
 /**

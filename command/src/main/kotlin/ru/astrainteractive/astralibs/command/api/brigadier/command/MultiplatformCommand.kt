@@ -12,8 +12,8 @@ import ru.astrainteractive.astralibs.command.api.brigadier.sender.KPlayerKComman
 import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterException
 import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NotPlayerExecutorException
-import ru.astrainteractive.astralibs.server.permission.Permission
-import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
+import ru.astrainteractive.astralibs.server.permission.api.Permission
+import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
 
 /**
  * Brigadier DSL for building platform-agnostic command trees.

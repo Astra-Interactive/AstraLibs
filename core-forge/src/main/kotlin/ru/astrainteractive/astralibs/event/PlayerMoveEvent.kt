@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.onEach
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.storage.ServerLevelData
 import net.minecraftforge.event.TickEvent
-import ru.astrainteractive.astralibs.server.location.KLocation
+import ru.astrainteractive.astralibs.server.location.model.KLocation
 import ru.astrainteractive.klibs.mikro.core.util.tryCast
 import java.util.UUID
 import kotlin.time.Duration.Companion.seconds

@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.service
 
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
-import ru.astrainteractive.astralibs.lifecycle.Lifecycle
+import ru.astrainteractive.astralibs.lifecycle.api.Lifecycle
 
 /**
  * Long-lived, restartable component driven by the [Lifecycle] contract.

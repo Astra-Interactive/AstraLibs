@@ -1,9 +1,9 @@
 package ru.astrainteractive.astralibs.command.api.brigadier.sender
 
 import org.bukkit.command.CommandSender
-import ru.astrainteractive.astralibs.server.KAudience
-import ru.astrainteractive.astralibs.server.KCommandDispatcher
-import ru.astrainteractive.astralibs.server.permission.KPermissible
+import ru.astrainteractive.astralibs.server.api.KAudience
+import ru.astrainteractive.astralibs.server.api.KCommandDispatcher
+import ru.astrainteractive.astralibs.server.permission.api.KPermissible
 import ru.astrainteractive.astralibs.server.permission.asKPermissible
 import ru.astrainteractive.astralibs.server.util.asKAudience
 import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher

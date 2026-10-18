@@ -1,9 +1,9 @@
 package ru.astrainteractive.astralibs.command.api.brigadier.sender
 
-import ru.astrainteractive.astralibs.server.KAudience
-import ru.astrainteractive.astralibs.server.KCommandDispatcher
-import ru.astrainteractive.astralibs.server.permission.KPermissible
-import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
+import ru.astrainteractive.astralibs.server.api.KAudience
+import ru.astrainteractive.astralibs.server.api.KCommandDispatcher
+import ru.astrainteractive.astralibs.server.permission.api.KPermissible
+import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
 
 /** Sealed abstraction for any entity that can execute a command; replies go out in its [KAudience.locale]. */
 public sealed interface KCommandSender : KAudience

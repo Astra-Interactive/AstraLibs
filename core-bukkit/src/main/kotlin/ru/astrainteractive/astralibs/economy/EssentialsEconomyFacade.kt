@@ -1,6 +1,7 @@
 package ru.astrainteractive.astralibs.economy
 
 import com.earth2me.essentials.api.Economy
+import ru.astrainteractive.astralibs.economy.api.EconomyFacade
 import java.math.BigDecimal
 import java.util.UUID
 

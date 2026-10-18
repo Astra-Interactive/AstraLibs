@@ -4,8 +4,8 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.server.player.BukkitKPlayer
 import ru.astrainteractive.astralibs.server.player.BukkitOnlineKPlayer
-import ru.astrainteractive.astralibs.server.player.KPlayer
-import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
+import ru.astrainteractive.astralibs.server.player.api.KPlayer
+import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
 
 /** Adapts this [Player] as an [OnlineKPlayer]. */
 public fun Player.asOnlineMinecraftPlayer(): OnlineKPlayer {

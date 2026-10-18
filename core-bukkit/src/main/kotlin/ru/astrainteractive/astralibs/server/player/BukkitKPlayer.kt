@@ -1,7 +1,8 @@
 package ru.astrainteractive.astralibs.server.player
 
 import org.bukkit.OfflinePlayer
-import ru.astrainteractive.astralibs.server.annotation.InternalPlatformApi
+import ru.astrainteractive.astralibs.server.api.InternalPlatformApi
+import ru.astrainteractive.astralibs.server.player.api.KPlayer
 import java.util.UUID
 
 /** [KPlayer] wrapping a Bukkit [OfflinePlayer]. Exposes [instance] for Bukkit-specific API access. */

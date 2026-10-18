@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.server.util
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.rcon.RconConsoleSource
-import ru.astrainteractive.astralibs.server.KCommandDispatcher
+import ru.astrainteractive.astralibs.server.api.KCommandDispatcher
 
 /** Adapts this [MinecraftServer] as a [KCommandDispatcher]. */
 public fun MinecraftServer.asKCommandDispatcher(): KCommandDispatcher = KCommandDispatcher { command ->
