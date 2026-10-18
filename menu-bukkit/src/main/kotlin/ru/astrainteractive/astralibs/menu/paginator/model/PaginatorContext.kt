@@ -1,8 +1,6 @@
 package ru.astrainteractive.astralibs.menu.paginator.model
 
-import ru.astrainteractive.astralibs.menu.paginator.api.Paginator
-
-/** Snapshot of the current pagination state used by [Paginator]. */
+/** Snapshot of the current pagination state used by [ru.astrainteractive.astralibs.menu.paginator.api.Paginator]. */
 public data class PaginatorContext(
     val page: Int,
     val maxItems: Int,

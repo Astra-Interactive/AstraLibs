@@ -1,11 +1,11 @@
-package ru.astrainteractive.astralibs.menu.inventory.api
+package ru.astrainteractive.astralibs.menu.inventory.gui
 
 import org.bukkit.Bukkit
 import org.bukkit.inventory.Inventory
-import ru.astrainteractive.astralibs.menu.clicker.ClickListener
-import ru.astrainteractive.astralibs.menu.clicker.DefaultClickListener
-import ru.astrainteractive.astralibs.menu.core.Menu
+import ru.astrainteractive.astralibs.menu.clicker.api.ClickListener
+import ru.astrainteractive.astralibs.menu.clicker.component.DefaultClickListener
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
+import ru.astrainteractive.astralibs.menu.gui.Menu
 import ru.astrainteractive.astralibs.menu.inventory.model.InventorySize
 
 /**

@@ -1,9 +1,10 @@
-package ru.astrainteractive.astralibs.menu.paginator.api
+package ru.astrainteractive.astralibs.menu.paginator
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import ru.astrainteractive.astralibs.menu.paginator.api.Paginator
 import ru.astrainteractive.astralibs.menu.paginator.model.PaginatorContext
 import ru.astrainteractive.astralibs.menu.paginator.model.maxPages
 

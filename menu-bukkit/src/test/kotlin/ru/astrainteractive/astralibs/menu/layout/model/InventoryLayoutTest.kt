@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.menu.layout
+package ru.astrainteractive.astralibs.menu.layout.model
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

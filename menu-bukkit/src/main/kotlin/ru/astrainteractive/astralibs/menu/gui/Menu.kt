@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.menu.core
+package ru.astrainteractive.astralibs.menu.gui
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
@@ -7,9 +7,8 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import org.bukkit.inventory.InventoryHolder
-import ru.astrainteractive.astralibs.menu.clicker.ClickListener
-import ru.astrainteractive.astralibs.menu.clicker.DefaultClickListener
-import ru.astrainteractive.astralibs.menu.clicker.remember
+import ru.astrainteractive.astralibs.menu.clicker.api.ClickListener
+import ru.astrainteractive.astralibs.menu.clicker.component.DefaultClickListener
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
 import ru.astrainteractive.astralibs.menu.slot.InventorySlot
 
@@ -46,6 +45,11 @@ public abstract class Menu : InventoryHolder {
     }
 
     public abstract fun onInventoryOpenEvent(e: InventoryOpenEvent)
+}
+
+/** Registers [slot]'s click handler by [InventorySlot.index]. */
+public fun ClickListener.remember(slot: InventorySlot) {
+    remember(slot.index, slot.click)
 }
 
 /** Registers [slot]'s click handler and writes its item into the inventory. */

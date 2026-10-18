@@ -1,6 +1,4 @@
-package ru.astrainteractive.astralibs.menu.layout
-
-import ru.astrainteractive.astralibs.menu.slot.InventorySlot
+package ru.astrainteractive.astralibs.menu.layout.model
 
 /** DSL builder for [InventoryLayout]. All rows must have the same width. */
 public class InventoryLayoutBuilder<KEY, SLOT> {
@@ -24,8 +22,3 @@ public fun <KEY, SLOT> inventoryLayout(
 ): InventoryLayout<KEY, SLOT> = InventoryLayoutBuilder<KEY, SLOT>()
     .apply(block)
     .build()
-
-/** Shorthand for [inventoryLayout] with [InventorySlot] as the slot type. */
-public fun <KEY> slotInventoryLayout(
-    block: InventoryLayoutBuilder<KEY, InventorySlot>.() -> Unit
-): InventoryLayout<KEY, InventorySlot> = inventoryLayout(block)

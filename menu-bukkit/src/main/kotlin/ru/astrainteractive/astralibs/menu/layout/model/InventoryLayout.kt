@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.menu.layout
+package ru.astrainteractive.astralibs.menu.layout.model
 
 /**
  * Read-only mapping between inventory slot indices and semantic [KEY]s.

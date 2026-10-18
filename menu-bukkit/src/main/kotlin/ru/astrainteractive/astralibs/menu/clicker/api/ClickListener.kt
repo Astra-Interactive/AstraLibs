@@ -1,7 +1,6 @@
-package ru.astrainteractive.astralibs.menu.clicker
+package ru.astrainteractive.astralibs.menu.clicker.api
 
 import org.bukkit.event.inventory.InventoryClickEvent
-import ru.astrainteractive.astralibs.menu.slot.InventorySlot
 
 /** Manages per-slot [Click] handlers for an inventory menu. */
 public interface ClickListener {
@@ -12,9 +11,4 @@ public interface ClickListener {
 
     /** Clears all registered handlers. Call before each render. */
     public fun clear()
-}
-
-/** Registers [slot]'s click handler by [InventorySlot.index]. */
-public fun ClickListener.remember(slot: InventorySlot) {
-    remember(slot.index, slot.click)
 }

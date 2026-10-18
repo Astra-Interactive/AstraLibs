@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.menu.layout
+package ru.astrainteractive.astralibs.menu.layout.model
 
 /** Default [InventoryLayout] backed by a flat list of [KEY]s. */
 public class DefaultInventoryLayout<KEY, SLOT>(
