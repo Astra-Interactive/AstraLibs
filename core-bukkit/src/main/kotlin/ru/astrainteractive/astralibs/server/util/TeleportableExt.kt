@@ -3,7 +3,7 @@ package ru.astrainteractive.astralibs.server.util
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.server.Teleportable
+import ru.astrainteractive.astralibs.server.api.Teleportable
 
 /** Adapts this [Player] as a [Teleportable]. */
 public fun Player.asTeleportable(): Teleportable = Teleportable { location ->

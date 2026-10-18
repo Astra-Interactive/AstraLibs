@@ -2,7 +2,7 @@ package ru.astrainteractive.astralibs.configuration
 
 import org.bukkit.configuration.file.YamlConfiguration
 import org.junit.Test
-import ru.astrainteractive.astralibs.configuration.BukkitMutableStorageValue.anyMutableStorageValue
+import ru.astrainteractive.astralibs.configuration.util.anyMutableStorageValue
 import ru.astrainteractive.klibs.kstorage.api.withDefault
 import java.io.File
 import kotlin.test.assertEquals

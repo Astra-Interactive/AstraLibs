@@ -1,9 +1,9 @@
 package ru.astrainteractive.astralibs.server.util
 
-import ru.astrainteractive.astralibs.server.player.KPlayer
-import ru.astrainteractive.astralibs.server.player.OfflineKPlayerSnapshot
-import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
-import ru.astrainteractive.astralibs.server.player.OnlineKPlayerSnapshot
+import ru.astrainteractive.astralibs.server.player.api.KPlayer
+import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
+import ru.astrainteractive.astralibs.server.player.model.OfflineKPlayerSnapshot
+import ru.astrainteractive.astralibs.server.player.model.OnlineKPlayerSnapshot
 
 /** Snapshots this player's [uuid] as an [OfflineKPlayerSnapshot]. */
 public fun KPlayer.asOfflineSnapshot(): OfflineKPlayerSnapshot {

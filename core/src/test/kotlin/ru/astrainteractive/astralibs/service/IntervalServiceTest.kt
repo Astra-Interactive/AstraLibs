@@ -19,6 +19,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import ru.astrainteractive.astralibs.service.fake.FakeLogger
 import ru.astrainteractive.astralibs.service.fake.FakeServiceTask
+import ru.astrainteractive.astralibs.service.model.OverflowPolicy
 import java.util.Collections
 import kotlin.concurrent.thread
 import kotlin.test.Test

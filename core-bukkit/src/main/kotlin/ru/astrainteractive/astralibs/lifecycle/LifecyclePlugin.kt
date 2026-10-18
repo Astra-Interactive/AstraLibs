@@ -1,6 +1,7 @@
 package ru.astrainteractive.astralibs.lifecycle
 
 import org.bukkit.plugin.java.JavaPlugin
+import ru.astrainteractive.astralibs.lifecycle.api.Lifecycle
 
 /** [JavaPlugin] base class that also satisfies the [Lifecycle] contract. */
 public abstract class LifecyclePlugin : JavaPlugin(), Lifecycle {

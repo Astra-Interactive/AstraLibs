@@ -3,7 +3,6 @@ package ru.astrainteractive.astralibs.localization.component
 import net.kyori.adventure.audience.Audience
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
-import net.kyori.adventure.text.format.TextDecoration
 
 /** Returns this component if non-null, or [Component.empty]. */
 public fun Component?.orEmpty(): Component = this ?: Component.empty()
@@ -23,11 +22,6 @@ public fun Component.clickable(onClick: (Audience) -> Unit): Component {
     )
 }
 
-/** Item names and lore render italic unless told otherwise, while config text is meant to be upright. */
-internal fun Component.withItalicOffByDefault(): Component {
-    return decorationIfAbsent(TextDecoration.ITALIC, TextDecoration.State.FALSE)
-}
-
 /** A ready component that looks the same in every language. */
 public fun Component.asLocalizableComponent(): LocalizableComponent {
     return LocalizableComponent { _ -> this }
@@ -36,7 +30,7 @@ public fun Component.asLocalizableComponent(): LocalizableComponent {
 /**
  * Places [other] after this one as a sibling, so the style of this component does not leak into [other].
  * This is the only `plus` for localizable components; joining the markup of two texts as strings is
- * [ru.astrainteractive.astralibs.localization.text.LocalizedText.concat].
+ * [ru.astrainteractive.astralibs.localization.component.LocalizedText.concat].
  */
 public operator fun LocalizableComponent.plus(other: LocalizableComponent): LocalizableComponent {
     val first = this

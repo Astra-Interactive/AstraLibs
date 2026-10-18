@@ -5,8 +5,8 @@ import net.minecraft.commands.CommandSourceStack
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.rcon.RconConsoleSource
-import ru.astrainteractive.astralibs.localization.locale.MinecraftLocaleSerializer
-import ru.astrainteractive.astralibs.server.KAudience
+import ru.astrainteractive.astralibs.localization.locale.model.MinecraftLocaleSerializer
+import ru.astrainteractive.astralibs.server.api.KAudience
 import java.util.Locale
 
 /** [Locale.ROOT] while the client has not sent its settings yet. */

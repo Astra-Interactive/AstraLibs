@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.onEach
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.storage.ServerLevelData
 import net.minecraftforge.event.TickEvent
-import ru.astrainteractive.astralibs.server.location.KLocation
+import ru.astrainteractive.astralibs.event.util.flowEvent
+import ru.astrainteractive.astralibs.server.location.model.KLocation
 import ru.astrainteractive.klibs.mikro.core.util.tryCast
 import java.util.UUID
 import kotlin.time.Duration.Companion.seconds
@@ -18,15 +19,22 @@ import kotlin.time.toJavaDuration
 /**
  * Player movement event synthesised from [TickEvent.PlayerTickEvent] snapshots, emitted by [playerMoveFlowEvent].
  *
- * @param oldKLocation Position at the previous tick.
- * @param newKLocation Position at the current tick.
+ * @property oldKLocation Position at the previous tick.
+ * @property newKLocation Position at the current tick.
  */
-public class PlayerMoveEvent(
-    public val instance: TickEvent.PlayerTickEvent,
-    public val oldKLocation: KLocation,
-    public val newKLocation: KLocation,
+public interface PlayerMoveEvent {
+    public val instance: TickEvent.PlayerTickEvent
+    public val oldKLocation: KLocation
+    public val newKLocation: KLocation
     public val player: Player
-)
+}
+
+internal class TickPlayerMoveEvent(
+    override val instance: TickEvent.PlayerTickEvent,
+    override val oldKLocation: KLocation,
+    override val newKLocation: KLocation,
+    override val player: Player
+) : PlayerMoveEvent
 
 /** Cold [Flow] that emits a [PlayerMoveEvent] on each tick-end position snapshot per player. */
 public fun playerMoveFlowEvent(): Flow<PlayerMoveEvent> = flow {
@@ -51,7 +59,7 @@ public fun playerMoveFlowEvent(): Flow<PlayerMoveEvent> = flow {
             val cachedLocation = cache.get(event.player.uuid) {
                 kLocation
             }
-            val moveEvent = PlayerMoveEvent(
+            val moveEvent = TickPlayerMoveEvent(
                 instance = event,
                 oldKLocation = cachedLocation,
                 newKLocation = kLocation,

@@ -12,6 +12,10 @@ kotlin {
     explicitApi()
 }
 
+linter {
+    unitKind.set("technology")
+}
+
 dependencies {
     compileOnly(libs.kotlin.coroutines.core)
     compileOnly(libs.minecraft.paper.api)

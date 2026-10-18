@@ -5,6 +5,7 @@ import net.milkbowl.vault.economy.EconomyResponse
 import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 import org.bukkit.plugin.java.JavaPlugin
+import ru.astrainteractive.astralibs.economy.api.EconomyFacade
 import java.util.UUID
 
 /** [EconomyFacade] backed by the Vault economy API. */

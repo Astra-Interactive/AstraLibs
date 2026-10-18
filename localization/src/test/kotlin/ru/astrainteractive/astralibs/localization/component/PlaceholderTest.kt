@@ -7,8 +7,7 @@ import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
-import ru.astrainteractive.astralibs.localization.locale.MinecraftLocales
-import ru.astrainteractive.astralibs.localization.text.LocalizedText
+import ru.astrainteractive.astralibs.localization.locale.model.MinecraftLocales
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertSame

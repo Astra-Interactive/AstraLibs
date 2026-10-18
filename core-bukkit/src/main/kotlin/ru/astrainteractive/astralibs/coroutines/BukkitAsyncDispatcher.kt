@@ -3,6 +3,7 @@ package ru.astrainteractive.astralibs.coroutines
 import kotlinx.coroutines.CoroutineDispatcher
 import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitScheduler
+import ru.astrainteractive.astralibs.coroutines.model.CoroutineTimings
 import kotlin.coroutines.CoroutineContext
 
 /**

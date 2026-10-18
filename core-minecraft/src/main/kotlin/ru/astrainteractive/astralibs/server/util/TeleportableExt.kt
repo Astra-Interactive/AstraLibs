@@ -5,7 +5,8 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.level.TicketType
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.storage.ServerLevelData
-import ru.astrainteractive.astralibs.server.Teleportable
+import ru.astrainteractive.astralibs.server.api.MinecraftServerRegistry
+import ru.astrainteractive.astralibs.server.api.Teleportable
 import ru.astrainteractive.klibs.mikro.core.util.tryCast
 
 /**
@@ -13,7 +14,7 @@ import ru.astrainteractive.klibs.mikro.core.util.tryCast
  */
 public fun ServerPlayer.asTeleportable(): Teleportable = Teleportable { location ->
     val player = this
-    val server = MinecraftUtil.serverOrNull ?: return@Teleportable
+    val server = MinecraftServerRegistry.serverOrNull ?: return@Teleportable
     val level = server
         .allLevels
         .firstOrNull { serverLevel ->

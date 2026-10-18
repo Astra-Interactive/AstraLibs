@@ -13,6 +13,10 @@ kotlin {
     explicitApi()
 }
 
+linter {
+    unitKind.set("technology")
+}
+
 dependencies {
     compileOnly(libs.klibs.mikro.core)
     compileOnly(libs.kotlin.coroutines.core)

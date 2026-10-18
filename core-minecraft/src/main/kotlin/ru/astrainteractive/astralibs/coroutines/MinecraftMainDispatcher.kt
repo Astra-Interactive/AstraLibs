@@ -1,7 +1,8 @@
 package ru.astrainteractive.astralibs.coroutines
 
 import kotlinx.coroutines.MainCoroutineDispatcher
-import ru.astrainteractive.astralibs.server.util.MinecraftUtil
+import ru.astrainteractive.astralibs.coroutines.model.CoroutineTimings
+import ru.astrainteractive.astralibs.server.api.MinecraftServerRegistry
 import java.util.concurrent.Executor
 import kotlin.coroutines.CoroutineContext
 
@@ -17,7 +18,7 @@ public class MinecraftMainDispatcher : MainCoroutineDispatcher() {
         get() = this
 
     private val executor = Executor { block ->
-        MinecraftUtil.requireServer().executeBlocking(block)
+        MinecraftServerRegistry.requireServer().executeBlocking(block)
     }
 
     override fun isDispatchNeeded(context: CoroutineContext): Boolean = true

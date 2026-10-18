@@ -13,6 +13,10 @@ kotlin {
     explicitApi()
 }
 
+linter {
+    unitKind.set("technology")
+}
+
 repositories {
     minecraft.mavenizer(this)
     mavenCentral()

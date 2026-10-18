@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.server.util
 
 import org.bukkit.Bukkit
-import ru.astrainteractive.astralibs.server.location.KLocation
+import ru.astrainteractive.astralibs.server.location.model.KLocation
 
 /**
  * Converts this [KLocation] to a Bukkit [org.bukkit.Location].

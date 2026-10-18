@@ -1,4 +1,0 @@
-EntryPointVisibility	src/main/kotlin/ru/astrainteractive/astralibs/command/registrar/NeoForgeCommandRegistrarContext.kt	NeoForgeCommandRegistrarContext
-EntryPointVisibility	src/main/kotlin/ru/astrainteractive/astralibs/event/PlayerMoveEvent.kt	PlayerMoveEvent
-KindShape	src/main/kotlin/ru/astrainteractive/astralibs/command/registrar/NeoForgeCommandRegistrarContext.kt	NeoForgeCommandRegistrarContext
-KindShape	src/main/kotlin/ru/astrainteractive/astralibs/lifecycle/ForgeLifecycleServer.kt	ForgeLifecycleServer

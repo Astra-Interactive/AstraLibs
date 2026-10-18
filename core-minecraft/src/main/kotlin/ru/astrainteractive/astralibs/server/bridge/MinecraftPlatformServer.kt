@@ -1,39 +1,40 @@
 package ru.astrainteractive.astralibs.server.bridge
 
-import ru.astrainteractive.astralibs.server.player.KPlayer
-import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
-import ru.astrainteractive.astralibs.server.util.MinecraftUtil
-import ru.astrainteractive.astralibs.server.util.asOfflineMinecraftPlayer
-import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
+import ru.astrainteractive.astralibs.server.api.MinecraftServerRegistry
+import ru.astrainteractive.astralibs.server.bridge.api.PlatformServer
+import ru.astrainteractive.astralibs.server.player.MinecraftKPlayer
+import ru.astrainteractive.astralibs.server.player.MinecraftOnlineKPlayer
+import ru.astrainteractive.astralibs.server.player.api.KPlayer
+import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
 import ru.astrainteractive.astralibs.server.util.getOnlinePlayer
 import ru.astrainteractive.astralibs.server.util.getOnlinePlayers
 import ru.astrainteractive.astralibs.server.util.getPlayerGameProfile
 import java.util.UUID
 
 /**
- * Vanilla-Minecraft [PlatformServer] implementation backed by [MinecraftUtil].
+ * Vanilla-Minecraft [PlatformServer] implementation backed by [MinecraftServerRegistry].
  * Offline-player resolution only works for profiles cached locally on this server.
  */
 public object MinecraftPlatformServer : PlatformServer {
     override fun getOnlinePlayers(): List<OnlineKPlayer> {
-        return MinecraftUtil
+        return MinecraftServerRegistry
             .getOnlinePlayers()
-            .map { serverPlayer -> serverPlayer.asOnlineMinecraftPlayer() }
+            .map { serverPlayer -> MinecraftOnlineKPlayer(serverPlayer) }
     }
 
     override fun findOnlinePlayer(uuid: UUID): OnlineKPlayer? {
-        return MinecraftUtil.getOnlinePlayer(uuid)?.asOnlineMinecraftPlayer()
+        return MinecraftServerRegistry.getOnlinePlayer(uuid)?.let(::MinecraftOnlineKPlayer)
     }
 
     override fun findOfflinePlayer(uuid: UUID): KPlayer? {
-        return MinecraftUtil.getPlayerGameProfile(uuid)?.asOfflineMinecraftPlayer()
+        return MinecraftServerRegistry.getPlayerGameProfile(uuid)?.let(::MinecraftKPlayer)
     }
 
     override fun findOnlinePlayer(name: String): OnlineKPlayer? {
-        return MinecraftUtil.getOnlinePlayer(name)?.asOnlineMinecraftPlayer()
+        return MinecraftServerRegistry.getOnlinePlayer(name)?.let(::MinecraftOnlineKPlayer)
     }
 
     override fun findOfflinePlayer(name: String): KPlayer? {
-        return MinecraftUtil.getPlayerGameProfile(name)?.asOfflineMinecraftPlayer()
+        return MinecraftServerRegistry.getPlayerGameProfile(name)?.let(::MinecraftKPlayer)
     }
 }
