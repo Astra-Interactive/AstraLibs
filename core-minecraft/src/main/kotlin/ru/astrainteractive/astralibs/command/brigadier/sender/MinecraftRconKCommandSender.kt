@@ -1,7 +1,7 @@
 package ru.astrainteractive.astralibs.command.brigadier.sender
 
 import net.minecraft.server.rcon.RconConsoleSource
-import ru.astrainteractive.astralibs.command.api.brigadier.sender.ConsoleKCommandSender
+import ru.astrainteractive.astralibs.command.sender.model.ConsoleKCommandSender
 import ru.astrainteractive.astralibs.server.api.KAudience
 import ru.astrainteractive.astralibs.server.api.KCommandDispatcher
 import ru.astrainteractive.astralibs.server.permission.api.KPermissible

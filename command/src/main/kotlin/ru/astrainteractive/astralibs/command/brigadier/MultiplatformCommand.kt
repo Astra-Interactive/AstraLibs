@@ -1,0 +1,213 @@
+package ru.astrainteractive.astralibs.command.brigadier
+
+import com.mojang.brigadier.Command
+import com.mojang.brigadier.arguments.ArgumentType
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
+import com.mojang.brigadier.builder.RequiredArgumentBuilder
+import com.mojang.brigadier.context.CommandContext
+import ru.astrainteractive.astralibs.command.argumenttype.api.ArgumentConverter
+import ru.astrainteractive.astralibs.command.brigadier.api.MultiplatformCommands
+import ru.astrainteractive.astralibs.command.model.ArgumentConverterException
+import ru.astrainteractive.astralibs.command.model.NoPermissionException
+import ru.astrainteractive.astralibs.command.model.NotPlayerExecutorException
+import ru.astrainteractive.astralibs.command.sender.model.ConsoleKCommandSender
+import ru.astrainteractive.astralibs.command.sender.model.KCommandSender
+import ru.astrainteractive.astralibs.command.sender.model.KPlayerKCommandSender
+import ru.astrainteractive.astralibs.server.permission.api.Permission
+import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
+
+/**
+ * Brigadier DSL for building platform-agnostic command trees.
+ *
+ * @param commands Platform-specific factory for brigadier builders and sender resolution.
+ */
+@Suppress("TooManyFunctions", "MaximumLineLength", "MaxLineLength")
+public class MultiplatformCommand(private val commands: MultiplatformCommands) {
+    /** Appends a child literal sub-command node to this builder. */
+    public fun LiteralArgumentBuilder<Any>.literal(
+        alias: String,
+        block: LiteralArgumentBuilder<Any>.() -> Unit
+    ) {
+        val literal = commands.literal(alias)
+        literal.block()
+        this.then(literal)
+    }
+
+    /**
+     * Appends a child literal node to this argument builder, so a keyword can follow a typed
+     * argument (`/cmd <arg> keyword`).
+     *
+     * Without this overload the same call inside an `argument` block resolves against the
+     * enclosing literal receiver and silently attaches the node as a sibling of the argument.
+     */
+    public fun RequiredArgumentBuilder<Any, *>.literal(
+        alias: String,
+        block: LiteralArgumentBuilder<Any>.() -> Unit
+    ) {
+        val literal = commands.literal(alias)
+        literal.block()
+        this.then(literal)
+    }
+
+    /** Creates a root literal command node and applies [block] to it. */
+    public fun command(
+        alias: String,
+        block: LiteralArgumentBuilder<Any>.() -> Unit
+    ): LiteralArgumentBuilder<Any> {
+        val literal = commands.literal(alias)
+        literal.block()
+        return literal
+    }
+
+    /**
+     * Metadata needed to retrieve a typed Brigadier argument from a [CommandContext].
+     *
+     * Passed into [argument] builder lambdas so callers can use [requireArgument] without
+     * repeating the alias or class token.
+     */
+    public data class BrigadierArgument<T : Any>(
+        val alias: String,
+        val type: ArgumentType<T>,
+        val clazz: Class<T>
+    )
+
+    /** Appends a typed argument child node to this literal builder (type inferred via reification). */
+    public inline fun <reified T : Any> LiteralArgumentBuilder<Any>.argument(
+        alias: String,
+        type: ArgumentType<T>,
+        noinline block: RequiredArgumentBuilder<Any, T>.(BrigadierArgument<T>) -> Unit
+    ): Unit = argument(
+        alias = alias,
+        type = type,
+        clazz = T::class.java,
+        block = block
+    )
+
+    /** Appends a typed argument child node to this literal builder with an explicit [clazz] token. */
+    public fun <T : Any> LiteralArgumentBuilder<Any>.argument(
+        alias: String,
+        type: ArgumentType<T>,
+        clazz: Class<T>,
+        block: RequiredArgumentBuilder<Any, T>.(BrigadierArgument<T>) -> Unit
+    ) {
+        val argument = commands.argument(alias, type)
+        val brigadierArgument = BrigadierArgument(
+            alias = alias,
+            type = type,
+            clazz = clazz
+        )
+        argument.block(brigadierArgument)
+        this.then(argument)
+    }
+
+    /** Appends a typed argument child node to this required-argument builder (type inferred via reification). */
+    public inline fun <reified T : Any> RequiredArgumentBuilder<Any, *>.argument(
+        alias: String,
+        type: ArgumentType<T>,
+        noinline block: RequiredArgumentBuilder<Any, T>.(BrigadierArgument<T>) -> Unit
+    ): Unit = argument(
+        alias = alias,
+        type = type,
+        clazz = T::class.java,
+        block = block
+    )
+
+    /** Appends a typed argument child node to this required-argument builder with an explicit [clazz] token. */
+    public fun <T : Any> RequiredArgumentBuilder<Any, *>.argument(
+        alias: String,
+        type: ArgumentType<T>,
+        clazz: Class<T>,
+        block: RequiredArgumentBuilder<Any, T>.(BrigadierArgument<T>) -> Unit
+    ) {
+        val argument = commands.argument(alias, type)
+        val brigadierArgument = BrigadierArgument(
+            alias = alias,
+            type = type,
+            clazz = clazz
+        )
+        argument.block(brigadierArgument)
+        this.then(argument)
+    }
+
+    /**
+     * Attaches an execution handler to this required-argument node.
+     *
+     * Exceptions are forwarded to [onFailure] rather than propagating to the Brigadier dispatcher.
+     */
+    public fun RequiredArgumentBuilder<Any, *>.runs(
+        onFailure: (CommandContext<Any>, Throwable) -> Unit = { _, _ -> },
+        block: (RequiredArgumentBuilder<Any, *>.(CommandContext<Any>) -> Unit)
+    ) {
+        executes { ctx ->
+            runCatching { block.invoke(this, ctx) }
+                .onFailure { throwable -> onFailure.invoke(ctx, throwable) }
+            Command.SINGLE_SUCCESS
+        }
+    }
+
+    /**
+     * Attaches an execution handler to this literal node.
+     *
+     * Exceptions are forwarded to [onFailure] rather than propagating to the Brigadier dispatcher.
+     */
+    public fun LiteralArgumentBuilder<Any>.runs(
+        onFailure: (CommandContext<Any>, Throwable) -> Unit = { _, _ -> },
+        block: LiteralArgumentBuilder<Any>.(CommandContext<Any>) -> Unit
+    ) {
+        executes { ctx ->
+            runCatching { block.invoke(this, ctx) }
+                .onFailure { throwable -> onFailure.invoke(ctx, throwable) }
+            Command.SINGLE_SUCCESS
+        }
+    }
+
+    /** Registers tab-completion suggestions for this argument node. */
+    public fun RequiredArgumentBuilder<Any, *>.hints(block: (CommandContext<Any>) -> List<String>) {
+        suggests { context, builder ->
+            block.invoke(context).forEach(builder::suggest)
+            builder.buildFuture()
+        }
+    }
+
+    /** Retrieves the parsed value of [bArgument] from this command context. */
+    @Throws(IllegalArgumentException::class)
+    public fun <T : Any> CommandContext<Any>.requireArgument(bArgument: BrigadierArgument<T>): T {
+        return getArgument(bArgument.alias, bArgument.clazz)
+    }
+
+    /** Retrieves a raw string argument from this context and converts it via [converter]. */
+    @Throws(ArgumentConverterException::class)
+    public fun <T : Any> CommandContext<Any>.requireArgument(
+        bArgument: BrigadierArgument<String>,
+        converter: ArgumentConverter<T>
+    ): T {
+        val string = getArgument(bArgument.alias, bArgument.clazz)
+        return converter.transform(string)
+    }
+
+    /** Returns the [KCommandSender] (player or console) who issued this command. */
+    public fun CommandContext<Any>.getSender(): KCommandSender {
+        return commands.getSender(this)
+    }
+
+    /** Throws [NoPermissionException] if the sender does not hold [permission]. */
+    @Throws(NoPermissionException::class)
+    public fun CommandContext<Any>.requirePermission(permission: Permission) {
+        val sender = commands.getSender(this)
+        val hasPermission = when (sender) {
+            is ConsoleKCommandSender -> sender.hasPermission(permission)
+            is KPlayerKCommandSender -> sender.hasPermission(permission)
+        }
+        if (!hasPermission) throw NoPermissionException(permission)
+    }
+
+    /** Returns the executing [OnlineKPlayer], or throws [NotPlayerExecutorException] if the sender is console. */
+    @Throws(NotPlayerExecutorException::class)
+    public fun CommandContext<Any>.requirePlayer(): OnlineKPlayer {
+        val sender = commands.getSender(this)
+        return when (sender) {
+            is ConsoleKCommandSender -> throw NotPlayerExecutorException()
+            is KPlayerKCommandSender -> sender.instance
+        }
+    }
+}

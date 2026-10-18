@@ -1,0 +1,4 @@
+package ru.astrainteractive.astralibs.command.model
+
+/** Base class for all exceptions thrown during command parsing or execution. */
+public open class CommandException(message: String) : Throwable(message)

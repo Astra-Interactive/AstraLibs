@@ -13,11 +13,11 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.rcon.RconConsoleSource
-import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
-import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterException
-import ru.astrainteractive.astralibs.command.api.exception.CommandException
-import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
-import ru.astrainteractive.astralibs.command.api.exception.NotPlayerExecutorException
+import ru.astrainteractive.astralibs.command.argumenttype.api.ArgumentConverter
+import ru.astrainteractive.astralibs.command.model.ArgumentConverterException
+import ru.astrainteractive.astralibs.command.model.CommandException
+import ru.astrainteractive.astralibs.command.model.NoPermissionException
+import ru.astrainteractive.astralibs.command.model.NotPlayerExecutorException
 import ru.astrainteractive.astralibs.server.permission.api.Permission
 import ru.astrainteractive.astralibs.server.util.asPermissible
 import ru.astrainteractive.astralibs.util.publicSource
