@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.RegistryAccess
 import net.minecraft.network.chat.Component
 import ru.astrainteractive.astralibs.localization.markup.api.KyoriComponentSerializer
+import ru.astrainteractive.astralibs.server.api.MinecraftServerRegistry
 
 /**
  * Registries a component may resolve entries against.
@@ -12,7 +13,7 @@ import ru.astrainteractive.astralibs.localization.markup.api.KyoriComponentSeria
  * parts that look up registry entries degrade.
  */
 private fun registryProvider(): HolderLookup.Provider {
-    return MinecraftUtil.serverOrNull
+    return MinecraftServerRegistry.serverOrNull
         ?.registryAccess()
         ?: RegistryAccess.EMPTY
 }

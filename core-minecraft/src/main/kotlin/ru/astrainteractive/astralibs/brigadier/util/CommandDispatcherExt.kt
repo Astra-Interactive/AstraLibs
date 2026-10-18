@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.command.registrar
+package ru.astrainteractive.astralibs.brigadier.util
 
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.tree.CommandNode

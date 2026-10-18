@@ -1,6 +1,6 @@
 @file:Suppress("TooManyFunctions")
 
-package ru.astrainteractive.astralibs.command.brigadier.command
+package ru.astrainteractive.astralibs.brigadier.util
 
 import com.mojang.brigadier.Command
 import com.mojang.brigadier.arguments.ArgumentType
@@ -13,6 +13,7 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.rcon.RconConsoleSource
+import ru.astrainteractive.astralibs.brigadier.model.BrigadierArgument
 import ru.astrainteractive.astralibs.command.argumenttype.api.ArgumentConverter
 import ru.astrainteractive.astralibs.command.model.ArgumentConverterException
 import ru.astrainteractive.astralibs.command.model.CommandException
@@ -41,13 +42,6 @@ public fun command(
     literal.block()
     return literal
 }
-
-/** Metadata needed to register and extract a typed Brigadier argument. */
-public data class BrigadierArgument<T : Any>(
-    val alias: String,
-    val type: ArgumentType<T>,
-    val clazz: Class<T>
-)
 
 /** Appends a typed required argument to this [LiteralArgumentBuilder], inferring [T] from the reified type. */
 public inline fun <reified T : Any> LiteralArgumentBuilder<CommandSourceStack>.argument(

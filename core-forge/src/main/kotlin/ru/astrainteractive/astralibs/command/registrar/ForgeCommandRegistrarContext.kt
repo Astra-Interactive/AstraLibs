@@ -13,6 +13,7 @@ import net.minecraft.commands.CommandSourceStack
 import net.minecraftforge.event.RegisterCommandsEvent
 import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.server.ServerLifecycleHooks
+import ru.astrainteractive.astralibs.brigadier.util.removeCommand
 import ru.astrainteractive.astralibs.command.registrar.api.CommandRegistrarContext
 import ru.astrainteractive.astralibs.event.flowEvent
 

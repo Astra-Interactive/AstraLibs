@@ -5,10 +5,10 @@ import ru.astrainteractive.astralibs.server.api.InternalPlatformApi
 import ru.astrainteractive.astralibs.server.api.KAudience
 import ru.astrainteractive.astralibs.server.api.KCommandDispatcher
 import ru.astrainteractive.astralibs.server.api.Locatable
+import ru.astrainteractive.astralibs.server.api.MinecraftServerRegistry
 import ru.astrainteractive.astralibs.server.api.Teleportable
 import ru.astrainteractive.astralibs.server.permission.api.KPermissible
 import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
-import ru.astrainteractive.astralibs.server.util.MinecraftUtil
 import ru.astrainteractive.astralibs.server.util.asKAudience
 import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
 import ru.astrainteractive.astralibs.server.util.asLocatable
@@ -40,7 +40,7 @@ public class MinecraftOnlineKPlayer(public val instance: ServerPlayer) :
             ?: error("Failed to get address from player ${instance.name}")
 
     override fun hasPlayedBefore(): Boolean {
-        return MinecraftUtil.serverOrNull
+        return MinecraftServerRegistry.serverOrNull
             ?.playerList
             ?.load(instance)
             ?.isEmpty == true

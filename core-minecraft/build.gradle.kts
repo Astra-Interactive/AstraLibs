@@ -13,6 +13,10 @@ kotlin {
     explicitApi()
 }
 
+linter {
+    unitKind.set("technology")
+}
+
 dependencies {
     minecraft(libs.minecraft.fabric.mojang)
     mappings(loom.officialMojangMappings())

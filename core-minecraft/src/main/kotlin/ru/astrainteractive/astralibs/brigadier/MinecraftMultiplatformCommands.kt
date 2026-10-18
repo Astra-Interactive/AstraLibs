@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.command.brigadier.command
+package ru.astrainteractive.astralibs.brigadier
 
 import com.mojang.brigadier.arguments.ArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
@@ -10,12 +10,12 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.dedicated.DedicatedServer
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.server.rcon.RconConsoleSource
+import ru.astrainteractive.astralibs.brigadier.sender.MinecraftRconKCommandSender
+import ru.astrainteractive.astralibs.brigadier.sender.MinecraftServerKCommandSender
 import ru.astrainteractive.astralibs.command.brigadier.api.MultiplatformCommands
-import ru.astrainteractive.astralibs.command.brigadier.sender.MinecraftRconKCommandSender
-import ru.astrainteractive.astralibs.command.brigadier.sender.MinecraftServerKCommandSender
 import ru.astrainteractive.astralibs.command.sender.model.KCommandSender
 import ru.astrainteractive.astralibs.command.sender.model.KPlayerKCommandSender
-import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
+import ru.astrainteractive.astralibs.server.player.MinecraftOnlineKPlayer
 import ru.astrainteractive.astralibs.util.publicSource
 
 /**
@@ -39,7 +39,7 @@ public class MinecraftMultiplatformCommands : MultiplatformCommands {
         val commandSourceStack = context.source as CommandSourceStack
         return when (val source = commandSourceStack.publicSource) {
             is ServerPlayer -> {
-                KPlayerKCommandSender(source.asOnlineMinecraftPlayer())
+                KPlayerKCommandSender(MinecraftOnlineKPlayer(source))
             }
 
             is RconConsoleSource -> {
