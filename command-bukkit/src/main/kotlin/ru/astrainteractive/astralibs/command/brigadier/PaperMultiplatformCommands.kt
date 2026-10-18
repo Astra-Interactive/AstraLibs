@@ -13,7 +13,7 @@ import ru.astrainteractive.astralibs.command.brigadier.api.MultiplatformCommands
 import ru.astrainteractive.astralibs.command.sender.PaperConsoleKCommandSender
 import ru.astrainteractive.astralibs.command.sender.model.KCommandSender
 import ru.astrainteractive.astralibs.command.sender.model.KPlayerKCommandSender
-import ru.astrainteractive.astralibs.server.util.asOnlineMinecraftPlayer
+import ru.astrainteractive.astralibs.server.player.BukkitOnlineKPlayer
 
 /**
  * Paper-specific implementation of [MultiplatformCommands].
@@ -46,7 +46,7 @@ public class PaperMultiplatformCommands : MultiplatformCommands {
             }
 
             is Player -> {
-                KPlayerKCommandSender(sender.asOnlineMinecraftPlayer())
+                KPlayerKCommandSender(BukkitOnlineKPlayer(sender))
             }
 
             else -> error("Could not wrap sender ${sender.javaClass}")

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.persistence
+package ru.astrainteractive.astralibs.persistence.api
 
 import org.bukkit.NamespacedKey
 import org.bukkit.persistence.PersistentDataType

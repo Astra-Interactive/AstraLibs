@@ -7,10 +7,10 @@ import ru.astrainteractive.astralibs.server.api.KCommandDispatcher
 import ru.astrainteractive.astralibs.server.api.Locatable
 import ru.astrainteractive.astralibs.server.api.Teleportable
 import ru.astrainteractive.astralibs.server.permission.api.KPermissible
-import ru.astrainteractive.astralibs.server.permission.asKPermissible
 import ru.astrainteractive.astralibs.server.player.api.OnlineKPlayer
 import ru.astrainteractive.astralibs.server.util.asKAudience
 import ru.astrainteractive.astralibs.server.util.asKCommandDispatcher
+import ru.astrainteractive.astralibs.server.util.asKPermissible
 import ru.astrainteractive.astralibs.server.util.asLocatable
 import ru.astrainteractive.astralibs.server.util.asTeleportable
 import java.net.InetSocketAddress

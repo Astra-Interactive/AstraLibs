@@ -12,6 +12,10 @@ kotlin {
     explicitApi()
 }
 
+linter {
+    unitKind.set("technology")
+}
+
 dependencies {
     compileOnly(libs.klibs.kstorage)
     compileOnly(libs.klibs.mikro.core)

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.encoding.factory
+package ru.astrainteractive.astralibs.encoding.encoder
 
 import org.bukkit.util.io.BukkitObjectInputStream
 import org.bukkit.util.io.BukkitObjectOutputStream

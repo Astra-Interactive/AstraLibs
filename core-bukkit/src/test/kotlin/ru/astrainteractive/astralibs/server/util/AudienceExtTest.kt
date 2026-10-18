@@ -1,17 +1,16 @@
 @file:Suppress("FunctionNaming")
 
-package ru.astrainteractive.astralibs.server
+package ru.astrainteractive.astralibs.server.util
 
 import net.kyori.adventure.identity.Identity
 import net.kyori.adventure.pointer.Pointers
 import net.kyori.adventure.text.Component
 import ru.astrainteractive.astralibs.server.fake.FakeAudience
-import ru.astrainteractive.astralibs.server.util.asKAudience
 import java.util.Locale
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class AdventureKAudienceTest {
+class AudienceExtTest {
     @Test
     fun GIVEN_audience_reporting_locale_WHEN_adapted_THEN_receiver_has_that_locale() {
         val audience = FakeAudience(Pointers.builder().withStatic(Identity.LOCALE, Locale.GERMANY).build())
