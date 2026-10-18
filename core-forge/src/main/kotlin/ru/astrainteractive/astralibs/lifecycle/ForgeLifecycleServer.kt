@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.onEach
 import net.minecraftforge.event.server.ServerStartedEvent
 import net.minecraftforge.event.server.ServerStoppingEvent
 import net.minecraftforge.eventbus.api.EventPriority
-import ru.astrainteractive.astralibs.event.flowEvent
+import ru.astrainteractive.astralibs.event.util.flowEvent
 import ru.astrainteractive.astralibs.lifecycle.api.Lifecycle
 import ru.astrainteractive.astralibs.server.api.MinecraftServerRegistry
 import ru.astrainteractive.klibs.mikro.core.logging.Logger

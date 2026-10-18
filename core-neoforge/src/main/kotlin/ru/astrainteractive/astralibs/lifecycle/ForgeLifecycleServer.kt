@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.onEach
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.neoforge.event.server.ServerStartedEvent
 import net.neoforged.neoforge.event.server.ServerStoppingEvent
-import ru.astrainteractive.astralibs.event.flowEvent
+import ru.astrainteractive.astralibs.event.util.flowEvent
 import ru.astrainteractive.astralibs.lifecycle.api.Lifecycle
 import ru.astrainteractive.astralibs.server.api.MinecraftServerRegistry
 import ru.astrainteractive.klibs.mikro.core.logging.Logger

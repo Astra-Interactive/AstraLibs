@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.command.registrar
+package ru.astrainteractive.astralibs.brigadier.registrar
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +15,7 @@ import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.server.ServerLifecycleHooks
 import ru.astrainteractive.astralibs.brigadier.util.removeCommand
 import ru.astrainteractive.astralibs.command.registrar.api.CommandRegistrarContext
-import ru.astrainteractive.astralibs.event.flowEvent
+import ru.astrainteractive.astralibs.event.util.flowEvent
 
 /**
  * Forge implementation of [CommandRegistrarContext] that registers Brigadier commands via

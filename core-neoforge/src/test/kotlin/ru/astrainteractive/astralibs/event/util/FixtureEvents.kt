@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.event
+package ru.astrainteractive.astralibs.event.util
 
 import net.neoforged.bus.api.Event
 

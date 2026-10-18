@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.event
+package ru.astrainteractive.astralibs.event.util
 
 import kotlin.test.Test
 import kotlin.test.assertEquals

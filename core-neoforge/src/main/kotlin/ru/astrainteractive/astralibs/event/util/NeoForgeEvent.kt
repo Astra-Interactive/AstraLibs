@@ -1,4 +1,4 @@
-package ru.astrainteractive.astralibs.event
+package ru.astrainteractive.astralibs.event.util
 
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
